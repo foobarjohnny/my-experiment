@@ -1,0 +1,9 @@
+Vector和ArrayList   
+Vector和ArrayList在使用上非常相似,都可用来表示一组数量可变的对象应用的集合,并且可以随机地访问其中的元素。   
+Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
+当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间。 
+Hashtable和HashMap区别 
+Hashtable和HashMap它们的性能方面的比较类似   Vector和ArrayList，比如Hashtable的方法是同步的,而HashMap的不是。
+HashMap   类没有分类或者排序。它允许一个   null   键和多个   null   值。   
+Hashtable   类似于   HashMap，但是不允许   null   键和   null   值。 
+它也比   HashMap   慢，因为它是同步的。
