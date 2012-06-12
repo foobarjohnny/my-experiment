@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -73,12 +74,14 @@ public class MaxFlow
 				// 经过BFS 不能达到终点T 即找不到增广路径(augmenting father)[残留网络中S到T的简单路径]
 				break;
 			}
+			int aug = minCapacity[T];
 			for (int i = T; i != S; i = father[i]) {
-				capacity[father[i]][i] -= minCapacity[T];// 正向更新
-				capacity[i][father[i]] += minCapacity[T];// 反向更新
-				flow[father[i]][i] += minCapacity[T]; // 更新FLOW表
+				capacity[father[i]][i] -= aug;// 正向更新
+				capacity[i][father[i]] += aug;// 反向更新
+				flow[father[i]][i] += aug; // 更新FLOW表
+				minCapacity[i] -= aug;
 			}
-			maxFlow += minCapacity[T];// 更新最大流
+			maxFlow += aug;// 更新最大流
 			// 如果Maxflow 可以认为没有流
 		}
 		return maxFlow;
@@ -86,13 +89,15 @@ public class MaxFlow
 
 	public static void main(String[] args)
 	{
-		int S = 1, T = 2;
+		int S = 2, T = 9;
 		buildCap();
 		System.out.println(Edmonds_Karp(S, T));
+		printFlow();
 		buildCap();
 		System.out.println(Dinic(S, T));
 		buildCap();
 		System.out.println(Dinic2(S, T));
+		printFlow();
 		buildCap();
 		System.out.println(ISAP(S, T));
 		buildCap();
@@ -104,9 +109,20 @@ public class MaxFlow
 		buildCap();
 		System.out.println(FIFO_Preflow_Push(S, T));
 		buildCap();
-		System.out.println(HLPP(S, T));
-		buildCap();
-		System.out.println(Hungary());
+		// System.out.println(HLPP(S, T));
+		// buildCap();
+		// System.out.println(Hungary());
+	}
+
+	private static void printFlow()
+	{
+		for (int i = 0; i < flow.length; i++) {
+			for (int j = 0; j < flow[i].length; j++) {
+				if (flow[i][j] > 0) {
+					System.out.println(i + " -> " + j + " : " + (flow[i][j] - flow[j][i]));
+				}
+			}
+		}
 	}
 
 	public static boolean BFS4Dinic(int s, int t)
@@ -146,7 +162,7 @@ public class MaxFlow
 		maxFlow = 0;// 最大流初始化
 		// 如果BFS为FALSE 说明已经没有到T的路径了
 		while (BFS4Dinic(S, T)) {
-			int[] nextV = new int[vertexCnt + 1];// 保存U的下一个对应端点V,不作重复遍历V
+			nextV = new int[vertexCnt + 1];// 保存U的下一个对应端点V,不作重复遍历V
 			for (int i = 0; i <= vertexCnt; i++) { // nextV里初始化是第一个节点哈 FOR循环
 				nextV[i] = 1; // DFS中，如果需要回溯，就回溯到nextV中的节点。
 			}
@@ -168,22 +184,23 @@ public class MaxFlow
 				}
 				// 如果这个新搜到的点是T
 				if (v == T) {
+					int aug = minCapacity[T];
 					for (int i = T; i != S; i = father[i]) {
-						capacity[father[i]][i] -= minCapacity[T];// 正向更新
-						capacity[i][father[i]] += minCapacity[T];// 反向更新
-						flow[father[i]][i] += minCapacity[T]; // 更新FLOW表
+						capacity[father[i]][i] -= aug;// 正向更新
+						capacity[i][father[i]] += aug;// 反向更新
+						flow[father[i]][i] += aug; // 更新FLOW表
+						minCapacity[i] -= aug; // 设S永远为MAX
 						if (capacity[father[i]][i] == 0) {
 							// 把stack弹到前一个饱和压入的点 因为他没能力继续压入了 后面的PRUNE
 							// 设成u=S也行 但这样是 剪枝 阻塞优化＝＝多路增广 连续增广
-							// 设成u=S时 按理说应该重置minCapacity数组,但不重置也实际没问题 想想为什么
-							// 不用minCapacity用一个aug变量更安全
+							// 设成u=S时 不用minCapacity用一个aug变量更安全
 							while (queue.peek() != father[i]) {
 								queue.poll();
 							}
 						}
 					}
 					// 如果Maxflow==0 可以认为没有流
-					maxFlow += minCapacity[T];// 更新最大流
+					maxFlow += aug;// 更新最大流
 				}
 				// 说明U这点的子孙遍历完了 可以设置为BLACK
 				// 其实不设也没有关系 但避免重复
@@ -239,7 +256,7 @@ public class MaxFlow
 	private static void buildCap()
 	{
 		// gap 设成vertexCnt*2，因为有可能有V+1次提升高度，原来最大高度是V V+V-1=2V-1
-		vertexCnt = 9;
+		vertexCnt = 10;
 		capacity = new int[vertexCnt + 1][vertexCnt + 1];
 		flow = new int[vertexCnt + 1][vertexCnt + 1];
 		minCapacity = new int[vertexCnt + 1];
@@ -259,20 +276,59 @@ public class MaxFlow
 		// addCap(2, 4, 20);
 		// addCap(3, 4, 10);
 
-		addCap(1, 6, 1);
-		addCap(2, 6, 1);
-		addCap(2, 8, 1);
-		addCap(3, 7, 1);
-		addCap(3, 8, 1);
-		addCap(3, 9, 1);
-		addCap(4, 8, 1);
-		addCap(5, 8, 1);
+		// addCap(1, 6, 1);
+		// addCap(2, 6, 1);
+		// addCap(2, 8, 1);
+		// addCap(3, 7, 1);
+		// addCap(3, 8, 1);
+		// addCap(3, 9, 1);
+		// addCap(4, 8, 1);
+		// addCap(5, 8, 1);
+
+//		addCap(7, 1, 3);
+//		addCap(7, 2, 1);
+//		addCap(7, 3, 10);
+		int maxint = MAX;
+//		addCap(1, 4, maxint);
+//		addCap(1, 5, maxint);
+//		addCap(2, 4, maxint);
+//		addCap(2, 6, maxint);
+//		addCap(3, 5, maxint);
+//		addCap(4, 5, maxint);
+//		addCap(4, 6, maxint);
+//
+//		addCap(4, 8, 2);
+//		addCap(5, 8, 3);
+//		addCap(6, 8, 6);
+		
+		addCap(1, 2, 1);
+		addCap(3, 4, 4);
+		addCap(5, 6, 4);
+		addCap(7, 8, 11);
+		addCap(9, 10, 1);
+//		addCap(2, 1, 1);
+//		addCap(4, 3, 6);
+//		addCap(6, 5, 6);
+//		addCap(8, 7, 11);
+//		addCap(10, 9, 1);
+		
+		addCap(4, 1, maxint);
+		addCap(6, 1, maxint);
+		addCap(2, 3, maxint);
+		addCap(2, 5, maxint);
+		addCap(4, 7, maxint);
+		addCap(6, 7, maxint);
+		addCap(8, 3, maxint);
+		addCap(8, 5, maxint);
+		addCap(8, 9, maxint);
+		addCap(10, 7, maxint);
+
 	}
 
 	private static void addCap(int u, int v, int cap)
 	{
 		capacity[u][v] = cap;
-		capacity[v][u] = cap;
+		// capacity[v][u] = cap;
 	}
 
 	public static int Dinic2(int S, int T)
@@ -357,18 +413,20 @@ public class MaxFlow
 			}
 			// 如果这个新搜到的点是T，找到了增广路径
 			if (v == T) {
+				// 设成u=S时 不用 minCapacity用一个aug变量更安全
+				int aug = minCapacity[T];
 				for (int i = T; i != S; i = father[i]) {
-					capacity[father[i]][i] -= minCapacity[T];// 正向更新
-					capacity[i][father[i]] += minCapacity[T];// 反向更新
-					flow[father[i]][i] += minCapacity[T]; // 更新FLOW表
+					capacity[father[i]][i] -= aug;// 正向更新
+					capacity[i][father[i]] += aug;// 反向更新
+					flow[father[i]][i] += aug; // 更新FLOW表
+					minCapacity[i] -= aug;
+					// 设成u=S也行 但这样是 剪枝 阻塞优化＝＝多路增广 连续增广
+					if (capacity[father[i]][i] == 0) {
+						u = father[i];
+					}
 				}
-				maxFlow += minCapacity[T];// 更新最大流
-				// 设成u=S也行 但这样是 剪枝 阻塞优化＝＝多路增广 连续增广
-				// 设成u=S时 按理说应该重置minCapacity数组,但不重置也实际没问题 想想为什么
-				// 不用minCapacity用一个aug变量更安全
-				if (capacity[father[v]][v] == 0) {
-					u = father[v];
-				}
+				maxFlow += aug;// 更新最大流
+
 			}
 			// U点没容许弧了，增大标号 dis 或者Level
 			else if (v > vertexCnt) {
@@ -398,20 +456,20 @@ public class MaxFlow
 	public static int ISAP2(int s, int t)
 	{
 		int v, maxFlow = 0;
-		int[] cur = new int[vertexCnt + 1];
+		nextV = new int[vertexCnt + 1];
 		for (int i = 0; i <= vertexCnt; i++) {
 			H[i] = gap[i] = 0;
-			cur[i] = 1;
+			nextV[i] = 1;
 		}
 		int u = s, aug = MAX;
 		gap[0] = vertexCnt;
 
 		while (H[s] <= vertexCnt) {
-			for (v = cur[u]; v <= vertexCnt; v++) {
+			for (v = nextV[u]; v <= vertexCnt; v++) {
 				if (capacity[u][v] > 0 && H[v] + 1 == H[u]) {
 					aug = Math.min(aug, capacity[u][v]);
 					father[v] = u;
-					cur[u] = v;
+					nextV[u] = v;
 					u = v;
 					if (v == t) {
 						maxFlow += aug;
@@ -421,9 +479,9 @@ public class MaxFlow
 							u = father[u];
 						}
 						father = new int[vertexCnt + 1];
-						v = cur[u] - 1;
-						continue;
+						aug = MAX;
 					}
+					v = nextV[u] - 1;// 为什么－1呢?
 				}
 			}
 			// 不能找到U点的
@@ -437,7 +495,7 @@ public class MaxFlow
 				break;
 			}
 			gap[H[u] = mindis + 1]++;
-			cur[u] = 1;
+			nextV[u] = 1;
 			if (u != s) {
 				u = father[u];
 			}
@@ -471,53 +529,65 @@ public class MaxFlow
 							// 3 cases exist: E[u]>0 && Capacity[u][v]>0 &&
 							// H[u]<=H[v]+1
 							// 高度函数定义
-							System.out.println("capacity[" + u + "][" + v + "] > 0");
+							// System.out.println("capacity[" + u + "][" + v +
+							// "] > 0");
 							if (H[u] == H[v] + 1) {
-								System.out.println("H[" + u + "] == H[" + v + "] + 1");
+								// System.out.println("H[" + u + "] == H[" + v +
+								// "] + 1");
 								// push
 								needRelabel = false;
 								push(u, v);
 							}
-							else if (H[u] > H[v] + 1) {
-								System.out.println("H[" + u + "] > H[" + v + "] + 1");
-								System.out.println("There should be no this case;");
-							}
-							else if (H[u] < H[v] + 1) {
-								System.out.println("H[" + u + "] < H[" + v + "] + 1");
-							}
-							System.out.println();
+							// else if (H[u] > H[v] + 1) {
+							// System.out.println("H[" + u + "] > H[" + v +
+							// "] + 1");
+							// System.out.println("There should be no this case;");
+							// }
+							// else if (H[u] < H[v] + 1) {
+							// System.out.println("H[" + u + "] < H[" + v +
+							// "] + 1");
+							// }
+							// System.out.println();
 						}
-						else if (capacity[u][v] == 0) {
-							// 3 cases exist: E[u]>0 && Capacity[u][v]==0 &&
-							// H[u]<=>H[v]+1
-							System.out.println("capacity[" + u + "][" + v + "] == 0");
-							if (H[u] == H[v] + 1) {
-								System.out.println("H[" + u + "] == H[" + v + "] + 1");
-							}
-							else if (H[u] > H[v] + 1) {
-								System.out.println("H[" + u + "] > H[" + v + "] + 1");
-							}
-							else if (H[u] < H[v] + 1) {
-								System.out.println("H[" + u + "] < H[" + v + "] + 1");
-							}
-							System.out.println();
-						}
-						else {
-							// no this case E[u]>0 && Capacity[u][v]>0
-							System.out.println("There should be no this 3 cases;");
-							System.out.println("capacity[" + u + "][" + v + "] < 0");
-							if (H[u] == H[v] + 1) {
-								System.out.println("H[" + u + "] == H[" + v + "] + 1");
-								System.out.println("There should be no this case;");
-							}
-							else if (H[u] > H[v] + 1) {
-								System.out.println("H[" + u + "] > H[" + v + "] + 1");
-							}
-							else if (H[u] < H[v] + 1) {
-								System.out.println("H[" + u + "] < H[" + v + "] + 1");
-							}
-							System.out.println();
-						}
+						// else if (capacity[u][v] == 0) {
+						// // 3 cases exist: E[u]>0 && Capacity[u][v]==0 &&
+						// // H[u]<=>H[v]+1
+						// System.out.println("capacity[" + u + "][" + v +
+						// "] == 0");
+						// if (H[u] == H[v] + 1) {
+						// System.out.println("H[" + u + "] == H[" + v +
+						// "] + 1");
+						// }
+						// else if (H[u] > H[v] + 1) {
+						// System.out.println("H[" + u + "] > H[" + v +
+						// "] + 1");
+						// }
+						// else if (H[u] < H[v] + 1) {
+						// System.out.println("H[" + u + "] < H[" + v +
+						// "] + 1");
+						// }
+						// System.out.println();
+						// }
+						// else {
+						// // no this case E[u]>0 && Capacity[u][v]>0
+						// System.out.println("There should be no this 3 cases;");
+						// System.out.println("capacity[" + u + "][" + v +
+						// "] < 0");
+						// if (H[u] == H[v] + 1) {
+						// System.out.println("H[" + u + "] == H[" + v +
+						// "] + 1");
+						// System.out.println("There should be no this case;");
+						// }
+						// else if (H[u] > H[v] + 1) {
+						// System.out.println("H[" + u + "] > H[" + v +
+						// "] + 1");
+						// }
+						// else if (H[u] < H[v] + 1) {
+						// System.out.println("H[" + u + "] < H[" + v +
+						// "] + 1");
+						// }
+						// System.out.println();
+						// }
 					}
 					// 没有可以push的顶点,执行relabel
 					if (needRelabel) {
@@ -751,8 +821,9 @@ public class MaxFlow
 				minH = H[v];
 			}
 		}
-		System.out.println("need Relabel H[" + u + "] from " + H[u] + " to " + (1 + minH));
-		System.out.println();
+		// System.out.println("need Relabel H[" + u + "] from " + H[u] + " to "
+		// + (1 + minH));
+		// System.out.println();
 		H[u] = 1 + minH;
 	}
 
@@ -765,8 +836,8 @@ public class MaxFlow
 		capacity[v][u] += d;
 		flow[u][v] += d;
 		flow[v][u] = -flow[u][v];
-		System.out.println("Push " + u + "->" + v + " " + d);
-		System.out.println();
+		// System.out.println("Push " + u + "->" + v + " " + d);
+		// System.out.println();
 		return d;
 		// flow[v][u] -=d; 这样其实可以保证的
 	}
@@ -872,3 +943,32 @@ public class MaxFlow
 // 历（DFS），所有被遍历到的点，即构成点集
 // 注意，虽然最小割中的边都是满流边，但满流边不一定都是最小割中的边。在某些
 // 特殊图中，很多初学者容易犯错，认为不用 DFS，就可以直接得出割。下面举一个二分图的例子。
+
+// 【无向图的最大独立数】: 从V个顶点中选出k个顶，使得这k个顶互不相邻。 那么最大的k就是这个图的最大独立数。
+// 【无向图的最大团】: 从V个顶点选出k个顶，使得这k个顶构成一个完全图，即该子图任意两个顶都有直接的边。
+// 【最小路径覆盖(原图不一定是二分图，但必须是有向图，拆点构造二分图)】：在图中找一些路径，使之覆盖了图中的所有顶点，且任何一个顶点有且只有一条路径与之关联。最小路径覆盖
+// = |V| - 最大匹配数
+// 【最小边覆盖(原图是二分图)】：在图中找一些边，使之覆盖了图中所有顶点，且任何一个顶点有且只有一条边与之关联。最小边覆盖 = 最大独立集 = |V| -
+// 最大匹配数
+// 【最小顶点覆盖】：用最少的点（左右两边集合的点）让每条边都至少和其中一个点关联。
+//
+// PS: 原来学二分匹配时就整理过这些数字，他们之间关系是很多。如: 最小覆盖数+最大独立数 = 顶点数。
+// 虽然求出他们都是np问题。但对于特殊的图还是有好的算法的，如:
+// 在二分图中，最小覆盖数 等于 最大匹配数，而最大独立数又等于顶点数减去最小覆盖数(=最大匹配数)，所以可以利用匈牙利求出最大独立数等等。
+// a.点覆盖集：无向图G的一个点集，使得该图中所有边都至少有一点端点在该集合内。
+// b.点独立集：无向图G的一个点集，使得任两个在该集合中的点在原图中不相邻。
+// c.最小点覆盖集：无向图G中点数最少的点覆盖集
+// d.最大点独立集：无向图G中，点数最多的点独立集
+// e.最小点权覆盖集：带点权的无向图中，点权之和最小的点覆盖集
+// f.最大点权独立集：实在带点权无向图中，点权之和最大的点独立集
+// 性质：
+// 最大团 = 补图的最大独立集
+// 最小边覆盖 = 二分图最大独立集 = |V| - 最小路径覆盖
+// 最小路径覆盖 = |V| - 最大匹配数
+// 最小顶点覆盖 = 最大匹配数
+// 最小顶点覆盖 + 最大独立数 = |V|
+// 最小割 = 最小点权覆盖集 = 点权和 - 最大点权独立集
+// 覆盖集与独立集互补，但也可能是相同的
+// 例 1-3
+// 如 | |
+// 如2-4 中1,4既是覆盖集，也是独立集
