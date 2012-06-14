@@ -1,3 +1,4 @@
+package sort;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -366,6 +367,7 @@ public class Sort
 		// time O(n)
 	}
 
+	//构建最大堆
 	public static void adjustHeap(int[] k, int i, int heapSize)
 	{
 		int left;
@@ -385,6 +387,7 @@ public class Sort
 		k[left / 2] = temp;
 	}
 
+	//最大堆构建小－大数列
 	public static void heapSort(int[] k, int heapSize)
 	{
 		int i;
