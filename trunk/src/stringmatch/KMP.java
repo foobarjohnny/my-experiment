@@ -1,4 +1,4 @@
-package string;
+package stringmatch;
 
 import java.util.Arrays;
 
