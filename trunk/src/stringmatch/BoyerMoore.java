@@ -5,6 +5,14 @@ import java.util.Arrays;
 /**
  * http://blog.csdn.net/sealyao/article/details/4568167
  * http://mindlee.net/2011/11/25/string-matching/
+ * http://www.cnblogs.com/a180285/archive/2011/12/15/BM_algorithm.html
+ */
+/**
+ * http://blog.focus-linux.net/?p=162
+ * 上面三种策略为BM高效的原因，其中好后缀的策略与KMP类似(其实应该是包括了类似KMP）。那么如果我们将坏字符的策略引入到KMP，是否也可以生效呢？
+ * abcdefgbcabc…… abcdefabcabc
+ * 如上面的匹配，当第7位d和a不匹配时，g作为坏字符，对于KMP算法来说，也只能移动7位，相对于原来的KMP算法，不过多移动了一位，
+ * 效果有限。其原因就在于BM是从右开始匹配，而KMP是从左开始匹配，这一左一右的区别，就使BM可以滑动更多的位数。F
  */
 // 在用于查找子字符串的算法当中，BM(Boyer-Moore)算法是目前相当有效又容易理解的一种，一般情况下，比KMP算法快3-5倍。
 // BM算法在移动模式串的时候是从左到右，而进行比较的时候是从右到左的。
@@ -14,13 +22,12 @@ import java.util.Arrays;
 // 这两种算法的目的就是让模式串每次向右移动尽可能大的距离(j+=x，x尽可能的大)。
 
 // BoyerMoore BM算法
-// 预处理时间 O(m|gama|) O(n)时间 用于多模式匹配
 // parStr TEXT 或者 S 子串 PATTERN
+// BM算法预处理时间复杂度为O（m+s），空间复杂度为O(s)，s是与P, T相关的有限字符集长度，搜索阶段时间复杂度为O(m·n)。
+// 最好情况下的时间复杂度为O(n/m)，最坏情况下时间复杂度为O(m·n)。
 public class BoyerMoore
 {
-	private static final int	ASIZE	= 0;
-	private static final int	XSIZE	= 0;
-	private static int			times	= 10;
+	private static int	times	= 10;
 
 	public static void test(String parStr, String subStr)
 	{
@@ -33,7 +40,7 @@ public class BoyerMoore
 			System.out.println(boyerMoore(parStr, subStr));
 		}
 		end = System.currentTimeMillis();
-		System.out.println("Time for ahoCorasick: " + (end - start));
+		System.out.println("Time for BoyerMoore: " + (end - start));
 	}
 
 	private static void illustration()
@@ -75,6 +82,7 @@ public class BoyerMoore
 		for (i = 0; i < Character.MAX_VALUE; ++i) {
 			bmBc[i] = m;
 		}
+		//从0－M-1 保证了 为最右
 		for (i = 0; i < m - 1; ++i) {
 			bmBc[subStr[i]] = m - i - 1;
 		}
@@ -139,6 +147,8 @@ public class BoyerMoore
 			}
 		}
 		for (i = 0; i <= m - 2; ++i) {
+			// 不能从m-2变一
+			// m-1-i；保证了bmGs[i]为右移最小,M-1-i为递减
 			bmGs[m - 1 - suff[i]] = m - 1 - i;
 		}
 	}
@@ -158,6 +168,7 @@ public class BoyerMoore
 		int[] bmGs = new int[n];
 
 		int[] bmBc = new int[Character.MAX_VALUE];
+		//可测汉字
 		/* Preprocessing */
 		preBmGs(sub, m, bmGs);
 		preBmBc(sub, m, bmBc);
@@ -170,13 +181,13 @@ public class BoyerMoore
 				;
 			}
 			if (i < 0) {
-				System.out.println(j);
+				//System.out.println(j);
 				count++;
 				j += bmGs[0];
 				// j++;
 			}
 			else {
-				j += Math.max(bmGs[i], bmBc[par[i + j]] - m + 1 + i);
+				j += Math.max(bmGs[i], bmBc[par[i + j]] - (m - 1 - i));
 			}
 		}
 		return count;
@@ -185,12 +196,17 @@ public class BoyerMoore
 	public static void main(String[] args)
 	{
 		// 回退位置数组为P[0, 0, 0, 0, 0, 0]
-		System.out.println("abcdeg, abcdeh, abcdef!这个会匹配1次 ,  abcdef");
-		test("abcdegabcdehabcdef", "abcdef");
-		// 回退位置数组为P[0, 0, 1, 2, 3, 4]
-		System.out.println("Test ititi ititit! Test ititit!这个会匹配2次 , ititit");
-		test("testititiititittestititit", "ititit");
-
-		test("ushers", "her");
+//		System.out.println("abcdeg, abcdeh, abcdef!这个会匹配1次 ,  abcdef");
+//		test("abcdegabcdehabcdef", "abcdef");
+//		// 回退位置数组为P[0, 0, 1, 2, 3, 4]
+//		System.out.println("Test ititi ititit! Test ititit!这个会匹配2次 , ititit");
+//		
+//		test("testititiititittestititit", "ititit");
+//		test("testititiititittestititit", "ititit");
+//
+//		test("ushers", "her");
+		
+		
+		test("Test ititi ititit! Test ititit!这个会匹配2次","ititit");
 	}
 }
