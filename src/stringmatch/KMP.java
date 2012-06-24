@@ -3,11 +3,12 @@ package stringmatch;
 import java.util.Arrays;
 
 /**
- * KMP算法的Java实现例子与测试、分析
- * http://www.isnowfy.com/kmp-and-extend-kmp/
+ * KMP算法的Java实现例子与测试、分析 http://www.isnowfy.com/kmp-and-extend-kmp/
  * http://my.oschina.net/YeanXu/blog/15612s
  * http://3214668848.blog.163.com/blog/static/48764919200910152452182/
  */
+// O(m+n)
+// KMP算法，预处理复杂度O(n)，匹配复杂度O(m)，总复杂度O(n + m);
 public class KMP
 {
 	static int[]		Next;
@@ -81,7 +82,7 @@ public class KMP
 		char[] par = parStr.toCharArray();
 		int[] B = new int[parSize];
 		int j = 0;
-		int k = 0;
+		int count = 0;
 		for (int i = 0; i < parSize; i++) {
 			while (j > 0 && sub[j] != par[i]) {
 				j = Next[j];
@@ -93,11 +94,12 @@ public class KMP
 
 			if (j == subSize) {
 				// 重新找新串
+				// NEXT最大INDEX SUBSIZE-1
 				j = Next[j - 1];
-				k++;
+				count++;
 			}
 		}
-		return k;
+		return count;
 	}
 
 	// A是T对T自己的匹配即NEXT
@@ -193,6 +195,8 @@ public class KMP
 		test("abcdeg, abcdeh, abcdef!这个会匹配1次", "abcdef");
 		// 回退位置数组为P[0, 0, 1, 2, 3, 4]
 		test("Test ititi ititit! Test ititit!这个会匹配2次", "ititit");
+		
+		test("aaaaat!这个会匹配2次", "a");
 
 	}
 
