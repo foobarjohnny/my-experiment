@@ -1,10 +1,17 @@
 package geometry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
  * http://softsurfer.com/Archive/algorithm_0109/algorithm_0109.htm
  * http://www.cnblogs.com/Booble/archive/2011/03/10/1980089.html
  * 记住叉积与面积有关系，有垂直高度有关系
  * 
+ * http://blog.csdn.net/zhang20072844/article/category/893217
+ * http://www.csie.ntnu.edu.tw/~u91029/ConvexHull.html
  * @author SDY
  */
 public class QuickHull
@@ -45,9 +52,10 @@ public class QuickHull
 	// 可以说 这种数据是Graham扫描法的最好情况 一遍走完就行了
 	// 构造快速凸包的最坏情况就是使划分不均等 和构造快速排序最坏情况一样
 	// 跟QUICKSORT有一样的性质
-	public static void quickHull(int l, int r, Point a, Point b, Point[] pts, double[] area)
+	public static void quickHull(int l, int r, Point a, Point b, Point[] pts, double[] area, ArrayList<Point> ch)
 	{
 		int x = l, i = l - 1, j = r + 1, k;
+		// 求AREA 或者求距离点远的 这里面要去掉重点的点
 		for (k = l; k <= r; k++) {
 			double temp = sgn(area[x] - area[k]);
 			if (temp < 0 || temp == 0 && cmp(pts[x], pts[k])) {
@@ -56,30 +64,40 @@ public class QuickHull
 		}
 		// 求出距离最远的那个点，用叉积 推 面积 再推 垂直高度
 		Point y = pts[x];
-		for (k = l; k <= r; k++) {
-			area[++i] = Vector.direction(pts[k], a, y);
-			if (sgn(area[i]) > 0) {
-				swap(pts, j, k);
-			}
-			else {
-				i--;
-			}
+		if (a == null || b == null) {
+			a = y;
+			b = y;
+			ch.add(y);
+			// 想想为什么 要把这个交换出去
+			swap(pts, l, x);
+			quickHull(l + 1, r, a, b, pts, area, ch);
 		}
-		for (k = r; k >= l; k--) {
-			area[--j] = Vector.direction(pts[k], y, b);
-			if (sgn(area[j]) > 0) {
-				swap(pts, j, k);
+		else {
+			for (k = l; k <= r; k++) {
+				area[++i] = Vector.direction(pts[k], a, y);
+				if (sgn(area[i]) > 0) {
+					swap(pts, i, k);
+				}
+				else {
+					i--;
+				}
 			}
-			else {
-				j++;
+			for (k = r; k >= l; k--) {
+				area[--j] = Vector.direction(pts[k], y, b);
+				if (sgn(area[j]) > 0) {
+					swap(pts, j, k);
+				}
+				else {
+					j++;
+				}
 			}
-		}
-		if (l <= i) {
-			quickHull(l, i, a, y, pts, area);
-		}
-		System.out.println(y.x + ":" + y.y);
-		if (j <= r) {
-			quickHull(j, r, y, b, pts, area);
+			if (l <= i) {
+				quickHull(l, i, a, y, pts, area, ch);
+			}
+			ch.add(y);
+			if (j <= r) {
+				quickHull(j, r, y, b, pts, area, ch);
+			}
 		}
 	}
 
@@ -91,7 +109,7 @@ public class QuickHull
 		a[index2] = tmp;
 	}
 
-	private static boolean cmp(Point a, Point b)
+	public static boolean cmp(Point a, Point b)
 	{
 		return (a.x < b.x || sgn(a.x - b.x) == 0 && a.y < b.y);
 	}
@@ -114,17 +132,39 @@ public class QuickHull
 		// ans+=2*d*acos(-1.0); //等价于圆形周长
 		// cout<<(int)(ans+0.5)<<endl; //四舍五入
 		// return 0;
-		Point[] p = new Point[11];
-		double[] s = new double[p.length];
-		int n = p.length - 1;
-		int i = 0;
-		int x = 0;
-		for (i = 1; i <= n; i++) {
-			if (x == 0 || cmp(p[i], p[x]))
-				x = i;
+		int pointCnt = 10;
+		int max = 68;
+		ArrayList<Point> p2 = getPoints(pointCnt, max);
+		System.out.println(p2);
+		Point[] p = new Point[p2.size()];
+		p2.toArray(p);
+		ArrayList<Point> ch = new ArrayList<Point>();
+		quickHull(0, p.length - 1, null, null, p, new double[p.length], ch);
+		System.out.println(ch);
+
+		ch = (ArrayList<Point>) GranhamScan.grahamScan(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+
+		ch = (ArrayList<Point>) AndrewMonotoneChain.andrewMonotoneChain(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+
+		ch = (ArrayList<Point>) JarvisMarch.jarvisMarch(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+		
+		
+		ch = (ArrayList<Point>) BruteForce.bruteForce(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+		
+
+	}
+
+	private static ArrayList<Point> getPoints(int pointCnt, int max)
+	{
+		ArrayList<Point> pts = new ArrayList<Point>();
+		Random r = new Random();
+		for (int i = 1; i <= pointCnt; i++) {
+			pts.add(new Point(r.nextInt(max) + 1, r.nextInt(max) + 1));
 		}
-		swap(p, 1, x);
-		System.out.println(p[1].x + ":" + p[1].y);
-		quickHull(2, n, p[1], p[1], p, s);
+		return pts;
 	}
 }
