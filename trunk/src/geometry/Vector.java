@@ -2,6 +2,13 @@ package geometry;
 
 public class Vector
 {
+	@Override
+	public String toString()
+	{
+		// return "Vector [x=" + x + ", y=" + y + "]";
+		return "v[" + x + ", " + y + "]";
+	}
+
 	double	x;
 	double	y;
 
