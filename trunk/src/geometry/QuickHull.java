@@ -12,6 +12,7 @@ import java.util.Random;
  * 
  * http://blog.csdn.net/zhang20072844/article/category/893217
  * http://www.csie.ntnu.edu.tw/~u91029/ConvexHull.html
+ * 
  * @author SDY
  */
 public class QuickHull
@@ -141,21 +142,33 @@ public class QuickHull
 		ArrayList<Point> ch = new ArrayList<Point>();
 		quickHull(0, p.length - 1, null, null, p, new double[p.length], ch);
 		System.out.println(ch);
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
 
 		ch = (ArrayList<Point>) GranhamScan.grahamScan(p2.toArray(new Point[p2.size()]));
 		System.out.println(ch);
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
 
 		ch = (ArrayList<Point>) AndrewMonotoneChain.andrewMonotoneChain(p2.toArray(new Point[p2.size()]));
 		System.out.println(ch);
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
 
 		ch = (ArrayList<Point>) JarvisMarch.jarvisMarch(p2.toArray(new Point[p2.size()]));
 		System.out.println(ch);
-		
-		
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
+
 		ch = (ArrayList<Point>) BruteForce.bruteForce(p2.toArray(new Point[p2.size()]));
 		System.out.println(ch);
-		
 
+		ch = (ArrayList<Point>) AndrewMonotoneChain.andrewMonotoneChain2(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
+		
+		ch = (ArrayList<Point>) Melkman.melkman(p2.toArray(new Point[p2.size()]));
+		System.out.println(ch);
+		System.out.println(diameter(ch.toArray(new Point[ch.size()])));
+
+		// RotatingCaliper.rotatingCaliper(p2.toArray(new Point[p2.size()]));
+		// System.out.println(ch);
 	}
 
 	private static ArrayList<Point> getPoints(int pointCnt, int max)
@@ -166,5 +179,20 @@ public class QuickHull
 			pts.add(new Point(r.nextInt(max) + 1, r.nextInt(max) + 1));
 		}
 		return pts;
+	}
+
+	private static double diameter(Point[] ch)
+	{
+
+		int n = ch.length;
+		int q = 1;
+		double ans = 0;
+		for (int p = 0; p <= n - 1; p++) {
+			while (Vector.direction(ch[p], ch[(q + 1) % n], ch[(p + 1) % n]) > Vector.direction(ch[p], ch[q], ch[(p + 1) % n])) {
+				q = (q + 1) % n;
+			}
+			ans = Math.max(ans, Math.max(Vector.dis(ch[p], ch[q]), Vector.dis(ch[(p + 1) % n], ch[(q + 1) % n])));
+		}
+		return ans;
 	}
 }
