@@ -97,7 +97,8 @@ public class JarvisMarch
 	 * of the square at that point. The math is in my Sept '06 notebook.
 	 * UncleBob.
 	 */
-	public static double pseudoAngle(double dx, double dy)
+	// CLOCK WISE
+	public static double pseudoAngle2(double dx, double dy)
 	{
 		if (dx >= 0 && dy >= 0)
 			return quadrantOnePseudoAngle(dx, dy);
@@ -107,6 +108,20 @@ public class JarvisMarch
 			return 2 + quadrantOnePseudoAngle(Math.abs(dx), Math.abs(dy));
 		if (dx < 0 && dy >= 0)
 			return 3 + quadrantOnePseudoAngle(dy, Math.abs(dx));
+		throw new Error("Impossible");
+	}
+
+	// COUNTER CLOCK WISE
+	public static double pseudoAngle(double dx, double dy)
+	{
+		if (dx >= 0 && dy >= 0)
+			return 1 + quadrantOnePseudoAngle(dy, dx);
+		if (dx >= 0 && dy < 0)
+			return quadrantOnePseudoAngle(dx, Math.abs(dy));
+		if (dx < 0 && dy < 0)
+			return 3 + quadrantOnePseudoAngle(Math.abs(dy), Math.abs(dx));
+		if (dx < 0 && dy >= 0)
+			return 2 + quadrantOnePseudoAngle(Math.abs(dx), dy);
 		throw new Error("Impossible");
 	}
 

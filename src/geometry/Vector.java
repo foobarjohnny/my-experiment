@@ -41,6 +41,9 @@ public class Vector
 	}
 
 	// >0 p2是p1的顺时针 即 pp1p2为右转
+	// AREA
+	// CROSS
+	// MULIFY
 	public static double direction(Point p, Point p1, Point p2)
 	{
 		return (p2.x - p.x) * (p1.y - p.y) - (p2.y - p.y) * (p1.x - p.x);

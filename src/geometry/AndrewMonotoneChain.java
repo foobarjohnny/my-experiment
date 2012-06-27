@@ -81,13 +81,13 @@ public class AndrewMonotoneChain
 		i = minmax;
 		while (++i <= maxmin) {
 			// the lower line joins P[minmin] with P[maxmin]
-			if (Vector.direction(P[minmin], P[maxmin], P[i]) >= 0 && i < maxmin) {
+			if (Vector.direction(P[minmin], P[maxmin], P[i]) <= 0 && i < maxmin) {
 				continue; // ignore P[i] above or on the lower line
 			}
 			while (top > 0) // there are at least 2 points on the stack
 			{
 				// test if P[i] is left of the line at the stack top
-				if (Vector.direction(H[top - 1], H[top], P[i]) > 0) {
+				if (Vector.direction(H[top - 1], H[top], P[i]) < 0) {
 					break; // P[i] is a new hull vertex
 				}
 				else {
@@ -105,13 +105,13 @@ public class AndrewMonotoneChain
 		i = maxmin;
 		while (--i >= minmax) {
 			// the upper line joins P[maxmax] with P[minmax]
-			if (Vector.direction(P[maxmax], P[minmax], P[i]) >= 0 && i > minmax) {
+			if (Vector.direction(P[maxmax], P[minmax], P[i]) <= 0 && i > minmax) {
 				continue; // ignore P[i] below or on the upper line
 			}
 			while (top > bot) // at least 2 points on the upper stack
 			{
 				// test if P[i] is left of the line at the stack top
-				if (Vector.direction(H[top - 1], H[top], P[i]) > 0) {
+				if (Vector.direction(H[top - 1], H[top], P[i]) < 0) {
 					break; // P[i] is a new hull vertex
 				}
 				else {
@@ -126,4 +126,42 @@ public class AndrewMonotoneChain
 		// return top + 1;
 		return new ArrayList<Point>(Arrays.asList(Arrays.copyOf(H, top + 1)));
 	}
+
+	public static ArrayList<Point> andrewMonotoneChain2(Point[] P)
+	{
+		// 將所有點依照座標大小排序
+		int n = P.length;
+		Point[] CH = new Point[n];
+		// 按X从小到大,相等时Y从小大到 排序
+		Point tmp;
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = i + 1; j < n; j++) {
+				if ((P[i].x > P[j].x) || ((P[i].x == P[j].x) && (P[i].y > P[j].y))) {
+					tmp = P[i];
+					P[i] = P[j];
+					P[j] = tmp;
+				}
+			}
+		}
+
+		int m = 0; // m 為凸包頂點數目
+
+		// 包下半部
+		for (int i = 0; i < 10; ++i) {
+			while (m >= 2 && Vector.direction(CH[m - 2], CH[m - 1], P[i]) >= 0)
+				m--;
+			CH[m++] = P[i];
+		}
+
+		// 包上半部，不用再包入方才包過的終點，但會再包一次起點
+		for (int i = 10 - 2, t = m + 1; i >= 0; --i) {
+			while (m >= t && Vector.direction(CH[m - 2], CH[m - 1], P[i]) >= 0)
+				m--;
+			CH[m++] = P[i];
+		}
+
+		m--; // 最後一個點是重複出現兩次的起點，故要減一。
+		return new ArrayList<Point>(Arrays.asList(Arrays.copyOf(CH, m)));
+	}
+
 }
