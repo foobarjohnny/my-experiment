@@ -158,6 +158,9 @@ public class TarjanLCA
 		return index;
 	}
 
+	// 本节介绍了一种比较高效的在线算法（ST算法）解决这个问题。所谓在线算法，是指用户每输入一个查询便马上处理一个查询。
+	// 该算法一般用较长的时间做预处理，待信息充足以后便可以用较少的时间回答每个查询。
+	// ST（Sparse Table）算法是一个非常有名的在线处理RMQ问题的算法，它可以在O(nlogn)时间内进行预处理，然后在O(1)时间内回答每个查询。
 	private static void rmq_LCA(int root)
 	{
 		// 为什么是2N-1呢
@@ -166,6 +169,7 @@ public class TarjanLCA
 		levels = new int[vertexCnt * 2 - 1];
 		times = new int[vertexCnt * 2 - 1];
 		index = 0;
+		// 先DFS 再ST
 		DFS(root, 1);
 		RMQ.preProcess(levels);
 		for (Question q : questList) {
