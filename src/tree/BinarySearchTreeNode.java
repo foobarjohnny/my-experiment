@@ -1,3 +1,5 @@
+package tree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,10 +12,21 @@ public class BinarySearchTreeNode
 	protected BinarySearchTreeNode	right	= null;
 	protected BinarySearchTreeNode	parent	= null;
 	private String					color	= "";
+	public int						priority;
 
 	public String getColor()
 	{
 		return color;
+	}
+
+	public int getPriority()
+	{
+		return priority;
+	}
+
+	public void setPriority(int priority)
+	{
+		this.priority = priority;
 	}
 
 	public void setColor(String color)

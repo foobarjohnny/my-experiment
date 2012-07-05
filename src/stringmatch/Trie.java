@@ -1,5 +1,6 @@
 package stringmatch;
 
+//×ÖµäÊ÷
 public class Trie
 {
 	public final static int	MAXK	= 26;

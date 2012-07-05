@@ -1,5 +1,7 @@
 package LeastCommonAncestor;
 
+import java.io.IOException;
+
 //LeastCommonAncestor
 //Range Minimum/Maximum Query
 /**
@@ -8,113 +10,348 @@ package LeastCommonAncestor;
  * @author dysong
  * 
  */
-// 线段树，也叫区间树，是一个完全二叉树，它在各个节点保存一条线段（即“子数组”）
+// 线段树，也叫区间树interval tree，是一个完全二叉树，它在各个节点保存一条线段（即“子数组”）
 // 因而常用于解决数列维护问题，它基本能保证每个操作的复杂度为O(lgN)。
+// 线段树上的参数通常有两种维护方法：
+// （1）一类参数表达了结点的性质，通常具有树型的递推性质，可以从下向上进行递推计算；（如sum,max,min）
+// （2）一类参数表达了子树的性质，维护的时候可以先打上标记，在需要进一步访问其子结点的时候从上向下传递。（如delta,en）
+// interval tree
 public class SegmentTree
 {
-	private static int[][]	min;
-	private static int[][]	max;
+	public SegmentTree	leftChild, rightChild;
+	public int			leftIndex, rightIndex;
+	public int			min;
+	public int			max;
+	public int			sum;
+	public int			delta;
+	public boolean		En	= false;
+	public int			data;
 
-	// O(N*lgN)
-	public static void preProcess(int[] target)
+	public static void insert(SegmentTree cur, int index, int num)
 	{
-		int length = target.length;
-		int count = 1;
-		while ((1 << count) <= length) {
-			count++;
+		SegmentTree LC, RC;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		if (cur.leftIndex == cur.rightIndex) // 对叶结点的处理
+		{
+			cur.min = num;
+			cur.max = num;
+			cur.sum = num;
 		}
-		min = new int[length][count];
-		max = new int[length][count];
-		// O(N)
-		for (int i = 0; i < length; i++) {
-			min[i][0] = i;
-			max[i][0] = i;
-		}
-
-		// DP
-		// O(N*lgN)
-		for (int j = 1; (1 << j) <= length; j++) {
-			for (int i = 0; i + (1 << j) - 1 < length; i++) {
-				min[i][j] = target[min[i][j - 1]] < target[min[i + (1 << j - 1)][j - 1]] ? min[i][j - 1] : min[i + (1 << j - 1)][j - 1];
-				max[i][j] = target[max[i][j - 1]] > target[max[i + (1 << j - 1)][j - 1]] ? max[i][j - 1] : max[i + (1 << j - 1)][j - 1];
+		else {
+			if (index <= (cur.leftIndex + cur.rightIndex) / 2) {
+				insert(LC, index, num);
+			}
+			if (index > (cur.leftIndex + cur.rightIndex) / 2) {
+				insert(RC, index, num);
+			}
+			cur.sum = LC.sum + RC.sum; // 上推
+			if (LC.max > RC.max) {
+				cur.max = LC.max;
+			}
+			else {
+				cur.max = RC.max;
+			}
+			if (LC.min < RC.min) {
+				cur.min = LC.min;
+			}
+			else {
+				cur.min = RC.min;
 			}
 		}
 	}
 
-	// O(N*lgN)
-	public static void preProcess(int len)
+	@Override
+	public String toString()
 	{
-		int length = len;
-		int count = 1;
-		while ((1 << count) <= length) {
-			count++;
-		}
-		min = new int[length][count];
-		max = new int[length][count];
-		// O(N)
-		for (int i = 0; i < length; i++) {
-			min[i][0] = i;
-			max[i][0] = i;
-		}
+		return "ST[leftIndex=" + leftIndex + ", rightIndex=" + rightIndex + ", sum=" + sum + ", delta=" + delta + ",\nleftChild=" + leftChild + ",\nrightChild=" + rightChild + "]";
+	}
 
-		// DP
-		// O(N*lgN)
-		for (int j = 1; (1 << j) <= length; j++) {
-			for (int i = 0; i + (1 << j) - 1 < length; i++) {
-				min[i][j] = Math.min(min[i][j - 1], min[i + (1 << j - 1)][j - 1]);
-				max[i][j] = Math.max(max[i][j - 1], max[i + (1 << j - 1)][j - 1]);
+	public static void updateForDelta(SegmentTree cur, int l, int r, int delta)
+	{
+		SegmentTree LC, RC; // 需要给每个区间增加一个变量delta
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			cur.delta = cur.delta + delta;
+			cur.max += delta;
+			cur.min += delta;
+		}// 改变该区间的delta，注意sum
+		else {
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				updateForDelta(LC, l, r, delta);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				updateForDelta(RC, l, r, delta);
+			}
+			cur.sum = LC.sum + LC.delta * (LC.rightIndex - LC.leftIndex + 1);
+			cur.sum = cur.sum + RC.sum + RC.delta * (RC.rightIndex - RC.leftIndex + 1); // 上推
+		}
+	}
+
+	public static int querySumForDelta(SegmentTree cur, int l, int r)
+	{
+		SegmentTree LC, RC;
+		int ret;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		ret = 0;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = ret + cur.sum + (cur.rightIndex - cur.leftIndex + 1) * cur.delta;
+		}
+		else { // 将该区间的delta下传 给左右区间，同时修改sum的值
+			cur.sum = cur.sum + (cur.rightIndex - cur.leftIndex + 1) * cur.delta;
+			LC.delta = LC.delta + cur.delta;
+			RC.delta = RC.delta + cur.delta;
+			cur.delta = 0;
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querySumForDelta(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querySumForDelta(RC, l, r);
 			}
 		}
+		return ret;
 	}
 
-	// O(1)
-	public static int queryMax(int start, int end) // 查询
+	public static int queryMaxForDelta(SegmentTree cur, int l, int r)
 	{
-		/*
-		 * 要使得[a,b]的max = max{ [a, a+2^m]的max, [b-2^m+1, m]的max } 需要 m 大于一定值:
-		 * a+2^m >= b-2^m+1 <==> m >= log(b-a+1)/log(2) - 1 <==> m 至少是 floor[
-		 * log(b-a+1)/log(2) ]
-		 */
-		int m = 1;
-		while ((1 << m) <= end - start + 1) {
-			m++;
+		SegmentTree LC, RC;
+		int ret;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		ret = 0;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = cur.max;
 		}
-		m--;
-		return Math.max(max[start][m], max[end - (1 << m) + 1][m]); // 区间[a,b]最大值
+		else {
+			LC.delta = LC.delta + cur.delta;
+			RC.delta = RC.delta + cur.delta;
+			LC.max += cur.delta;
+			RC.max += cur.delta;
+			cur.delta = 0;
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = queryMaxForDelta(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = Math.max(ret, queryMaxForDelta(RC, l, r));
+			}
+		}
+		return ret;
 	}
 
-	// O(1)
-	public static int queryMin(int start, int end) // 查询
+	// 同一个值
+	public static void updateForEn(SegmentTree cur, int l, int r, int num)
 	{
-		int m = 1;
-		while ((1 << m) <= end - start + 1) {
-			m++;
+		SegmentTree LC, RC;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		if (cur.En) // 如果该区间已经是同一个值，将值下传给左右区间
+		{
+			cur.sum = (cur.rightIndex - cur.leftIndex + 1) * cur.data;
+			if (LC != null) {
+				LC.data = cur.data;
+				LC.En = true;
+			}
+			if (RC != null) {
+				RC.data = cur.data;
+				RC.En = true;
+			}
+			cur.En = false;
 		}
-		m--;
-
-		return Math.min(min[start][m], min[end - (1 << m) + 1][m]);
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			cur.En = true;
+			cur.data = num;
+		}
+		else {
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				updateForEn(LC, l, r, num);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				updateForEn(RC, l, r, num);
+			}
+			cur.sum = calcsum(LC) + calcsum(RC);
+		}
 	}
 
-	// O(1)
-	public static int queryMax(int target[], int start, int end) // 查询
+	public static int calcsum(SegmentTree cur)
 	{
-		int m = 1;
-		while ((1 << m) <= end - start + 1) {
-			m++;
+		int ret;
+		if (cur.En) {
+			ret = (cur.rightIndex - cur.leftIndex + 1) * cur.data;
 		}
-		m--;
-		return target[max[start][m]] < target[max[end - (1 << m) + 1][m]] ? max[start][m] : max[end - (1 << m) + 1][m];
+		else {
+			ret = cur.sum;
+		}
+		return ret;
 	}
 
-	// O(1)
-	public static int queryMin(int target[], int start, int end) // 查询
+	public static int querysumForEn(SegmentTree cur, int l, int r)
 	{
-		int m = 1;
-		while ((1 << m) <= end - start + 1) {
-			m++;
+		SegmentTree LC, RC;
+		int ret;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		ret = 0;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = ret + calcsum(cur);
 		}
-		m--;
-		return target[min[start][m]] < target[min[end - (1 << m) + 1][m]] ? min[start][m] : min[end - (1 << m) + 1][m];
+		else {
+			if (cur.En) // 如果该区间是同一个数，将值下传给左右区间
+			{
+				LC.data = cur.data;
+				LC.En = true;
+				RC.data = cur.data;
+				RC.En = true;
+				cur.En = false;
+			}
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querysumForEn(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querysumForEn(RC, l, r);
+			}
+		}
+		return ret;
+	};
+
+	public static int querySum(SegmentTree cur, int l, int r)
+	{
+		SegmentTree LC, RC;
+		int ret;
+		LC = cur.leftChild;
+		RC = cur.rightChild;
+		ret = 0;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = cur.sum;
+		}
+		else {
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querySum(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = ret + querySum(RC, l, r);
+			}
+		}
+		return ret;
 	}
 
+	public static SegmentTree Build(int L, int R)
+	{
+		SegmentTree rootTree = new SegmentTree();
+		// SegmentTree rootTree = nodes[pos++];
+		rootTree.leftIndex = L;
+		rootTree.rightIndex = R;
+		if (L == R) {
+			return rootTree;
+		}
+		else {
+			int mid;
+			mid = (L + R) / 2;
+			rootTree.leftChild = Build(L, mid);
+			rootTree.rightChild = Build(mid + 1, R);
+		}
+		return rootTree;
+	}
+
+	public static int queryMax(SegmentTree cur, int l, int r)
+	{
+		int ret = 0;
+		SegmentTree LC = cur.leftChild, RC = cur.rightChild;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = cur.max;
+		}
+		else {
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = queryMax(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = Math.max(ret, queryMax(RC, l, r));
+			}
+		}
+		return ret;
+	}
+
+	public static int queryMin(SegmentTree cur, int l, int r)
+	{
+		int ret = 0;
+		SegmentTree LC = cur.leftChild, RC = cur.rightChild;
+		if ((l <= cur.leftIndex) && (cur.rightIndex <= r)) {
+			ret = cur.min;
+		}
+		else {
+			if (l <= (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = queryMin(LC, l, r);
+			}
+			if (r > (cur.leftIndex + cur.rightIndex) / 2) {
+				ret = Math.min(ret, queryMin(RC, l, r));
+			}
+		}
+		return ret;
+	}
+
+	public static int QueryMax(SegmentTree root, int LL, int RR)
+	{
+		int ret = 0;
+		if (LL == root.leftIndex && RR == root.rightIndex) {
+			return root.data;
+		}
+		else {
+			int mid;
+			mid = (root.leftIndex + root.rightIndex) / 2;
+			if (RR <= mid)
+				ret = QueryMax(root.leftChild, LL, RR);
+			else if (LL > mid)
+				ret = QueryMax(root.rightChild, LL, RR);
+			else
+				ret = Math.max(QueryMax(root.leftChild, LL, mid), QueryMax(root.rightChild, mid + 1, RR));
+			return ret;
+		}
+	}
+
+	public static void main(String[] args) throws IOException
+	{
+		// TODO Main Start
+		// System.setIn(new BufferedInputStream(new
+		// FileInputStream("c://1754.in")));
+		int n, m;
+		int a, b;
+		int i;
+		SegmentTree root;
+		String cmd;
+		root = SegmentTree.Build(0, 9);
+		System.out.println(root);
+		SegmentTree.updateForDelta(root, 0, 3, 1);
+		System.out.println(root);
+		SegmentTree.updateForDelta(root, 4, 6, 1);
+		SegmentTree.updateForDelta(root, 5, 7, 1);
+		SegmentTree.updateForDelta(root, 2, 6, 1);
+		System.out.println(SegmentTree.querySumForDelta(root, 1, 1));
+		System.out.println(SegmentTree.querySumForDelta(root, 3, 3));
+		System.out.println(SegmentTree.querySumForDelta(root, 5, 5));
+		// Scanner cin = new Scanner(new BufferedInputStream(System.in));
+		// while (cin.hasNext()) {
+		// n = cin.nextInt();
+		// m = cin.nextInt();
+		// for (i = 1; i <= n; i++)
+		// score[i] = cin.nextInt();
+		// // SegmentTree.pos = 0;
+		// rootTree = SegmentTree.Build(1, n);
+		// for (i = 0; i < m; i++) {
+		// cmd = cin.next();
+		// a = cin.nextInt();
+		// b = cin.nextInt();
+		// if (cmd.equals("Q")) {
+		// if (a == b)
+		// System.out.println(score[a]);
+		// else
+		// System.out.println(SegmentTree.Query(rootTree, a, b));
+		// }
+		// else {
+		// score[a] = b;
+		// SegmentTree.Update(rootTree, a, a, b);
+		// }
+		// }
+		// }
+	}
 }

@@ -1,3 +1,5 @@
+package graph;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,24 +13,24 @@ import java.util.Set;
 public class MST_Kruskal
 {
 	public Map<V, Integer>	vertexMap	= new HashMap<V, Integer>();
-	public List<E>			EQueue		= new ArrayList<E>();
-	public static List<E>	EList		= new ArrayList<E>();
+	public List<E1>			EQueue		= new ArrayList<E1>();
+	public static List<E1>	EList		= new ArrayList<E1>();
 
 	public MST_Kruskal()
 	{
 		buildGraph();
 		// 把边按权值非递减的排序
-		Collections.sort(EQueue, new Comparator<E>()
+		Collections.sort(EQueue, new Comparator<E1>()
 		{
 			@Override
-			public int compare(E e1, E e2)
+			public int compare(E1 e1, E1 e2)
 			{
 				return e1.weight - e2.weight;
 			}
 		});
 		// 贪心的构造生成树
 		int i = 1;
-		for (E edge : EQueue) {
+		for (E1 edge : EQueue) {
 			// i用来标记顶点是否属于同一个树
 			i = i + 1;
 			Set<V> vertexSet = vertexMap.keySet();
@@ -66,7 +68,7 @@ public class MST_Kruskal
 
 	public void addE(V a, V b, int w)
 	{
-		E e = new E(a, b, w);
+		E1 e = new E1(a, b, w);
 		EQueue.add(e);
 	}
 
@@ -91,7 +93,7 @@ public class MST_Kruskal
 	public static void main(String[] args)
 	{
 		new MST_Kruskal();
-		for (E edge : EList) {
+		for (E1 edge : EList) {
 			System.out.println("[" + edge.a.key + "," + edge.b.key + "]" + edge.weight);
 		}
 	}
@@ -107,13 +109,13 @@ class V
 	}
 }
 
-class E
+class E1
 {
 	int	weight;
 	V	a;
 	V	b;
 
-	public E(V a2, V b2, int w)
+	public E1(V a2, V b2, int w)
 	{
 		a = a2;
 		b = b2;

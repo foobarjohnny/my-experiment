@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package tree;
 
 enum NodeKind
 {
@@ -50,7 +50,7 @@ class BranchNode extends TrieNode
  */
 /**
  * @author dysong
- *
+ * 
  */
 public class StandardTrie
 {
