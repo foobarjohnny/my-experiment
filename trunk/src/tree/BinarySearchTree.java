@@ -1,8 +1,12 @@
+package tree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 //Binary Search Tree
+//1.如果v是u的左孩子，则key[v] < key[u].
+//2.如果v是u的右孩子，则key[v] > key[u].
 public class BinarySearchTree
 {
 
@@ -111,7 +115,7 @@ public class BinarySearchTree
 				System.out.print(printBlank(space, length));
 			}
 			else {
-				System.out.print(printKey(t.getKey() + t.getColor(), length, c));
+				System.out.print(printKey(t.getKey() + t.getColor() + "p" + t.getPriority(), length, c));
 				System.out.print(printBlank(space, length));
 			}
 		}
@@ -161,6 +165,8 @@ public class BinarySearchTree
 		if (t != null && t != RedBlackTree.NIL) {
 			inOrderTreeWalk(t.getLeft());
 			System.out.print(t.getKey());
+			// System.out.print(":");
+			// System.out.print(t.getPriority());
 			System.out.print(",");
 			inOrderTreeWalk(t.getRight());
 		}
@@ -170,6 +176,8 @@ public class BinarySearchTree
 	{
 		if (t != null && t != RedBlackTree.NIL) {
 			System.out.print(t.getKey());
+//			System.out.print(":");
+//			System.out.print(t.getPriority());
 			System.out.print(",");
 			preOrderTreeWalk(t.getLeft());
 			preOrderTreeWalk(t.getRight());

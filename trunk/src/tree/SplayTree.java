@@ -1,6 +1,14 @@
+package tree;
+
 import java.util.Random;
 
-//SplyTree Tree
+/**
+ * http://www.cnblogs.com/kernel_hcy/archive/2010/03/17/1688360.html
+ * 
+ * @author dysong
+ * 
+ */
+// SplyTree Tree 伸展树 自适应调整树
 public class SplayTree extends BinarySearchTree
 {
 	public static BinarySearchTreeNode treeSplay(int i, BinarySearchTreeNode t)
