@@ -3,21 +3,69 @@ package tree;
 import java.util.Random;
 
 /**
- * http://www.cnblogs.com/kernel_hcy/archive/2010/03/17/1688360.html
  * http://www.coderplusplus.com/?p=393
- * 
+ * http://blog.csdn.net/niushuai666/article/details/7428311
+ * http://www.cppblog.com/ACM-Boy/archive/2009/05/12/48158.html
+ * http://archive.cnblogs.com/a/2129138/
  * 
  * @author dysong
  * 
  */
-// Treap = Tree + Heap 树堆  Randomized Binary Search Tree
-// 一棵treap是一棵修改了结点顺序的二叉查找树，如图，显示一个例子，通常树内的每个结点x都有一个关键字值key[x]，另外，还要为结点分配priority[x]，它是一个独立选取的随机数。
-// 假设所有的优先级是不同的，所有的关键字也是不同的。treap的结点排列成让关键字遵循二叉查找树性质，并且优先级遵循最小堆顺序性质：
+// 笛卡尔树(Cartesian Tree)
+// 笛卡尔树是一棵二叉树，树的每个节点有两个值，一个为key，一个为value。
+// 光看key的话，笛卡尔树是一棵二叉搜索树，每个节点的左子树的key都比它小， 右子树都比它大；
+// 光看value的话，笛卡尔树有点类似堆，根节点的value是最小（或者最大）的，每个节点的value都比它的子树要小(或者要大)。
+// 从上可以看出，笛卡尔树类似于treap,所不同的是笛卡尔树中构成堆的值(也就是value)是预先给出的(因此如果按照treap去构造则很可能会退化),而treap则是在建树的过程中随机生成的。
+// 笛卡尔树是把已有的一些（key, value）二元组拿来构造树，然后利用构树过程和构好的树来解决问题。
+// 而Treap的目的只是对一些key进行二叉搜索，但是为了保证树的平衡性，
+// 为每个key随机地额外增加了一个value（或者叫权重）属性，这样从概率上来讲可以让这棵树更加平衡。
+// treap更大的意义在于为了维持BST的平衡型而找到的一种随即化构造的方案。
+// 在treap中，insert的时候节点的value值是随机生成的。因此在逐个insert节点的时候能够保证treap的统计意义上的平衡。
+// 然而，笛卡尔树的目的更多是为了rmq问题和LCA问题的转化。理解的两者的关系和区别后，什么时候该用什么结构就一目了然了。
 // 1.如果v是u的左孩子，则key[v] < key[u].
 // 2.如果v是u的右孩子，则key[v] > key[u].
 // 3.如果v是u的孩子，则priority[v] > priority[u].
-public class Treap extends BinarySearchTree
+// 笛卡尔树的节点含有2个值，1个key，一个value，其中key是主键，value是辅键。
+// 一棵笛卡尔树就是：key升序，value升序或者降序。类似堆。
+// 与treap的区别是：treap的value是随机值，是为了使树更加平衡引进的，而笛卡尔树的value是一个确定的值。
+// 结构完全相同，功能不一样。理解这一点就知道什么时候用treap，什么时候用笛卡尔树了。
+public class CartesianTree extends BinarySearchTree
 {
+	public static int	MAXN	= 200;
+
+	public static void computeTree(int[] A, int N, int[] pre, int[] rChild, int[] lChild)
+	{
+		int[] st = new int[MAXN];
+		int i, k, top = -1;
+
+		// we start with an empty stack
+		// at step i we insert A[i] in the stack
+		for (i = 0; i < N; i++) {
+			// compute the position of the first element that is
+			// equal or smaller than A[i]
+			k = top;
+			while (k >= 0 && A[st[k]] > A[i]) {
+				k--;
+			}
+			// we modify the tree as explained above
+			if (k != -1) {
+				pre[i] = st[k];
+				rChild[st[k]] = i;
+			}
+			if (k < top) {
+				pre[st[k + 1]] = i;
+				lChild[i] = st[k + 1];
+			}
+			// we insert A[i] in the stack and remove
+			// any bigger elements
+			st[++k] = i;
+			top = k;
+		}
+		// the first element in the stack is the root of
+		// the tree, so it has no father
+		pre[st[0]] = -1;
+	}
+
 	public static void treeInsert(BinarySearchTree T, int key, int priority)
 	{
 		BinarySearchTreeNode a = new BinarySearchTreeNode();
@@ -326,8 +374,8 @@ public class Treap extends BinarySearchTree
 	{
 		/* A sample use of these functions. Start with the empty tree, */
 		/* insert some stuff into it, and then delete it */
-		BinarySearchTree T = new Treap();
-		BinarySearchTree T2 = new Treap();
+		BinarySearchTree T = new CartesianTree();
+		BinarySearchTree T2 = new CartesianTree();
 		int i;
 
 		int NUM = 20;
