@@ -1,4 +1,5 @@
 package tree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,9 +19,9 @@ public class RedBlackTree extends BinarySearchTree
 	{
 		BinarySearchTreeNode a = new RedBlackTreeNode();
 		a.setKey(key);
-		a.setParent(null);
-		a.setLeft(null);
-		a.setRight(null);
+		a.setParent(NIL);
+		a.setLeft(NIL);
+		a.setRight(NIL);
 		a.setColor("");
 		treeInsert(T, a);
 	}
@@ -36,10 +37,16 @@ public class RedBlackTree extends BinarySearchTree
 		while (current != NIL && current != null) {
 			parent = current;
 			if (target.getKey() < current.getKey()) {
+				// 小于在左边
 				current = current.getLeft();
 			}
-			else {
+			else if (target.getKey() > current.getKey()) {
+				// 大于在右边
 				current = current.getRight();
+			}
+			else {
+				// 等于返回,因为左旋右旋容易出事
+				return;
 			}
 		}
 		target.setParent(parent);
@@ -61,7 +68,9 @@ public class RedBlackTree extends BinarySearchTree
 		// int spaceLength = 4;
 		// String character = "^";
 		// printTreeByBFS(T.getRoot(), spaceLength, character);
+		// printTreeByBFS(T.getRoot(), 7, "=");
 		rbInsertFixup(T, target);
+		// printTreeByBFS(T.getRoot(), 7, "*");
 	}
 
 	private static void rbInsertFixup(BinarySearchTree T, BinarySearchTreeNode z)
@@ -109,11 +118,66 @@ public class RedBlackTree extends BinarySearchTree
 		T.getRoot().setColor(BLACK);
 	}
 
+	public static void treeDelete_Suc(BinarySearchTree T, int key)
+	{
+		BinarySearchTreeNode target = treeSearch_Iterative(T.getRoot(), key);
+		treeDelete_Suc(T, target);
+	}
+
+	public static BinarySearchTreeNode treeMinimum(BinarySearchTreeNode t)
+	{
+		while (t.getLeft() != null && t.getLeft() != NIL) {
+			t = t.getLeft();
+		}
+		return t;
+	}
+
+	public static BinarySearchTreeNode treeMaximum(BinarySearchTreeNode t)
+	{
+		while (t.getRight() != null && t.getRight() != NIL) {
+			t = t.getRight();
+		}
+		return t;
+	}
+
+	public static BinarySearchTreeNode treeSuccessor(BinarySearchTreeNode t)
+	{
+		if (t == null) {
+			return t;
+		}
+		if (t.getRight() != null && t.getRight() != NIL) {
+			return treeMinimum(t.getRight());
+		}
+		BinarySearchTreeNode successor = t.getParent();
+		while (successor != null && successor != NIL && t == successor.getRight()) {
+			t = successor;
+			successor = successor.getParent();
+		}
+		return successor;
+	}
+
+	public static BinarySearchTreeNode treePredecessor(BinarySearchTreeNode t)
+	{
+		if (t == null) {
+			return t;
+		}
+		if (t.getLeft() != null && t.getLeft() != NIL) {
+			return treeMaximum(t.getLeft());
+		}
+		BinarySearchTreeNode predecessor = t.getParent();
+		while (predecessor != null && predecessor != NIL && t == predecessor.getLeft()) {
+			t = predecessor;
+			predecessor = predecessor.getParent();
+		}
+		return predecessor;
+	}
+
 	public static void treeDelete_Suc(BinarySearchTree T, BinarySearchTreeNode target)
 	{
+		// System.out.println("rb treeDelete_Suc");
 		BinarySearchTreeNode candidate = null;
 		BinarySearchTreeNode child = null;
-		if (target == null) {
+		if (target == null || target == NIL) {
 			return;
 		}
 		if (target.getLeft() == NIL || target.getRight() == NIL) {
@@ -132,7 +196,7 @@ public class RedBlackTree extends BinarySearchTree
 
 		child.setParent(candidate.getParent());
 
-		if (candidate.getParent() == null) {
+		if (candidate.getParent() == null || candidate.getParent() == NIL) {
 			T.setRoot(child);
 		}
 		else {
@@ -146,9 +210,11 @@ public class RedBlackTree extends BinarySearchTree
 		if (candidate != target) {
 			target.setKey(candidate.getKey());
 		}
+		// printTreeByBFS(T.getRoot(), 7, "=");
 		if (candidate.getColor() == BLACK) {
-			rbDeleteFixup(T, target);
+			rbDeleteFixup(T, child);
 		}
+		// printTreeByBFS(T.getRoot(), 7, "*");
 	}
 
 	private static void rbDeleteFixup(BinarySearchTree T, BinarySearchTreeNode current)
@@ -162,26 +228,26 @@ public class RedBlackTree extends BinarySearchTree
 					current.getParent().setColor(RED);
 					leftRotate(T, current.getParent());
 					sibling = current.getParent().getRight();
-					if (sibling.getLeft().getColor() == BLACK && sibling.getRight().getColor() == BLACK) {
+				}
+				if (sibling.getLeft().getColor() == BLACK && sibling.getRight().getColor() == BLACK) {
+					sibling.setColor(RED);
+					current = current.getParent();
+				}
+				else {
+					if (sibling.getRight().getColor() == BLACK) {
+						// sibling.getRight().getColor() == RED &&
+						// sibling.getRight().getColor() == BLACK
+						sibling.getLeft().setColor(BLACK);
 						sibling.setColor(RED);
-						current = current.getParent();
+						rightRotate(T, sibling);
+						sibling = current.getParent().getRight();
 					}
-					else {
-						if (sibling.getRight().getColor() == BLACK) {
-							// sibling.getRight().getColor() == RED &&
-							// sibling.getRight().getColor() == BLACK
-							sibling.getLeft().setColor(BLACK);
-							sibling.setColor(RED);
-							rightRotate(T, sibling);
-							sibling = current.getParent().getRight();
-						}
-						// sibling.getRight().getColor() == RED
-						sibling.setColor(current.getParent().getColor());
-						current.getParent().setColor(BLACK);
-						sibling.getRight().setColor(BLACK);
-						leftRotate(T, current.getParent());
-						current = T.getRoot();
-					}
+					// sibling.getRight().getColor() == RED
+					sibling.setColor(current.getParent().getColor());
+					current.getParent().setColor(BLACK);
+					sibling.getRight().setColor(BLACK);
+					leftRotate(T, current.getParent());
+					current = T.getRoot();
 				}
 			}
 			else {
@@ -191,23 +257,23 @@ public class RedBlackTree extends BinarySearchTree
 					current.getParent().setColor(RED);
 					rightRotate(T, current.getParent());
 					sibling = current.getParent().getLeft();
-					if (sibling.getRight().getColor() == BLACK && sibling.getLeft().getColor() == BLACK) {
+				}
+				if (sibling.getRight().getColor() == BLACK && sibling.getLeft().getColor() == BLACK) {
+					sibling.setColor(RED);
+					current = current.getParent();
+				}
+				else {
+					if (sibling.getLeft().getColor() == BLACK) {
+						sibling.getRight().setColor(BLACK);
 						sibling.setColor(RED);
-						current = current.getParent();
+						leftRotate(T, sibling);
+						sibling = current.getParent().getLeft();
 					}
-					else {
-						if (sibling.getLeft().getColor() == BLACK) {
-							sibling.getRight().setColor(BLACK);
-							sibling.setColor(RED);
-							leftRotate(T, sibling);
-							sibling = current.getParent().getLeft();
-						}
-						sibling.setColor(current.getParent().getColor());
-						current.getParent().setColor(BLACK);
-						sibling.getLeft().setColor(BLACK);
-						rightRotate(T, current.getParent());
-						current = T.getRoot();
-					}
+					sibling.setColor(current.getParent().getColor());
+					current.getParent().setColor(BLACK);
+					sibling.getLeft().setColor(BLACK);
+					rightRotate(T, current.getParent());
+					current = T.getRoot();
 				}
 			}
 		}

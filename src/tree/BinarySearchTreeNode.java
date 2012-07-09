@@ -12,7 +12,36 @@ public class BinarySearchTreeNode
 	protected BinarySearchTreeNode	right	= null;
 	protected BinarySearchTreeNode	parent	= null;
 	private String					color	= "";
+	@Override
+	public String toString()
+	{
+		return "BinarySearchTreeNode [key=" + key + ", color=" + color + ", priority=" + priority + ", height=" + height + ", balFac=" + balFac + "]";
+	}
+
 	public int						priority;
+	public int						height;
+	public int						balFac;		// Balance Factor :
+													// RightHeight - LeftHeight
+
+	public int getHeight()
+	{
+		return height;
+	}
+
+	public void setHeight(int height)
+	{
+		this.height = height;
+	}
+
+	public int getBalFac()
+	{
+		return balFac;
+	}
+
+	public void setBalFac(int balFac)
+	{
+		this.balFac = balFac;
+	}
 
 	public String getColor()
 	{

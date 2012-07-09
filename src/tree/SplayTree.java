@@ -72,12 +72,14 @@ public class SplayTree extends BinarySearchTree
 	{
 		/* Insert i into the tree t, unless it's already there. */
 		/* Return a pointer to the resulting tree. */
+		System.out.println("splay treeinsert");
 		BinarySearchTreeNode root = T.getRoot();
 		BinarySearchTreeNode target = new BinarySearchTreeNode();
 		target.key = key;
 		if (root == null) {
 			target.left = target.right = null;
 			T.setRoot(target);
+			return;
 		}
 		root = treeSplay(key, root);
 		if (key < root.key) { // ÁîtÎªiµÄÓÒ×ÓÊ÷

@@ -106,7 +106,7 @@ public class BinarySearchTree
 
 	private static void PrintNodeOfLevel(BinarySearchTreeNode t, int level, int length, int space, String c)
 	{
-		if (level < 0 || t == RedBlackTree.NIL) {
+		if (level < 0) {
 			return;
 		}
 		if (level == 0) {
@@ -115,7 +115,7 @@ public class BinarySearchTree
 				System.out.print(printBlank(space, length));
 			}
 			else {
-				System.out.print(printKey(t.getKey() + t.getColor() + "p" + t.getPriority(), length, c));
+				System.out.print(printKey(t.getKey() + t.getColor() + "b" + t.balFac, length, c));
 				System.out.print(printBlank(space, length));
 			}
 		}
@@ -176,8 +176,8 @@ public class BinarySearchTree
 	{
 		if (t != null && t != RedBlackTree.NIL) {
 			System.out.print(t.getKey());
-//			System.out.print(":");
-//			System.out.print(t.getPriority());
+			// System.out.print(":");
+			// System.out.print(t.getPriority());
 			System.out.print(",");
 			preOrderTreeWalk(t.getLeft());
 			preOrderTreeWalk(t.getRight());
@@ -232,10 +232,16 @@ public class BinarySearchTree
 		while (current != null) {
 			parent = current;
 			if (target.getKey() < current.getKey()) {
+				// 小于在左边
 				current = current.getLeft();
 			}
-			else {
+			else if (target.getKey() > current.getKey()) {
+				// 大于在右边
 				current = current.getRight();
+			}
+			else {
+				// 等于返回,因为左旋右旋容易出事
+				return;
 			}
 		}
 		target.setParent(parent);
@@ -408,6 +414,21 @@ public class BinarySearchTree
 		}
 	}
 
+	// FOR AVL 's BALANCE FACTOR
+	// 避免用getTreeHeight递归运算
+	public static int height(BinarySearchTreeNode T)
+	{
+		int lchildh, rchildh;
+		if (T == null || T == RedBlackTree.NIL) {
+			return 0;
+		}
+		else {
+			lchildh = T.getLeft() != null ? T.getLeft().height : 0;
+			rchildh = T.getRight() != null ? T.getRight().height : 0;
+			return (lchildh > rchildh) ? (lchildh + 1) : (rchildh + 1);
+		}
+	}
+
 	public static void leftRotate(BinarySearchTree T, BinarySearchTreeNode target)
 	{
 		// System.out.println("leftRotate");
@@ -434,6 +455,14 @@ public class BinarySearchTree
 		}
 		parent.setLeft(target);
 		target.setParent(parent);
+		--target.balFac;
+		target.balFac -= parent.balFac > 0 ? parent.balFac : 0;
+		--parent.balFac;
+		parent.balFac += target.balFac < 0 ? target.balFac : 0;
+		// FOR AVL 's BALANCE FACTOR
+		// resetBalAndHeight(target);
+		// resetBalAndHeight(parent);
+		// reset太麻烦,直接用Bal
 	}
 
 	public static void rightRotate(BinarySearchTree T, BinarySearchTreeNode target)
@@ -460,6 +489,33 @@ public class BinarySearchTree
 		}
 		parent.setRight(target);
 		target.setParent(parent);
+		++target.balFac;
+		target.balFac -= parent.balFac < 0 ? parent.balFac : 0;
+		++parent.balFac;
+		parent.balFac += target.balFac > 0 ? target.balFac : 0;
+		// FOR AVL 's BALANCE FACTOR
+		// resetBalAndHeight(target);
+		// resetBalAndHeight(parent);
+	}
+
+	// FOR AVL 's BALANCE FACTOR
+	public static void resetBalAndHeight(BinarySearchTreeNode t)
+	{
+		if (t != null) {
+			int l = height(t.getLeft());
+			int r = height(t.getRight());
+			t.setHeight(l > r ? l + 1 : r + 1);
+			t.setBalFac(r - l);
+		}
+	}
+
+	public static void resetHeight(BinarySearchTreeNode t)
+	{
+		if (t != null) {
+			int l = height(t.getLeft());
+			int r = height(t.getRight());
+			t.setHeight(l > r ? l + 1 : r + 1);
+		}
 	}
 
 	public static BinarySearchTree initTree(int[] a)
