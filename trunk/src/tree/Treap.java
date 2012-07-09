@@ -41,10 +41,16 @@ public class Treap extends BinarySearchTree
 		while (current != null) {
 			parent = current;
 			if (target.getKey() < current.getKey()) {
+				// 小于在左边
 				current = current.getLeft();
 			}
-			else {
+			else if (target.getKey() > current.getKey()) {
+				// 大于在右边
 				current = current.getRight();
+			}
+			else {
+				// 等于返回,因为左旋右旋容易出事
+				return;
 			}
 		}
 		target.setParent(parent);
