@@ -115,7 +115,7 @@ public class BinarySearchTree
 				System.out.print(printBlank(space, length));
 			}
 			else {
-				System.out.print(printKey(t.getKey() + t.getColor() + "b" + t.balFac, length, c));
+				System.out.print(printKey(t.getKey() + t.getColor(), length, c));
 				System.out.print(printBlank(space, length));
 			}
 		}
@@ -160,6 +160,7 @@ public class BinarySearchTree
 		return s.toString();
 	}
 
+	// 中序遍历，也叫中根遍历
 	public static void inOrderTreeWalk(BinarySearchTreeNode t)
 	{
 		if (t != null && t != RedBlackTree.NIL) {
@@ -223,7 +224,7 @@ public class BinarySearchTree
 
 	protected static void treeInsert(BinarySearchTree T, BinarySearchTreeNode target)
 	{
-		System.out.println("bst treeinsert");
+		// System.out.println("bst treeinsert");
 		if (target == null) {
 			return;
 		}
@@ -429,73 +430,152 @@ public class BinarySearchTree
 		}
 	}
 
-	public static void leftRotate(BinarySearchTree T, BinarySearchTreeNode target)
+	public static void leftRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
 	{
 		// System.out.println("leftRotate");
 		// printTreeByBFS(target, 3, "|");
-		if (target == null) {
+		if (pivot == null) {
 			return;
 		}
-		BinarySearchTreeNode parent = target.getRight();
-		target.setRight(parent.getLeft());
+		BinarySearchTreeNode parent = pivot.getRight();
+		pivot.setRight(parent.getLeft());
 		if (parent.getLeft() != null) {
-			parent.getLeft().setParent(target);
+			parent.getLeft().setParent(pivot);
 		}
-		parent.setParent(target.getParent());
-		if (target.getParent() == null) {
+		parent.setParent(pivot.getParent());
+		if (pivot.getParent() == null) {
 			T.setRoot(parent);
 		}
 		else {
-			if (target == target.getParent().getLeft()) {
-				target.getParent().setLeft(parent);
+			if (pivot == pivot.getParent().getLeft()) {
+				pivot.getParent().setLeft(parent);
 			}
 			else {
-				target.getParent().setRight(parent);
+				pivot.getParent().setRight(parent);
 			}
 		}
-		parent.setLeft(target);
-		target.setParent(parent);
-		--target.balFac;
-		target.balFac -= parent.balFac > 0 ? parent.balFac : 0;
+		parent.setLeft(pivot);
+		pivot.setParent(parent);
+
+		parent.size = pivot.size;
+		pivot.size = (pivot.left != null && pivot.left != RedBlackTree.NIL ? pivot.left.size : 0) + (pivot.right != null && pivot.right != RedBlackTree.NIL ? pivot.right.size : 0) + 1;
+
+		--pivot.balFac;
+		pivot.balFac -= parent.balFac > 0 ? parent.balFac : 0;
 		--parent.balFac;
-		parent.balFac += target.balFac < 0 ? target.balFac : 0;
+		parent.balFac += pivot.balFac < 0 ? pivot.balFac : 0;
 		// FOR AVL 's BALANCE FACTOR
 		// resetBalAndHeight(target);
 		// resetBalAndHeight(parent);
 		// reset太麻烦,直接用Bal
 	}
 
-	public static void rightRotate(BinarySearchTree T, BinarySearchTreeNode target)
+	// 返回新的pivot
+	public static BinarySearchTreeNode leftRotate(BinarySearchTreeNode pivot)
 	{
-		if (target == null) {
+		if (pivot == null) {
+			return null;
+		}
+		BinarySearchTreeNode parent = pivot.getRight();
+		pivot.setRight(parent.getLeft());
+		if (parent.getLeft() != null) {
+			parent.getLeft().setParent(pivot);
+		}
+		parent.setParent(pivot.getParent());
+		if (pivot.getParent() == null) {
+			// T.setRoot(parent);
+		}
+		else {
+			if (pivot == pivot.getParent().getLeft()) {
+				pivot.getParent().setLeft(parent);
+			}
+			else {
+				pivot.getParent().setRight(parent);
+			}
+		}
+		parent.setLeft(pivot);
+		pivot.setParent(parent);
+
+		parent.size = pivot.size;
+		pivot.size = (pivot.left != null && pivot.left != RedBlackTree.NIL ? pivot.left.size : 0) + (pivot.right != null && pivot.right != RedBlackTree.NIL ? pivot.right.size : 0) + 1;
+
+		--pivot.balFac;
+		pivot.balFac -= parent.balFac > 0 ? parent.balFac : 0;
+		--parent.balFac;
+		parent.balFac += pivot.balFac < 0 ? pivot.balFac : 0;
+		return parent;
+	}
+
+	public static void rightRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
+	{
+		if (pivot == null) {
 			return;
 		}
-		BinarySearchTreeNode parent = target.getLeft();
-		target.setLeft(parent.getRight());
+		BinarySearchTreeNode parent = pivot.getLeft();
+		pivot.setLeft(parent.getRight());
 		if (parent.getRight() != null) {
-			parent.getRight().setParent(target);
+			parent.getRight().setParent(pivot);
 		}
-		parent.setParent(target.getParent());
-		if (target.getParent() == null) {
+		parent.setParent(pivot.getParent());
+		if (pivot.getParent() == null) {
 			T.setRoot(parent);
 		}
 		else {
-			if (target == target.getParent().getRight()) {
-				target.getParent().setRight(parent);
+			if (pivot == pivot.getParent().getRight()) {
+				pivot.getParent().setRight(parent);
 			}
 			else {
-				target.getParent().setLeft(parent);
+				pivot.getParent().setLeft(parent);
 			}
 		}
-		parent.setRight(target);
-		target.setParent(parent);
-		++target.balFac;
-		target.balFac -= parent.balFac < 0 ? parent.balFac : 0;
+		parent.setRight(pivot);
+		pivot.setParent(parent);
+
+		parent.size = pivot.size;
+		pivot.size = (pivot.left != null && pivot.left != RedBlackTree.NIL ? pivot.left.size : 0) + (pivot.right != null && pivot.right != RedBlackTree.NIL ? pivot.right.size : 0) + 1;
+
+		++pivot.balFac;
+		pivot.balFac -= parent.balFac < 0 ? parent.balFac : 0;
 		++parent.balFac;
-		parent.balFac += target.balFac > 0 ? target.balFac : 0;
+		parent.balFac += pivot.balFac > 0 ? pivot.balFac : 0;
 		// FOR AVL 's BALANCE FACTOR
 		// resetBalAndHeight(target);
 		// resetBalAndHeight(parent);
+	}
+
+	public static BinarySearchTreeNode rightRotate(BinarySearchTreeNode pivot)
+	{
+		if (pivot == null) {
+			return null;
+		}
+		BinarySearchTreeNode parent = pivot.getLeft();
+		pivot.setLeft(parent.getRight());
+		if (parent.getRight() != null) {
+			parent.getRight().setParent(pivot);
+		}
+		parent.setParent(pivot.getParent());
+		if (pivot.getParent() == null) {
+			// T.setRoot(parent);
+		}
+		else {
+			if (pivot == pivot.getParent().getRight()) {
+				pivot.getParent().setRight(parent);
+			}
+			else {
+				pivot.getParent().setLeft(parent);
+			}
+		}
+		parent.setRight(pivot);
+		pivot.setParent(parent);
+
+		parent.size = pivot.size;
+		pivot.size = (pivot.left != null && pivot.left != RedBlackTree.NIL ? pivot.left.size : 0) + (pivot.right != null && pivot.right != RedBlackTree.NIL ? pivot.right.size : 0) + 1;
+
+		++pivot.balFac;
+		pivot.balFac -= parent.balFac < 0 ? parent.balFac : 0;
+		++parent.balFac;
+		parent.balFac += pivot.balFac > 0 ? pivot.balFac : 0;
+		return parent;
 	}
 
 	// FOR AVL 's BALANCE FACTOR

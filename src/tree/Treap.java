@@ -10,7 +10,7 @@ import java.util.Random;
  * @author dysong
  * 
  */
-// Treap = Tree + Heap 树堆  Randomized Binary Search Tree
+// Treap = Tree + Heap 树堆 Randomized Binary Search Tree
 // 一棵treap是一棵修改了结点顺序的二叉查找树，如图，显示一个例子，通常树内的每个结点x都有一个关键字值key[x]，另外，还要为结点分配priority[x]，它是一个独立选取的随机数。
 // 假设所有的优先级是不同的，所有的关键字也是不同的。treap的结点排列成让关键字遵循二叉查找树性质，并且优先级遵循最小堆顺序性质：
 // 1.如果v是u的左孩子，则key[v] < key[u].
@@ -32,7 +32,7 @@ public class Treap extends BinarySearchTree
 
 	protected static void treeInsert(BinarySearchTree T, BinarySearchTreeNode target)
 	{
-		System.out.println("treap treeinsert");
+		// System.out.println("treap treeinsert");
 		if (target == null) {
 			return;
 		}

@@ -1,14 +1,13 @@
 package tree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
- * http://zh.wikipedia.org/wiki/AVL%E6%A0%91 http://www.coderplusplus.com/?p=393
+ * http://zh.wikipedia.org/wiki/AVL%E6%A0%91 
+ * http://www.coderplusplus.com/?p=393
  * http://www.cnblogs.com/daoluanxiaozi/archive/2012/04/26/2471256.html
  * http://www
  * .cnblogs.com/daoluanxiaozi/archive/2012/04/26/2471256.html看BALANCE的东西
@@ -282,7 +281,7 @@ public class AVL extends BinarySearchTree
 		BinarySearchTree splay = new SplayTree();
 		int i;
 
-		int NUM = 1000;
+		int NUM = 10;
 		int space = 7;
 		Random r = new Random();
 		ArrayList a = new ArrayList();
@@ -323,7 +322,6 @@ public class AVL extends BinarySearchTree
 		System.out.println("\n");
 		System.out.println("\n");
 		ArrayList b = new ArrayList();
-
 		for (i = 0; i < NUM; i++) {
 			int key = r.nextInt(NUM) % NUM;
 			b.add(key);
@@ -334,7 +332,6 @@ public class AVL extends BinarySearchTree
 			SplayTree.treeDelete_Pre(splay, key);
 			Treap.treeDelete_Pre(treap, key);
 		}
-
 		// z = new int[] { 10, 11, 4, 13, 13, 16, 15, 8, 9, 6, 12, 9, 19 };
 		// for (int j = 0; j < z.length; j++) {
 		// b.add(z[j]);
@@ -342,6 +339,7 @@ public class AVL extends BinarySearchTree
 		// AVL.treeDelete_Suc(avl, z[j]);
 		// RedBlackTree.treeDelete_Suc(rb, z[j]);
 		// }
+		System.out.println(b);
 		HashSet c = new HashSet();
 		c.addAll(a);
 		c.removeAll(b);
