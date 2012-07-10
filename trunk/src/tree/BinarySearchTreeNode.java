@@ -1,9 +1,5 @@
 package tree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 //Binary Search Tree
 public class BinarySearchTreeNode
 {
@@ -12,16 +8,30 @@ public class BinarySearchTreeNode
 	protected BinarySearchTreeNode	right	= null;
 	protected BinarySearchTreeNode	parent	= null;
 	private String					color	= "";
-	@Override
-	public String toString()
-	{
-		return "BinarySearchTreeNode [key=" + key + ", color=" + color + ", priority=" + priority + ", height=" + height + ", balFac=" + balFac + "]";
-	}
 
 	public int						priority;
 	public int						height;
-	public int						balFac;		// Balance Factor :
-													// RightHeight - LeftHeight
+	// Balance Factor : RightHeight - LeftHeight
+	public int						balFac;
+	// Size Balanced Tree
+	public int						size;
+
+	@Override
+	public String toString()
+	{
+		return "[key=" + key + ", left=" + (left == null ? null : left.key) + ", right=" + (right == null ? null : right.key) + ", parent=" + (parent == null ? null : parent.key) + ", color=" + color
+				+ ", priority=" + priority + ", height=" + height + ", balFac=" + balFac + ", size=" + size + "]";
+	}
+
+	public int getSize()
+	{
+		return size;
+	}
+
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
 
 	public int getHeight()
 	{
