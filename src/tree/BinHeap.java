@@ -2,39 +2,64 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-/*8
+/*
  * http://mindlee.net/2011/09/26/binomial-heaps/
  * http://mindlee.net/2011/09/29/fibonacci-heaps/
+ * 二项树Bk是一种递归定义的有序树。二项树B0只包含一个结点。二项树Bk由两个子树Bk-1连接而成：其中一棵树的根是另一棵树的根的最左孩子。二项树的性质有：
+ 1)共有2^k个结点。
+ 2)树的高度为k。从0开始
+ 3)在深度i处恰有Cik个结点。i与K从0开始
+ 4)根的度数（子女的个数）为k，它大于任何其他结点的度数；如果根的子女从左到右的编号设为k-1, k-2, …, 0，子女i是子树Bi的根。
+ 右图中图(b)表示二项树B0至B4中示出了各结点的深度。图(c)是以另外一种方式来看二项树Bk。
+ PS : 在一棵包含n个结点的二项树中，任意结点的最大度数为lgn. 即结点度数为k
+
+ 操作                    二叉堆(最坏）             二项堆 (最坏）                        斐波那契堆(平摊)
+ MAKE-HEAP    Θ(1)           Θ(1)                     Θ(1)
+ INSERT       Θ(lg n)        O(lg n)                  Θ(1)
+ MINIMUM      Θ(1)           O(lg n)                  Θ(1)
+ EXTRACT-MIN  Θ(lg n)        Θ(lg n)                  O(lg n)
+ UNION        Θ(n)           O(lg n)                  Θ(1)
+ DECREASE-KEY Θ(lg n)        Θ(lg n)                  Θ(1)
+ DELETE       Θ(lg n)        Θ(lg n)                  O(lg n)
  */
 
 //binomial-heap
+//binomial-heap 由binomial-tree 组成
+// 二项树的各个根组成根表
+// 二项树和F树都不能有效地支持SEARCH操作
+// 最坏情况下 Make-Heap为O(1),其余ExtractMin, Minimum, Insert, Union, DecreaseKey, Delete 均为O(lgN)
+// Search 没有
+// 性能比较见(二项堆 F堆 二叉堆 性能比较.jpg)
+// 每层宽度有B0+B0=B1,即Bk=(Bk-1)+B(k-1)=2B(K-1) 即W0=1,W1=1,Wk=2^(k-1)[k>=2]
+// 从定义可知 堆中 可以 大于或等于父结点，有等于，因为堆中没有旋转，树中涉及旋转要特殊处理
 public class BinHeap
 {
+	// 二项堆由二项树构成的树表，只不过这里直接用BinHeap的Sibling代替了Head表
 	int		key;
 	int		degree;
 	BinHeap	parent;
-	BinHeap	leftChild;
+	BinHeap	rightChild;
 	BinHeap	sibling;
 
-	@Override
 	public String toString()
 	{
-		return "[key=" + key + ", degree=" + degree + ", parent=" + (parent == null ? null : parent.key) + ", leftChild=" + (leftChild == null ? null : leftChild.key) + ", sibling="
+		return "[key=" + key + ", degree=" + degree + ", parent=" + (parent == null ? null : parent.key) + ", rightChild=" + (rightChild == null ? null : rightChild.key) + ", sibling="
 				+ (sibling == null ? null : sibling.key) + "]";
 	}
 
 	/*
-	 * 第一个二叉堆H1: (41) (28 (33) ) (7 (15 (25) ) (12) )
+	 * 第一个二项堆H1: (41) (28 (33) ) (7 (15 (25) ) (12) )
 	 * 
-	 * 第二个二叉堆H2: (55) (24 (50) ) (2 (3 (8 (10 (44) ) (29) ) (6 (37) ) (18) ) (17
+	 * 第二个二项堆H2: (55) (24 (50) ) (2 (3 (8 (10 (44) ) (29) ) (6 (37) ) (18) ) (17
 	 * (32 (45) ) (31) ) (23 (30) ) (48) )
 	 * 
 	 * 合并H1,H2后，得到H3: (41 (55) ) (7 (24 (28 (33) ) (50) ) (15 (25) ) (12) ) (2
 	 * (3 (8 (10 (44) ) (29) ) (6 (37) ) (18) ) (17 (32 (45) ) (31) ) (23 (30) )
 	 * (48) )
 	 * 
-	 * 用于测试提取和删除的二叉堆H4: (27 (42) ) (11 (17 (38) ) (18) ) (1 (8 (14 (23 (26) )
+	 * 用于测试提取和删除的二项堆H4: (27 (42) ) (11 (17 (38) ) (18) ) (1 (8 (14 (23 (26) )
 	 * (29) ) (12 (16) ) ( 25) ) (10 (37 (41) ) (28) ) (13 (77) ) (6) )
 	 * 
 	 * 抽取最小的值1后： (6) (13 (27 (42) ) (77) ) (8 (10 (11 (17 (38) ) (18) ) (37 (41)
@@ -52,6 +77,22 @@ public class BinHeap
 
 	// 销毁堆
 	// void DestroyBinHeap(BinHeap heap);
+
+	// Insert Key to heap
+	public static BinHeap BinHeapInsert(BinHeap heap, int key)
+	{
+		BinHeap newHeap = null;
+		newHeap = new BinHeap();
+		newHeap.key = key;
+		if (null == heap) {
+			heap = newHeap;
+		}
+		else {
+			heap = BinHeapUnion(heap, newHeap);
+			newHeap = null;
+		}
+		return heap;
+	}
 
 	// 用数组内的值建堆
 	public static BinHeap MakeBinHeapWithArray(int keys[], int n)
@@ -159,8 +200,8 @@ public class BinHeap
 	public static void BinLink(BinHeap H1, BinHeap H2)
 	{
 		H1.parent = H2;
-		H1.sibling = H2.leftChild;
-		H2.leftChild = H1;
+		H1.sibling = H2.rightChild;
+		H2.rightChild = H1;
 		H2.degree++;
 	}
 
@@ -207,7 +248,7 @@ public class BinHeap
 
 		// 将y的子结点指针reverse
 		BinHeap H2 = null, p = null;
-		x = y.leftChild;
+		x = y.rightChild;
 		while (x != null) {
 			p = x;
 			x = x.sibling;
@@ -238,6 +279,28 @@ public class BinHeap
 		}
 	}
 
+	// 增加关键字的值
+	// Increase 为自己写出来, 他不能用于DELETE因为他们把KEY增长到MAX下降到树底再删去 会破坏二项树完整
+	// 对比一下二叉堆的删除
+	// 效率应该是O(lgN)
+	public static void BinHeapIncreaseKey(BinHeap heap, BinHeap x, int key)
+	{
+		if (key < x.key) {
+			System.out.println("new key is less than current key");
+			System.exit(1);// 不为升键
+		}
+		x.key = key;
+
+		BinHeap z = null, y = null;
+		y = x;
+		z = x.rightChild;
+		while (z != null && z.key < y.key) {
+			swapHeapKey(z, y);
+			y = z;
+			z = y.rightChild;
+		}
+	}
+
 	private static void swapHeapKey(BinHeap a, BinHeap b)
 	{
 		int c = a.key;
@@ -249,7 +312,7 @@ public class BinHeap
 	public static BinHeap BinHeapDelete(BinHeap heap, int key)
 	{
 		BinHeap x = null;
-		x = BinHeapFind(heap, key);
+		x = BinHeapSearch(heap, key);
 		if (x != null) {
 			BinHeapDecreaseKey(heap, x, Integer.MIN_VALUE);
 			return BinHeapExtractMin(heap);
@@ -258,7 +321,8 @@ public class BinHeap
 	}
 
 	// 找出一个关键字
-	public static BinHeap BinHeapFind(BinHeap heap, int key)
+	// 效率未知
+	public static BinHeap BinHeapSearch(BinHeap heap, int key)
 	{
 		BinHeap p = null, x = null;
 		p = heap;
@@ -267,7 +331,7 @@ public class BinHeap
 				return p;
 			}
 			else {
-				if ((x = BinHeapFind(p.leftChild, key)) != null) {
+				if ((x = BinHeapSearch(p.rightChild, key)) != null) {
 					return x;
 				}
 				p = p.sibling;
@@ -288,8 +352,8 @@ public class BinHeap
 			System.out.print(" (");
 			System.out.print(p.key);
 			// 显示其孩子
-			if (null != p.leftChild) {
-				PrintBinHeap(p.leftChild);
+			if (null != p.rightChild) {
+				PrintBinHeap(p.rightChild);
 			}
 			System.out.print(") ");
 
@@ -297,70 +361,80 @@ public class BinHeap
 		}
 	}
 
-	public static void PrintBinomialHeap(BinHeap heap)
+	public static void printBinHeapByBFS(BinHeap root, int spaceLength, String c)
 	{
-		if (null == heap) {
-			return;
+		System.out.println("\n====BinHeap Start====");
+		BinHeap sibling = root;
+		while (sibling != null) {
+			printBinTreeByBFS(sibling, spaceLength, c);
+			System.out.println("↓");
+			sibling = sibling.sibling;
 		}
-		BinHeap p = heap;
-		int height = getBinHeapHeight(heap);
-
-		while (p != null) {
-			System.out.print(" (");
-			System.out.print(p.key);
-			// 显示其孩子
-			if (null != p.leftChild) {
-				PrintBinHeap(p.leftChild);
-			}
-			System.out.print(") ");
-
-			p = p.sibling;
-		}
+		System.out.println("====BinHeap Over====");
 	}
 
-	public static void printTreeByBFS(BinHeap root, int spaceLength, String c)
+	// 二项堆由二项树构成的树表，只不过这里直接用BinHeap的Sibling代替了Head表
+	public static void printBinTreeByBFS(BinHeap root, int spaceLength, String c)
 	{
 		ArrayList<BinHeap> list = new ArrayList<BinHeap>();
-		list.add(root);
+		LinkedList<BinHeap> siblingList = new LinkedList<BinHeap>();
+		StringBuilder s = new StringBuilder();
+		int startSpaces = 1;
+		int intervalSpaces = 1;
 		int currentIndex = 0;
 		int nextIndex = 1;
 		int level = 0;
 		int depth = getBinHeapHeight(root);
-		StringBuilder s = new StringBuilder();
+		BinHeap tree;
+		BinHeap sibling;
+		BinHeap cur;
+		list.add(root);
 		while (currentIndex < list.size())// 还有下层
 		{
 			level++;
-			int startSpaces = (int) (Math.pow(2, (depth - level)) - 1);
 			nextIndex = list.size();
-			s.append(printKey(level + ":", spaceLength, " "));
-			s.append(printBlank(startSpaces, spaceLength));
-			int intervalSpaces = (int) (Math.pow(2, depth - level + 1) - 1);
-			int j = 0;
+			System.out.print(printKey(level + ":", spaceLength, " "));
 			while (currentIndex < nextIndex)// 该层还有元素
 			{
-				BinHeap tree = list.get(currentIndex);
-				s.append(printKey(tree.key + "", spaceLength, c));
-				if (tree.leftChild != null) {
-					list.add(tree.leftChild);
-				}
-				if (tree.sibling != null) {
-					if (currentIndex < list.size() - 1) {
-						list.add(currentIndex + 1, tree.sibling);
+				tree = list.get(currentIndex);
+				if (tree == null) {
+					System.out.print(printBlank(intervalSpaces, spaceLength));
+					if (depth > level) {
+						list.add(null);
 					}
-					else {
-						list.add(tree.sibling);
-					}
-					nextIndex++;
+					System.out.print(printBlank(startSpaces, spaceLength));
 				}
-				if (currentIndex != nextIndex - 1) {
-					s.append(printBlank(intervalSpaces, spaceLength));
+				else {
+
+					siblingList.push(tree);
+					if (tree.parent != null) {
+						sibling = tree;
+						while ((sibling = sibling.sibling) != null) {
+							siblingList.push(sibling);
+						}
+					}
+					while (siblingList.size() > 0) {
+						cur = siblingList.poll();
+						if (depth > level) {
+							list.add(cur.rightChild);
+						}
+						if (cur.sibling != null && level != 1) {
+							System.out.print(printKey("<-", spaceLength, " "));
+						}
+						else {
+							System.out.print(printBlank(intervalSpaces, spaceLength));
+						}
+						System.out.print(printKey(cur.key + (cur.rightChild == null ? "" : "↓"), spaceLength, c));
+						if (cur.degree > 1) {
+							System.out.print(printBlank((cur.degree - 1) * 2, spaceLength));
+						}
+					}
 				}
 				currentIndex++;
-				j++;
 			}
-			s.append("\n");
+			System.out.print("\n");
 		}
-		System.out.print(s);
+		// System.out.print(s);
 	}
 
 	// 组合数 m!/(m-n)!n!
@@ -390,75 +464,6 @@ public class BinHeap
 		return ret;
 	}
 
-	public static void printTree(BinarySearchTreeNode t, int spaceLength, String c)
-	{
-		int depth = 0;
-		// getTreeHeight(t);
-		System.out.println("depth=" + depth);
-		for (int i = 0; i < depth; i++) {
-			int spaces = (int) (Math.pow(2, (depth - i - 1)) - 1);
-			System.out.print(printKey(i + 1 + ":", spaceLength, " "));
-			System.out.print(printBlank(spaces, spaceLength));
-			PrintNodeOfLevel(t, i, spaceLength, (int) (Math.pow(2, depth) - 1), c);
-			System.out.println();
-		}
-
-	}
-
-	public static void printTreeVertical(BinarySearchTreeNode t, int totalSpaces, int spaceLength, int depth, int level)
-	{
-		if (level <= depth || t != RedBlackTree.NIL) {
-			BinarySearchTreeNode left = null, right = null;
-			String key = "---";
-			level++;
-			if (t != null) {
-				left = t.getLeft();
-				right = t.getRight();
-				key = t.key + "";
-			}
-			printTreeVertical(right, totalSpaces + spaceLength, spaceLength, depth, level);
-			for (int i = 0; i < totalSpaces; i++) {
-				System.out.print(" ");
-			}
-			System.out.println(key);
-			printTreeVertical(left, totalSpaces + spaceLength, spaceLength, depth, level);
-		}
-	}
-
-	private static void PrintNodeOfLevel(BinarySearchTreeNode t, int level, int length, int space, String c)
-	{
-		if (level < 0) {
-			return;
-		}
-		if (level == 0) {
-			if (t == null) {
-				System.out.print(printPlaceHolder(length));
-				System.out.print(printBlank(space, length));
-			}
-			else {
-				System.out.print(printKey(t.key + t.getColor(), length, c));
-				System.out.print(printBlank(space, length));
-			}
-		}
-		if (t == null) {
-			PrintNodeOfLevel(null, level - 1, length, space / 2, c);
-			PrintNodeOfLevel(null, level - 1, length, space / 2, c);
-		}
-		else {
-			PrintNodeOfLevel(t.getLeft(), level - 1, length, space / 2, c);
-			PrintNodeOfLevel(t.getRight(), level - 1, length, space / 2, c);
-		}
-	}
-
-	private static String printPlaceHolder(int length)
-	{
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < length; i++) {
-			s.append("-");
-		}
-		return s.toString();
-	}
-
 	private static String printBlank(int space, int length)
 	{
 		StringBuilder s = new StringBuilder();
@@ -486,7 +491,7 @@ public class BinHeap
 		if (heap == null) {
 			return 0;
 		}
-		return getBinHeapHeight(heap.leftChild) + 1;
+		return getBinHeapHeight(heap.rightChild) + 1;
 	}
 
 	public static int[]	kp1	= { 12, 7, 25, 15, 28, 33, 41 };
@@ -499,29 +504,34 @@ public class BinHeap
 	{
 		BinHeap H1 = null;
 		H1 = MakeBinHeapWithArray(kp1, kp1.length);
-		System.out.println("第一个二叉堆H1:");
+		System.out.println("第一个二项堆H1:");
 		PrintBinHeap(H1);
+		printBinHeapByBFS(H1, 5, " ");
 
 		BinHeap H2 = null;
 		H2 = MakeBinHeapWithArray(kp2, kp2.length);
-		System.out.println("\n\n第二个二叉堆H2:");
+		System.out.println("\n\n第二个二项堆H2:");
 		PrintBinHeap(H2);
+		printBinHeapByBFS(H2, 5, " ");
 
 		BinHeap H3 = null;
 		H3 = BinHeapUnion(H1, H2);
 		System.out.println("\n\n合并H1,H2后，得到H3:");
 		PrintBinHeap(H3);
+		printBinHeapByBFS(H3, 5, " ");
 
 		BinHeap H4 = null;
 		H4 = MakeBinHeapWithArray(kp4, kp4.length);
-		System.out.println("\n\n用于测试提取和删除的二叉堆H4:");
+		System.out.println("\n\n用于测试提取和删除的二项堆H4:");
 		PrintBinHeap(H4);
+		printBinHeapByBFS(H4, 5, " ");
 
 		BinHeap extractNode = BinHeapMin(H4);
 		H4 = BinHeapExtractMin(H4);
 		if (extractNode != null) {
 			System.out.print("\n\n抽取最小的值" + extractNode.key + "后：\n");
 			PrintBinHeap(H4);
+			printBinHeapByBFS(H4, 5, " ");
 		}
 
 		extractNode = BinHeapMin(H4);
@@ -529,6 +539,7 @@ public class BinHeap
 		if (extractNode != null) {
 			System.out.print("\n\n抽取最小的值" + extractNode.key + "后：\n");
 			PrintBinHeap(H4);
+			printBinHeapByBFS(H4, 5, " ");
 		}
 
 		extractNode = BinHeapMin(H4);
@@ -536,10 +547,12 @@ public class BinHeap
 		if (extractNode != null) {
 			System.out.print("\n\n抽取最小的值" + extractNode.key + "后：\n");
 			PrintBinHeap(H4);
+			printBinHeapByBFS(H4, 5, " ");
 		}
 
 		H4 = BinHeapDelete(H4, 12);
 		System.out.println("\n\n删除12后：");
 		PrintBinHeap(H4);
+		printBinHeapByBFS(H4, 5, " ");
 	}
 }
