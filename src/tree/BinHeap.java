@@ -34,7 +34,7 @@ import java.util.LinkedList;
 // 性能比较见(二项堆 F堆 二叉堆 性能比较.jpg)
 // 每层宽度有B0+B0=B1,即Bk=(Bk-1)+B(k-1)=2B(K-1) 即W0=1,W1=1,Wk=2^(k-1)[k>=2]
 // 从定义可知 堆中 可以 大于或等于父结点，有等于，因为堆中没有旋转，树中涉及旋转要特殊处理
-public class BinHeap
+public class BinHeap extends MergeableHeap
 {
 	// 二项堆由二项树构成的树表，只不过这里直接用BinHeap的Sibling代替了Head表
 	int		key;
@@ -283,6 +283,7 @@ public class BinHeap
 	// Increase 为自己写出来, 他不能用于DELETE因为他们把KEY增长到MAX下降到树底再删去 会破坏二项树完整
 	// 对比一下二叉堆的删除
 	// 效率应该是O(lgN)
+	// 自己写的Increase 相当于heapSort的MAX/MIN HEAPIFY
 	public static void BinHeapIncreaseKey(BinHeap heap, BinHeap x, int key)
 	{
 		if (key < x.key) {
@@ -290,14 +291,20 @@ public class BinHeap
 			System.exit(1);// 不为升键
 		}
 		x.key = key;
-
-		BinHeap z = null, y = null;
-		y = x;
-		z = x.rightChild;
-		while (z != null && z.key < y.key) {
-			swapHeapKey(z, y);
-			y = z;
-			z = y.rightChild;
+		BinHeap child = x.rightChild;
+		if (child == null) {
+			return;
+		}
+		BinHeap sibling = child;
+		BinHeap min = x;
+		do {
+			if (sibling.key < min.key) {
+				min = sibling;
+			}
+		} while ((sibling = sibling.sibling) != null);
+		if (x != min) {
+			x.key = min.key;
+			BinHeapIncreaseKey(heap, min, key);
 		}
 	}
 
@@ -462,28 +469,6 @@ public class BinHeap
 			}
 		}
 		return ret;
-	}
-
-	private static String printBlank(int space, int length)
-	{
-		StringBuilder s = new StringBuilder();
-		for (int j = 0; j < space * length; j++) {
-			s.append(" ");
-		}
-		return s.toString();
-	}
-
-	private static String printKey(String k, int length, String c)
-	{
-		if (k.length() < length) {
-			StringBuilder s = new StringBuilder();
-			for (int i = 0; i < length; i++) {
-				s.append(c);
-			}
-			s.replace((length - k.length()) / 2, (length - k.length()) / 2 + k.length(), k);
-			k = s.toString();
-		}
-		return k;
 	}
 
 	private static int getBinHeapHeight(BinHeap heap)
