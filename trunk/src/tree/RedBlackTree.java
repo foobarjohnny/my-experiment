@@ -378,12 +378,12 @@ public class RedBlackTree extends BinarySearchTree
 
 	}
 
-	public static void leftRotate(BinarySearchTree T, BinarySearchTreeNode target)
+	public static BinarySearchTreeNode leftRotate(BinarySearchTree T, BinarySearchTreeNode target)
 	{
 		// System.out.println("leftRotate");
 		// printTreeByBFS(target, 3, "|");
 		if (target == null) {
-			return;
+			return null;
 		}
 		BinarySearchTreeNode parent = target.getRight();
 		target.setRight(parent.getLeft());
@@ -404,12 +404,13 @@ public class RedBlackTree extends BinarySearchTree
 		}
 		parent.setLeft(target);
 		target.setParent(parent);
+		return parent;
 	}
 
-	public static void rightRotate(BinarySearchTree T, BinarySearchTreeNode target)
+	public static BinarySearchTreeNode rightRotate(BinarySearchTree T, BinarySearchTreeNode target)
 	{
 		if (target == null) {
-			return;
+			return null;
 		}
 		BinarySearchTreeNode parent = target.getLeft();
 		target.setLeft(parent.getRight());
@@ -430,6 +431,7 @@ public class RedBlackTree extends BinarySearchTree
 		}
 		parent.setRight(target);
 		target.setParent(parent);
+		return parent;
 	}
 
 	public static BinarySearchTree initTree(int[] a)

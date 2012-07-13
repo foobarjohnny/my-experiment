@@ -115,7 +115,7 @@ public class BinarySearchTree
 				System.out.print(printBlank(space, length));
 			}
 			else {
-				System.out.print(printKey(t.getKey() + t.getColor(), length, c));
+				System.out.print(printKey(t.getKey() + t.getColor() + "s" + t.size, length, c));
 				System.out.print(printBlank(space, length));
 			}
 		}
@@ -320,7 +320,8 @@ public class BinarySearchTree
 		else {
 			candidate = treePredecessor(target);
 		}
-
+		// (target.getLeft() == null || target.getRight() == null)
+		// 的判断保证了candidate!=null
 		if (candidate.getRight() != null) {
 			child = candidate.getRight();
 		}
@@ -430,12 +431,12 @@ public class BinarySearchTree
 		}
 	}
 
-	public static void leftRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
+	public static BinarySearchTreeNode leftRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
 	{
 		// System.out.println("leftRotate");
 		// printTreeByBFS(target, 3, "|");
 		if (pivot == null) {
-			return;
+			return null;
 		}
 		BinarySearchTreeNode parent = pivot.getRight();
 		pivot.setRight(parent.getLeft());
@@ -468,6 +469,7 @@ public class BinarySearchTree
 		// resetBalAndHeight(target);
 		// resetBalAndHeight(parent);
 		// reset太麻烦,直接用Bal
+		return parent;
 	}
 
 	// 返回新的pivot
@@ -506,10 +508,10 @@ public class BinarySearchTree
 		return parent;
 	}
 
-	public static void rightRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
+	public static BinarySearchTreeNode rightRotate(BinarySearchTree T, BinarySearchTreeNode pivot)
 	{
 		if (pivot == null) {
-			return;
+			return null;
 		}
 		BinarySearchTreeNode parent = pivot.getLeft();
 		pivot.setLeft(parent.getRight());
@@ -541,6 +543,7 @@ public class BinarySearchTree
 		// FOR AVL 's BALANCE FACTOR
 		// resetBalAndHeight(target);
 		// resetBalAndHeight(parent);
+		return parent;
 	}
 
 	public static BinarySearchTreeNode rightRotate(BinarySearchTreeNode pivot)
