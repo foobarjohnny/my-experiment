@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-
 /**
- * http://zh.wikipedia.org/wiki/AVL%E6%A0%91 
- * http://www.coderplusplus.com/?p=393
+ * http://zh.wikipedia.org/wiki/AVL%E6%A0%91 http://www.coderplusplus.com/?p=393
  * http://www.cnblogs.com/daoluanxiaozi/archive/2012/04/26/2471256.html
  * http://www
  * .cnblogs.com/daoluanxiaozi/archive/2012/04/26/2471256.html看BALANCE的东西
@@ -279,9 +277,9 @@ public class AVL extends BinarySearchTree
 		BinarySearchTree avl = new AVL();
 		BinarySearchTree rb = new RedBlackTree();
 		BinarySearchTree splay = new SplayTree();
+		BinarySearchTree sbt = new SizeBalancedTree();
 		int i;
-
-		int NUM = 10;
+		int NUM = 1000;
 		int space = 7;
 		Random r = new Random();
 		ArrayList a = new ArrayList();
@@ -294,21 +292,24 @@ public class AVL extends BinarySearchTree
 			AVL.treeInsert(avl, key);
 			RedBlackTree.treeInsert(rb, key);
 			SplayTree.treeInsert(splay, key);
+			SizeBalancedTree.treeInsert(sbt, key);
 		}
-		// int[] z = new int[] { 7, 16, 6, 7, 8, 17, 19, 0, 3, 7, 1, 7, 17, 17,
-		// 16, 12, 12, 17, 14, 15 };
+		// int[] z = new int[] { 9, 9, 8, 1, 7, 3, 9, 9, 1, 0 };
 		// for (int j = 0; j < z.length; j++) {
 		// a.add(z[j]);
 		// AVL.treeInsert(avl, z[j]);
-		// RedBlackTree.treeInsert(rb, z[j]);
+		// // RedBlackTree.treeInsert(rb, z[j]);
+		// SizeBalancedTree.treeInsert(sbt, z[j]);
+		// printTree(sbt.getRoot(), space, "*");
 		// }
 
 		System.out.println(a);
-		// printTree(bst.getRoot(), space, "-");
-		// printTree(avl.getRoot(), space, "-");
-		// printTreeByBFS(rb.getRoot(), space, "-");
-		// printTree(splay.getRoot(), space, "-");
-		// printTree(treap.getRoot(), space, "-");
+//		printTree(bst.getRoot(), space, "-");
+//		printTree(avl.getRoot(), space, "-");
+//		printTreeByBFS(rb.getRoot(), space, "-");
+//		printTree(splay.getRoot(), space, "-");
+//		printTree(treap.getRoot(), space, "-");
+//		printTree(sbt.getRoot(), space, "-");
 		System.out.println("\n");
 		inOrderTreeWalk(bst.getRoot());
 		System.out.println("\n");
@@ -319,6 +320,8 @@ public class AVL extends BinarySearchTree
 		inOrderTreeWalk(splay.getRoot());
 		System.out.println("\n");
 		inOrderTreeWalk(treap.getRoot());
+		System.out.println("\n");
+		inOrderTreeWalk(sbt.getRoot());
 		System.out.println("\n");
 		System.out.println("\n");
 		ArrayList b = new ArrayList();
@@ -331,13 +334,15 @@ public class AVL extends BinarySearchTree
 			RedBlackTree.treeDelete_Suc(rb, key);
 			SplayTree.treeDelete_Pre(splay, key);
 			Treap.treeDelete_Pre(treap, key);
+			SizeBalancedTree.treeDelete_Pre(sbt, key);
 		}
-		// z = new int[] { 10, 11, 4, 13, 13, 16, 15, 8, 9, 6, 12, 9, 19 };
+		// z = new int[] { 7, 4, 0, 5, 7, 9, 5, 1, 1, 9 };
 		// for (int j = 0; j < z.length; j++) {
 		// b.add(z[j]);
 		// System.out.println(b);
 		// AVL.treeDelete_Suc(avl, z[j]);
-		// RedBlackTree.treeDelete_Suc(rb, z[j]);
+		// // RedBlackTree.treeDelete_Suc(rb, z[j]);
+		// SizeBalancedTree.treeDelete_Pre(sbt, z[j]);
 		// }
 		System.out.println(b);
 		HashSet c = new HashSet();
@@ -349,6 +354,7 @@ public class AVL extends BinarySearchTree
 		// printTreeByBFS(rb.getRoot(), space, "-");
 		// printTree(splay.getRoot(), space, "-");
 		// printTree(treap.getRoot(), space, "-");
+		// printTree(sbt.getRoot(), space, "-");
 		System.out.println("\n");
 		inOrderTreeWalk(bst.getRoot());
 		System.out.println("\n");
@@ -360,6 +366,7 @@ public class AVL extends BinarySearchTree
 		System.out.println("\n");
 		inOrderTreeWalk(treap.getRoot());
 		System.out.println("\n");
+		inOrderTreeWalk(sbt.getRoot());
 		System.out.println("\n");
 		// System.out.println("\nsize = " + size);
 	}
