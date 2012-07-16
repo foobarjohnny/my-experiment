@@ -17,6 +17,7 @@ package tree;
  *  http://blog.csdn.net/skyprophet/article/details/5497911
  *  http://www.byvoid.com/blog/tag/%E6%A0%91%E5%A5%97%E6%A0%91/
  *  http://www.cnblogs.com/Booble/archive/2010/10/18/1855172.html
+ *  用于树套树 线段树套平衡树
  */
 // http://blog.csdn.net/acceptedxukai/article/details/6921334
 public class SizeBalancedTree extends BinarySearchTree
