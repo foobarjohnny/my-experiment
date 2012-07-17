@@ -11,6 +11,8 @@ import java.util.List;
  * Copyright (c) 2011 ljs (http://blog.csdn.net/ljsspace/) Licensed under GPL
  * (http://www.opensource.org/licenses/gpl-license.php)
  * http://hi.baidu.com/xieyeshan2009/blog/item/0b796a25287d9519908f9d50.html
+ * http://hi.baidu.com/feixeyes/item/39b131d7b4233447fb57683c
+ * http://blog.csdn.net/ljsspace/article/details/6596509
  * 
  */
 // 后缀Trie之所以没有家喻户晓正是因为构造它需要O(n2)的时间和空间. 平方级的开销使它在最需要它的领域 --- 长串搜索 中被拒之门外.
@@ -125,10 +127,14 @@ public class SuffixTree
 			sb.append(text.charAt(i));
 
 			// step 1: do implicit extensions
+			int count =0;
 			for (SuffixNode leafnode : leaves) {
 				leafnode.end++;
 				leafnode.pathlen++;
+				count++;
 			}
+			System.out.println("count:"+count);
+			System.out.println("j_star:"+j_star);
 
 			// step 2: do explicit extensions until rule #3 is applied
 			State state = new State();
@@ -146,8 +152,7 @@ public class SuffixTree
 				// if rule #3 is applied, then we can terminate this phase
 				j_star = j - 1;
 				// Note: no need to update state.v because it is not going to be
-				// used
-				// at the next phase
+				// used at the next phase
 				u = state.u;
 				continue;
 			}
@@ -225,7 +230,7 @@ public class SuffixTree
 				// order keys by lexi-order
 				if (sb.charAt(k) < sb.charAt(child.start)) {
 					// e.g. child="e" (currNode="abc")
-					// abc abc
+					// abc             abc
 					// / \ =========> / | \
 					// e f insert "c" c e f
 					int pathlen = sb.length() - k + currNode.pathlen;
@@ -238,9 +243,10 @@ public class SuffixTree
 					done = true;
 					break;
 				}
-				else { // key.charAt(0)>child.key.charAt(0)
-						// don't forget to add the largest new key after
-						// iterating all children
+				else { 
+					// key.charAt(0)>child.key.charAt(0)
+					// don't forget to add the largest new key after
+					// iterating all children
 					continue;
 				}
 			}
@@ -248,8 +254,8 @@ public class SuffixTree
 				if (delta == len) {
 					if (keyLen == childKeyLen) {
 						// e.g. child="ab"
-						// ab ab
-						// / \ =========> / \
+						// ab               ab
+						// / \ =========>   / \
 						// e f insert "ab" e f
 						// terminate this phase (implicit tree with rule #3)
 						state.u = child;
@@ -258,9 +264,9 @@ public class SuffixTree
 					else if (keyLen > childKeyLen) {
 						// TODO: still need an example to test this condition
 						// e.g. child="ab"
-						// ab ab
-						// / \ ==========> / | \
-						// e f insert "abc" c e f
+						// ab                 ab
+						// / \ ==========>   / | \
+						// e f insert "abc"  c e f
 						// recursion
 						state.u = child;
 						state.v = child;
@@ -270,8 +276,8 @@ public class SuffixTree
 					}
 					else { // keyLen<childKeyLen
 							// e.g. child="abc"
-							// abc abc
-							// / \ =========> / \
+							// abc             abc
+							// / \ =========>  / \
 							// e f insert "ab" e f
 							//
 							// terminate this phase (implicit tree with rule #3)
@@ -282,17 +288,19 @@ public class SuffixTree
 				else {// 0<delta<len
 
 					// e.g. child="abc"
-					// abc ab
-					// / \ ==========> / \
+					// abc              ab
+					// / \ ==========>  / \
 					// e f insert "abd" c d
-					// / \
-					// e f
+					//                 / \
+					//                 e f
 					// insert the new node: ab
 					int nodepathlen = child.pathlen - (child.getLength() - delta);
 					SuffixNode node = new SuffixNode(sb, child.start, child.start + delta - 1, nodepathlen);
+					// node:ab
 					node.children = new LinkedList<SuffixNode>();
 
 					int leafpathlen = (sb.length() - (k + delta)) + nodepathlen;
+					// leaf: d
 					SuffixNode leaf = new SuffixNode(sb, k + delta, sb.length() - 1, leafpathlen);
 
 					// update child node: c
@@ -308,10 +316,11 @@ public class SuffixTree
 					// update parent
 					currNode.children.set(i, node);
 
-					// state.u = currNode; //currNode is already registered as
-					// state.u, so commented out
-					state.v = node;
-					newleaf = leaf;
+					// state.u = currNode;
+					// currNode is already registered as state.u, so commented
+					// out
+					state.v = node;//ab
+					newleaf = leaf;//d
 				}
 				done = true;
 				break;
@@ -364,11 +373,11 @@ public class SuffixTree
 					// we know v must be an internal node; branching and cut
 					// child short
 					// e.g. child="abc",uvLen = 2
-					// abc ab
-					// / \ ================> / \
-					// e f suffix part: "abd" c d
-					// / \
-					// e f
+					// abc                     ab
+					// / \ ================>   / \
+					// e f suffix part: "abd"  c d
+					//                        / \
+					//                        e f
 
 					// insert the new node: ab; child is now c
 					int nodepathlen = child.pathlen - (child.getLength() - uvLen);
