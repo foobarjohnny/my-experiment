@@ -13,7 +13,7 @@ package tree;
  * @author dysong
  *         http://www.cnblogs.com/ljsspace/archive/2011/07/18/2109196.html
  * 
- * 
+ *         RANK-K 中间是允许有相等值的 如果没有相等值 那就意味着RANK不用再排了
  */
 public class SuffixArray_PrefixDoubling
 {
@@ -113,6 +113,7 @@ public class SuffixArray_PrefixDoubling
 		int len = tA.length;
 		int digitsTotalLen = tA[0].digits.length;
 
+		// 基数排序是先排次关键字 再排主关键字
 		for (int d = digitsTotalLen - 1, j = 0; j < digitsLen; d--, j++) {
 			this.countingSort(d, tA, tB, max);
 			// assign tB to tA
@@ -145,6 +146,9 @@ public class SuffixArray_PrefixDoubling
 		for (int i = 1; i < len; i++) {
 			sa[i] = tB[i].isuffix;
 
+			// 这是什么意思 去掉重复的？
+			// K前缀
+			// 的确要这样做 不然有些RANK-K相等的却因为排序關系有前后 影響下次加倍運算
 			boolean equalLast = true;
 			for (int j = digitsTotalLen - digitsLen; j < digitsTotalLen; j++) {
 				if (tB[i].digits[j] != tB[i - 1].digits[j]) {
@@ -162,6 +166,10 @@ public class SuffixArray_PrefixDoubling
 		suffix.rank = rank;
 		suffix.sa = sa;
 		// judge if we are done
+		// R = LEN
+		// 说明RANK-K里没有相等的了
+		// 那就代表了RANK-2K也不用排了
+		// 因为前K已经不相等 就不用对比后K了
 		if (r == len) {
 			suffix.done = true;
 		}
@@ -188,6 +196,9 @@ public class SuffixArray_PrefixDoubling
 		for (int i = 0; i < len; i++) {
 			tA[i] = new Tuple(i, new int[] { 0, text.charAt(i) - base });
 		}
+		System.out.println("base" + (base - '0'));
+		System.out.println("base" + ('a' - '0'));
+		System.out.println("base" + ('A' - '0'));
 		Suffix suffix = rank(tA, tB, MAX_CHAR - base, 1);
 		while (!suffix.done) { // no need to decide if: k<=len
 			k <<= 1;
@@ -220,6 +231,65 @@ public class SuffixArray_PrefixDoubling
 		System.out.println();
 	}
 
+	// h[i]=height[Rank[i]]，即height[i]=h[SA[i]], h[i-1]=
+	// height[Rank[i-1]]=LCP(Suffix(SA[Rank[i-1]-1]),Suffix(SA[Rank[i-1]]);
+	// height[Rank[SA[i]-1]]=h[SA[i]-1]
+	// 令height[i]=LCP(i-1,i)==lcp(Suffix(SA[i-1]),Suffix(SA[i])，1<i≤n，并设height[1]=0。
+	// RMQ看另一個SuffixArrayC.java
+	public int[] getHeight(String text, int[] sa, int[] rank)
+	{
+		if (text == null)
+			return null;
+		int len = text.length();
+		if (len == 0) {
+			return null;
+		}
+		int[] H = new int[len];
+
+		// base case: p=0
+		// caculate LCP of suffix[0]
+		int lcp = 0;
+		int r = rank[0] - 1;
+		if (r > 0) {
+			int q = sa[r - 1];
+			// caculate LCP by definition
+			for (int i = 0, j = q; i < len && j < len; i++, j++) {
+				if (text.charAt(i) != text.charAt(j)) {
+					lcp = i;
+					break;
+				}
+			}
+		}
+		H[0] = lcp;
+
+		// other cases: p>=1
+		// ignore p == sa[0] because LCP=0 for suffix[p] where rank[p]=0
+		for (int p = 1; p < len && p != sa[0]; p++) {
+			int h = H[p - 1];
+			int q = sa[rank[p] - 2];
+			lcp = 0;
+			if (h > 1) { // for h<=1, caculate LCP by definition (i.e. start
+							// with lcp=0)
+				// jump h-1 chars for suffix[p] and suffix[q]
+				lcp = h - 1;
+			}
+			for (int i = p + lcp, j = q + lcp, k = 0; i < len && j < len; i++, j++, k++) {
+				if (text.charAt(i) != text.charAt(j)) {
+					lcp += k;
+					break;
+				}
+			}
+			H[p] = lcp;
+		}
+
+		// caculate LCP
+		int[] Height = new int[len];
+		for (int i = 0; i < len; i++) {
+			Height[i] = H[sa[i]];
+		}
+		return Height;
+	}
+
 	public static void main(String[] args)
 	{
 		/*
@@ -230,8 +300,11 @@ public class SuffixArray_PrefixDoubling
 		 * i=0;i<B.length;i++) System.out.format(" %d", B[i]);
 		 * System.out.println();
 		 */
-
+		System.out.println(MAX_CHAR);
+		System.out.println(Character.MAX_VALUE);
+		System.out.println(Character.MIN_VALUE);
 		String text = "GACCCACCACC#";
+		text = "abcd#";
 		SuffixArray_PrefixDoubling pd = new SuffixArray_PrefixDoubling();
 		Suffix suffix = pd.solve(text);
 		System.out.format("Text: %s%n", text);
