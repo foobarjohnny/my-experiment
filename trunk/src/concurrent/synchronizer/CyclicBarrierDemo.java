@@ -7,6 +7,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+//基于ReentrantLock
 public class CyclicBarrierDemo
 {
 	// 徒步需要的时间: Shenzhen, Guangzhou, Chongqing
