@@ -2,6 +2,7 @@ package concurrent.locks;
 
 import java.util.concurrent.CyclicBarrier;
 
+// ReentrantLock不公平锁 先ACQUIRE后ENQUEUE 直接插队了 但不用PARK还是什么的 所以效率更高
 public class BenchmarkTest
 {
 	private Counter			counter;	;
