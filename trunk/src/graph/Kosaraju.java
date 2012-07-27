@@ -1,7 +1,11 @@
 package graph;
 import java.util.Arrays;
 import java.util.LinkedList;
-
+/**
+ * http://blog.csdn.net/liguanxing/article/details/5665520
+ * @author dysong
+ *
+ */
 //Kosaraju算法 StrongConnectedComponent
 //对正图DFS 然后再对逆序图DFS－－按照第一次的F[U]反向访问
 //O(V+E)

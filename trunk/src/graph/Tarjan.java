@@ -8,6 +8,12 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * http://blog.csdn.net/jokes000/article/details/7538994
+ * http://yzmduncan.iteye.com/blog/990580 http://www.byvoid.com/blog/biconnect/
+ * http://www.haogongju.net/art/1543539
+ */
+
 public class Tarjan
 {
 	public static int									vertexCnt, edgeCnt;										// µãÊý£¬±ßÊý
@@ -35,6 +41,7 @@ public class Tarjan
 	public static int[][]								bridge;
 	public static HashMap<Integer, LinkedList<Integer>>	unionMap	= new HashMap<Integer, LinkedList<Integer>>();
 	public static int[]									ancestor;
+	public static int[]									degree;
 
 	public static void init()
 	{
@@ -58,6 +65,7 @@ public class Tarjan
 		InStack = new int[MAX];
 		father = new int[MAX];
 		stack = new int[MAX];
+		degree = new int[MAX];
 		p = new int[MAX];
 		rank = new int[MAX];
 		ancestor = new int[MAX];
@@ -379,6 +387,8 @@ public class Tarjan
 				System.out.println(a + "->" + b);
 				gra[a].push(b);
 				gra[b].push(a);
+				degree[a]++;
+				degree[b]++;
 			}
 		}
 
@@ -400,6 +410,8 @@ public class Tarjan
 				System.out.println(a + "-" + b);
 				gra[a].push(b);
 				gra[b].push(a);
+				degree[a]++;
+				degree[b]++;
 			}
 		}
 
