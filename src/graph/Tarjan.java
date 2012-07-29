@@ -31,6 +31,8 @@ public class Tarjan
 																													// 所有在组分量组
 																													// 可能强连通分量，点双连通分量，边双连通分量
 	public static LinkedList<Integer>					sta;														// 存储已遍历的结点
+	public static LinkedList<Integer>					gabowSta;													// gabow的辅助STACK
+																													// 类似于low数组
 	public static int									time, ComponentNumber;										// 索引号，强连通分量个数
 	public static int									top;
 	public static int									bridgeCnt;
@@ -93,13 +95,14 @@ public class Tarjan
 			InComponentCC[i] = new LinkedList<Integer>();
 		}
 		sta = new LinkedList<Integer>();
+		gabowSta = new LinkedList<Integer>();
 		makeSet();
 	}
 
 	// O(V+E)
 	// connected component 连通分量 无向图 求割点与点连通分量
 	// 此图已经是无向连通图
-	public static void tarjan_CC_V(int cur)
+	public static void tarjan_CC_V_DFS(int cur)
 	{
 		InStack[cur] = 2;
 		low[cur] = dfn[cur] = ++time;
@@ -108,7 +111,7 @@ public class Tarjan
 			int next = gra[cur].get(i);
 			if (dfn[next] == 0) {
 				father[next] = cur;
-				tarjan_CC_V(next);
+				tarjan_CC_V_DFS(next);
 				low[cur] = Math.min(low[cur], low[next]);
 				if (low[next] >= dfn[cur]) {
 					cut.add(cur);
@@ -152,7 +155,7 @@ public class Tarjan
 	}
 
 	// O(V+E)
-	public static void bicon(int cur)
+	public static void biconDFS(int cur)
 	{
 		int a[] = new int[MAX];
 		low[cur] = dfn[cur] = ++time;
@@ -163,7 +166,7 @@ public class Tarjan
 			if (dfn[next] == 0) // 第一种情况，next是新点
 			{
 				father[next] = cur;
-				bicon(next);
+				biconDFS(next);
 				low[cur] = Math.min(low[cur], low[next]);
 				if (low[next] >= dfn[cur]) // cur割点(把割点留在栈中)
 				{
@@ -204,7 +207,7 @@ public class Tarjan
 
 	// 求割边与边连通分量
 	// 此图已经是无向连通图
-	public static void tarjan_CC_E(int cur, int father)
+	public static void tarjan_CC_E_DFS(int cur, int father)
 	{
 		low[cur] = dfn[cur] = ++time;
 		sta.push(cur);
@@ -216,7 +219,7 @@ public class Tarjan
 			}
 			// white 正边
 			if (dfn[next] == 0) {
-				tarjan_CC_E(next, cur);
+				tarjan_CC_E_DFS(next, cur);
 				low[cur] = Math.min(low[cur], low[next]);
 				if (low[next] > dfn[cur]) // 桥判断没有=
 				{
@@ -289,18 +292,18 @@ public class Tarjan
 	// Strong connected component 强连通分量 有向图
 	// 此图不定为强连通图
 	// O(V+E)
-	public static void tarjan_SCC(int cur)
+	public static void tarjan_SCC_DFS(int cur)
 	{
-		System.out.println("u:" + cur);
+		// System.out.println("cur:" + cur);
 		InStack[cur] = 2;
 		low[cur] = dfn[cur] = ++time;
 		sta.push(cur);
 
 		for (int i = 0; i < gra[cur].size(); ++i) {
 			int next = gra[cur].get(i);
-			System.out.println("t:" + next);
+			// System.out.println("next:" + next);
 			if (dfn[next] == 0) {
-				tarjan_SCC(next);
+				tarjan_SCC_DFS(next);
 				low[cur] = Math.min(low[cur], low[next]);
 			}
 			// grey 反向边
@@ -309,13 +312,56 @@ public class Tarjan
 			}
 			// BLACK 交叉边 或者正向边 没环
 		}
-		System.out.println("low[" + cur + "]:" + low[cur]);
-		System.out.println("dfn[" + cur + "]:" + dfn[cur]);
+		// System.out.println("low[" + cur + "]:" + low[cur]);
+		// System.out.println("dfn[" + cur + "]:" + dfn[cur]);
 		if (low[cur] == dfn[cur]) {
 			++ComponentNumber;
 			while (!sta.isEmpty()) {
 				int j = sta.peek();
-				System.out.println("j:" + j);
+				// System.out.println("j:" + j);
+				sta.pop();
+				InStack[j] = 1;
+				Component[ComponentNumber].push(j);
+				InComponentCC[j].add(ComponentNumber);
+				if (j == cur) {
+					System.out.println();
+					break;
+				}
+			}
+		}
+	}
+
+	public static void gabow_SCC_DFS(int cur)
+	{
+		// System.out.println("cur:" + cur);
+		InStack[cur] = 2;
+		dfn[cur] = ++time;
+		sta.push(cur);
+		gabowSta.push(cur);
+		for (int i = 0; i < gra[cur].size(); ++i) {
+			int next = gra[cur].get(i);
+			// System.out.println("next:" + next);
+			if (dfn[next] == 0) {
+				gabow_SCC_DFS(next);
+			}
+			// grey 反向边
+			// 否则如果当前顶点不属于强分量
+			else if (InComponentCC[next].size() == 0) {
+				// else if (InStack[next] == 2) {// 其实这里用instack也可以的
+				while (dfn[gabowSta.peek()] > dfn[next]) {
+					// 就将路径栈gabowSta中大于当前顶点dfn值的顶点都弹出
+					gabowSta.pop();
+				}
+			}
+
+			// BLACK 交叉边 或者正向边 没环
+		}
+		if (gabowSta.peek() == cur) {// 如果gabowSta栈顶元素等于cur,则找到强分量的根,就是cur
+			gabowSta.pop();
+			++ComponentNumber;
+			while (!sta.isEmpty()) {
+				int j = sta.peek();
+				// System.out.println("j:" + j);
 				sta.pop();
 				InStack[j] = 1;
 				Component[ComponentNumber].push(j);
@@ -368,7 +414,7 @@ public class Tarjan
 		for (int i = 0; i < gra[cur].size(); ++i) {
 			int next = gra[cur].get(i);
 			tarjan_LCA(next);
-			union(cur, gra[cur].get(i));
+			union(cur, next);
 			ancestor[findSet(cur)] = cur;
 		}
 		InStack[cur] = 2; // BLACK
@@ -416,15 +462,15 @@ public class Tarjan
 
 	}
 
-	public static void input2()
+	public static void input2(boolean directedGraph)
 	{
-		// String[] s = { "4-3", "5-6", "5-2", "7-8", "5-7", "3-5" };
+		String[] s = { "4-3", "5-6", "5-2", "7-8", "5-7", "3-5", "8-3" };
 		// String[] s = { "7-8", "6-1", "8-1", "1-2", "3-2", "1-3", "4-5",
 		// "6-7", "5-7", "5-6", "6-8", "7-1" };
 		// String[] s = { "1-2", "2-3", "1-4", "3-1", "4-5", "5-6", "6-7", "7-5"
 		// };
 		// for euler
-		String[] s = { "1-2", "1-3", "2-5", "4-2", "3-2", "4-5" };
+		// String[] s = { "1-2", "1-3", "2-5", "4-2", "3-2", "4-5" };
 		int a, b;
 		int count = 0;
 		for (int i = 0; i < s.length; i++) {
@@ -437,12 +483,14 @@ public class Tarjan
 				graT[b].push(a);
 				outDegree[a]++;
 				inDegree[b]++;
-				// gra[b].push(a);
-				// graT[a].push(b);
-				// outDegree[b]++;
-				// inDegree[a]++;
-				// degree[a]++;
-				// degree[b]++;
+				if (!directedGraph) {
+					gra[b].push(a);
+					graT[a].push(b);
+					outDegree[b]++;
+					inDegree[a]++;
+					degree[a]++;
+					degree[b]++;
+				}
 				count++;
 			}
 		}
@@ -462,49 +510,100 @@ public class Tarjan
 
 	}
 
-	public static void solve()
+	public static void solve(boolean directedGraph)
 	{
-		refresh();
+		if (!directedGraph) {
+			refresh();
+			bicon();
+			printResult("bicon");
+
+			refresh();
+			tarjan_CC_V();
+			printResult("tarjan_CC_V");
+
+			refresh();
+			bridge();
+			printResult("bridge_");
+
+			refresh();
+			tarjan_CC_E();
+			printResult("tarjan_CC_E");
+		}
+		else {
+			refresh();
+			tarjan_SCC();
+			printResult("tarjan_SCC");
+
+			refresh();
+			gabow_SCC();
+			printResult("gabow_SCC");
+
+			refresh();
+			tarjan_LCA(1);
+		}
+
+	}
+
+	// 加degree判定 排除未用点
+	public static void tarjan_SCC()
+	{
 		for (int i = 1; i <= vertexCnt; i++) {
 			if (0 == dfn[i]) {
-				bicon(i);
+				tarjan_SCC_DFS(i);
 			}
 		}
-		printResult("bicon");
+	}
 
-		refresh();
+	public static void gabow_SCC()
+	{
 		for (int i = 1; i <= vertexCnt; i++) {
 			if (0 == dfn[i]) {
-				tarjan_CC_V(i);
+				gabow_SCC_DFS(i);
 			}
 		}
-		printResult("tarjan_CC_P");
+	}
 
-		refresh();
+	public static void tarjan_CC_E()
+	{
+		for (int i = 1; i <= vertexCnt; i++) {
+			if (0 == dfn[i]) {
+				tarjan_CC_E_DFS(i, -1);
+			}
+		}
+	}
+
+	public static void bridge()
+	{
 		for (int i = 1; i <= vertexCnt; i++) {
 			if (0 == dfn[i]) {
 				bridge_dfs(i, -1);
 			}
 		}
-		printResult("bridge_dfs");
+	}
 
-		refresh();
+	public static void tarjan_CC_V()
+	{
 		for (int i = 1; i <= vertexCnt; i++) {
 			if (0 == dfn[i]) {
-				tarjan_CC_E(i, -1);
+				tarjan_CC_V_DFS(i);
 			}
 		}
-		printResult("tarjan_CC_E");
+	}
 
-		refresh();
-		tarjan_LCA(1);
+	public static void bicon()
+	{
+		for (int i = 1; i <= vertexCnt; i++) {
+			if (0 == dfn[i]) {
+				biconDFS(i);
+			}
+		}
 	}
 
 	private static void printResult(String type)
 	{
 		System.out.println();
 		System.out.println("****************" + type + "****************");
-		if (type == "tarjan_CC_P") {
+		if (type == "tarjan_CC_V" || type == "tarjan_SCC" || type == "gabow_SCC") {
 			System.out.println("=====Connected Component===========");
 			if (ComponentNumber >= 1) {
 				System.out.println("Yes");
@@ -521,7 +620,7 @@ public class Tarjan
 				System.out.println(i + " --> " + InComponentCC[i]);
 			}
 		}
-		if (type == "tarjan_CC_P" || type == "bicon") {
+		if (type == "tarjan_CC_V" || type == "bicon") {
 			System.out.println("=====Cut Point=" + cutCnt + "==========");
 			System.out.println();
 			System.out.println("=====Cut Size=" + cut.size() + "==========");
@@ -530,7 +629,7 @@ public class Tarjan
 				System.out.println(t);
 			}
 		}
-		if (type == "tarjan_CC_E" || type == "bridge_dfs") {
+		if (type == "tarjan_CC_E" || type == "bridge") {
 			System.out.println("=====Bridge=" + bridgeCnt + "==========");
 			for (int i = 1; i <= bridgeCnt; i++) {
 				System.out.println(bridge[i][0] + "=" + bridge[i][1]);
@@ -559,9 +658,10 @@ public class Tarjan
 	{
 		edgeCnt = 22;
 		vertexCnt = 9;
+		boolean directedGraph = true;
 		init();
-		input2();
-		solve();
+		input2(directedGraph);
+		solve(directedGraph);
 	}
 
 	public static void makeSet()
