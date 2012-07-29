@@ -1,8 +1,7 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
 /*
  * http://blog.163.com/zhoumhan_0351/blog/static/39954227200982051154725/
@@ -11,83 +10,161 @@ import java.util.LinkedList;
  * http://hi.baidu.com/ybq0460/blog/item/9f5e2272a445a7ea0bd18725.html
  * http://ideone.com/3lfbC
  */
+/*
+ * 欧拉回路：图G，若存在一条路，经过G中每条边有且仅有一次，称这条路为欧拉路，
+ 如果存在一条回路经过G每条边有且仅有一次，
+ 称这条回路为欧拉回路。具有欧拉回路的图成为欧拉图。
+ 判断欧拉路是否存在的方法
+ 有向图：图连通，有一个顶点出度大入度1，有一个顶点入度大出度1，其余都是出度=入度。
+ 无向图：图连通，只有两个顶点是奇数度，其余都是偶数度的。
+ 判断欧拉回路是否存在的方法
+ 有向图：图连通，所有的顶点出度=入度。
+ 无向图：图连通，所有顶点都是偶数度。
+ 这里图连通并不代表图是强连通 有向图的话
+ http://zyk.thss.tsinghua.edu.cn/73/longtime/part4/chapter14/14_03_04_01.htm
+ 定义14.22 设D=<V,E>为一个有向图。若D的基图是连通图，则称D是弱连通图，简称为连通图。若vi,vj∈V ，vi→vj与vj→vi至少成立其一，则称D是单向连通图。若均有vivj，则称D是强连通图。
 
+ 欧拉路 0或者2个点是特殊的 0的情况下就是回路
+ *
+ */
+//CC指无向图 SCC指有向图
+//http://www.graph-magics.com/articles/euler.php 最经典
+//http://coco-young.iteye.com/blog/1437699 最不错
+/*Procedure Euler-circuit (start);
+ Begin
+ For 顶点start的每个邻接点v Do
+ If 边(start,v)未被标记 Then Begin
+ 将边(start,v)作上标记;
+ 将边(v,start)作上标记;                   //1 有向图注释掉
+ Euler-circuit (v);
+ 将边加入栈;
+ End;
+ End;
+ */
 public class Euler extends Tarjan
 {
 
-	// struct stack
-	// {
-	// int top , node[81];
-	//
-	// } T,F,A; //顶点的堆栈
-
-	// int n;
-	public static LinkedList<Integer>	eulerPath;
-
-	boolean brigde(int i, int j)
+	public static boolean brigde4CC(int i, int j)
 	{
-		int t, cur;
-		for (cur = 1; cur <= vertexCnt; cur++) {
-			InStack[cur] = 0;
-		}
 		// 如果度数是1表明就只有I,J这条边 那必然是桥了
 		if (degree[i] == 1) {
-			return false;
+			return true;
 		}
 		else {
 			// 为什么要加Integer的强制转换，为什么Integer能够去掉里面的数字j? 不同的类呀，想想为什么
 			gra[i].remove((Integer) j);
 			gra[j].remove((Integer) i);
-			InStack[i] = 1;
-			t = i;
-			sta.push(i);
-			// 这是一个DFS
-			while (!sta.isEmpty()) {
-				t = sta.peek();
-				int idx = 0;
-				for (idx = 0; idx < gra[t].size(); idx++) {
-					cur = gra[t].get(idx);
-					if (degree[cur] > 0) {
-						if (InStack[cur] == 0)
-							InStack[cur] = 1;
-						sta.push(cur);
-						t = cur;
-						break;
-					}
-				}
-
-				// 没有下面的边了
-				if (idx > vertexCnt) {
-					sta.pop();
-				}
-			}
-			for (cur = 1; cur <= vertexCnt; cur++) {
-				if (degree[cur] > 0) {
-					// 表明有点没访问到
-					if (InStack[cur] == 0) {
-						gra[i].push(j);
-						gra[j].push(i);
-						break;
-					}
-				}
-			}
-			if (cur > vertexCnt) {
+			if (connectivity4CC(i)) {
 				// 不为桥
+				gra[i].push((Integer) j);// 为什么用PUSH而不是ADD，因为之前已经遍历过了
+				gra[j].push((Integer) i);
+				System.out.println("brigde4CC false");
 				return false;
 			}
 			// 为桥
+			gra[i].push((Integer) j);
+			gra[j].push((Integer) i);
+			System.out.println("brigde4CC true");
 			return true;
 		}
 	}
 
-	void Fleury(int cur) // Fleury算法
+	// 有向图其实没有桥这一概念，这里看成他的基图来说
+	public static boolean brigde4SCC(int i, int j)
+	{
+		// 如果度数是1表明就只有I,J这条边 那必然是桥了
+		if (outDegree[i] == 1) {
+			return true;
+		}
+		else {
+			// 为什么要加Integer的强制转换，为什么Integer能够去掉里面的数字j? 不同的类呀，想想为什么
+			gra[i].remove((Integer) j);
+			if (connectivity()) {
+				// 不为桥
+				gra[i].push((Integer) j);// 为什么用PUSH而不是ADD，因为之前已经遍历过了
+				System.out.println("brigde4SCC false");
+				return false;
+			}
+			// 为桥
+			gra[i].push((Integer) j);
+			System.out.println("brigde4SCC true");
+			return true;
+		}
+	}
+
+	// 同样可以用并查集来测连通性 这里采用的BFS DFS
+	public static boolean connectivity4CC(int cur)
+	{
+		int[] visit = new int[vertexCnt + 1];
+		LinkedList<Integer> queue = new LinkedList<Integer>();
+		visit[cur] = 1;
+		queue.push(cur);
+		int i = 0, next = 0;
+		// BFS DFS都能测CC的连通性
+		while (!queue.isEmpty()) {
+			cur = queue.pop();
+			for (i = 0; i < gra[cur].size(); ++i) {
+				next = gra[cur].get(i);
+				if (visit[next] == 0) {
+					visit[next] = 1;
+					queue.push(next);
+				}
+			}
+		}
+
+		for (i = 1; i <= vertexCnt; i++) {
+			// 排除掉孤立点 当要算整个图的时候可以去掉这个判断
+			if (degree[i] > 0) {
+				if (visit[i] == 0) {
+					System.out.println("connectivity4CC false");
+					return false;
+				}
+			}
+		}
+		System.out.println("connectivity4CC true");
+		return true;
+	}
+
+	// SCC 用Kosaraju测强连通性或者Tarjan
+	// 这里只需要测连通性 有向图无向图都可以用
+	public static boolean connectivity()
+	{
+		makeSet();
+		int next, cur;
+		for (cur = 1; cur <= vertexCnt; cur++) {
+			for (int idx = 0; idx < gra[cur].size(); idx++) {
+				next = gra[cur].get(idx);
+				union(cur, next);
+			}
+		}
+		int cnt = 0;
+		for (int i = 1; i <= vertexCnt; i++) {
+			// 必须加括号
+			if ((outDegree[i] > 0 || inDegree[i] > 0) && p[i] == i)
+				cnt++;
+		}
+		return cnt == 1;
+	}
+
+	// 弗罗莱（Fleury）算法思想－解决欧拉回路
+	// Fleury算法：
+	// 任取v0∈V(G)，令P0=v0；
+	// 设Pi=v0e1v1e2…ei vi已经行遍，按下面方法从中选取ei+1：
+	// （a）ei+1与vi相关联；
+	// （b）除非无别的边可供行遍，否则ei+1不应该为Gi=G-{e1,e2, …,
+	// ei}中的桥（所谓桥是一条删除后使连通图不再连通的边，有向图转化为其图，用并查集最好）；
+	// （c）当（b）不能再进行时，算法停止。
+	// 可以证明,当算法停止时所得的简单回路Wm=v0e1v1e2….emvm(vm=v0)为G中的一条欧拉回路，复杂度为O(e*e)。
+	// http://www.austincc.edu/powens/+Topics/HTML/05-6/05-6.html
+	// 只能用于无向图，可拓展到有向图
+	public static void Fleury4CC(LinkedList<Integer> eulerPath, int cur) // Fleury算法
 	{
 		int next = 0, b = 0;
 		if (eulerPath.size() <= edgeCnt + 1) {
-			eulerPath.push(cur);
+			eulerPath.add(cur);
 			for (int idx = 0; idx < gra[cur].size(); idx++) {
 				next = gra[cur].get(idx);
-				if (brigde(cur, next) == false) {
+				if (degree[cur] == 1 || brigde4CC(cur, next) == false) {
 					b = 1;
 					break;
 				}
@@ -98,119 +175,175 @@ public class Euler extends Tarjan
 			gra[next].remove((Integer) cur);
 			degree[cur]--;
 			degree[next]--;
-			Fleury(next);
+			Fleury4CC(eulerPath, next);
 		}
 	}
 
-	void main()
+	public static void Fleury4SCC(LinkedList<Integer> eulerPath, int cur) // Fleury算法
 	{
-
-		int m, s, t, num, i, j;
-
-		s = 0;
-		if (BFSTest(1)) // 判断有无奇度点
-		{
-			for (i = 1; i <= vertexCnt; i++) {
-				num = gra[i].size();
-				if (num % 2 == 1) {
-					s++;
+		int next = 0, b = 0;
+		if (eulerPath.size() <= edgeCnt + 1) {
+			eulerPath.add(cur);
+			for (int idx = 0; idx < gra[cur].size(); idx++) {
+				next = gra[cur].get(idx);
+				if (outDegree[cur] == 1 || brigde4SCC(cur, next) == false) {
+					b = 1;
 					break;
 				}
 			}
 		}
+		if (b == 1) {
+			gra[cur].remove((Integer) next);
+			outDegree[cur]--;
+			inDegree[next]--;
+			Fleury4SCC(eulerPath, next);
+		}
+	}
 
-		if (s == 0) {
-			Fleury(1);
-			System.out.println("\n\t该图的一条欧拉回路：");
+	// 既可以求CIRCUIT又可以求PATH,不过PATH的时候要选好START,必须在后面用push
+	// O(E)
+	public static void Hierholzer(LinkedList<Integer> eulerPath, int cur, int[][] visitEdge, boolean directedGraph)
+	{
+		int next;
+		for (int idx = 0; idx < gra[cur].size(); idx++) {
+			next = gra[cur].get(idx);
+			if (visitEdge[cur][next] == 0) {
+				visitEdge[cur][next] = 1;
+				if (!directedGraph) {
+					visitEdge[next][cur] = 1;
+				}
+
+				// if (eulerPath.size() == 0) {
+				// eulerPath.add(cur);
+				// }
+				// eulerPath.add(next);
+				// 这川不行的 为什么需要在后面用PUSH更准确呢 自己想想吧
+				Hierholzer(eulerPath, next, visitEdge, directedGraph);
+				if (eulerPath.size() == 0) {
+					eulerPath.push(next);
+				}
+				eulerPath.push(cur);
+				// eulerPath.push(edge);
+			}
+		}
+	}
+
+	public static void HierholzerSlove(boolean directedGraph)
+	{
+
+		if (true)
+		// if (((directedGraph && !odd4SCC()) || (!directedGraph && !odd4CC()))
+		// && connectivity()) // 判断图连通,判断有无奇度点
+		{
+			LinkedList<Integer> eulerPath = new LinkedList<Integer>();
+			int[][] visitEdge = new int[vertexCnt + 1][vertexCnt + 1];
+			int start = 1;
+			Hierholzer(eulerPath, start, visitEdge, directedGraph);
+			System.out.println("\n\t HierholzerSlove 该图的一条欧拉回路：");
 			System.out.println(eulerPath);
 		}
 		else {
-			System.out.println("\n\t该图不存在欧拉回路!\n");
+			System.out.println("\n\t HierholzerSlove 该图不存在欧拉回路!\n");
 		}
-
 	}
 
-	public static boolean BFSTest(int cur)
+	public static void FleurySlove4CC()
 	{
-		InStack[cur] = 1;
-		sta.push(cur);
-		while (!sta.isEmpty()) {
-			cur = sta.pop();
-			for (int i = 0; i < gra[cur].size(); ++i) {
-				int next = gra[cur].get(i);
-				InStack[next] = 1;
-				sta.push(next);
+
+		if (!odd4CC() && connectivity4CC(1)) // 判断图连通,判断有无奇度点
+		{
+			LinkedList<Integer> eulerPath = new LinkedList<Integer>();
+			Fleury4CC(eulerPath, 1);
+			System.out.println("\n\tFleurySlove4CC 该图的一条欧拉回路：");
+			System.out.println(eulerPath);
+		}
+		else {
+			System.out.println("\n\tFleurySlove4CC 该图不存在欧拉回路!\n");
+		}
+	}
+
+	public static void FleurySlove4SCC()
+	{
+
+		if (!odd4SCC() && connectivity()) // 判断图连通,判断有无奇度点
+		{
+			LinkedList<Integer> eulerPath = new LinkedList<Integer>();
+			Fleury4SCC(eulerPath, 1);
+			System.out.println("\n\tFleurySlove4SCC 该图的一条欧拉回路：");
+			System.out.println(eulerPath);
+		}
+		else {
+			System.out.println("\n\tFleurySlove4SCC 该图不存在欧拉回路!\n");
+		}
+	}
+
+	public static boolean odd4CC()
+	{
+		for (int i = 1; i <= vertexCnt; i++) {
+			if (gra[i].size() % 2 == 1) {
+				System.out.println("odd4CC true");
+				return true;
 			}
 		}
-
-		for (int i = 1; i <= vertexCnt; i++)
-			if (InStack[i] == 0) {
-				return false;
-			}
+		System.out.println("odd4CC false");
 		return false;
 	}
 
-	// void Euler(Graph G,int x)
-	// {
-	// int m;
-	// SqStack S;
-	// InitStack(S);
-	// DFS(G,S,x,0);
-	// printf("该图的一个欧拉回路为：");
-	// while(!StackEmpty(S))
-	// {
-	// GetTop(S,m);
-	// printf("->v%d",m);
-	// Pop(S);
-	// }//while
-	// }
-	//
-	// void InputM1(Graph &G)
-	// {
-	//
-	// int h,z;
-	// printf("Please input 顶点数和边数/n");
-	// scanf("%d",&v);
-	// scanf("%d",&e);
-	// for(int i=0;i<v;i++)
-	// for(int j=0;j<v;j++)
-	// G[i][j]=0;
-	//
-	// printf("please int the 邻接矩阵的值(起点(数字) 终点(数字))：/n");
-	// for(int i=0;i<e;i++)
-	// {
-	// scanf("%d",&h);
-	// scanf("%d",&z);
-	// G[h-1][z-1]=1;
-	// G[z-1][h-1]=1;
-	// }//for
-	// }//InputM1
-	//
-	// int main()
-	// {
-	// int i,j,sum,k=0;
-	// Graph G;
-	// InputM1(G);
-	// if(BFSTest(G)==0)
-	// {
-	// printf("该图不是连通图!/n");
-	// exit(0);
-	// }//if
-	// for(i=0;i<v;i++)
-	// {
-	// sum=0;
-	// for(j=0;j<v;j++)
-	// sum+=G[i][j];
-	// if(sum%2==1)
-	// { k=1;
-	// break;
-	// }//if
-	// }//for
-	// if(k==1) printf("该图不存在欧拉回路！/n");
-	// else
-	// Euler(G,0); //从那个点出发
-	// return 1;
-	// }
-}
+	public static boolean odd4SCC()
+	{
+		for (int i = 1; i <= vertexCnt; i++) {
+			if (outDegree[i] != inDegree[i]) {
+				System.out.println("odd4SCC true");
+				return true;
+			}
+		}
+		System.out.println("odd4SCC false");
+		return false;
+	}
 
-// 顶点类
+	public static void main(String[] args)
+	{
+		edgeCnt = 22;
+		vertexCnt = 5;
+		boolean directedGraph = true;
+		init();
+		input3(directedGraph);
+		// FleurySlove4CC();
+		// FleurySlove4SCC();
+		HierholzerSlove(directedGraph);
+	}
+
+	public static void input3(boolean directedGraph)
+	{
+		// for cc euler
+		// String[] s = { "1-2", "1-3", "2-5", "4-2", "3-2", "4-5" };
+		// for scc euler
+		// String[] s = { "2-1","4-2", "1-3", "2-5", "3-2", "5-4" };
+		String[] s = { "1-3", "1-4", "4-1" };
+		int a, b;
+		int count = 0;
+		for (int i = 0; i < s.length; i++) {
+			a = Integer.valueOf(s[i].split("-")[0]);// 1-n
+			b = Integer.valueOf(s[i].split("-")[1]);// 1-n
+			if (!gra[a].contains(b) && a != b) {
+				System.out.println(a + "-" + b);
+				gra[a].push(b);
+				graT[b].push(a);
+				outDegree[a]++;
+				inDegree[b]++;
+				if (!directedGraph) {
+					gra[b].push(a);
+					graT[a].push(b);
+					outDegree[b]++;
+					inDegree[a]++;
+					degree[a]++;
+					degree[b]++;
+				}
+				count++;
+			}
+		}
+		// 去掉了重复了的edge
+		edgeCnt = count;
+	}
+
+}

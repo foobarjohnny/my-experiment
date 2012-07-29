@@ -10,15 +10,21 @@ import java.util.Set;
 
 /**
  * http://blog.csdn.net/jokes000/article/details/7538994
- * http://yzmduncan.iteye.com/blog/990580 http://www.byvoid.com/blog/biconnect/
+ * http://yzmduncan.iteye.com/blog/990580/ http://www.byvoid.com/blog/biconnect/
  * http://www.haogongju.net/art/1543539
+ * http://blog.csdn.net/sevenster/article/details/6882225
+ * http://www.byvoid.com/blog/scc-tarjan/
  */
-
+// 强连通分量对于有向图，不定强连通
+// 点双连通分量，边双连通分量是对于无向连通图
 public class Tarjan
 {
 	public static int									vertexCnt, edgeCnt;										// 点数，边数
 	public static int									MAX			= 100;											// 题目中可能的最大点数
 	public static LinkedList<Integer>[]					gra;
+	public static LinkedList<Integer>[]					graT;
+	// 反向图
+	// Kosaraju要用到
 	public static LinkedList<Integer>[]					quest;
 	public static LinkedList<Integer>[]					Component;													// 获得强连通分量结果
 	public static LinkedList<Integer>[]					InComponentCC;												// Component
@@ -42,17 +48,24 @@ public class Tarjan
 	public static HashMap<Integer, LinkedList<Integer>>	unionMap	= new HashMap<Integer, LinkedList<Integer>>();
 	public static int[]									ancestor;
 	public static int[]									degree;
+	public static int[]									outDegree;
+	public static int[]									inDegree;
 
 	public static void init()
 	{
-
+		MAX = vertexCnt + 1;
 		gra = new LinkedList[MAX];
+		graT = new LinkedList[MAX];
 		quest = new LinkedList[MAX];
 
 		for (int i = 1; i <= vertexCnt; ++i) {
 			gra[i] = new LinkedList<Integer>();
+			graT[i] = new LinkedList<Integer>();
 			quest[i] = new LinkedList<Integer>();
 		}
+		degree = new int[MAX];
+		outDegree = new int[MAX];
+		inDegree = new int[MAX];
 		refresh();
 	}
 
@@ -65,7 +78,7 @@ public class Tarjan
 		InStack = new int[MAX];
 		father = new int[MAX];
 		stack = new int[MAX];
-		degree = new int[MAX];
+
 		p = new int[MAX];
 		rank = new int[MAX];
 		ancestor = new int[MAX];
@@ -85,7 +98,8 @@ public class Tarjan
 
 	// O(V+E)
 	// connected component 连通分量 无向图 求割点与点连通分量
-	public static void tarjan_CC_P(int cur)
+	// 此图已经是无向连通图
+	public static void tarjan_CC_V(int cur)
 	{
 		InStack[cur] = 2;
 		low[cur] = dfn[cur] = ++time;
@@ -94,7 +108,7 @@ public class Tarjan
 			int next = gra[cur].get(i);
 			if (dfn[next] == 0) {
 				father[next] = cur;
-				tarjan_CC_P(next);
+				tarjan_CC_V(next);
 				low[cur] = Math.min(low[cur], low[next]);
 				if (low[next] >= dfn[cur]) {
 					cut.add(cur);
@@ -110,6 +124,7 @@ public class Tarjan
 						if (j == next) {
 							break;// 仔细回忆一下 为什么这里不用CUR来判断而是用NEXT
 							// 不像强连通分量一样用CUR 折磨俺N久的东西呀
+							// low[cur] == dfn[cur] 强连通分量是比较CUR与CUR。。。
 						}
 					}
 				}
@@ -188,6 +203,7 @@ public class Tarjan
 	}
 
 	// 求割边与边连通分量
+	// 此图已经是无向连通图
 	public static void tarjan_CC_E(int cur, int father)
 	{
 		low[cur] = dfn[cur] = ++time;
@@ -208,7 +224,7 @@ public class Tarjan
 					bridge[bridgeCnt][1] = next;
 				}
 				else {// 不是桥，缩点
-					Union(cur, next);
+					union(cur, next);
 				}
 				// if (low[next] >= dfn[cur]) 不能用这个来统计边连通分去 想想为什么？
 			}
@@ -245,7 +261,7 @@ public class Tarjan
 					bridge[bridgeCnt][1] = next;
 				}
 				else {// 不是桥，缩点
-					Union(cur, next);
+					union(cur, next);
 				}
 				// 不能这个来统计 BRIDGE SC。。。 有BUG 想想为什么？
 				if (low[next] >= dfn[cur]) {
@@ -271,6 +287,7 @@ public class Tarjan
 	}
 
 	// Strong connected component 强连通分量 有向图
+	// 此图不定为强连通图
 	// O(V+E)
 	public static void tarjan_SCC(int cur)
 	{
@@ -351,7 +368,7 @@ public class Tarjan
 		for (int i = 0; i < gra[cur].size(); ++i) {
 			int next = gra[cur].get(i);
 			tarjan_LCA(next);
-			Union(cur, gra[cur].get(i));
+			union(cur, gra[cur].get(i));
 			ancestor[findSet(cur)] = cur;
 		}
 		InStack[cur] = 2; // BLACK
@@ -379,7 +396,7 @@ public class Tarjan
 
 	public static void input()
 	{
-
+		int count = 0;
 		for (int i = 1; i <= edgeCnt; i++) {
 			int a = new Random().nextInt(vertexCnt - 1) + 1;// 1-n
 			int b = new Random().nextInt(vertexCnt - 1) + 1;// 1-n
@@ -387,10 +404,15 @@ public class Tarjan
 				System.out.println(a + "->" + b);
 				gra[a].push(b);
 				gra[b].push(a);
+				graT[a].push(b);
+				graT[b].push(a);
 				degree[a]++;
 				degree[b]++;
+				count++;
 			}
 		}
+		// 去掉了重复了的edge
+		edgeCnt = count;
 
 	}
 
@@ -399,9 +421,12 @@ public class Tarjan
 		// String[] s = { "4-3", "5-6", "5-2", "7-8", "5-7", "3-5" };
 		// String[] s = { "7-8", "6-1", "8-1", "1-2", "3-2", "1-3", "4-5",
 		// "6-7", "5-7", "5-6", "6-8", "7-1" };
-		String[] s = { "1-2", "2-3", "1-4", "3-1", "4-5", "5-6", "6-7", "7-5" };
-
+		// String[] s = { "1-2", "2-3", "1-4", "3-1", "4-5", "5-6", "6-7", "7-5"
+		// };
+		// for euler
+		String[] s = { "1-2", "1-3", "2-5", "4-2", "3-2", "4-5" };
 		int a, b;
+		int count = 0;
 		for (int i = 0; i < s.length; i++) {
 
 			a = Integer.valueOf(s[i].split("-")[0]);// 1-n
@@ -409,11 +434,20 @@ public class Tarjan
 			if (!gra[a].contains(b) && a != b) {
 				System.out.println(a + "-" + b);
 				gra[a].push(b);
-				gra[b].push(a);
-				degree[a]++;
-				degree[b]++;
+				graT[b].push(a);
+				outDegree[a]++;
+				inDegree[b]++;
+				// gra[b].push(a);
+				// graT[a].push(b);
+				// outDegree[b]++;
+				// inDegree[a]++;
+				// degree[a]++;
+				// degree[b]++;
+				count++;
 			}
 		}
+		// 去掉了重复了的edge
+		edgeCnt = count;
 
 		for (int i = 1; i <= 7; i++) {
 			a = new Random().nextInt(vertexCnt - 1) + 1;// 1-n
@@ -441,7 +475,7 @@ public class Tarjan
 		refresh();
 		for (int i = 1; i <= vertexCnt; i++) {
 			if (0 == dfn[i]) {
-				tarjan_CC_P(i);
+				tarjan_CC_V(i);
 			}
 		}
 		printResult("tarjan_CC_P");
@@ -546,7 +580,7 @@ public class Tarjan
 		return p[x];
 	}
 
-	public static void Union(int x, int y)
+	public static void union(int x, int y)
 	{
 		int i = findSet(x);
 		int j = findSet(y);
