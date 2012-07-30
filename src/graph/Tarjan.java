@@ -331,6 +331,12 @@ public class Tarjan
 		}
 	}
 
+	// http://www.nocow.cn/index.php/Gabow%E7%AE%97%E6%B3%95
+	// Gabow算法与Tarjan算法的核心思想实质上是相通的,就是利用强连通分量必定是DFS的一棵子树
+	// 这个重要性质,通过找出这个子树的根来求解强分量.具体到实现是利用一个栈S来保存DFS遇到的
+	// 所有树边的另一端顶点,在找出强分量子树的根之后,弹出S中的顶点一一进行编号.
+	// 二者不同的是,Tarjan算法通过一个low数组来维护各个顶点能到达的最小前序编号,而Gabow算法
+	// 通过维护另一个栈来取代low数组,将前序编号值更大的顶点都弹出,然后通过栈顶的那个顶点来判 断是否找到强分量子树的根
 	public static void gabow_SCC_DFS(int cur)
 	{
 		// System.out.println("cur:" + cur);
