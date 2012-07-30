@@ -9,6 +9,8 @@ import java.util.Map;
 
 /** 最小生成树的Kruskal算法(以无向图为例) */
 /** 最小生成树是最小权值生成树，并不是边最小化，因为生成树的边都固定为V-1 */
+// http://www.byvoid.com/blog/tag/%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/
+// 次短路径 次小生成树 枚举减掉
 public class MinimumSpanningTree
 {
 	public static Map<Ve, Integer>	vertexMap	= new HashMap<Ve, Integer>();
@@ -21,6 +23,7 @@ public class MinimumSpanningTree
 	public static int				vertexCnt	= edgeCnt = 0;					// 点数，边数
 
 	// O(ElgV) 详细看书吧
+	// 克鲁斯卡尔
 	public static boolean Kruskal()
 	{
 		// 把边按权值非递减的排序
@@ -86,6 +89,7 @@ public class MinimumSpanningTree
 	//
 	// EXTRACT-MIN : 二叉 lgV 斐 lgV
 	// DECREASE-KEY: lgV 1
+	// 普利姆
 	private static boolean prim()
 	{
 		int start = 1;

@@ -1,6 +1,8 @@
 package graph;
+
 import java.util.ArrayDeque;
 
+//贝尔曼—福德
 public class Bellman_Ford
 {
 	private static final int	MAX	= 1000;
@@ -119,7 +121,7 @@ public class Bellman_Ford
 	 * 只有那些在前一遍松弛中改变了距离估计值的点，才可能引起他们的邻接点的距离估计值的改变。
 	 * 判断负权回路的方案很多，世间流传最广、比较容易实现并且高效的方法的是记录每个结点进队次数，超过|V|次表示有负权。
 	 */
-	// ELEMENT--PEEK, ADD--OFFER, REMOVE--POLL
+	// ELEMENT--PEEK, ADD--OFFER, REMOVE--POLL--POP
 	private static boolean spfa(Edge[] edges, int[] dist, int[] pre, int n)
 	{
 		initDist(dist, pre, n);
@@ -152,6 +154,7 @@ public class Bellman_Ford
 		return true;
 	}
 
+	// 约翰森
 	private static boolean Johnson(Edge[] edges, int[] dist, int[] pre)
 	{
 		int[] dist2 = new int[dist.length + 1];
@@ -165,10 +168,11 @@ public class Bellman_Ford
 				edges2[i] = new Edge(dist.length, i - edges.length, 0);
 			}
 		}
-		
+
 		int start = dist2.length - 1;
-		
+
 		boolean b = bellman_Ford(edges2, dist2, pre2, start);
+		// 用bellman_Ford生成的DIST来赋权 是用三角定理保定生成的W>=0
 		printPath(dist2, pre2, start, b);
 		if (b) {
 			start = dist.length - 1;
@@ -192,7 +196,7 @@ public class Bellman_Ford
 	/**
 	 * 时间复杂度是O(V^2+E) 换成最小堆 则变成O((V+E)lgV) 换成斐波那契堆则变成O(VlgV+E)
 	 */
-
+	// 迪杰斯特拉
 	private static boolean Dijkstra(Edge[] edges, int[] dist, int[] pre, int n, int[] h)
 	{
 		initDist(dist, pre, n);
