@@ -1,6 +1,5 @@
 package graph;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** 最小生成树的Kruskal算法(以无向图为例) */
+//(克鲁斯克尔)
 public class MST_Kruskal
 {
 	public Map<V, Integer>	vertexMap	= new HashMap<V, Integer>();
@@ -30,6 +30,7 @@ public class MST_Kruskal
 		});
 		// 贪心的构造生成树
 		int i = 1;
+		// 并查集
 		for (E1 edge : EQueue) {
 			// i用来标记顶点是否属于同一个树
 			i = i + 1;

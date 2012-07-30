@@ -18,6 +18,7 @@ import java.util.Set;
 // 强连通分量对于有向图，不定强连通
 // 点双连通分量，边双连通分量是对于无向连通图
 public class Tarjan
+// 塔扬 塔尖
 {
 	public static int									vertexCnt, edgeCnt;										// 点数，边数
 	public static int									MAX			= 100;											// 题目中可能的最大点数
@@ -331,6 +332,7 @@ public class Tarjan
 		}
 	}
 
+	// 盖宝
 	// http://www.nocow.cn/index.php/Gabow%E7%AE%97%E6%B3%95
 	// Gabow算法与Tarjan算法的核心思想实质上是相通的,就是利用强连通分量必定是DFS的一棵子树
 	// 这个重要性质,通过找出这个子树的根来求解强分量.具体到实现是利用一个栈S来保存DFS遇到的

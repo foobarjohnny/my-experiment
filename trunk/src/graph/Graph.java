@@ -1,4 +1,5 @@
 package graph;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -214,6 +215,12 @@ public class Graph
 		}
 	}
 
+	// 拓扑排序 一个无环的有向图称为无环图（Directed Acyclic Graph），简称DAG图
+	// 这里采用的深搜方法
+	// 另外 有前趋法
+	// (1)从有向图中选择一个没有前驱(即入度为0)的顶点并且输出它.
+	// (2)从网中删去该顶点,并且删去从该顶点发出的全部有向边.
+	// (3)重复上述两步,直到剩余的网中不再存在没有前趋的顶点为止.
 	public void topologySort_byDFS()
 	{
 		this.visit();

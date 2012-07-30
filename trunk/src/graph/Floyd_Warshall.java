@@ -1,4 +1,5 @@
 package graph;
+
 //弗洛伊德算法，插点法
 //以无向图G为入口，得出任意两点之间的路径长度dist[i][j]，路径path[i][j][k]，
 //途中无连接得点距离用0表示，点自身也用0表示
@@ -61,15 +62,24 @@ public class Floyd_Warshall
 			}
 		}
 
-		/**
-		 * 上面是精简形式，把空间从O(V^3)节省到O(V^2) int i, j, k; for (i = 1; i <= n; i++) {
-		 * for (j = 1; j <= n; j++) { distance[i][j][0] = map[i][j]; } } for (k
-		 * = 1; k <= n; k++) { for (i = 1; i <= n; i++) { for (j = 1; j <= n;
-		 * j++) { distance[i][j][k] = distance[i][j][k - 1]; if
-		 * (distance[i][k][k - 1] + distance[k][j][k - 1] < distance[i][j][k])
-		 * distance[i][j][k] = distance[i][k][k - 1] + distance[k][j][k - 1]; }
-		 * } }
-		 */
+		// 上面是精简形式，把空间从O(V^3)节省到O(V^2)
+		// int[][][] distance = new int[row][row][row];
+		// int i, j, k;
+		// for (i = 1; i <= row; i++) {
+		// for (j = 1; j <= row; j++) {
+		// distance[i][j][0] = G[i][j];
+		// }
+		// }
+		// for (k = 1; k <= row; k++) {
+		// for (i = 1; i <= row; i++) {
+		// for (j = 1; j <= row; j++) {
+		// distance[i][j][k] = distance[i][j][k - 1];
+		// if (distance[i][k][k - 1] + distance[k][j][k - 1] <
+		// distance[i][j][k])
+		// distance[i][j][k] = distance[i][k][k - 1] + distance[k][j][k - 1];
+		// }
+		// }
+		// }
 
 		for (int i = 0; i < row; i++) {
 			// 求出所有的路径
