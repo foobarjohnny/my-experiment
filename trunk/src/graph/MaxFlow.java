@@ -32,8 +32,8 @@ public class MaxFlow
 	public static int[]					E;											// E=Excess
 	public static LinkedList<Integer>[]	activeHLPP;
 
-	// Ford-Fullkerson方法 Method
-	// 使用BFS来实现Ford-Fullkerson方法中的找增广路径的算法称为Edmonds-Karp算法。
+	// Ford-Fullkerson方法 Method(福特-福克森)
+	// 使用BFS来实现Ford-Fullkerson方法中的找增广路径的算法称为Edmonds-Karp算法。(埃德蒙兹-卡普)
 	// Edmonds-Karp算法是最短增广路算法，因为实用BFS找到的增广路径是所有可能的增广路径中最短的路径。它的复杂度是O(VE^2)，其中V是结点数，E是有向边数。
 	// 如果用使用DFS代替BFS，则Ford-Fullkerson方法退化成一般增广路算法。其复杂度是O(E| f* |)。其中f*是算法找出的最大流。
 	// 最大流的Edmonds-Karp算法 Algorithm
@@ -163,6 +163,7 @@ public class MaxFlow
 		// 如果BFS为FALSE 说明已经没有到T的路径了
 		while (BFS4Dinic(S, T)) {
 			nextV = new int[vertexCnt + 1];// 保存U的下一个对应端点V,不作重复遍历V
+											// 类似于EDMOND_KARP里的VISITED数组
 			for (int i = 0; i <= vertexCnt; i++) { // nextV里初始化是第一个节点哈 FOR循环
 				nextV[i] = 1; // DFS中，如果需要回溯，就回溯到nextV中的节点。
 			}
@@ -285,33 +286,33 @@ public class MaxFlow
 		// addCap(4, 8, 1);
 		// addCap(5, 8, 1);
 
-//		addCap(7, 1, 3);
-//		addCap(7, 2, 1);
-//		addCap(7, 3, 10);
+		// addCap(7, 1, 3);
+		// addCap(7, 2, 1);
+		// addCap(7, 3, 10);
 		int maxint = MAX;
-//		addCap(1, 4, maxint);
-//		addCap(1, 5, maxint);
-//		addCap(2, 4, maxint);
-//		addCap(2, 6, maxint);
-//		addCap(3, 5, maxint);
-//		addCap(4, 5, maxint);
-//		addCap(4, 6, maxint);
-//
-//		addCap(4, 8, 2);
-//		addCap(5, 8, 3);
-//		addCap(6, 8, 6);
-		
+		// addCap(1, 4, maxint);
+		// addCap(1, 5, maxint);
+		// addCap(2, 4, maxint);
+		// addCap(2, 6, maxint);
+		// addCap(3, 5, maxint);
+		// addCap(4, 5, maxint);
+		// addCap(4, 6, maxint);
+		//
+		// addCap(4, 8, 2);
+		// addCap(5, 8, 3);
+		// addCap(6, 8, 6);
+
 		addCap(1, 2, 1);
 		addCap(3, 4, 4);
 		addCap(5, 6, 4);
 		addCap(7, 8, 11);
 		addCap(9, 10, 1);
-//		addCap(2, 1, 1);
-//		addCap(4, 3, 6);
-//		addCap(6, 5, 6);
-//		addCap(8, 7, 11);
-//		addCap(10, 9, 1);
-		
+		// addCap(2, 1, 1);
+		// addCap(4, 3, 6);
+		// addCap(6, 5, 6);
+		// addCap(8, 7, 11);
+		// addCap(10, 9, 1);
+
 		addCap(4, 1, maxint);
 		addCap(6, 1, maxint);
 		addCap(2, 3, maxint);
@@ -481,7 +482,8 @@ public class MaxFlow
 						father = new int[vertexCnt + 1];
 						aug = MAX;
 					}
-					v = nextV[u] - 1;// 为什么－1呢?
+					v = nextV[u] - 1;// 为什么－1呢? 新的U，有一个V++所以从V=(NEXT[U]-1)++=
+										// next[u]开始
 				}
 			}
 			// 不能找到U点的
