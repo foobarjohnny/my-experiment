@@ -4,6 +4,7 @@ package sort;
 //假定在待排序的记录序列中，存在多个具有相同的关键字的记录，若经过排序，这些记录的相对次序保持不变，
 //即在原序列中，ri=rj，且ri在rj之前，而在排序后的序列中，ri仍在rj之前，则称这种排序算法是稳定的；否则称为不稳定的。
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Sort
@@ -87,6 +88,8 @@ public class Sort
 		}
 	}
 
+	// 不知道在哪看的
+
 	public static void swapSort(int[] k, int n)
 	{
 		int i, j, temp;
@@ -100,7 +103,7 @@ public class Sort
 			}
 		}
 		// n(n-1)/2 = O(n^2); at least n-1 passes;
-		// stable sort; one temp
+		// unstable sort; one temp
 	}
 
 	public static void insertSort(int k[], int n)
@@ -111,7 +114,8 @@ public class Sort
 			temp = k[i];
 			j = i - 1;
 			while (j > 0 && temp < k[j]) {
-				k[j + 1] = k[j--];
+				k[j + 1] = k[j];
+				j--;
 			}
 			k[j + 1] = temp;
 			// best: n-1;worst: n^2/4; O(n^2); at least n-1 passes;
@@ -119,7 +123,7 @@ public class Sort
 		}
 	}
 
-	public static void binInsertSort(int k[], int length)
+	public static void binaryInsertSort(int k[], int length)
 	{
 		int i, j, low, high, mid;
 		int temp;
@@ -149,18 +153,18 @@ public class Sort
 
 	public static void selectSort(int[] k, int n)
 	{
-		int i, j, d;
+		int i, j, min;
 		int temp;
 		for (i = 1; i < n; i++) {
-			d = i;
+			min = i;
 			for (j = i + 1; j <= n; j++) {
-				if (k[j] < k[d]) {
-					d = j;
+				if (k[j] < k[min]) {
+					min = j;
 				}
 			}
-			if (d != i) {
-				temp = k[d];
-				k[d] = k[i];
+			if (min != i) {
+				temp = k[min];
+				k[min] = k[i];
 				k[i] = temp;
 			}
 		}
@@ -242,19 +246,25 @@ public class Sort
 	}
 
 	// alias: partition-exchange sort
-	public static void recurQuickSort(int[] k, int s, int t)
+	// 这段程序中的PARTITION步骤中，每次都是将序列中的第一个数作为主元，这样对于处理已经排好序或者反向排好序的输入，
+	// 代价是很大的，因为每次划分子序列并没有显著的降低输入的规模，这种情况运行时间的递归表达式为
+	// T(n) = T(0) + T(n – 1) + cn
+	// cn为Partition步骤的代价
+	// 所以有T(n) = Θ(n^2) 对于排序来说是苦情的表达式。。
+	// 排好序或者反向排好序-->第一个作为主元或者最后一个 worst
+	public static void recurQuickSort(int[] k, int low, int high)
 	{
 		int i, j, temp;
-		if (s < t) {
-			i = s;
-			j = t + 1;
+		if (low < high) {
+			i = low;
+			j = high + 1;
 			while (true) {
 				do {
 					i++;
-				} while (!(k[s] <= k[i] || i == t));
+				} while (!(k[low] <= k[i] || i == high));
 				do {
 					j--;
-				} while (!(k[s] >= k[j] || j == s));
+				} while (!(k[low] >= k[j] || j == low));
 				if (i < j) {
 					temp = k[i];
 					k[i] = k[j];
@@ -265,42 +275,77 @@ public class Sort
 				}
 			}
 			temp = k[j];
-			k[j] = k[s];
-			k[s] = temp;
-			recurQuickSort(k, s, j - 1);
-			recurQuickSort(k, j + 1, t);
+			k[j] = k[low];
+			k[low] = temp;
+			recurQuickSort(k, low, j - 1);
+			recurQuickSort(k, j + 1, high);
 		}
 		// O(nlog2n)< time < O(n^2)
 		// unstable;O(log2n)<temp<O(n) ; not suitable for linked table
 	}
 
 	// alias: partition-exchange sort
-	public static void quickSort(int[] k, int s, int t)
+	public static void quickSort(int[] k, int low, int high)
 	{
 
 		int i, j, p;
-		if (s < t) {
-			int[] stack = new int[t - s + 1];
+		if (low < high) {
+			int[] stack = new int[(high - low + 1) * 2];
 			int top = 0;
-			stack[top++] = s;
-			stack[top++] = t;
+			stack[top++] = low;
+			stack[top++] = high;
 			while (top > 0) {
 				i = stack[--top];
 				j = stack[--top];
 				if (j < i) {
 					p = partition2(k, j, i);
-					stack[top++] = j;
-					stack[top++] = p - 1;
-					stack[top++] = p + 1;
-					stack[top++] = i;
+					if (j < p - 1) {
+						stack[top++] = j;
+						stack[top++] = p - 1;
+					}
+					if (p + 1 < i) {
+						stack[top++] = p + 1;
+						stack[top++] = i;
+					}
 				}
 				else {
 					continue;
 				}
 			}
 		}
+
 		// O(nlog2n)< time < O(n^2)
 		// unstable;O(log2n)<temp<O(n) ; not suitable for linked table
+	}
+
+	public static void quickSort2(int[] k, int low, int high)
+	{
+
+		if (low < high) {
+			LinkedList<Integer> stack = new LinkedList<Integer>();
+			stack.push(low);
+			stack.push(high);
+			int tmp;
+			int pivot;
+			while (!stack.isEmpty()) {
+				high = stack.pop();
+				low = stack.pop();
+
+				if (low < high) {
+					pivot = partition2(k, low, high);
+					tmp = pivot - 1;
+					if (low < tmp) {
+						stack.push(low);
+						stack.push(tmp);
+					}
+					tmp = pivot + 1;
+					if (tmp < high) {
+						stack.push(tmp);
+						stack.push(high);
+					}
+				}
+			}
+		}
 	}
 
 	public static int partition2(int k[], int low, int high)
@@ -409,57 +454,61 @@ public class Sort
 		// unstable;temp=O(1) ; not suitable for linked table
 	}
 
-	public static void merge(int[] x, int[] z, int s, int u, int v)
+	public static void merge(int[] pre, int[] cur, int s1, int t1, int t2)
 	{
-		int i, j, q;
-		i = s;
-		j = u + 1;
-		q = s;
-		while (i <= u && j <= v) {
-			if (x[i] < x[j]) {
-				z[q++] = x[i++];
+		int idx1, idx2, newIdx;
+		idx1 = s1;
+		idx2 = t1 + 1;
+		newIdx = s1;
+		while (idx1 <= t1 && idx2 <= t2) {
+			if (pre[idx1] < pre[idx2]) {
+				cur[newIdx++] = pre[idx1++];
 			}
 			else {
-				z[q++] = x[j++];
+				cur[newIdx++] = pre[idx2++];
 			}
 		}
-		while (i <= u) {
-			z[q++] = x[i++];
+		while (idx1 <= t1) {
+			cur[newIdx++] = pre[idx1++];
 		}
-		while (j <= v) {
-			z[q++] = x[j++];
+		while (idx2 <= t2) {
+			cur[newIdx++] = pre[idx2++];
 		}
 	}
 
-	public static void MPASS(int[] x, int[] z, int n, int t)
+	public static void MPASS(int[] pre, int[] cur, int n, int gap)
 	{
 		int i, j;
 		i = 1;
-		while (n - i + 1 >= 2 * t) {
-			merge(x, z, i, i + t - 1, i + 2 * t - 1);
-			i = i + 2 * t;
+		while (n - i + 1 >= 2 * gap) {
+			merge(pre, cur, i, i + gap - 1, i + 2 * gap - 1);
+			i = i + 2 * gap;
 		}
-		if (n - i + 1 > t) {
-			merge(x, z, i, i + t - 1, n);
+		if (n - i + 1 > gap) {
+			merge(pre, cur, i, i + gap - 1, n);
 		}
 		else {
 			for (j = i; j <= n; j++) {
-				z[j] = x[j];
+				cur[j] = pre[j];
 			}
 		}
 	}
 
 	public static void mergeSort(int[] x, int n)
 	{
-		int t = 1;
+		int[] orig = x;
+		int gap = 1;
 		int[] y = new int[x.length];
 		int[] temp = x;
-		while (t < n) {
-			MPASS(x, y, n, t);
+		while (gap < n) {
+			MPASS(x, y, n, gap);
 			temp = x;
 			x = y;
 			y = temp;
-			t *= 2;
+			gap *= 2;
+		}
+		if (orig != x) {
+			System.arraycopy(x, 0, orig, 0, orig.length);
 		}
 		// O(nlog2n)
 		// stable; one int[];
@@ -609,7 +658,8 @@ public class Sort
 		// Sort test = new Sort();
 		// System.out.println(test.testFinal());
 		int max = 1000;
-		int[] a = getArray(38, max);
+		// int[] a = getArray(8, max);
+		int[] a = { 0, 254, 785, 489, 195, 790, 46, 271, 862 };
 		printArray(a);
 		int[] b;
 		b = Arrays.copyOf(a, a.length);
@@ -732,7 +782,7 @@ public class Sort
 // 5.冒泡排序，n*n的时间复杂度，稳定排序，原地排序。冒泡排序的思想很不错，一个一个比较，把小的上移，依次确定当前最小元素。
 // 因为他简单，稳定排序，而且好实现，所以用处也是比较多的。还有一点就是加上哨兵之后他可以提前退出。
 //
-// 6.选择排序，n*n的时间复杂度， 稳定排序，原地排序。选择排序就是冒泡的基本思想，从小的定位，一个一个选择，直到选择结束。
+// 6.选择排序，n*n的时间复杂度，不稳定排序，原地排序。选择排序就是冒泡的基本思想，从小的定位，一个一个选择，直到选择结束。
 // 他和插入排序是一个相反的过程，插入是确定一个元素的位置，而选择是确定这个位置的元素。
 // 他的好处就是每次只选择确定的元素，不会对很多数据进行交换。所以在数据交换量上应该比冒泡小。
 //

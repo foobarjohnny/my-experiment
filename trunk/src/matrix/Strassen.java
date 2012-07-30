@@ -1,7 +1,6 @@
 package matrix;
 
 import java.util.Random;
-import java.util.Scanner;
 
 /*
  * http://www.codeforge.cn/read/113654/strassen.cpp__html
