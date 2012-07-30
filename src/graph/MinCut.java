@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+//http://blog.sina.com.cn/s/blog_64018c2501011dd7.html
 //可以用最小切割最大流定理：
 //1.min=MAXINT,确定一个源点 为什么不枚举源点了呢？？？
 //2.枚举汇点
@@ -39,7 +40,7 @@ import java.util.Map;
 //v) 
 //
 //求 G=(V, E)中任意 s-t 最小割的算法： 
-//定义w(A, x) = ∑w(v[i], x)，v[i]  A ∈  
+//定义w(A, x) = ∑w(v[i], x)，v[i] ∈   A 
 //定义 Ax 为在x 前加入 A 的所有点的集合（不包括 x）  
 //1. 令集合 A={a}，a为 V中任意点  
 //2. 选取 V - A中的 w(A, x)最大的点 x加入集合 A  

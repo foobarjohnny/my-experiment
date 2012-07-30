@@ -33,7 +33,7 @@ public class SizeBalancedTree extends BinarySearchTree
 				if (x.left.left != null && x.left.left.size > (x.right == null ? 0 : x.right.size)) {// 左孩子的左子树大于右孩子
 					x = rightRotate(T, x);
 				}
-				else if (x.left.right != null && x.left.right.size > (x.right == null ? 0 : x.right.size))// 右孩子的右子树大于右孩子
+				else if (x.left.right != null && x.left.right.size > (x.right == null ? 0 : x.right.size))// 左孩子的右子树大于右孩子
 				{
 					x.left = leftRotate(T, x.left);
 					x = rightRotate(T, x);
