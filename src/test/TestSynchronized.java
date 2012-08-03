@@ -1,3 +1,5 @@
+package test;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TestSynchronized
@@ -23,16 +25,16 @@ public class TestSynchronized
 	void Y()
 	{
 		ReentrantLock lock = new ReentrantLock();
-		synchronized (A.class) {
-			System.out.println("synchronized (A.class) ");
+		synchronized (TestSynchronized.class) {
+			System.out.println("synchronized (TestSynchronized.class) ");
 		}
 	}
 
-	void Z(A a)
+	void Z(TestSynchronized a)
 	{
 
 		synchronized (a.getClass()) {
-			System.out.println("synchronized (a.getClass()) ");
+			System.out.println("synchronized (TestSynchronized a.getClass()) ");
 		}
 	}
 
