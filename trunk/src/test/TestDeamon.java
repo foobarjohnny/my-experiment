@@ -1,16 +1,17 @@
+package test;
+
 public class TestDeamon
 {
-
 	public static void main(String[] args)
 	{
-		A a = new TestDeamon().new A();
+		ThA a = new TestDeamon().new ThA();
 		a.start();
 	}
 
-	class A extends Thread
+	class ThA extends Thread
 	{
 
-		public A()
+		public ThA()
 		{
 			this.setDaemon(true);
 		}
@@ -19,7 +20,7 @@ public class TestDeamon
 		{
 			System.out.println("A run");
 			try {
-				B b = new B();
+				ThB b = new ThB();
 				Thread.sleep(6000);
 			}
 			catch (Exception e) {
@@ -30,7 +31,7 @@ public class TestDeamon
 
 	}
 
-	class B extends Thread
+	public class ThB extends Thread
 	{
 		public void run()
 		{
@@ -43,5 +44,20 @@ public class TestDeamon
 			}
 			System.out.println("B done");
 		}
+	}
+}
+
+class outThread extends Thread
+{
+	public void run()
+	{
+		System.out.println("B run");
+		try {
+			Thread.sleep(6000);
+		}
+		catch (Exception e) {
+			System.out.println("B Exception");
+		}
+		System.out.println("B done");
 	}
 }
