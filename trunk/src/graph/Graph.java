@@ -195,7 +195,7 @@ public class Graph
 	/**
 	 * 有向图拓扑
 	 */
-	public void poto()
+	public void topologySort_NoPrecessor()
 	{
 		int orig_nverts = vertexList.size();
 		String[] sortedArray = new String[orig_nverts];
@@ -232,7 +232,7 @@ public class Graph
 	// 　　　　 //若此条件不成立，则表示所有顶点均已输出，排序成功。
 	// 　　　　　　 Error("G中存在有向环，排序失败！")；
 	// 　　　　 }
-	public void topologySort_byDFS()
+	public void topologySort_DFS()
 	{
 		this.visit();
 		System.out.println(this.topoList);
@@ -278,8 +278,8 @@ public class Graph
 		g.addEdge(6, 0);
 		g.addEdge(0, 6);
 
-		g.topologySort_byDFS();
-		g.poto();
+		g.topologySort_DFS();
+		g.topologySort_NoPrecessor();
 	}
 }
 
