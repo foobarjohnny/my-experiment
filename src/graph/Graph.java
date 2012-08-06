@@ -108,6 +108,7 @@ public class Graph
 	// v: black - > forward edge -> d[u]<d[v]<f[v]<f[u]
 	// v: black - > cross edge -> d[v]<f[v]<d[u]<f[u]
 	// 无向图G DFS时要么树边 要么反向边
+	// http://wangxiaohigh.iteye.com/blog/1293397
 	public void dfs(int start)
 	{
 		vertexList.get(start).color = Color.grey;
@@ -221,6 +222,16 @@ public class Graph
 	// (1)从有向图中选择一个没有前驱(即入度为0)的顶点并且输出它.
 	// (2)从网中删去该顶点,并且删去从该顶点发出的全部有向边.
 	// (3)重复上述两步,直到剩余的网中不再存在没有前趋的顶点为止.
+	// 　NonPreFirstTopSort(G){//优先输出无前趋的顶点
+	// 　　　　 while(G中有入度为0的顶点)
+	// do{
+	// 　　　　　 　 从G中选择一个入度为0的顶点v且输出之；（栈顶弹出）
+	// 　　　　 　　 从G中删去v及其所有出边；（压栈）
+	// 　　　　 }
+	// 　　　　 if(输出的顶点数目<|V(G)|)
+	// 　　　　 //若此条件不成立，则表示所有顶点均已输出，排序成功。
+	// 　　　　　　 Error("G中存在有向环，排序失败！")；
+	// 　　　　 }
 	public void topologySort_byDFS()
 	{
 		this.visit();
