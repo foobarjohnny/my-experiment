@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 
 //贝尔曼—福德
 public class Bellman_Ford
@@ -10,11 +11,11 @@ public class Bellman_Ford
 	public static void main(String[] args)
 	{
 
-		// Edge a1 = new Edge(0, 1, 1);
-		Edge a1 = new Edge(0, 1, -1);
+		Edge a1 = new Edge(0, 1, 1);
+		// Edge a1 = new Edge(0, 1, -1);
 		Edge a2 = new Edge(0, 2, 4);
 		Edge a3 = new Edge(1, 2, 3);
-		Edge a4 = new Edge(3, 1, 1);
+		// Edge a4 = new Edge(3, 1, 1);
 		Edge a5 = new Edge(1, 3, 2);
 		Edge a6 = new Edge(3, 2, 5);
 		Edge a7 = new Edge(1, 4, 2);
@@ -22,19 +23,21 @@ public class Bellman_Ford
 		// 换成负数去测 BELLMAN_FORD和SPFA
 		Edge a8 = new Edge(4, 3, -1);
 
-		Edge[] edges = new Edge[] { a1, a2, a3, a4, a5, a6, a7, a8 };
+		Edge[] edges = new Edge[] { a1, a2, a3, a5, a6, a7, a8 };
 
 		int[] dist = new int[5];
 		int[] pre = new int[5];
 		// 这一步是关键
-		int start = 4;
+		int start = 1;
 		boolean b;
 		// b = bellman_Ford(edges, dist, pre, start);
 		// b = spfa(edges, dist, pre, start);
 		// int[] h = new int[dist.length];
 		// b = Dijkstra(edges, dist, pre, start, h);
 		// printPath(dist, pre, start, b);
-		b = Johnson(edges, dist, pre);
+		// b = Johnson(edges, dist, pre);
+		b = DAG_shortestPath(edges, dist, pre, start);
+		printPath(dist, pre, start, b);
 	}
 
 	private static void printPath(int[] dist, int[] pre, int start, boolean b)
@@ -74,9 +77,13 @@ public class Bellman_Ford
 	 * 很明显时间复杂度为O(VE),因为每一次需要对边进行松弛，所以我们采用保存边的方式来存储图的的信息。
 	 * p保存的是前驱节点，d保存的是源点到每一个点的最短距离。我们最后又做了一次判断，如果还有可以松弛
 	 * 的边，那么可以保证的是图中有负权的环存在，这样的话就没有最短路径只说了，可以无限小。
-	 * 
-	 * 
+	 * http://hi.baidu.com/rangemq/blog/item/0e96cad3977cdcdea9ec9ac6.html
+	 * http://hi.baidu.com/jffifa/item/ef628c50d37345dcd58bac44
 	 */
+	// BELLMAN_FORD求最长路径一样
+	// 1.所有的W取负,求最短
+	// 2.MAX变MIN,>换成<
+	// BELLMAN_FORD中S到某点上有负(正)权回路,那S到某点就没有最短(长)路径,注意有负(正)回权路不代表S到全部的点都没有最短(长)路径
 	private static boolean bellman_Ford(Edge[] edges, int[] dist, int[] pre, int n)
 	{
 		initDist(dist, pre, n);
@@ -98,6 +105,78 @@ public class Bellman_Ford
 		}
 		return true;
 
+	}
+
+	// 有向无回图DAG(Directed Acyclic Graph)的最短路径, DAG图求最短,负权边可以有,DI不可以有
+	// 先TOPO排序,再把TOPO序抽出点进行松驰
+	// 有向无回路(dag图)拓扑排序后,对拓扑序列遍历一次计算出单源最短路径(也可以修改后求出关键路径(最长的))
+	// 求关键路径,即最长路径与BELLMAN_FORD求最长一样
+	// 1.所有的W取负,求最短
+	// 2.MAX变MIN,>换成<
+	private static boolean DAG_shortestPath(Edge[] edges, int[] dist, int[] pre, int start)
+	{
+		boolean isDAG = true;
+		initDist(dist, pre, start);
+		LinkedList<Integer> topoList = new LinkedList<Integer>();
+		isDAG = topSort(dist.length, edges, topoList);// 对图进行拓扑排序，结果存储在arrayList[]内
+		System.out.println(topoList);
+		if (isDAG == false) {
+			return false;
+		}
+		// 遍历一次拓扑序列，完成单源最短路径问题
+		for (int i = 0; i < dist.length; i++) {
+			int t = topoList.get(i);
+			for (int j = 0; j < edges.length; j++) {
+				if (edges[j].getU() == t) {
+					if (dist[edges[j].getU()] != MAX && dist[edges[j].getV()] > dist[edges[j].getU()] + edges[j].getW()) {
+						dist[edges[j].getV()] = dist[edges[j].getU()] + edges[j].getW();
+						pre[edges[j].getV()] = edges[j].getU();
+					}
+				}
+			}
+		}
+		return isDAG;
+	}
+
+	private static boolean topSort(int vetexCnt, Edge[] edges, LinkedList<Integer> topoList)
+	{
+		boolean isDAG = true;
+		int[] visited = new int[vetexCnt];
+		for (int i = 0; i < vetexCnt; i++) {
+			if (visited[i] == 0) {
+				isDAG = topOlogicalSort(i, edges, visited, topoList);// 对每个顶点深度优先拓扑排序
+				if (isDAG == false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	// 拓扑排序核心算法
+	private static boolean topOlogicalSort(int u, Edge[] edges, int[] visited, LinkedList<Integer> topoList)
+	{
+		visited[u] = 1;// 正在访问周边顶点
+		boolean isDAG = true;
+		for (int j = 0; j < edges.length; j++) {// 深度优先遍历
+			if (edges[j].getU() == u) {
+				int v = edges[j].getV();
+				if (visited[v] == 1) {
+					// 反向边GREY 不是有向无环图 没TOPO
+					return false;
+				}
+				if (visited[v] == 0) {
+					isDAG = topOlogicalSort(v, edges, visited, topoList);
+					if (isDAG == false) {
+						return false;
+					}
+				}
+			}
+		}
+		visited[u] = 2;// 该顶点周围都已遍历结束
+		// 插入到拓扑序列中
+		topoList.push(u);
+		return isDAG;
 	}
 
 	private static void initDist(int[] dist, int[] pre, int n)
@@ -197,6 +276,7 @@ public class Bellman_Ford
 	 * 时间复杂度是O(V^2+E) 换成最小堆 则变成O((V+E)lgV) 换成斐波那契堆则变成O(VlgV+E)
 	 */
 	// 迪杰斯特拉
+	// 不能求最长路径
 	private static boolean Dijkstra(Edge[] edges, int[] dist, int[] pre, int n, int[] h)
 	{
 		initDist(dist, pre, n);
