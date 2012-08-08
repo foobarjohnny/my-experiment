@@ -232,6 +232,7 @@ public class Graph
 	// 　　　　 //若此条件不成立，则表示所有顶点均已输出，排序成功。
 	// 　　　　　　 Error("G中存在有向环，排序失败！")；
 	// 　　　　 }
+	// 有反向边 GREY表明没TOPO
 	public void topologySort_DFS()
 	{
 		this.visit();

@@ -1,6 +1,6 @@
 package graph;
 
-//弗洛伊德算法，插点法
+//弗洛伊德算法，插点法 没有负回权路就行
 //以无向图G为入口，得出任意两点之间的路径长度dist[i][j]，路径path[i][j][k]，
 //途中无连接得点距离用0表示，点自身也用0表示
 //O(V^3) V vetex E edge
@@ -9,13 +9,33 @@ package graph;
 //仔细回想一下矩阵算法重复平方 O(V^3*lnV)的区别 
 //一个是增加边（点V在里面）然后循环(V-1)次增长边为(V-1)，一个是遍历点 V在外面
 //矩阵算法可能在并行计算机中能被很好地优化，因为矩阵乘法在并行计算机中有很多优化办法
+
+//http://imlazy.ycool.com/post.1104393.html
+//如果要你求一个网络中只有一条路径的最大流，应该用什么算法。（原题：http://online-judge.uva.es/p/v5/544.html）
+//首先，我们通常用的最大流算法Ford-Fulkerson算法是不能用了。
+//然而，我们可以用最短路径的算法，Dijkstra或Floyd-Warshall加以修改，
+//来解决这个问题。因为这个问题实际就是要找出一条容量最大的路径。
+//但是我们同时也知道另一件事，很多人初学的时候都会通过把Dijkstra和Floyd-Warshall里的小于号改成大于号来求最长路径。
+//结果显然是错误的，因为这样的算法算出的最长路径中会有重复的边。为什么，很简单，
+//Dijkstra和Floyd-Warshall里都无法限制重复边的出现，但是在最短路径中，如果一条路径有重复的边，
+//那它肯定不会是最短路径，所以重复边被问题本身的性质剃除了。但是如果用来求最长路径，
+//那么越有重复的边，路径就越长，就越满足要求，则最终的结果就会错误了。
+//所以如果要看一个问题能不能用Dijkstra和Floyd-Warshall来解决，
+//只要看有重复边的路径是否会比没有重复边有路径更符合问题的要求。
+//比如求容量最大的路径时，重复的边不可能使容量变大，因为容量取决于路径中容量最小的一条边。
+//还有一个同类的问题：用2种颜色可不可能给一张地图着色，使每两个相邻的国家颜色都不同。
+//解法是看一个无向图中存不存在边数为奇数的圈。同样，在这个问题里，
+//有重复边有路径不可能改变原有的解，所以可以用Dijkstra或Floyd-Warshall来解。
+
+//http://hi.baidu.com/qlyzpqz/item/d006b6092eb18b1eeafe38ab
+//FLOD不能用于求最长路径,但能把W取反来取最短路径求最长,但如果有负权环路,会出错误的结果,用BELLMAN_FORD来检测
 public class Floyd_Warshall
 {
 	int[][]		dist	= null; // 任意两点之间路径长度
 	int[][][]	path	= null; // 任意两点之间的路径
 
 	/**
-	 * @param G
+	 * http://59.73.198.250/bbs/viewthread.php?tid=359
 	 */
 	public Floyd_Warshall(int[][] G)
 	{
@@ -91,6 +111,38 @@ public class Floyd_Warshall
 				path[i][j] = new int[point[0]];
 				for (int s = 0; s < point[0]; s++) {
 					path[i][j][s] = onePath[s];
+				}
+			}
+		}
+	}
+
+	// 求强通量分量
+	// O(v^3)
+	void scc(int[][] g)
+	{
+		int n = g.length;
+		int i, j, k;
+		int nr_scc = 0;
+		int[] v_id = new int[n];
+		for (i = 1; i <= n; ++i) {
+			g[i][i] = 1;
+		}
+		for (i = 1; i <= n; ++i) {
+			for (j = 1; j <= n; ++j) {
+				g[i][j] = g[i][j] > 0 ? 1 : 0;
+			}
+		}
+		for (k = 1; k <= n; ++k) {
+			for (i = 1; i <= n; ++i) {
+				for (j = 1; j <= n; ++j) {
+					g[i][j] = Math.max(g[i][j], g[i][k] & g[k][j]); // floyd
+				}
+			}
+		}
+		for (i = 1; i <= n; ++i) {
+			for (j = i; j <= n; ++j) {
+				if ((g[i][j] & g[j][i]) == 1) {
+					v_id[j] = v_id[i] = (v_id[i] == 0 ? ++nr_scc : v_id[i]);
 				}
 			}
 		}

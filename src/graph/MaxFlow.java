@@ -865,6 +865,39 @@ public class MaxFlow
 		}
 	}
 
+	// 用'临点填色法'判断，相邻点异色，发现同色则不成立也算求奇圈
+	// 然后匈牙利算法， 求出个数除2
+	boolean BFS()
+	{ // 二分图BFS判断
+		int v, start = 1, end = 2;
+		int[] queue = new int[vertexCnt + 1];
+		int[] judge = new int[vertexCnt + 1];
+		queue[1] = 1;
+		for (int i = 0; i <= vertexCnt; i++) {
+			judge[i] = -1;
+		}
+		v = queue[start];
+		judge[1] = 0;
+
+		while (start < end) {
+			v = queue[start];
+			for (int i = 1; i <= vertexCnt; i++) {
+				if (capacity[v][i] > 0) {
+					if (judge[i] == -1) {
+						judge[i] = (judge[v] + 1) % 2;
+						queue[end++] = i;
+					}
+					else {
+						if (judge[i] == judge[v])
+							return false;
+					}
+				}
+			}
+			start++;
+		}
+		return true;
+	}
+
 	public static boolean dfs(int u)
 	{
 		for (int v = 1; v <= vertexCnt; v++) {
@@ -883,6 +916,7 @@ public class MaxFlow
 		return false;
 	}
 
+	// http://wanzhenjie88.blog.163.com/blog/static/4066646920077131486697/
 	public static int Hungary()
 	{
 		int maxMatch = 0;
@@ -890,6 +924,7 @@ public class MaxFlow
 		for (int i = 1; i <= vertexCnt; ++i) {
 			visit = new boolean[vertexCnt + 1];
 			// 每找到一条增广径 最大匹配加1 M+1
+			// 跟最大流的增广径 定义不一样
 			if (dfs(i)) {
 				maxMatch++;
 			}
