@@ -78,6 +78,8 @@ public class TestVarArgs
 		d(1);
 		d(1.2);
 		d(1.2f);
+		int[] a = { 1, 2, 3 };
+		f(a);
 		// output 慢慢体会结果吧
 		// f2...
 		// c2...
