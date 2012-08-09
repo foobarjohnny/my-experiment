@@ -29,6 +29,21 @@ package graph;
 
 //http://hi.baidu.com/qlyzpqz/item/d006b6092eb18b1eeafe38ab
 //FLOD不能用于求最长路径,但能把W取反来取最短路径求最长,但如果有负权环路,会出错误的结果,用BELLMAN_FORD来检测
+/**
+ * 
+ * Will Floyd-Warshall2( ) correctly find the length of the longest path between
+ * each pair of vertices? Why or why not?
+ * 
+ * 
+ * Solution: NO. It will not. It does not correctly treat cycles, even positive
+ * weight cycles for graphs whose edge weights are all positive. In fact, the
+ * All-Pairs-Longest-Paths problem is NP-complete, even for simple paths on
+ * graphs with only positive edge weights.
+ */
+// 自我总结:Floyd-Warshall可以通过取反取最短求最长,直接改变大小于符号是也是行的
+// 之所以网上说不行,是因为存在正权环路,实行情况中很常出现,而同样求最短时,也不能存在负环权路(这个很少出现,因为大多权重全为正)
+// 利用了动态规划里的最优子结构,最短路径,最长路径皆是,但最短简单路径和最长简单路径皆不是,只要存在正权环和负权环
+// 所以FLOYD可以求最短路径,最长路径,因为是保证没负(正)权环路的前提下,其实都求出了最短简单路径和最长简单路径
 public class Floyd_Warshall
 {
 	int[][]		dist	= null; // 任意两点之间路径长度
@@ -40,6 +55,7 @@ public class Floyd_Warshall
 	public Floyd_Warshall(int[][] G)
 	{
 		int MAX = Integer.MAX_VALUE;
+		MAX = Integer.MIN_VALUE;
 		int row = G.length;// 图G的行数
 		int[][] spot = new int[row][row];// 定义任意两点之间经过的点
 		int[] onePath = new int[row];// 记录一条路径
@@ -74,12 +90,40 @@ public class Floyd_Warshall
 			for (int v = 0; v < row; ++v) {
 				for (int w = 0; w < row; ++w) {
 					// 防止溢出
-					if (dist[v][u] != MAX && dist[u][w] != MAX && dist[v][w] > dist[v][u] + dist[u][w]) {
+					if (dist[v][u] != MAX && dist[u][w] != MAX && dist[v][w] < dist[v][u] + dist[u][w]) {
 						dist[v][w] = dist[v][u] + dist[u][w];// 如果存在更短路径则取更短路径
 						spot[v][w] = u;// 把经过的点加入
 					}
 				}
 			}
+
+			System.out.println(" *************** ********" + u + " *************** ********");
+			for (int i = 0; i < row; i++) {
+				// 求出所有的路径
+				int[] point = new int[1];
+				for (int j = 0; j < row; j++) {
+					point[0] = 0;
+					onePath[point[0]++] = i;
+					outputPath(spot, i, j, onePath, point);
+					path[i][j] = new int[point[0]];
+					for (int s = 0; s < point[0]; s++) {
+						path[i][j][s] = onePath[s];
+					}
+				}
+			}
+
+			for (int i = 0; i < dist.length; i++) {
+				for (int j = 0; j < dist[i].length; j++) {
+					System.out.println();
+					System.out.print("From " + i + " to " + j + " path is: ");
+					for (int k = 0; k < path[i][j].length; k++) {
+						System.out.print(path[i][j][k] + "->");
+					}
+					System.out.println();
+					System.out.println("From " + i + " to " + j + " length :" + dist[i][j]);
+				}
+			}
+
 		}
 
 		// 上面是精简形式，把空间从O(V^3)节省到O(V^2)
@@ -114,6 +158,7 @@ public class Floyd_Warshall
 				}
 			}
 		}
+
 	}
 
 	// 求强通量分量
@@ -184,13 +229,20 @@ public class Floyd_Warshall
 				{ 27, 0, 0, 0, 25, 29, 33, 0, 33, 14, 9, 14, 0, 0, 11, 0, 9 },// 15
 				{ 0, 0, 0, 0, 30, 0, 0, 0, 21, 13, 20, 0, 0, 0, 0, 9, 0 } // 16
 		};
-		for (int i = 0; i < data.length; i++) {
-			for (int j = i; j < data.length; j++) {
-				if (data[i][j] != data[j][i]) {
-					return;
-				}
-			}
-		}
+		data = new int[5][5];
+		data[0][2] = 1;
+		data[0][3] = 6;
+		data[1][0] = 2;
+		data[2][3] = 3;
+		data[4][0] = 5;
+		data[4][1] = 2;
+		// for (int i = 0; i < data.length; i++) {
+		// for (int j = i; j < data.length; j++) {
+		// if (data[i][j] != data[j][i]) {
+		// return;
+		// }
+		// }
+		// }
 		Floyd_Warshall test = new Floyd_Warshall(data);
 		for (int i = 0; i < data.length; i++) {
 			for (int j = i; j < data[i].length; j++) {
