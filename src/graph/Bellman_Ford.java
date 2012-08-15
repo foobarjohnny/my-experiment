@@ -2,7 +2,10 @@ package graph;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
-
+/*
+ * http://www.cnblogs.com/jffifa/archive/2012/05/12/2497072.html
+ * [转载][研究总结]最短路、最长路与差分约束的最大解、最小解
+ */
 //贝尔曼—福德
 public class Bellman_Ford
 {
