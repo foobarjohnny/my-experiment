@@ -8,7 +8,7 @@ import java.util.LinkedList;
  1、 连续最短路算法（Successive Shortest Path）--升级-->3；
  2、 消圈算法（Cycle Canceling）--升级-->4；
  3、 原始对偶算法（Primal Dual）；
- 4、 网络单纯形（Network Simplex）。
+ 4、 网络单纯形（Network Simplex）
  mincost-maxflow
  mincost-maxflow是一种适用范围很广的模型。如果只考虑流量不考虑费用，则是maxflow模型；
  如果只考虑费用不考虑流量，就是 shortest path模型；二者综合，就是mincost-maxflow模型。
@@ -237,6 +237,7 @@ public class MinCostMaxFlow
 
 	// 消圈算法（Cycle Canceling）
 	// 先求最大流或定值流的一个流，再消去里面的负费用圈
+	// http://blog.sina.com.cn/s/blog_64675f540100sbx0.html
 	public static int cycleCanceling(int S, int T)
 	{
 		int minCost = 0;
