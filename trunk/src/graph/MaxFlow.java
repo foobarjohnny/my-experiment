@@ -1,7 +1,6 @@
 package graph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,11 +14,11 @@ public class MaxFlow
 	public static Map<Ve, Integer>		vertexMap	= new HashMap<Ve, Integer>();
 	public static List<E>				EdgeQueue	= new ArrayList<E>();
 	public static List<E>				EdgeList	= new ArrayList<E>();
-	public static int					MAX			= Integer.MAX_VALUE;
+	// 太大了 要溢出
+	public static int					MAX			= 10000;
 	public static int					edgeCnt;
 	public static int					vertexCnt	= edgeCnt = 0;					// 点数，边数
 
-	public static int					MAXN		= 10;
 	public static int[][]				capacity;
 	public static int[][]				flow;
 	public static int[]					minCapacity;
@@ -79,6 +78,7 @@ public class MaxFlow
 				capacity[father[i]][i] -= aug;// 正向更新
 				capacity[i][father[i]] += aug;// 反向更新
 				flow[father[i]][i] += aug; // 更新FLOW表
+				flow[i][father[i]] = -flow[father[i]][i];
 				minCapacity[i] -= aug;
 			}
 			maxFlow += aug;// 更新最大流
@@ -89,29 +89,57 @@ public class MaxFlow
 
 	public static void main(String[] args)
 	{
-		int S = 2, T = 9;
+		int S = 4, T = 1;
+
+		// addCap(4, 1, maxint);
+		// addCap(6, 1, maxint);
+		// addCap(2, 3, maxint);
+		// addCap(2, 5, maxint);
+		// addCap(4, 7, maxint);
+		// addCap(6, 7, maxint);
+		// addCap(8, 3, maxint);
+		// addCap(8, 5, maxint);
+		// addCap(8, 9, maxint);
+		// addCap(10, 7, maxint);
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Edmonds_Karp(S, T)" + "+++++++++++++++++++++");
 		System.out.println(Edmonds_Karp(S, T));
 		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Dinic(S, T)" + "+++++++++++++++++++++");
 		System.out.println(Dinic(S, T));
+		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Dinic2(S, T)" + "+++++++++++++++++++++");
 		System.out.println(Dinic2(S, T));
 		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "ISAP(S, T)" + "+++++++++++++++++++++");
 		System.out.println(ISAP(S, T));
+		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "ISAP2(S, T)" + "+++++++++++++++++++++");
 		System.out.println(ISAP2(S, T));
+		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Push_Relabel(S, T)" + "+++++++++++++++++++++");
 		System.out.println(Push_Relabel(S, T));
+		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Relabel_To_Front(S, T)" + "+++++++++++++++++++++");
 		System.out.println(Relabel_To_Front(S, T));
+		printFlow();
 		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "FIFO_Preflow_Push(S, T)" + "+++++++++++++++++++++");
 		System.out.println(FIFO_Preflow_Push(S, T));
+		printFlow();
 		buildCap();
-		// System.out.println(HLPP(S, T));
-		// buildCap();
-		// System.out.println(Hungary());
+		System.out.println("+++++++++++++++++++++++++" + "HLPP(S, T)" + "+++++++++++++++++++++");
+		System.out.println(HLPP(S, T));
+		printFlow();
+		buildCap();
+		System.out.println("+++++++++++++++++++++++++" + "Hungary(S, T)" + "+++++++++++++++++++++");
+		System.out.println(Hungary());
 	}
 
 	private static void printFlow()
@@ -119,7 +147,7 @@ public class MaxFlow
 		for (int i = 0; i < flow.length; i++) {
 			for (int j = 0; j < flow[i].length; j++) {
 				if (flow[i][j] > 0) {
-					System.out.println(i + " -> " + j + " : " + (flow[i][j] - flow[j][i]));
+					System.out.println(i + " -> " + j + " : " + flow[i][j]);
 				}
 			}
 		}
@@ -190,6 +218,7 @@ public class MaxFlow
 						capacity[father[i]][i] -= aug;// 正向更新
 						capacity[i][father[i]] += aug;// 反向更新
 						flow[father[i]][i] += aug; // 更新FLOW表
+						flow[i][father[i]] = -flow[father[i]][i];
 						minCapacity[i] -= aug; // 设S永远为MAX
 						if (capacity[father[i]][i] == 0) {
 							// 把stack弹到前一个饱和压入的点 因为他没能力继续压入了 后面的PRUNE
@@ -206,6 +235,9 @@ public class MaxFlow
 				// 说明U这点的子孙遍历完了 可以设置为BLACK
 				// 其实不设也没有关系 但避免重复
 				else if (v > vertexCnt) {
+					// 借鉴了HLPP里面的分层思想 不过这里T是最高层 S是最低层
+					// 这里不用考虑压回来的事，因为他总是找到了一条增广路径再压的，以增广路径的最小值压的
+					// 和PREFLOW里面要考虑压回来不同
 					H[u] = MAX;
 					queue.poll();
 				}
@@ -241,6 +273,7 @@ public class MaxFlow
 				capacity[father[v]][v] -= branchFlow;// 正向更新
 				capacity[v][father[v]] += branchFlow;
 				flow[father[v]][v] += branchFlow; // 更新FLOW表
+				flow[v][father[v]] = -flow[father[v]][v];
 				out += branchFlow;
 				beforeMin -= branchFlow;
 				// 前面压入的已经没了 所以不能再压出去了
@@ -335,7 +368,7 @@ public class MaxFlow
 	public static int Dinic2(int S, int T)
 	{
 		int[] cur = new int[vertexCnt + 1];
-		int flow = 0;
+		int maxFlow = 0;
 		int i, u, flag, v, ag, k;
 		while (BFS4Dinic(S, T)) {
 			for (i = 0; i <= vertexCnt; i++) { // cur里初始化是第一个节点哈
@@ -359,11 +392,14 @@ public class MaxFlow
 					if (u == T) // 找到t后，增广
 					{
 						ag = minCapacity[T];
-						flow += ag;
+						maxFlow += ag;
 						for (v = T; v != S; v = father[v]) {
 							cur[father[v]] = v; // 退回上一步。。 感觉这个多了
 							capacity[father[v]][v] -= ag;
 							capacity[v][father[v]] += ag;
+							flow[father[v]][v] += ag;
+							flow[v][father[v]] = -flow[father[v]][v];
+
 							minCapacity[v] -= ag;
 							if (capacity[father[v]][v] == 0) {
 								u = father[v];
@@ -382,7 +418,7 @@ public class MaxFlow
 				}
 			}
 		}
-		return flow;
+		return maxFlow;
 	}
 
 	// Improved Shortest Augmenting Path
@@ -420,6 +456,7 @@ public class MaxFlow
 					capacity[father[i]][i] -= aug;// 正向更新
 					capacity[i][father[i]] += aug;// 反向更新
 					flow[father[i]][i] += aug; // 更新FLOW表
+					flow[i][father[i]] = -flow[father[i]][i];
 					minCapacity[i] -= aug;
 					// 设成u=S也行 但这样是 剪枝 阻塞优化＝＝多路增广 连续增广
 					if (capacity[father[i]][i] == 0) {
@@ -477,6 +514,8 @@ public class MaxFlow
 						while (u != s) {
 							capacity[father[u]][u] -= aug;
 							capacity[u][father[u]] += aug;
+							flow[father[u]][u] += aug; // 更新FLOW表
+							flow[u][father[u]] = -flow[father[u]][u];
 							u = father[u];
 						}
 						father = new int[vertexCnt + 1];
@@ -511,7 +550,7 @@ public class MaxFlow
 		int u, v;
 		boolean done, needRelabel;
 		// Initialize the pre-flow
-		initPreflow(S);
+		initPreflow(S, T, null, null);
 		while (true) {
 			done = true;
 			for (u = 1; u <= vertexCnt; u++) {
@@ -609,6 +648,9 @@ public class MaxFlow
 			}
 		}
 		// E[u] or -E[s]
+		System.out.println("E[S]:" + E[S]);
+		System.out.println("E[T]:" + E[T]);
+		System.out.println("maxFlow:" + maxFlow);
 		return maxFlow;
 	}
 
@@ -619,7 +661,7 @@ public class MaxFlow
 		LinkedList<Integer> list = new LinkedList<Integer>();
 		int oldHeight;
 		// Initialize the pre-flow
-		initPreflow(S);
+		initPreflow(S, T, null, null);
 		for (u = 1; u <= vertexCnt; u++) {
 			// 不检查S,T,因为定义里不是溢出顶点
 			// 如果检查了T 则全为0
@@ -632,7 +674,7 @@ public class MaxFlow
 			u = it.next();
 			oldHeight = H[u];
 			// 把U的余量EXCESS消掉
-			Discharge(u);
+			Discharge(u, S, T, null, null);
 			if (H[u] > oldHeight) {
 				list.remove(new Integer(u));
 				list.push(u);
@@ -647,6 +689,9 @@ public class MaxFlow
 			}
 		}
 		// E[T] or -E[S] 如果把E[S]和E[T]设成0,才有意义,
+		System.out.println("E[S]:" + E[S]);
+		System.out.println("E[T]:" + E[T]);
+		System.out.println("maxFlow:" + maxFlow);
 		return maxFlow;
 	}
 
@@ -656,34 +701,14 @@ public class MaxFlow
 	// 如果是优先队列，并且标号最高的点优先的话：我们就得到了最高标号预流推进算法，其时间复杂度仅为(V^2sqrt(E))，算是比较快的最大流算法了。
 	public static int FIFO_Preflow_Push(int S, int T)
 	{
-		int u, pushFlow;
+		int u;
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		// Initialize the pre-flow
-		// initPreflow(S); 这里没有INIT
-		queue.push(S);
-		H[S] = vertexCnt;
-		E[S] = MAX;
-		// E[T] = -MAX;
+		initPreflow(S, T, queue, null);
 		while (!queue.isEmpty()) {
 			u = queue.peek();
 			queue.pop();
-			// 没用 while(E[u]>0)是考虑到把S加入了这个WHILE大循环，效果其实是一样的
-			// 用WHILE(E[U]>0),便于理解DISCHARGE
-
-			// push
-			for (int v = 1; v <= vertexCnt; v++) {
-				if (u == S || H[u] == H[v] + 1) {
-					pushFlow = push(u, v);
-					if (v != S && v != T && pushFlow > 0) {
-						queue.push(v);
-					}
-				}
-			}
-			// relabel
-			if (u != S && u != T && E[u] > 0) {
-				relabel(u);
-				queue.push(u);
-			}
+			Discharge(u, S, T, queue, null);
 		}
 		maxFlow = 0;
 		for (u = 1; u <= vertexCnt; u++) {
@@ -692,6 +717,9 @@ public class MaxFlow
 			}
 		}
 		// E[T] or -E[S]
+		System.out.println("E[S]:" + E[S]);
+		System.out.println("E[T]:" + E[T]);
+		System.out.println("maxFlow:" + maxFlow);
 		return maxFlow;
 	}
 
@@ -701,62 +729,53 @@ public class MaxFlow
 	// Push的算法复杂度据说是O(V^2*E^0.5)。我研究了一下HLPP，感觉它和Relabel-to-Front本质上没有区别，因为
 	// Relabel-to-Front每次前移的都是高度最高的顶点，所以也相当于每次选择最高的标号进行更新。还有一个感觉也会很好实现的算法是使用队列维护溢出顶点，每次对pop出来的顶点discharge，出现了
 	// 新的溢出顶点时入队。
-	// Push-Relabel类的算法有一个名为gap heuristic的优化，就是当存在一个整数0<k<2V-1，
-	// 没有任何顶点满足h[v]=k时，对所有h[v]>k的顶点v做更新，若它小于2V-1就置为2V-1,最小高度为1，等于0时未设高度
+	// Push-Relabel类的算法有一个名为gap heuristic的优化，就是当存在一个整数0<k<=V+1，
+	// 没有任何顶点满足h[v]=k时，对所有h[v]>k的顶点v做更新，若它小于V就置为v+1,最小高度为1，等于0时未设高度
+	// http://blog.csdn.net/moon_1st/article/details/5365886
+	// http://www.notonlysuccess.com/index.php/algorithm-of-network/
 	public static int HLPP(int S, int T)
 	{
-		int u, pushFlow;
-		// Initialize the pre-flow
-		// initPreflow(S); 这里没有INIT
+		int u;
 		// 分层
 		BFS4HLPP(S, T);
-		// 把S特殊化一下
-		E[S] = MAX;
-		gap[H[S]]--;
-		H[S] = vertexCnt + 1;
-		gap[H[S]]++;
-		int maxHeight = H[S];
-
-		activeHLPP[H[S]].push(S);
-		// E[T] = -MAX;
-		while (maxHeight > 0) {
-			if (activeHLPP[maxHeight].isEmpty()) {
-				maxHeight--;
+		// Initialize the pre-flow
+		initPreflow(S, T, null, activeHLPP);
+		int level = H[S];
+		while (level > 0) {
+			if (activeHLPP[level].isEmpty()) {
+				level--;
 				continue;
 			}
-			System.out.println("maxHeight:" + maxHeight);
-			u = (Integer) activeHLPP[maxHeight].peek();
-			activeHLPP[maxHeight].poll();
-			// 没用 while(E[u]>0)是考虑到把S加入了这个WHILE大循环，效果其实是一样的
-			// 用WHILE(E[U]>0),便于理解DISCHARGE
-			// push
-			for (int v = 1; v <= vertexCnt; v++) {
-				if (u == S || H[u] == H[v] + 1) {
-					pushFlow = push(u, v);
-					if (v != S && v != T && pushFlow > 0) {
-						activeHLPP[H[v]].push(v);
-					}
-				}
+			System.out.println("level:" + level);
+			u = (Integer) activeHLPP[level].peek();
+			activeHLPP[level].poll();
+
+			int oldHeight = H[u];
+			Discharge(u, S, T, null, activeHLPP);
+			gap[oldHeight]--;
+			// activeHLPP[oldHeight].remove(new Integer(u)); 已经POLL了不需要再REMOVE
+			// H[u]只可能比oldHeight大
+			gap[H[u]]++;
+			if (H[u] > level) {
+				level = H[u];
 			}
-			// relabel
-			if (u != S && u != T && E[u] > 0) {
-				int oldHeight = H[u];
-				gap[H[u]]--;
-				relabel(u);
-				gap[H[u]]++;
-				activeHLPP[H[u]].push(u);
-				// Gap heuristic 优化
-				if (gap[oldHeight] == 0) {
-					for (int i = 1; i <= vertexCnt; ++i)
-						if (H[i] > oldHeight && H[i] < 2 * vertexCnt - 1) {
-							gap[H[i]]--;
-							gap[2 * vertexCnt - 1]++;
-							H[i] = 2 * vertexCnt - 1;
-						}
-				}
-				if (H[u] > maxHeight) {
-					maxHeight = H[u];
-				}
+			// Gap heuristic 优化 断层过后直接从下面去
+			// TODO 这里没有做好 不知道怎么做优化 虽然结果是对的 但FLOW表有问题
+			// if (gap[oldHeight] == 0) {
+			// 不能这样做 这样做 从S多出的流压不回去了
+			// level = Math.min(oldHeight, level);
+			// }
+
+			// Gap heuristic 优化
+			// 断层后意味着这层以上的不能往T即最底层压东西 出来的流就全压回S去
+			// 与其一层一层爬上去 不如全弄成S+1层
+			if (gap[oldHeight] == 0 && oldHeight <= vertexCnt + 1) {
+				for (int i = 1; i <= vertexCnt; ++i)
+					if (H[i] > oldHeight && H[i] < 2 * vertexCnt - 1) {
+						gap[H[i]]--;
+						H[i] = vertexCnt + 1;
+						gap[H[i]]++;
+					}
 			}
 		}
 		maxFlow = 0;
@@ -766,6 +785,9 @@ public class MaxFlow
 			}
 		}
 		// E[T] or -E[S]
+		System.out.println("E[S]:" + E[S]);
+		System.out.println("E[T]:" + E[T]);
+		System.out.println("maxFlow:" + maxFlow);
 		return maxFlow;
 	}
 
@@ -787,9 +809,12 @@ public class MaxFlow
 				}
 			}
 		}
+		gap[H[S]]--;
+		H[S] = vertexCnt;
+		gap[H[S]]++;
 	}
 
-	private static void Discharge(int u)
+	private static void Discharge(int u, int S, int T, LinkedList<Integer> queue, LinkedList<Integer>[] activeHLPP)
 	{
 		boolean needRelabel = true;
 		while (E[u] > 0) {
@@ -804,7 +829,18 @@ public class MaxFlow
 						// push
 						needRelabel = false;
 						push(u, v);
+						if (queue != null && v != S && v != T && !queue.contains(v)) {
+							queue.add(v);
+						}
+						if (activeHLPP != null && v != S && v != T && !activeHLPP[H[v]].contains(v)) {
+							activeHLPP[H[v]].add(v);
+						}
+						// prune
+						if (E[u] <= 0) {
+							return;
+						}
 					}
+
 				}
 			}
 			// 没有可以push的顶点,执行relabel
@@ -838,18 +874,14 @@ public class MaxFlow
 		capacity[v][u] += d;
 		flow[u][v] += d;
 		flow[v][u] = -flow[u][v];
-		// System.out.println("Push " + u + "->" + v + " " + d);
-		// System.out.println();
+		System.out.println("Push " + u + "->" + v + " " + d);
+		System.out.println();
 		return d;
 		// flow[v][u] -=d; 这样其实可以保证的
 	}
 
-	private static void initPreflow(int S)
-
+	private static void initPreflow(int S, int T, LinkedList<Integer> queue, LinkedList<Integer>[] activeHLPP2)
 	{
-		H = new int[vertexCnt + 1];// H==Height
-		E = new int[vertexCnt + 1];// E=Excess
-		flow = new int[vertexCnt + 1][vertexCnt + 1];
 		H[S] = vertexCnt;
 		for (int u = 1; u <= vertexCnt; u++) {
 			if (capacity[S][u] > 0) {
@@ -861,6 +893,12 @@ public class MaxFlow
 				capacity[S][u] = capacity[S][u] - flow[S][u];
 				// capacity[u][S] = capacity[S][u];
 				// capacity[S][u] = 0;
+				if (queue != null && u != S && u != T && !queue.contains(u)) {
+					queue.add(u);
+				}
+				if (activeHLPP != null && u != S && u != T && !activeHLPP[H[u]].contains(u)) {
+					activeHLPP[H[u]].add(u);
+				}
 			}
 		}
 	}
