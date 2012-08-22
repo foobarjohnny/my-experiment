@@ -983,7 +983,7 @@ public class MaxFlow
 			}
 		}
 		// 已经把X,Y都遍历了 DOUBLE了 所以要除以2 这是对于无向图
-		// 如果是有向图就不必除以2
+		// 如果是有向图(必须保证只从X到Y或Y到X)就不必除以2
 		return maxMatch / 2;
 	}
 
