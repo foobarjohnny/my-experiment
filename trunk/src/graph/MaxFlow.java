@@ -290,7 +290,7 @@ public class MaxFlow
 	private static void buildCap()
 	{
 		// gap 设成vertexCnt*2，因为有可能有V+1次提升高度，原来最大高度是V V+V-1=2V-1
-		vertexCnt = 10;
+		vertexCnt = 6;
 		capacity = new int[vertexCnt + 1][vertexCnt + 1];
 		flow = new int[vertexCnt + 1][vertexCnt + 1];
 		minCapacity = new int[vertexCnt + 1];
@@ -335,27 +335,35 @@ public class MaxFlow
 		// addCap(5, 8, 3);
 		// addCap(6, 8, 6);
 
-		addCap(1, 2, 1);
-		addCap(3, 4, 4);
-		addCap(5, 6, 4);
-		addCap(7, 8, 11);
-		addCap(9, 10, 1);
 		// addCap(2, 1, 1);
 		// addCap(4, 3, 6);
 		// addCap(6, 5, 6);
 		// addCap(8, 7, 11);
 		// addCap(10, 9, 1);
 
-		addCap(4, 1, maxint);
-		addCap(6, 1, maxint);
-		addCap(2, 3, maxint);
-		addCap(2, 5, maxint);
-		addCap(4, 7, maxint);
-		addCap(6, 7, maxint);
-		addCap(8, 3, maxint);
-		addCap(8, 5, maxint);
-		addCap(8, 9, maxint);
-		addCap(10, 7, maxint);
+		// addCap(1, 2, 1);
+		// addCap(3, 4, 4);
+		// addCap(5, 6, 4);
+		// addCap(7, 8, 11);
+		// addCap(9, 10, 1);
+		// addCap(4, 1, maxint);
+		// addCap(6, 1, maxint);
+		// addCap(2, 3, maxint);
+		// addCap(2, 5, maxint);
+		// addCap(4, 7, maxint);
+		// addCap(6, 7, maxint);
+		// addCap(8, 3, maxint);
+		// addCap(8, 5, maxint);
+		// addCap(8, 9, maxint);
+		// addCap(10, 7, maxint);
+
+		// Hungary
+		addCap(1, 4, 1);
+		addCap(1, 5, 4);
+		addCap(1, 6, 4);
+		addCap(2, 4, 4);
+		addCap(2, 5, 4);
+		addCap(4, 3, 4);
 
 	}
 
@@ -905,7 +913,7 @@ public class MaxFlow
 
 	// 用'临点填色法'判断，相邻点异色，发现同色则不成立也算求奇圈
 	// 然后匈牙利算法， 求出个数除2
-	boolean BFS()
+	public static boolean BFS4Hungary()
 	{ // 二分图BFS判断
 		int v, start = 1, end = 2;
 		int[] queue = new int[vertexCnt + 1];
@@ -936,13 +944,13 @@ public class MaxFlow
 		return true;
 	}
 
-	public static boolean dfs(int u)
+	public static boolean DFS4Hungary(int u)
 	{
 		for (int v = 1; v <= vertexCnt; v++) {
 			if (capacity[u][v] > 0) {
 				if (!visit[v]) {
 					visit[v] = true;
-					if (father[v] == 0 || dfs(father[v])) {
+					if (father[v] == 0 || DFS4Hungary(father[v])) {
 						// father[i] == -1 保证了第一条边和最后一条边为未匹配边
 						// dfs(father[i])实现了交替路径;
 						father[v] = u;
@@ -957,17 +965,25 @@ public class MaxFlow
 	// http://wanzhenjie88.blog.163.com/blog/static/4066646920077131486697/
 	public static int Hungary()
 	{
+		if (!BFS4Hungary()) {
+			System.out.println("no hungary");
+			return -1;
+		}
+		else {
+			System.out.println("has hungary");
+		}
 		int maxMatch = 0;
 		father = new int[vertexCnt + 1];
 		for (int i = 1; i <= vertexCnt; ++i) {
 			visit = new boolean[vertexCnt + 1];
 			// 每找到一条增广径 最大匹配加1 M+1
 			// 跟最大流的增广径 定义不一样
-			if (dfs(i)) {
+			if (DFS4Hungary(i)) {
 				maxMatch++;
 			}
 		}
-		// 已经把X,Y都遍历了 DOUBLE了 所以要除以2
+		// 已经把X,Y都遍历了 DOUBLE了 所以要除以2 这是对于无向图
+		// 如果是有向图就不必除以2
 		return maxMatch / 2;
 	}
 
