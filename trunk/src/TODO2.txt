@@ -46,9 +46,10 @@ http://zh.wikipedia.org/zh/%E5%A4%9A%E8%BE%B9%E5%BD%A2
 5. 熟悉动态规划的各个典型：LCS、
 最长递增子串[http://blog.csdn.net/ztj111/article/details/2748152，http://robin.sh/html/823_longest-increase-subsequence.html]、
 三角剖分[http://www.docin.com/p-169913663.html,http://hi.baidu.com/flygenius/blog/item/c95203e90449c3c6d439c9ec.html]、
-记忆化dp 
+记忆化dp [记下原来的结果 空间换时间]
 
-6.博弈类算法。博弈树，二进制法等。 
+6.博弈类算法。博弈树[http://www.cnblogs.com/chinese-zmm/archive/2011/01/26/1945795.html,http://www.nowamagic.net/algorithm/algorithm_MinimaxGameTree.php]
+，二进制法[?]等。 
 
 7.最大团，最大独立集。 
 
@@ -98,7 +99,7 @@ http://zh.wikipedia.org/zh/%E5%A4%9A%E8%BE%B9%E5%BD%A2
 
         Euler Path / Tour 
 
-            圈套圈算法 
+            圈套圈算法 [http://blog.acmj1991.com/?p=306]
 
             混合图的 Euler Path / Tour 
 
@@ -138,7 +139,7 @@ http://zh.wikipedia.org/zh/%E5%A4%9A%E8%BE%B9%E5%BD%A2
 
             强连通分支 
 
-            2-SAT 
+            2-SAT [http://blog.csdn.net/nothi/article/details/7728312]
 
             最小点基 
 
