@@ -285,7 +285,7 @@ public class Sort
 	}
 
 	// alias: partition-exchange sort
-	public static void quickSort(int[] k, int low, int high)
+	public static void quickSort(int[] A, int low, int high)
 	{
 
 		int i, j, p;
@@ -298,7 +298,7 @@ public class Sort
 				i = stack[--top];
 				j = stack[--top];
 				if (j < i) {
-					p = partition2(k, j, i);
+					p = partition2(A, j, i);
 					if (j < p - 1) {
 						stack[top++] = j;
 						stack[top++] = p - 1;
@@ -494,21 +494,21 @@ public class Sort
 		}
 	}
 
-	public static void mergeSort(int[] x, int n)
+	public static void mergeSort(int[] A, int n)
 	{
-		int[] orig = x;
+		int[] orig = A;
 		int gap = 1;
-		int[] y = new int[x.length];
-		int[] temp = x;
+		int[] B = new int[A.length];
+		int[] temp = A;
 		while (gap < n) {
-			MPASS(x, y, n, gap);
-			temp = x;
-			x = y;
-			y = temp;
+			MPASS(A, B, n, gap);
+			temp = A;
+			A = B;
+			B = temp;
 			gap *= 2;
 		}
-		if (orig != x) {
-			System.arraycopy(x, 0, orig, 0, orig.length);
+		if (orig != A) {
+			System.arraycopy(A, 0, orig, 0, orig.length);
 		}
 		// O(nlog2n)
 		// stable; one int[];

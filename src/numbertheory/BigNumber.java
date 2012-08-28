@@ -409,6 +409,50 @@ public class BigNumber
 
 	}
 
+	// http://blog.csdn.net/hackbuteer1/article/details/6595901 这个不错
+	// void Mul10(BigNum &a)
+	// {
+	// int i, len = a.len;
+	// for(i = len; i >= 1; i--)
+	// a.num[i] = a.num[i-1];
+	// a.num[i] = 0;
+	// len++;
+	// //if a == 0
+	// while(len > 1 && a.num[len-1] == 0)
+	// len--;
+	// }
+	//
+	// //高精度除以高精度，除的结果为c，余数为f
+	// void Div2(BigNum &a, BigNum &b, BigNum &c, BigNum &f)
+	// {
+	// int i, len = a.len;
+	// memset(c.num, 0, sizeof(c.num));
+	// memset(f.num, 0, sizeof(f.num));
+	// f.len = 1;
+	// for(i = len-1;i >= 0;i--)
+	// {
+	// Mul10(f);
+	// //余数每次乘10
+	// f.num[0] = a.num[i];
+	// //然后余数加上下一位
+	// ///利用减法替换除法
+	// while(Comp(f, b) >= 0)
+	// {
+	// f = Sub(f, b);
+	// c.num[i]++;
+	// }
+	// }
+	// while(len > 1 && c.num[len-1] == 0)
+	// len--;
+	// c.len = len;
+	// }
+	//
+	// struct BigNum
+	// {
+	// int num[MAXL];
+	// int len;
+	// };
+
 	// http://tianya23.blog.51cto.com/1081650/412105
 	// JAVA大数运算
 	public static double add(double d1, double d2)
