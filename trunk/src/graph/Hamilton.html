@@ -1,0 +1,419 @@
+<!-- //http://mengliao.blog.51cto.com/876134/539522 -->
+<!-- 哈密尔顿路径问题是一个NP问题，即非多项式问题，其时间复杂度为O(k^n)，不可能使用穷举或遍历之类的算法求解。实际上哈密尔顿路径问题是一个NPC问题，
+即NP完备问题，已经有人证明如果NPC问题可以找到P解，则所有NP问题都有P解。 -->
+<!-- 我这里做的是一个经典问题，即马步问题，描述如下：在国际象棋棋盘上用马这个棋子遍历棋盘，每个格子必须经过且只能经过一次。 -->
+<!-- 该问题稍作变化有三种形式： -->
+<!-- 1、哈密尔顿链路(Chain)：从指定点出发，64步之后完成遍历棋盘，到达任意位置； -->
+<!-- 2、哈密尔顿回路(Loop)：从指定点出发，64步之后完成遍历棋盘，所到达的位置恰好与起始位置相邻1步（马步）； -->
+<!-- 3、哈密尔顿虫路(Worm)：从指定点出发，64步完成遍历棋盘，到达指定结束位置（容易证明，指定起始位置和结束位置在8*8的棋盘中一定处于不同颜色的格子中）。 -->
+<!-- 解决该问题没有任何简单办法，只能是尝试，通常采用回溯（有方向性的尝试），但成功率较低，而贪婪算法则采用这样一种思路：尽量先走出路比较少的棋盘格，
+这样，后面的步骤可选择的余地就大，成功的概率也就大的多。实际上，当后面的步骤回溯时，带来的时间复杂度要小得多，例如回溯到第2步为O(8^62)，
+而回溯到第40步只有O(8^24)，显然不是一个数量级的。 -->
+<!-- 程序使用JavaScript编写，绝大多数情况下在极短时间内便能够求得一组解！ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Horse traversing problem of Hamilton path(Greedy
+	algorithm) - 哈密尔顿路径之马步问题（贪婪算法）</title>
+<style type="text/css">
+body {
+	background-color: #e0ffe0;
+}
+
+p {
+	font-family: 宋体;
+	font-size: 9pt;
+	text-align: center;
+}
+
+table {
+	border-width: 8px;
+	border-color: #404080;
+	border-style: solid;
+	background-color: #ffffff;
+}
+
+td {
+	font-size: 35px;
+	font-weight: bold;
+	color: #ff6060;
+	text-align: center;
+	vertical-align: middle;
+	width: 70px;
+	height: 70px;
+}
+
+td.b {
+	background-color: #00007f;
+}
+</style>
+<script type="text/javascript">  
+        var H = new Array();  
+ 
+        //初始化表示棋盘的二维数组  
+        function init() {  
+            for (var i = 0; i < 12; i++)  
+                H.push(new Array(12));  
+            for (var i = 0; i < H.length; i++)  
+                for (var j = 0; j < H[i].length; j++)  
+                    if (i < 2 || i > 9 || j < 2 || j > 9)  
+                        H[i][j] = -1 //不允许的位置初始化为-1  
+                    else 
+                        H[i][j] = 0; //允许的位置为0，以后该值x表示第x步所在的位置，即1到64  
+        }  
+ 
+        //这里定义的二维数组表示对应的8种选择的x和y的坐标偏移量  
+        var moveOffset = new Array([-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1]);  
+ 
+        //贪婪（递归回溯）算法核心思想：  
+        //定义：如果点(x, y)下一步可供选择的位置为w，则称该点的度为w  
+        //对于任意一节点A，其下一步所有可达节点构成的集合S中，按照度由小到大排列  
+        //如果S为空，则回溯到上一步  
+        //否则，首先尝试将A节点的下一步移动到度最小的位置  
+        //如果该选择导致后面无法移动，则回溯到该位置继续尝试度次小的点  
+ 
+        //贪婪算法的估值函数  
+        function wayCosts(x, y, costs) {  
+            for (var i = 0; i < 8; i++) {  
+                if (H[x + moveOffset[i][0]][y + moveOffset[i][1]] == 0) {  
+                    var w = -1; //计算下一步的度时会统计当前位置（一定可达），故而事先减1  
+                    for (var j = 0; j < 8; j++)  
+                        if (H[x + moveOffset[i][0] + moveOffset[j][0]][y + moveOffset[i][1] + moveOffset[j][1]] == 0)  
+                            w++;  
+                    costs.push([w, x + moveOffset[i][0], y + moveOffset[i][1]]);  
+                }  
+            } //有一种特殊情况：w=1，但并不意味着该节点是当前位置到下一位置的必经的唯一节点，因为有可能该度为1的节点成为最后一个节点  
+            costs.sort(function (a, b) { return a[0] - b[0]; }); //依据度进行非递减序排列，使用匿名函数  
+        }  
+ 
+        //哈密尔顿链路函数，递归回溯求解  
+        function chain(x, y, step) {  
+            var costs = new Array();  
+            var flag = false;  
+            if (step > 64)  
+                return true 
+            else {  
+                wayCosts(x, y, costs);  
+                if (costs.length != 0) {  
+                    for (var i = 0; i < costs.length; i++) {  
+                        H[costs[i][1]][costs[i][2]] = step;  
+                        flag = chain(costs[i][1], costs[i][2], step + 1);  
+                        if (!flag)  
+                            H[costs[i][1]][costs[i][2]] = 0  
+                        else 
+                            break;  
+                    }  
+                }  
+                return flag;  
+            }  
+        }  
+ 
+        //哈密尔顿回路思想  
+        //与链路不同的是，回路相当于规定了最后一步的位置，即第64步的位置必须与第1步所在位置马步相邻，而虫路则是最后一步的位置已经确定  
+        //与第1步（虫路是最后一步）所在位置马步相邻的节点均可作为第64步的节点，而这些节点在搜索过程中，必须至少预留1个  
+        var lastCount;  
+        var lastX, lastY; //回路求解时需记录起点坐标，虫路求解时需记录终点坐标，用以判断lastCount是否增或减  
+ 
+        //判断两个节点是否为马步相邻  
+        function neigh(x1, y1, x2, y2) {  
+            return Math.abs(x1 - x2) == 1 && Math.abs(y1 - y2) == 2 || Math.abs(x1 - x2) == 2 && Math.abs(y1 - y2) == 1;  
+        }  
+ 
+        //哈密尔顿回路函数  
+        function loop(x, y, step) {  
+            var costs = new Array();  
+            var flag = false;  
+            if (step > 64)  
+                return true 
+            else {  
+                wayCosts(x, y, costs);  
+                if (costs.length != 0) {  
+                    for (var i = 0; i < costs.length; i++) {  
+                        H[costs[i][1]][costs[i][2]] = step;  
+                        if (neigh(costs[i][1], costs[i][2], lastX, lastY))  
+                            lastCount--;  
+                        if (lastCount != 0 || step == 64) //当仍然有预留位置，或者虽然没有预留位置，但恰好是求解最后一步  
+                            flag = loop(costs[i][1], costs[i][2], step + 1);  
+                        if (!flag) {  
+                            H[costs[i][1]][costs[i][2]] = 0;  
+                            if (neigh(costs[i][1], costs[i][2], lastX, lastY))  
+                                lastCount++;  
+                        }  
+                        else 
+                            break;  
+                    }  
+                }  
+                return flag;  
+            }  
+        }  
+ 
+        //哈密尔顿虫路函数  
+        function worm(x, y, step) {  
+            var costs = new Array();  
+            var flag = false;  
+            if (step > 63) //虫路的最后一步已经确定，故而只需求解63步  
+                return true 
+            else {  
+                wayCosts(x, y, costs);  
+                if (costs.length != 0) {  
+                    for (var i = 0; i < costs.length; i++) {  
+                        H[costs[i][1]][costs[i][2]] = step;  
+                        if (neigh(costs[i][1], costs[i][2], lastX, lastY))  
+                            lastCount--;  
+                        if (lastCount != 0 || step == 63) //当仍然有预留位置，或者虽然没有预留位置，但恰好是求解最后一步  
+                            flag = worm(costs[i][1], costs[i][2], step + 1);  
+                        if (!flag) {  
+                            H[costs[i][1]][costs[i][2]] = 0;  
+                            if (neigh(costs[i][1], costs[i][2], lastX, lastY))  
+                                lastCount++;  
+                        }  
+                        else 
+                            break;  
+                    }  
+                }  
+                return flag;  
+            }  
+        }  
+ 
+        //===========================================================  
+        //设定界面求解相关控件是否可用  
+        function runDisabled(flag) {  
+            selAlg.disabled = flag;  
+            runBtn.disabled = flag;  
+            selStartX.disabled = flag;  
+            selStartY.disabled = flag;  
+            selEndX.disabled = flag;  
+            selEndY.disabled = flag;  
+        }  
+ 
+        //设定界面演示相关控件是否可用  
+        function demoDisabled(flag) {  
+            demoBtn.disabled = flag;  
+            selDelay.disabled = flag;  
+        }  
+ 
+        //求解主函数  
+        function run() {  
+            runDisabled(true);  
+            demoDisabled(true);  
+            init();  
+            //算法中的二维数组的第1维存放的是列，故而这里进行翻转  
+            var startX = parseInt(selStartY.value);  
+            var startY = parseInt(selStartX.value);  
+            var endX = parseInt(selEndY.value);  
+            var endY = parseInt(selEndX.value);  
+            H[startX][startY] = 1; //设定第1步的位置  
+            if (selAlg.value == "chain")  
+                var func = chain  
+            else {  
+                if (selAlg.value == "loop") {  
+                    lastX = startX;  
+                    lastY = startY;  
+                    var func = loop;  
+                }  
+                else {  
+                    //哈密尔顿虫路的起点和终点必须在不同颜色的格子中，否则无解  
+                    if (((startX + startY + endX + endY) % 2 == 0)) {  
+                        alert("哈密尔顿虫路的起点和终点所在棋盘格的颜色必须不同！请重新选择！");  
+                        runDisabled(false);  
+                        retuen;  
+                    }  
+                    lastX = endX;  
+                    lastY = endY;  
+                    H[endX][endY] = 64; //设定第64步的位置  
+                    var func = worm;  
+                }  
+                //计算构成回路（虫路）的预留位置数量  
+                lastCount = 0;  
+                for (var i = 0; i < 8; i++)  
+                    if (H[lastX + moveOffset[i][0]][lastY + moveOffset[i][1]] == 0)  
+                        lastCount++;  
+            }  
+            alert("这是一个NP问题，尚无完备的求解方法，本程序所使用方法的可行性已经极高！\n如果长时间无法完成求解，则可能需要更长时间，甚至超过宇宙的年龄才能完成，请随时刷新页面取消求解！\n绝大多数情况下在极短时间内便能够求得一组解！")  
+            func(startX, startY, 2);  //从第2步开始求解  
+            alert("恭喜！求解成功！\n请点击“演示”按钮显示结果！");  
+            runDisabled(false);  
+            demoDisabled(false);  
+        }  
+ 
+        //演示输出函数  
+        var demoStep;  
+        var intervalID;  
+        function draw() {  
+            var flag = false;  
+            ++demoStep;  
+            for (var i = 2; i < 10 && !flag; i++)  
+                for (var j = 2; j < 10 && !flag; j++)  
+                    flag = H[i][j] == demoStep;  
+            eval("r" + (i - 1 - 2) + "c" + (j - 1 - 2) + ".innerText = \"" + demoStep + "\";"); //退出循环时，i和j的值均大了1，故而需要减去1  
+            if (demoStep == 64) {  
+                clearInterval(intervalID); //演示完成后清除定时器  
+                runDisabled(false);  
+                demoDisabled(false);  
+            }  
+        }  
+ 
+        //演示主函数  
+        function demo() {  
+            runDisabled(true);  
+            demoDisabled(true);  
+            //清除所有TD标签中的原有内容  
+            var tds = document.getElementsByTagName("TD");  
+            for (var i = 0; i < tds.length; i++)  
+                tds[i].innerHTML = "";  
+            //延时调用函数绘制图像并标记步骤数字  
+            var delay = parseInt(selDelay.value);  
+            demoStep = 0;  
+            intervalID = setInterval(draw, delay);  
+        }  
+    </script>
+</head>
+<body>
+	<p>
+		Horse traversing problem of Hamilton path(Greedy algorithm) -
+		哈密尔顿路径之马步问题（贪婪算法）<br /> Mengliao Software Studio(Baiyu) - 梦辽软件工作室（白宇）<br />
+		Copyright 2011, All right reserved. - 版权所有(C) 2011<br /> 2011.04.07
+	</p>
+	<center>
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td id="r0c0"></td>
+				<td class="b" id="r0c1"></td>
+				<td id="r0c2"></td>
+				<td class="b" id="r0c3"></td>
+				<td id="r0c4"></td>
+				<td class="b" id="r0c5"></td>
+				<td id="r0c6"></td>
+				<td class="b" id="r0c7"></td>
+			</tr>
+			<tr>
+				<td class="b" id="r1c0"></td>
+				<td id="r1c1"></td>
+				<td class="b" id="r1c2"></td>
+				<td id="r1c3"></td>
+				<td class="b" id="r1c4"></td>
+				<td id="r1c5"></td>
+				<td class="b" id="r1c6"></td>
+				<td id="r1c7"></td>
+			</tr>
+			<tr>
+				<td id="r2c0"></td>
+				<td class="b" id="r2c1"></td>
+				<td id="r2c2"></td>
+				<td class="b" id="r2c3"></td>
+				<td id="r2c4"></td>
+				<td class="b" id="r2c5"></td>
+				<td id="r2c6"></td>
+				<td class="b" id="r2c7"></td>
+			</tr>
+			<tr>
+				<td class="b" id="r3c0"></td>
+				<td id="r3c1"></td>
+				<td class="b" id="r3c2"></td>
+				<td id="r3c3"></td>
+				<td class="b" id="r3c4"></td>
+				<td id="r3c5"></td>
+				<td class="b" id="r3c6"></td>
+				<td id="r3c7"></td>
+			</tr>
+			<tr>
+				<td id="r4c0"></td>
+				<td class="b" id="r4c1"></td>
+				<td id="r4c2"></td>
+				<td class="b" id="r4c3"></td>
+				<td id="r4c4"></td>
+				<td class="b" id="r4c5"></td>
+				<td id="r4c6"></td>
+				<td class="b" id="r4c7"></td>
+			</tr>
+			<tr>
+				<td class="b" id="r5c0"></td>
+				<td id="r5c1"></td>
+				<td class="b" id="r5c2"></td>
+				<td id="r5c3"></td>
+				<td class="b" id="r5c4"></td>
+				<td id="r5c5"></td>
+				<td class="b" id="r5c6"></td>
+				<td id="r5c7"></td>
+			</tr>
+			<tr>
+				<td id="r6c0"></td>
+				<td class="b" id="r6c1"></td>
+				<td id="r6c2"></td>
+				<td class="b" id="r6c3"></td>
+				<td id="r6c4"></td>
+				<td class="b" id="r6c5"></td>
+				<td id="r6c6"></td>
+				<td class="b" id="r6c7"></td>
+			</tr>
+			<tr>
+				<td class="b" id="r7c0"></td>
+				<td id="r7c1"></td>
+				<td class="b" id="r7c2"></td>
+				<td id="r7c3"></td>
+				<td class="b" id="r7c4"></td>
+				<td id="r7c5"></td>
+				<td class="b" id="r7c6"></td>
+				<td id="r7c7"></td>
+			</tr>
+		</table>
+		<p>
+			算法 <select id="selAlg">
+				<option value="chain" selected="selected">哈密尔顿链路 (Chain)</option>
+				<option value="loop">哈密尔顿回路 (Loop)</option>
+				<option value="worm">哈密尔顿虫路 (Worm)</option>
+			</select>&nbsp;&nbsp;&nbsp; <input type="button" id="runBtn" value="尝试求解..."
+				style="width: 80px; height: 25px" onclick="run();" />&nbsp;&nbsp;&nbsp;
+			<input type="button" id="demoBtn" value="演示..."
+				style="width: 80px; height: 25px" disabled="disabled"
+				onclick="demo();" />&nbsp;&nbsp;&nbsp;演示速度 <select id="selDelay"
+				disabled="disabled">
+				<option value="100">0.1s/步</option>
+				<option value="200">0.2s/步</option>
+				<option value="300" selected="selected">0.3s/步</option>
+				<option value="500">0.5s/步</option>
+				<option value="700">0.7s/步</option>
+				<option value="1000">1s/步</option>
+				<option value="1500">1.5s/步</option>
+				<option value="2000">2s/步</option>
+			</select> <br /> <br />起点X坐标 <select id="selStartX">
+				<option value="2" selected="selected">第1列</option>
+				<option value="3">第2列</option>
+				<option value="4">第3列</option>
+				<option value="5">第4列</option>
+				<option value="6">第5列</option>
+				<option value="7">第6列</option>
+				<option value="8">第7列</option>
+				<option value="9">第8列</option>
+			</select>&nbsp;&nbsp;&nbsp;起点Y坐标 <select id="selStartY">
+				<option value="2" selected="selected">第1行</option>
+				<option value="3">第2行</option>
+				<option value="4">第3行</option>
+				<option value="5">第4行</option>
+				<option value="6">第5行</option>
+				<option value="7">第6行</option>
+				<option value="8">第7行</option>
+				<option value="9">第8行</option>
+			</select>&nbsp;&nbsp;&nbsp;终点X坐标 <select id="selEndX">
+				<option value="2" selected="selected">第1列</option>
+				<option value="3">第2列</option>
+				<option value="4">第3列</option>
+				<option value="5">第4列</option>
+				<option value="6">第5列</option>
+				<option value="7">第6列</option>
+				<option value="8">第7列</option>
+				<option value="9">第8列</option>
+			</select>&nbsp;&nbsp;&nbsp;终点Y坐标 <select id="selEndY">
+				<option value="2" selected="selected">第1行</option>
+				<option value="3">第2行</option>
+				<option value="4">第3行</option>
+				<option value="5">第4行</option>
+				<option value="6">第5行</option>
+				<option value="7">第6行</option>
+				<option value="8">第7行</option>
+				<option value="9">第8行</option>
+			</select>
+		</p>
+	</center>
+</body>
+</html>
