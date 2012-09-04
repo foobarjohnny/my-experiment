@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+    <form-beans>
+
+    </form-beans>
+	<global-exceptions></global-exceptions>
+	<global-forwards>
+		<forward contextRelative="yes" name="Globe_Exception"
+			path="/jsp/ErrorPage.jsp" />
+	</global-forwards>
+    <action-mappings>
+        <action path="/queryPoi"
+                 scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+        <action path="/oneBoxSearch"
+                 scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+		<!-- Address Capture -->
+		<action path="/ValidateAddress" scope="request" validate="false">
+			<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+		</action>
+        
+        <action path="/POICategory" scope="request" validate="true">
+			<forward name="success" path="/jsp/poi/PoiSubCategory.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+		</action>
+		
+        <action path="/goToJsp"
+                 scope="request" validate="false" input="/hello.jsp">
+            <forward name="SearchPoi" path="/jsp/poi/SearchPoi.jsp" />
+            <forward name="PoiList" path="/jsp/poi/PoiList.jsp" />
+            <forward name="SearchCategory" path="/jsp/poi/SearchCategory.jsp" />
+            <forward name="ShowDetail" path="/jsp/poi/ShowDetail.jsp" />
+			<forward name="TypeAddress" path="/jsp/ac/TypeAddress.jsp" />
+			<forward name="TypeIntersection" path="/jsp/ac/TypeIntersection.jsp" />
+			<forward name="TypeCity" path="/jsp/ac/TypeCity.jsp" />
+			<forward name="TypeAirport" path="/jsp/ac/TypeAirport.jsp" />
+			<forward name="AddressList" path="/jsp/ac/AddressList.jsp" />
+			<forward name="SelectCountry" path="/jsp/ac/SelectCountry.jsp" />
+			<forward name="RatePoi" path="/jsp/poi/RatePoi.jsp"/>
+			<forward name="ToolsMain" path="/jsp/ToolsMain.jsp"/>
+			<forward name="NewToolsMain" path="/jsp/NewToolsMain.jsp"/>
+			<forward name="FreeTrialOffer" path="/jsp/FreeTrialOffer.jsp"/>
+			<forward name="BundlePremiumInsert" path="/jsp/BundlePremiumInsert.jsp"/>
+			<forward name="FreeTrialReminder" path="/jsp/FreeTrialReminder.jsp"/>
+			<forward name="ShowReviews" path="/jsp/poi/ShowReviews.jsp"/>
+			<forward name="DriveToWrap" path="/jsp/DriveToWrap.jsp"/>
+			<forward name="DriveToInterface" path="/jsp/controller/DriveToInterface.jsp"/>
+			<forward name="SelectAddress" path="/jsp/ac/SelectAddress.jsp" />
+            <forward name="RecentPlaces" path="/jsp/ac/RecentPlaces.jsp" />
+            <forward name="MyFavorites" path="/jsp/ac/MyFavorites.jsp" />
+            <forward name="AirportList" path="/jsp/ac/AirportList.jsp" />
+            <forward name="SpeakCommandInstruction" path="/jsp/dsr/SpeakCommandInstruction.jsp" />
+            <forward name="ShareAddress" path="/jsp/ac/ShareAddress.jsp" />
+            <forward name="Receipient" path="/jsp/ac/Receipient.jsp" />
+            <forward name="SetUpHome" path="/jsp/ac/SetUpHome.jsp" />
+            <forward name="HomeMain" path="/jsp/ac/HomeMain.jsp" />
+            <forward name="HomeAddress" path="/jsp/ac/HomeAddress.jsp" />
+            <forward name="SelectContact" path="/jsp/ac/SelectContact.jsp" />
+            <forward name="MapWrap" path="/jsp/local_service/MapWrap.jsp"/>
+            <forward name="SpeakGettingRoute" path="/jsp/dsr/SpeakGettingRoute.jsp"/>
+            <forward name="ReferFriend" path="/jsp/ReferFriend.jsp"/>
+            <forward name="CreateFavorites" path="/jsp/ac/CreateFavorites.jsp"/>
+            <forward name="SpeakGettingMap" path="/jsp/dsr/SpeakGettingMap.jsp"/>
+            <forward name="NameAndEmail" path="/jsp/NameAndEmail.jsp"/>
+            <forward name="EditRoute" path="/jsp/ac/EditRoute.jsp" />
+			<forward name="ATTExtras" path="/jsp/ATTExtras.jsp" />
+			<forward name="GetGps" path="/jsp/local_service/GetGps.jsp" />
+	    	<forward name="SelectAddressController" path="/jsp/ac/controller/SelectAddressController.jsp" />
+	    	<forward name="SelectAddressInterface"	path="/jsp/ac/controller/SelectAddressInterface.jsp" />
+			<forward name="RouteStyle" path="/jsp/ac/RouteStyle.jsp" />
+			<forward name="AvoidRoute" path="/jsp/ac/AvoidRoute.jsp" />
+            <forward name="NameAndEmailAskPage" path="/jsp/NameAndEmailAskPage.jsp"/>
+			<forward name="NameAndEmailController" path="/jsp/controller/NameAndEmailController.jsp"/>
+            <forward name="AddressInfo" path="/jsp/misc/AddressInfo.jsp" />
+            <forward name="WeatherInfo" path="/jsp/weather/WeatherInfo.jsp" />
+			<forward name="WeatherWeek" path="/jsp/weather/WeatherWeek.jsp" />
+			<forward name="SpeakGettingPOI" path="/jsp/dsr/SpeakGettingPOI.jsp"/>
+			<forward name="SelectAddressController" path="/jsp/ac/controller/SelectAddressController.jsp"/>
+			<forward name="AboutMenu" path="/jsp/about/AboutMenu.jsp" />
+			<forward name="AboutAbout" path="/jsp/about/AboutAbout.jsp" />
+			<forward name="AboutSupport" path="/jsp/about/AboutSupport.jsp" />
+			<forward name="AboutSupportForBell_VMC" path="/jsp/about/AboutSupport.jsp" />
+			<forward name="AboutLocation" path="/jsp/about/AboutLocation.jsp" />
+			<forward name="MapWrapController" path="/jsp/local_service/controller/MapWrapController.jsp"/>
+			<forward name="SpeakSearchInstruction" path="/jsp/dsr/SpeakSearchInstruction.jsp" />
+			<forward name="AboutFeedback" path="/jsp/about/AboutFeedback.jsp" />
+			<forward name="ThirdPartAction" path="/jsp/thirdpart/ThirdPartAction.jsp" />
+			<forward name="RecordLocation" path="/jsp/ac/RecordLocation.jsp" />
+			<forward name="SelectContactController" path="/jsp/ac/controller/SelectContactController.jsp" />
+			<forward name="SayCommand" path="/jsp/dsr/SpeakCommandInterface.jsp" />
+			<forward name="ThirdPartAddressList" path="/jsp/thirdpart/ThirdPartAddressList.jsp" />
+			<forward name="WeatherStartUp" path="/jsp/weather/WeatherStartUp.jsp" />
+			<forward name="WeatherCurrent" path="/jsp/weather/WeatherCurrent.jsp" />
+			<forward name="WeatherSingle" path="/jsp/weather/WeatherSingle.jsp" />
+            <forward name="POIListFeedback" path="/jsp/poi/POIListFeedback.jsp" />
+            <forward name="POIDetailFeedback" path="/jsp/poi/POIDetailFeedback.jsp" />
+			<forward name="SpeakGettingRouteAndroid" path="/jsp/dsr/SpeakGettingRouteAndroid.jsp"/>
+            <forward name="PoiListAndroid" path="/jsp/poi/PoiListAndroid.jsp" />
+			<forward name="ShowDetailAndroid" path="/jsp/poi/ShowDetailAndroid.jsp" />
+			<forward name="OneBoxWrap" path="/jsp/OneBoxWrap.jsp" />
+			<forward name="OneBoxSearch" path="/jsp/OneBoxSearch.jsp" />
+			<forward name="InputBox" path="/jsp/InputBox.jsp" />
+        </action>
+        <action path="/startUp" scope="request" validate="false">
+        	<forward name="success" path="/jsp/StartUp.jsp" /> 
+        	<forward name="successSN" path="/jsp/StartUpForSN.jsp" />           
+        	<forward name="successRIM63" path="/jsp/StartUpForRIM63.jsp" />
+        	<forward name="successTMORIM62" path="/jsp/StartUpForTMORIM62.jsp" />
+        </action>
+        <action path="/runDSR" scope="request" validate="false">
+        	<forward name="SpeakSearch1" path="/jsp/dsr/SpeakSearch1.jsp" />
+        	<forward name="SpeakSearchAlong1" path="/jsp/dsr/SpeakSearchAlong1.jsp" />
+        	<forward name="SpeakSearchAlong2" path="/jsp/dsr/SpeakSearchAlong2.jsp" />        
+        	<forward name="SpeakCity1" path="/jsp/dsr/SpeakCity1.jsp" />
+        	<forward name="SpeakAddress1" path="/jsp/dsr/SpeakAddress1.jsp" />
+        	<forward name="SpeakAirport1" path="/jsp/dsr/SpeakAirport1.jsp" />
+        	<forward name="SpeakIntersection1" path="/jsp/dsr/SpeakIntersection1.jsp" />
+        	<forward name="SpeakCommand1" path="/jsp/dsr/SpeakCommand1.jsp" />
+        	<forward name="SpeakCommand2" path="/jsp/dsr/SpeakCommand2.jsp" />
+        	<forward name="SpeakCommand3" path="/jsp/dsr/SpeakCommand3.jsp" />
+        	<forward name="SpeakFlow3" path="/jsp/dsr/SpeakFlow3.jsp" />
+        </action>
+		<action path="/selectAddress" scope="request" validate="false">
+        	<forward name="SelectAddress" path="/jsp/ac/SelectAddress.jsp" />
+        	<forward name="TypeAddress" path="/jsp/ac/TypeAddress.jsp" />
+			<forward name="TypeIntersection" path="/jsp/ac/TypeIntersection.jsp" />
+			<forward name="TypeCity" path="/jsp/ac/TypeCity.jsp" />
+			<forward name="TypeAirport" path="/jsp/ac/TypeAirport.jsp" />      
+        </action>
+        
+        <action path="/FindAirPort" scope="request" validate="false">
+        	<forward name="success" path="/jsp/ac/TypeAirport.jsp" />      
+        </action>
+        
+        <action path="/ValidateAirport" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />     
+        </action>
+
+        <action path="/editPOI" scope="request" validate="false">
+			<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+		</action>
+        
+        <action path="/getBannerAds" scope="request" validate="false">
+			<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+		</action>
+
+        
+        <action path="/shareAddress" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />      
+        </action>
+  
+        <action path="/reviewPoi" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />     
+        </action>
+        
+        <action path="/ReferFriend" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />     
+        </action>
+        
+        <action path="/CheckAdJuggler" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />  
+        </action>
+        
+        <action path="/getCurrentLocation" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />     
+        </action>
+        
+        <action path="/updateUserInfo" scope="request" validate="false">
+        	<forward name="success" path="/jsp/AjaxResponse.jsp" />
+			<forward name="failure" path="/jsp/ErrorMsgPage.jsp" />     
+        </action>
+        
+        <action path="/SentAddress" scope="request">
+			<forward name="summary" path="/jsp/misc/SendedAddressList.jsp" />
+		</action>
+		
+		<action path="/Weather" scope="request">
+			<forward name="success" path="/jsp/AjaxResponse.jsp" />   
+		</action>
+		
+		<action path="/I18NWeather" scope="request">
+			<forward name="success" path="/jsp/AjaxResponse.jsp" />   
+		</action>
+		
+		<action path="/About" scope="request">
+			<forward name="aboutPin" path="/jsp/about/AboutPin.jsp" />
+		</action>
+		
+		<action path="/AboutFeedbackSubmit"
+                 scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+
+		<action path="/GenericFeedbackRetrieval"  scope="request" validate="false">
+            <forward name="successForPOIDetailFeedback" path="/jsp/poi/POIDetailFeedbackNew.jsp" />
+            <forward name="successForPOIListFeedback" path="/jsp/poi/POIListFeedbackNew.jsp" />
+            <forward name="successForPurchaseAbandonSurvey" path="/jsp/poi/PurchaseAbandonSurvey.jsp" />
+            <forward name="successForAdJugglerSurvey" path="/jsp/AdJugglerSurvey.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+		<action path="/GenericFeedbackSave"  scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+		<action path="/POIFeedbackSave"  scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+    </action-mappings>
+
+    <controller processorClass="org.springframework.web.struts.DelegatingRequestProcessor"/>
+
+    <!--  <message-resources parameter="MessageResources" />-->
+
+    <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+    	<set-property property="contextConfigLocation" value="/WEB-INF/action-servlet-touch62.xml"/> 
+    </plug-in>
+    
+    
+
+</struts-config>

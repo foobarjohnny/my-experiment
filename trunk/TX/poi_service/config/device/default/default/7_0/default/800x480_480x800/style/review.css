@@ -1,0 +1,56 @@
+.clsButtonsTd{
+	padding: 20px 0px;
+}
+
+.clsButtonOpre{
+    font-size : 18px;
+}
+
+.clsButtonOpre{
+    width: 62.5%;
+    height: 43px;
+}
+
+.clsButton{
+	font-size:26px;
+}
+
+.addTopDIV{
+	padding:15px 15px 0px 15px;
+	height: 210px;
+}
+
+.viewTopDIVBg{
+	margin:	15px 15px 0px 15px;
+	height: 70px;
+}
+
+.reviewMiddleDiv{
+	margin:	15px 10px 0px 10px;
+}
+
+.clsButton{
+	height: 50px;
+}
+
+.reviewCommentsTextArea{
+	height:140px;
+}
+
+.clsReviewNameWrapper{
+	position: relative;
+	top:14px;	
+}
+.clsReviewTitleWrapper{
+	position: relative;
+	top:18px;	
+}
+
+.clsReviewOptions{
+	padding: 13px 0px;
+	height: 220px;
+}
+
+.clsRatingDiv{
+	width:190px;
+}

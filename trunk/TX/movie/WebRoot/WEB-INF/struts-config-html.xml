@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans></form-beans>
+	<global-exceptions></global-exceptions>
+
+	<global-forwards>
+		<forward contextRelative="yes" name="Globe_Exception"
+			path="/jsp/ErrorMsgPage.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/manifest" scope="request" validate="false">
+			<forward name="success" path="/jsp/manifest_movie.jsp" />
+		</action>
+		<action path="/goToJsp" scope="request" validate="false">
+			<forward name="MovieList" path="/jsp/MovieList.jsp" />
+			<forward name="theaters" path="/jsp/manageTheaterList.jsp" />
+			<forward name="movies" path="/jsp/manageMovieList.jsp" />
+			<forward name="showSchedule" path="/jsp/showSchedule.jsp" />
+			<forward name="buyTicket" path="/jsp/buyTicket.jsp" />
+			<forward name="pageContainer" path="/jsp/pageContainer.jsp" />
+		</action>
+		<action path="/startup" scope="request" validate="false">
+			<forward name="success" path="/jsp/MovieTheaterList.jsp" />
+		</action>
+				
+        <action path="/theaterList" scope="request" validate="false">
+            <forward name="success" path="/jsp/manageTheaterList.jsp" />
+            <forward name="simpleList" path="/jsp/simpleTheaterList.jsp" />
+            <forward name="ajaxSimpleList" path="/jsp/newSimpleTheaterList.jsp" />
+            <forward name="subList" path="/jsp/subMovieList.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+
+        <action path="/movieList" scope="request" validate="false">
+            <forward name="success" path="/jsp/manageMovieList.jsp" />
+            <forward name="simpleList" path="/jsp/simpleMovieList.jsp" />
+            <forward name="ajaxSimpleList" path="/jsp/newSimpleMovieList.jsp" />
+            <forward name="subList" path="/jsp/subTheaterList.jsp" />
+            <forward name="failure" path="/jsp/ErrorMsgPage.jsp" />
+        </action>
+
+        <action path="/lookUpSchedule" scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/AjaxErrResponse.jsp" />
+        </action>        
+		
+		<action path="/GetTicketQuantity" scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/AjaxErrResponse.jsp" />
+		</action>
+		
+		<action path="/BookTicket" scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/AjaxErrResponse.jsp" />
+		</action>
+		
+		<action path="/LoadImage" scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/AjaxErrResponse.jsp" />
+		</action>
+
+        <action path="/lookUpMovie" scope="request" validate="false">
+            <forward name="success" path="/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/jsp/AjaxErrResponse.jsp" />
+        </action>       
+	</action-mappings>
+
+	<controller processorClass="org.springframework.web.struts.DelegatingRequestProcessor" />
+
+	    <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+	    	<set-property property="contextConfigLocation" value="/WEB-INF/action-servlet-html.xml"/> 
+	    </plug-in>
+</struts-config>

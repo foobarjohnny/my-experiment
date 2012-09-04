@@ -1,0 +1,22 @@
+<project name="zip-resource" default="zip">
+	<property name="dist.dir" value="dist"/>
+	<target name="zip">
+		<mkdir dir="temp"/>
+		<copy todir="temp/movie">
+			<fileset dir="./../config/device" >
+				<include name="**/7_*/**/*.png" />
+				<include name="**/7_*/**/*.gif" />
+				<include name="**/7_*/**/*.css" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<copy todir="temp/movie/js">
+			<fileset dir="./../WebRoot/html/js" >
+				<include name="**/*.js" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<zip destfile="${dist.dir}/movieResource_html.zip" basedir="./temp" />
+		<delete dir="temp"/>
+	</target>
+</project>

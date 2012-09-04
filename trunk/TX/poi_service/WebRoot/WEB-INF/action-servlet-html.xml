@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean name="/html/manifest" class="com.telenav.cserver.html.action.HtmlManifest">
+	</bean>		
+	<!-- Get static pages. -->
+	<bean name="/html/goToJsp" class="com.telenav.cserver.html.action.HtmlChooseJsp">
+	</bean>
+
+	<bean name="/html/weather" class="com.telenav.cserver.html.action.HtmlWeatherStartup">
+	</bean>
+
+	<bean name="/html/poidetail" class="com.telenav.cserver.html.action.HtmlPoiDetail">
+	</bean>
+		
+	<bean name="/html/reviewPoi"
+		class="com.telenav.cserver.poi.struts.action.PoiReviewAction">
+	</bean>
+
+	
+	<bean name="/html/feedback" class="com.telenav.cserver.html.action.HtmlChooseJsp">
+	</bean>
+	
+	<bean id="WeatherRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlWeatherRequestParser">
+	</bean>
+	<bean id="WeatherResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlWeatherResponseFormatter">
+	</bean>
+	<bean name="/html/WeatherFetch" class="com.telenav.cserver.html.action.HtmlWeatherAction">
+		<property name="requestParser">
+			<ref bean="WeatherRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="WeatherResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="poiReviewRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlPoiReviewRequestParser">
+	</bean>
+	<bean id="poiReviewResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlPoiReviewResponseFormatter">
+	</bean>
+	<bean name="/html/poireview" class="com.telenav.cserver.html.action.HtmlPoiReviewAction">
+		<property name="requestParser">
+			<ref bean="poiReviewRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="poiReviewResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="HtmlNickNameParser"
+		class="com.telenav.cserver.html.protocol.HtmlNickNameParser">
+	</bean>
+	<bean id="HtmlNickNameFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlNickNameFormatter">
+	</bean>
+	<bean name="/html/editNickName" class="com.telenav.cserver.html.action.HtmlNickNameAction">
+		<property name="requestParser">
+			<ref bean="HtmlNickNameParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlNickNameFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="getLogImageParser"
+		class="com.telenav.cserver.html.protocol.HtmlGetLogImageParser">
+	</bean>
+	<bean id="getLogImageFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlGetLogImageFormatter">
+	</bean>
+	<bean name="/html/getLogImage" class="com.telenav.cserver.html.action.HtmlGetLogImageAction">
+		<property name="requestParser">
+			<ref bean="getLogImageParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="getLogImageFormatter" />
+		</property>
+	</bean>
+
+	<bean id="HtmlAdsParser"
+		class="com.telenav.cserver.html.protocol.HtmlAdsParser">
+	</bean>
+	<bean id="HtmlAdsFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlAdsFormatter">
+	</bean>
+	<bean name="/html/adsinfo" class="com.telenav.cserver.html.action.HtmlAdsAction">
+		<property name="requestParser">
+			<ref bean="HtmlAdsParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlAdsFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="HtmlPoiDetailParser"
+		class="com.telenav.cserver.html.protocol.HtmlPoiDetailParser">
+	</bean>
+	<bean id="HtmlPoiDetailFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlPoiDetailFormatter">
+	</bean>
+	<bean name="/html/getPoiDetailData" class="com.telenav.cserver.html.action.HtmlPoiDetailAction">
+		<property name="requestParser">
+			<ref bean="HtmlPoiDetailParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlPoiDetailFormatter" />
+		</property>
+	</bean>
+	
+   <!--For Hotel  -->
+	<bean id="HtmlHotelParser"
+		class="com.telenav.cserver.html.protocol.HtmlHotelParser">
+	</bean>
+	<bean id="HtmlHotelFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlHotelFormatter">
+	</bean>
+	<bean name="/html/getHotelDetailData" class="com.telenav.cserver.html.action.HtmlHotelAction">
+		<property name="requestParser">
+			<ref bean="HtmlHotelParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlHotelFormatter" />
+		</property>
+	</bean>
+	
+		   <!--For OpenTable Main Tab -->
+	<bean id="HtmlRestaurantParser"
+		class="com.telenav.cserver.html.protocol.GetRestaurantDetailRequestParser">
+	</bean>
+	<bean id="HtmlRestaurantFormatter"
+		class="com.telenav.cserver.html.protocol.GetRestaurantDetailResponseFormatter">
+	</bean>
+	<bean name="/html/getRestaurantDetail" class="com.telenav.cserver.html.action.HtmlRestaurantAction">
+		<property name="requestParser">
+			<ref bean="HtmlRestaurantParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlRestaurantFormatter" />
+		</property>
+	</bean>
+	
+			   <!--For OpenTable Reserve Tab  -->
+	<bean id="HtmlTablePasrser"
+		class="com.telenav.cserver.html.protocol.GetTableDetailRequestParser">
+	</bean>
+	<bean id="HtmlTableFormatter"
+		class="com.telenav.cserver.html.protocol.GetTableDetailResponseFormatter">
+	</bean>
+	<bean name="/html/getTableAvailable" class="com.telenav.cserver.html.action.HtmlTableAvailableAction">
+		<property name="requestParser">
+			<ref bean="HtmlTablePasrser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlTableFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="HtmlFeedbackRetrievalRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlFeedbackRetrievalRequestParser">
+	</bean>
+	<bean id="HtmlFeedbackRetrievalResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlFeedbackRetrievalResponseFormatter">
+	</bean>
+	<bean name="/html/ajaxFeedback" class="com.telenav.cserver.html.action.HtmlFeedbackRetrievalAction">
+		<property name="requestParser">
+			<ref bean="HtmlFeedbackRetrievalRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlFeedbackRetrievalResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="HtmlFeedbackSaveRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlFeedbackSaveRequestParser">
+	</bean>
+	<bean id="HtmlFeedbackSaveResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlFeedbackSaveResponseFormatter">
+	</bean>
+	<bean name="/html/feedbackSave" class="com.telenav.cserver.html.action.HtmlFeedbackSaveAction">
+		<property name="requestParser">
+			<ref bean="HtmlFeedbackSaveRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlFeedbackSaveResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="HtmlPoiListFeedbackSaveRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlPoiListFeedbackSaveRequestParser">
+	</bean>
+	<bean id="HtmlPoiListFeedbackSaveResponseFormatter"  
+		class="com.telenav.cserver.html.protocol.HtmlPoiListFeedbackSaveResponseFormatter">
+	 </bean> 
+	<bean name="/html/poiListFeedbackSave" class="com.telenav.cserver.html.action.HtmlPoiListFeedbackSaveAction">
+		<property name="requestParser">
+			<ref bean="HtmlPoiListFeedbackSaveRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlPoiListFeedbackSaveResponseFormatter" />
+		</property>
+	</bean>
+	
+	<!-- AdJuggler Capture -->
+	<bean id="HtmlAdJugglerRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlAdJugglerRequestParser">
+	</bean>
+	<bean id="HtmlAdJugglerResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlAdJugglerResponseFormatter">
+	</bean>
+	<bean name="/html/CheckAdJuggler"
+		class="com.telenav.cserver.html.action.HtmlAdJugglerAction">
+		<property name="requestParser">
+			<ref bean="HtmlAdJugglerRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlAdJugglerResponseFormatter" />
+		</property>
+	</bean>
+	
+				   <!--For About  -->
+	<bean id="HtmlAboutRequestParser"
+		class="com.telenav.cserver.html.protocol.HtmlAboutRequestParser">
+	</bean>
+	<bean id="HtmlAboutResponseFormatter"
+		class="com.telenav.cserver.html.protocol.HtmlAboutResponseFormatter">
+	</bean>
+	<bean name="/html/about"
+		class="com.telenav.cserver.html.action.HtmlAboutAction">
+		<property name="requestParser">
+			<ref bean="HtmlAboutRequestParser"/>
+		</property>
+		<property name="responseFormatter">
+			<ref bean="HtmlAboutResponseFormatter"/>
+		</property>
+	</bean>
+	
+	<bean name="/html/dummyDataAction" class="com.telenav.cserver.html.action.DummyDataAction"/>
+	<bean name="/html/choosePOIAction" class="com.telenav.cserver.html.action.ChoosePOIAction"/>
+	<bean name="/html/acTemplate" class="com.telenav.cserver.html.action.HtmlAcTemplate"/>
+</beans>

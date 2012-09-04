@@ -1,0 +1,196 @@
+body {
+	font-family: Arial;
+}
+
+form {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+a:link,a:visited {
+	text-decoration: none;
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-text-size-adjust: none;
+}
+
+.align_left {
+	text-align: left;
+}
+
+.align_center {
+	text-align: center;
+}
+
+.align_right {
+	text-align: right;
+}
+
+.div_tableOnly,.table {
+	display: table;
+}
+
+.div_table {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.div_row,.tr {
+	display: table-row;
+}
+
+.div_cell,.td {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.clsFixTable {
+	table-layout: fixed;
+}
+
+.clsEllipsis {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.text_cutoff {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.clsNoWrap {
+	position: absolute;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.clsNoWrapTable {
+	table-layout: fixed;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.clsWordBreak {
+	word-break: keep-all;
+}
+
+.lineThroughText {
+	TEXT-DECORATION: line-through
+}
+
+.valign_top {
+	vertical-align: top;
+}
+
+.fc_gray {
+	color: #666666;
+}
+
+.fc_white {
+	color: white;
+}
+
+.fc_black {
+	color: #333333;
+}
+
+.fw_bold {
+	font-weight: bold;
+}
+
+.clsPageBackground {
+	background-color: white;
+	width: 100%;
+	height: 100%;
+}
+
+.clsTitleContent {
+	font-size: 24pt;
+}
+
+.clsOKButton {
+	font-size: 20px;
+}
+
+.clsTitleFrame {
+	position: relative;
+	height: 70px;
+	width: 100%;
+}
+
+.clsTitleContent {
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.clsOKButton {
+	width: 40%;
+	height: 46px;
+}
+
+.clsLargeRadius {
+	-webkit-border-radius: 10px;
+}
+
+.clsSmallRadius {
+	-webkit-border-radius: 5px;
+}
+
+.clsMiddleRadius {
+	-webkit-border-radius: 7px;
+}
+
+.fs_smallest {
+	font-size: 16px;
+}
+
+.fs_verySmall {
+	font-size: 18px;
+}
+
+.fs_small {
+	font-size: 20px;
+}
+
+.fs_middle {
+	font-size: 22px;
+}
+
+.fs_large {
+	font-size: 24px;
+}
+
+.fs_veryLarge {
+	font-size: 26px;
+}
+
+.fs_huge {
+	font-size: 28px;
+}
+
+.fs_veryHuge {
+	font-size: 30px;
+}
+
+.fs_hugest {
+	font-size: 32px;
+}
+
+.clsIphoneBackBtn {
+	text-align: left;
+	padding-left: 30px;
+	height: 60px;
+	width: 100px;
+}
+
+.backBtnLeftGap {
+	width: 10px;
+}

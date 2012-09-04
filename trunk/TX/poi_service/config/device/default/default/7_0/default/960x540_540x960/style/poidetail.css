@@ -1,0 +1,207 @@
+.clsBigGray,.clsBigWhite,.clsBusinessHour,.clsReviewNo,.clsNavButtonStyle {
+	font-size: 22px;
+}
+
+.clsDollarOrange,.clsDollarGrey,.clsMenuInfoDiv {
+	font-size: 20px;
+}
+
+.clsMainDiv {
+	padding: 0px 15px 0px 15px;
+	height: 290px;
+}
+
+.clsBigButtonStyle p {
+	margin: 16px 0px;
+}
+
+@media screen and (orientation: landscape) {
+	.clsMainDiv {
+		padding: 0px 20px 0px 20px;
+		height: 205px;
+	}
+}
+
+.clsDivFirst {
+	height: 90px;
+}
+
+.clsDivSecond {
+	height: 90px;
+	padding-bottom: 25px;
+}
+
+.clsDivThird {
+	height: 60px;
+}
+
+.clsPoiDistance {
+	width: 110px;
+	padding-right: 5px;
+}
+
+.clsBusinessHour {
+	width: 230px;
+}
+
+.clsReviewNo {
+	line-height: 18px;
+	height: 40px;
+}
+
+.clsBar {
+	position: relative;
+	height: 2%;
+	width: 100%;
+}
+
+.clsMainTabFirstLine {
+	height: 50px;
+	width: 100%;
+}
+
+.clsMainBottom {
+	height: 66px;
+	width: 100%;
+}
+
+.clsWriteReviewButton {
+	width: 190px;
+	height: 80%;
+}
+
+.clsLogoImageDiv {
+	width: 90px;
+	height: 90px;
+}
+
+.clsTabEdge {
+	width: 13px;
+}
+
+.clsButtonMiddleOn {
+	font-weight: bold;
+}
+
+.clsButtonMiddleOn,.clsButtonMiddleOff {
+	padding-top: 10px;
+}
+
+.clsFavTD {
+	width: 50px;
+}
+
+.clsAddressLineSpan {
+	width: 270px;
+}
+
+.clsAddressLine {
+	line-height: 25px;
+}
+
+#ratingIcons {
+	height: 20px;
+}
+
+.clsShowTime {
+	height: 62px;
+	width: 100%;
+}
+
+#writeReviewButton {
+	height: 100%;
+	margin: 7px 0px 7px 0px;
+}
+
+.bgDiv {
+	top: 2.2%;
+}
+
+.clsBuyButton {
+	line-height: 1.318em;
+}
+
+.clsMovieItemStyle {
+	padding-left: 15px;
+}
+
+.claPaddingLR {
+	width: 15px;
+}
+
+.clsTabOutSideTable {
+	height: 65px;
+}
+
+.clsTabInSideTable {
+	height: 62px;
+}
+
+.clsPageMiddleDiv {
+	height: 70px;
+}
+
+.clsDatePicker {
+	height: 68px;
+}
+
+.clsDivThirdLandscape {
+	height: 60px;
+}
+
+.clsMainTabFirstLineEmpty {
+	height: 12px;
+	width: 100%;
+}
+
+.clsMainBody {
+	height: 52%;
+}
+
+@media screen and (orientation: landscape) {
+	.clsMainBody {
+		height: 410px;
+	}
+}
+
+.clsRateNoFS,.clsAddressFS {
+	font-size: 20px;
+}
+
+.clsPoiTabNormal {
+	width: 28%;
+}
+
+#yelpAndTrip {
+	margin: 2em 0 0 0;
+}
+
+#yelp,#trip {
+	padding: 2em 3% 2em 3%;
+	width: 88%;
+	height: 4em;
+}
+
+#yelpRating,#tripRating {
+	float: left;
+	width: 50%;
+}
+
+#yelpReviewCount,#tripReviewCount {
+	font-size: 1.67em;
+}
+
+#yelpBtnContainer,#tripBtnContainer {
+	float: left;
+	width: 50%;
+}
+
+.yelp_button,.trip_button {
+	float: right;
+}
+
+#reviewTitle {
+	margin: 0.86em 3% 0.86em 3%;
+	float: left;
+	font-size: 2em;
+}

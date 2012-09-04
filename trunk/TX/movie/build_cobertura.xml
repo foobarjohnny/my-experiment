@@ -1,0 +1,215 @@
+<project name="movie" default="coverage">
+	<taskdef resource="antenna.properties" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	<!-- default build parameters -->
+	<property file="./../../../../../build/build_root.properties" />
+	<property name="version" value="x.x.x" />
+	<property name="base.dir" value="." />
+	<property name="project" value="movie" />
+	<property name="src.dir" value="./src" />
+	<property name="config.dir" value="./config" />
+	<property name="lib.dir" value="./WebRoot/WEB-INF/lib" />
+	<property name="web.root" value="./WebRoot" />
+	<property name="temp.dir" value="./temp" />
+	<property name="build.dir" value="./build" />
+	<property name="output.dir" value="./dist" />
+	<property name="package" value="com/telenav/" />
+	<property name="webinif.dir" value="WEB-INF" />
+	<property name="web_classes.dir" value="${webinif.dir}/classes" />
+	<property name="origin.lib.dir" value="./lib" />
+	<property name="cobertura.lib.dir" value="./lib_cobertura" />
+	<property name="unittest.dir" value="./unittest" />
+	<property name="instrumented.classes.dir" value="${temp.dir}/${webinif.dir}/classesOfInst" />
+	<property name="original.classes.dir" value="${temp.dir}/${web_classes.dir}" />
+	<property name="report.dir" value="./cobertura/report" />
+	<property name="coverage.cobertura.summary.dir" location="${report.dir}/cobertura-summary-xml"/>
+	<property name="coverage.cobertura.html.dir" location="${report.dir}/cobertura-html"/>
+	<property name="test.classes.dir" value="${temp.dir}/testclass" />
+	<property name="config.dir" value="./unittest/unittest-config" />
+	<property name="junit.report.dir" value="./junit/report" />
+	<property name="junit.report.html.dir" value="${junit.report.dir}/html" />
+
+	<!-- define our classpath -->
+	<path id="lib.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<path id="lib.class.path1">
+		<fileset dir="${origin.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${cobertura.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<taskdef classpathref="lib.class.path1" resource="tasks.properties" />
+	
+	<target name="clean">
+		<delete dir="${lib.dir}"/>
+		<delete dir="${temp.dir}" />
+		<delete dir="${output.dir}/${suffix}-${region}" />
+	</target>
+
+	<target name="create dir" depends="clean">
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${output.dir}/${suffix}-${region}" />
+	</target>
+
+	<target name="copy1" depends="create dir">
+
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="${origin.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="${cobertura.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}">
+			<fileset dir="${web.root}">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="WEB-INF/config/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile" depends="copy1">
+
+		<mkdir dir="${original.classes.dir}" />
+
+		<javac srcdir="${src.dir}" destdir="${original.classes.dir}" fork="yes" deprecation="on" debug="yes">
+			<classpath refid="lib.class.path" />
+		</javac>
+
+		<echo>build:${suffix}-${region}</echo>
+
+		<copy todir="${original.classes.dir}/">
+			<fileset dir="${config.dir}/${suffix}_${region}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${original.classes.dir}/executor/">
+			<fileset dir="${config.dir}/executor">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${original.classes.dir}/management/">
+			<fileset dir="${config.dir}/management">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+	</target>
+		
+	<target name="copy2" depends="compile">
+		<copy todir="${temp.dir}/${web_classes.dir}/${package}">
+			<fileset dir="${src.dir}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<delete file="${temp.dir}/${webinif.dir}/lib/jsp-api.jar"/>
+	</target>
+
+	<target name="war" depends="copy2">
+		<jar destfile="${output.dir}/${suffix}-${region}/${project}.war" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}"/>  
+	</target>
+
+	
+	<target name="instrument">
+		<!-- Remove the coverage data file and any old instrumentation classes -->
+		<delete file="cobertura.ser" />
+		<delete dir="${instrumented.classes.dir}" />
+		<!-- Instrument the application classes, writing the instrumented classes into ${instrumented.classes.dir} -->
+		<cobertura-instrument todir="${instrumented.classes.dir}">
+			<!-- The following line causes instrument to ignore any source line containing a reference to log4j, for the purpose of coverage reporting -->
+			<ignore regex="org.apache.log4j.*"/>
+			<fileset dir="${original.classes.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<target name="coverage-report">
+        <!-- Generate an XML file containing the coverage data using the 'srcdir' attribute -->
+    	<cobertura-report srcdir="${src.dir}" destdir="${report.dir}" format="xml" />
+    </target>
+    
+    <path id="compile.unittestclass.path">
+		<path refid="lib.class.path"/>
+		<pathelement path="${original.classes.dir}"/> 
+		<pathelement path="${test.classes.dir}"/> 
+	</path>
+	
+   <target name="compiletest" depends="compile">
+		<!-- compile Web sources -->
+		<mkdir dir="${test.classes.dir}" />
+		<javac srcdir="${unittest.dir}" destdir="${test.classes.dir}" classpathref="compile.unittestclass.path" debug="yes"/>
+	</target>
+	
+	<path id="test.classpath">
+		<pathelement path="${instrumented.classes.dir}"/> 
+		<pathelement path="${original.classes.dir}"/>
+		<pathelement path="${test.classes.dir}"/>
+		<pathelement path="${config.dir}"/>
+		<path refid="lib.class.path"/>
+	</path> 
+	 	
+	<target name="junittest" depends="compiletest">
+		<mkdir dir="${report.dir}" />
+		<mkdir dir="${junit.report.dir}" />
+		
+		<junit printSummary="yes"> 
+			<formatter type="xml"/>	
+			<classpath refid="test.classpath" /> 
+			<batchtest fork="yes" todir="${junit.report.dir}">
+			<fileset dir="${unittest.dir}">
+			<include name="**/Test*.java" />
+			</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="junitreport" depends="junittest">
+		<junitreport todir="${junit.report.dir}">
+			<fileset dir="${junit.report.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${junit.report.html.dir}"/>
+		</junitreport>
+	</target>
+		
+		<!-- ================================= 
+          target: summary-coverage-report              
+         ================================= -->
+    <target name="summary-coverage-report">
+        <!-- Generate an summary XML file containing the coverage data using the 'srcidir' attribute -->
+    	<cobertura-report srcdir="${src.dir}" destdir="${coverage.cobertura.summary.dir}" format="summaryXml" />
+    </target>
+	
+	<!-- ================================= 
+          target: alternate-coverage-report              
+         ================================= -->
+    <target name="alternate-coverage-report">
+        <!-- Generate a series of HTML files containing the coverage data in a user-readable form using nested source filesets -->
+    	<cobertura-report destdir="${coverage.cobertura.html.dir}">
+    		<fileset dir="${src.dir}">
+    			<include name="**/*.java"/>
+    		</fileset>
+    	</cobertura-report>
+    	<delete dir="${temp.dir}" />
+    </target>
+    
+	<target name="coverage" depends="copy2,instrument,junitreport,coverage-report,summary-coverage-report,alternate-coverage-report" description="Compile, instrument ourself, run the tests and generate JUnit and coverage reports." />	
+</project>
+

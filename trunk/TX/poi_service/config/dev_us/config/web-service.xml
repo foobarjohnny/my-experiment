@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="webservice-configuration" class="com.telenav.cserver.backend.util.WebServiceConfiguration">  	      
+        <property name="serviceConfigMap">
+	    	<map>
+			<entry key="CONTENT_MANAGER">
+	            		<ref bean ="CONTENT_MANAGER"/>
+	        	</entry>
+	        	
+	        	<entry key="POI_SEARCH">
+	            		<ref bean ="POI_SEARCH"/>
+	        	</entry>
+	        	
+	        	<entry key="POI_SEARCH20">
+	            	<ref bean ="POI_SEARCH20"/>
+	        	</entry>
+	        	
+	        	<entry key="FEEDBACKSERVICE">
+	            	<ref bean ="FEEDBACKSERVICE_CONFIG"/>
+	        	</entry>
+	        	
+				<entry key="EMAILSERVICE">
+	            		<ref bean ="EMAILSERVICE_CONFIG"/>
+	        	</entry>
+	        	
+	        	<entry key="TELEPERSONALIZATION">
+	            		<ref bean ="TELEPERSONALIZATION_CONFIG"/>
+	        	</entry>
+	        	
+	        	<entry key="ADDRESSSHARING">
+	            		<ref bean ="ADDRESSSHARING_CONFIG"/>
+	        	</entry>
+	        	
+	        	<entry key="ADDRESSSHARING20">
+	            		<ref bean ="ADDRESSSHARING20_CONFIG"/>
+	        	</entry>
+	        	
+	        	<entry key="XNAV">
+		            	<ref bean ="XNAV_CONFIG"/>
+		        </entry>
+		        
+		       	<entry key="POICATEGORY">
+             			<ref bean ="POICATEGORY_CONFIG"/>
+         		</entry>
+         		
+         		<entry key="ADVERTISE">
+                    <ref bean="ADVERTISE" />
+                </entry>
+                
+                <entry key="ADJUGGLER">
+                    <ref bean="ADJUGGLER" />
+                </entry>
+                
+	    	</map>
+		</property>
+   </bean> 
+   
+   
+   <bean id="FEEDBACKSERVICE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://10.224.90.26:8080/tnws/services/FeedbackService30</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+    <bean id="EMAILSERVICE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://10.224.83.35:8080/tnws/services/XnavService</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>  
+   
+   <bean id="ADVERTISE" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+        <property name="serviceUrl">
+            <value>http://hqd-adsfp-01.telenav.com:8080/tnws/services/AdServiceV20</value>
+        </property>
+        <property name="webServiceItem">
+            <ref bean="Default_ServiceItem" />
+        </property>
+    </bean>
+    
+    <bean id="ADJUGGLER" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+        <property name="webServiceItem">
+            <ref bean="AdJuggler_ServiceItem" />
+        </property>
+    </bean>
+   
+   <bean id="TELEPERSONALIZATION_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://10.224.91.27:8080/billingserver/services/UserProfileManagementService_v1</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+     
+    <bean id="ADDRESSSHARING_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://10.224.83.35:8080/tnws/services/AddressSharingService</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+     
+    <bean id="ADDRESSSHARING20_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://10.224.83.35:8080/tnws/services/AddressSharingService_v20</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+    <bean id="XNAV_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+			<value>http://10.224.83.35:8080/tnws/services/XnavService</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+    <bean id="CONTENT_MANAGER" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://10.224.83.35:8080/tnws/services/ReviewService20</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+      
+   <bean id="POI_SEARCH" class="com.telenav.cserver.backend.config.PoiSearchServiceConfig">
+   		<property name="serviceUrlMapping">
+   			<map>
+	    		<entry key="POI.TA">
+	            	<value>http://10.224.91.105:8080/tnws/services/ContentSearchService</value>
+	        	</entry>   
+	        	<entry key="POI.YPC">
+	            	<value>http://10.224.91.105:8080/tnws/services/ContentSearchService</value>
+	        	</entry>
+	    	</map>
+		</property>
+   		
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+      
+   <bean id="POI_SEARCH20" class="com.telenav.cserver.backend.config.PoiSearchServiceConfig">
+   		<property name="serviceUrlMapping">
+   			<map>
+	    		<entry key="POI.TA">
+	            	<value>http://10.224.91.105:8080/tnws/services/ContentSearchService20</value>
+	        	</entry>   
+	        	<entry key="POI.YPC">
+	            	<value>http://10.224.91.105:8080/tnws/services/ContentSearchService20</value>
+	        	</entry>
+	    	</map>
+		</property>
+   		
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+    <bean id="GET_POIDETAILS" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://contentinfo-ws.mypna.com/tnws/services/ContentInfoService</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+    <bean id="POICATEGORY_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+    		<value>http://10.224.83.35:8080/tnws/services/XnavService</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>  
+   <bean id="Default_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>default</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>20000</value>
+		</property>
+   </bean> 
+   
+   <bean id="AdJuggler_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>default</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>500</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>500</value>
+		</property>
+   </bean> 
+</beans>

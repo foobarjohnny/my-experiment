@@ -1,0 +1,31 @@
+<ivysettings>
+	<settings
+		defaultResolver="${ivy.default.resolver}"
+		defaultCache="${ivy.default.cache}"/>
+	<cache basedir="${ivy.cache.dir}"/>
+	<resolvers>
+		<filesystem name="telenav-artifact-repository-local">
+			<artifact pattern="${repository.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+			<artifact pattern="${repository.dir}/[organisation]/[module]/[revision]/[artifact]-snapshot-HEAD-release.[ext]"/>
+		</filesystem>
+		<filesystem name="telenav-artifact-repository-release">
+			<artifact pattern="${repository.dir}/[organisation]/[module]/[revision]/[artifact]-[revision]-${buildConf}.[ext]" />
+		</filesystem>
+		<url name="telenav-artifact-repository-url">
+			<artifact pattern="${telenav.artifact.repository}/repository/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="${telenav.artifact.repository}/repository/[organisation]/[module]/[revision]/[artifact]-[revision]-release.[ext]" />
+			<artifact pattern="${telenav.artifact.repository}/repository/[organisation]/[module]/[revision]/[artifact]-[revision]-production.[ext]" />
+			<artifact pattern="${telenav.artifact.repository}/repository/[organisation]/[module]/[revision]/[artifact].[ext]" />
+		</url>
+		<chain name="dev" dual="true">
+			<resolver ref="telenav-artifact-repository-local"/>
+			<resolver ref="telenav-artifact-repository-url"/>
+		</chain>
+		<chain name="default" dual="true">
+			<resolver ref="telenav-artifact-repository-url"/>
+		</chain>
+	</resolvers>
+	<modules>
+		<module organisation="${ivy.organisation}" name="${ivy.module}" resolver="${ivy.publish.resolver}" />
+	</modules>
+</ivysettings>

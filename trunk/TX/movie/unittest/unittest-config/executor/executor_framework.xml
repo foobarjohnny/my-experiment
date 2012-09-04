@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="executor_handler" class="com.telenav.cserver.framework.executor.ExecutorDispatcher">
+        <property name="interceptorManager">
+            <ref bean="interceptor_manager" />
+        </property>
+        <property name="executorRegistryLoader">
+            <ref bean="executor_registry_loader" />
+        </property>        
+   </bean>
+   
+   <bean id="LoggingInterceptor"
+         class="com.telenav.cserver.framework.executor.impl.interceptor.LoggingInterceptor">
+   </bean>
+   
+    <bean id="TnContextInterceptor_WithOutRegister"
+         class="com.telenav.cserver.framework.executor.impl.interceptor.TnContextInterceptor">
+         <property name="needRegister">
+            <value>false</value>
+        </property> 
+   </bean>
+  
+</beans>

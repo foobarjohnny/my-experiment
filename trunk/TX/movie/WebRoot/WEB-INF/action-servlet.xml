@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Movies search -->
+
+	<bean id="MovieSearchProtocolRequestParser"
+		class="com.telenav.browser.movie.protocol.MovieSearchRequestParser">
+	</bean>
+	<bean id="MovieSearchProtocolResponseFormatter"
+		class="com.telenav.browser.movie.protocol.MovieSearchResponseFormatter">
+	</bean>
+	<bean name="/queryMovieList" class="com.telenav.browser.movie.action.MovieListAction">
+		<property name="requestParser">
+			<ref bean="MovieSearchProtocolRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="MovieSearchProtocolResponseFormatter" />
+		</property>
+	</bean>
+	
+	<!-- Share movie -->
+
+	<bean id="ShareMovieRequestParser"
+		class="com.telenav.browser.movie.protocol.ShareMovieRequestParser">
+	</bean>
+	<bean id="ShareMovieResponseFormatter"
+		class="com.telenav.browser.movie.protocol.ShareMovieResponseFormatter">
+	</bean>
+	<bean name="/SendShareMovieSMS" class="com.telenav.browser.movie.action.ShareMovie">
+		<property name="requestParser">
+			<ref bean="ShareMovieRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="ShareMovieResponseFormatter" />
+		</property>
+	</bean>
+
+	<!-- Get static pages. -->
+	<bean name="/goToJsp" class="com.telenav.browser.movie.action.ChooseJsp">
+	</bean>
+	
+	<bean name="/MovieInfoShowTimes" class="com.telenav.browser.movie.action.MovieInfoShowTimes"/>
+	<bean name="/MovieDetails" class="com.telenav.browser.movie.action.MovieDetails"/>
+	<bean name="/BuyTickets" class="com.telenav.browser.movie.action.BuyTickets"/>
+	<bean name="/ShowMovies" class="com.telenav.browser.movie.action.ShowMovies"/>
+
+</beans>

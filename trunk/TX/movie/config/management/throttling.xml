@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="throttling_manager" class="com.telenav.cserver.framework.throttling.ThrottlingConfiguration">
+        <property name="enabled">
+            <value>true</value>
+        </property>
+        <property name="serviceList">
+            <list>
+	       <ref bean="ContentManageService" />
+	       <ref bean="POISearchService" />
+	        <ref bean="ACEService" />
+	        <ref bean="AddressShareingService"/>
+    	    </list>
+        </property>
+        
+   </bean>
+   
+   <bean id="ContentManageService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>CONTENTMANAGERSERVER</value>
+        </property>
+   </bean>
+   
+     <bean id="ACEService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>ACESERVER</value>
+        </property>
+   </bean>
+   
+      <bean id="POISearchService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>POISEARCHSERVER</value>
+        </property>
+   </bean>
+   
+      <bean id="AddressShareingService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>ADDRESSSHARINGSERVER</value>
+        </property>
+   </bean>   
+</beans>

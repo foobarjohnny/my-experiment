@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans></form-beans>
+	<global-exceptions></global-exceptions>
+
+	<global-forwards>
+		<forward contextRelative="yes" name="Globe_Exception"
+			path="/WEB-INF/jsp/ErrorMsgPage.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+        <action path="/queryMovieList" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/AjaxErrResponse.jsp" />
+        </action>
+        <action path="/SendShareMovieSMS" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/AjaxResponse.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/AjaxErrResponse.jsp" />
+        </action>
+        
+        <action path="/MovieInfoShowTimes" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/MovieInfoShowTimes.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+        <action path="/MovieDetails" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/MovieDetails.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+        <action path="/BuyTickets" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/BuyTickets.jsp" />
+            <forward name="noTickets" path="/WEB-INF/jsp/NoTickets.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+        <action path="/ShowMovies" scope="request" validate="false">
+            <forward name="success" path="/WEB-INF/jsp/ShowMovies.jsp" />
+            <forward name="noMovies" path="/WEB-INF/jsp/NoMovies.jsp" />
+            <forward name="failure" path="/WEB-INF/jsp/ErrorMsgPage.jsp" />
+        </action>
+        
+		<action path="/goToJsp" scope="request" validate="false">
+			<forward name="StartUp" path="/WEB-INF/jsp/StartUp.jsp" />
+			<forward name="SearchMovie" path="/WEB-INF/jsp/SearchMovie.jsp" />
+			<forward name="SearchTheater" path="/WEB-INF/jsp/SearchTheater.jsp" />
+			<forward name="SelectDate" path="/WEB-INF/jsp/SelectDate.jsp" />
+			<forward name="MovieList" path="/WEB-INF/jsp/MovieList.jsp" />
+			<forward name="MenuItems" path="/WEB-INF/jsp/MenuItems.jsp" />
+			<forward name="ShareMovie" path="/WEB-INF/jsp/ShareMovie.jsp" />
+			<forward name="ACInterface" path="/WEB-INF/jsp/SelectAddressExternalInterface.jsp" />
+			<forward name="SelectContact" path="/WEB-INF/jsp/SelectContact.jsp" />
+			<forward name="MovieController" path="/WEB-INF/jsp/controller/MovieController.jsp" />
+		</action>
+
+	</action-mappings>
+
+	<controller processorClass="org.springframework.web.struts.DelegatingRequestProcessor" />
+
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn" />
+</struts-config>

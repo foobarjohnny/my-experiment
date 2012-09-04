@@ -1,0 +1,116 @@
+------------ TxNode -----------
+Values:
+binary exists ? = false
+------------ children -----------
+	------------ TxNode -----------
+	Values:
+	binary exists ? = false
+	------------ children -----------
+		------------ TxNode -----------
+		Values:
+		[0]=110
+		binary exists ? = false
+		------------ children -----------
+			------------ TxNode -----------
+			Values:
+			[0]=400
+			[1]=45
+			binary exists ? = false
+			------------ messages -----------
+			action link
+			------------ children -----------
+				------------ TxNode -----------
+				Values:
+				binary exists ? = false
+				------------ messages -----------
+				{json}
+				------------ end of TxNode ------
+
+			------------ end of TxNode ------
+
+			------------ TxNode -----------
+			Values:
+			[0]=500
+			[1]=320
+			[2]=480
+			binary exists ? = false
+			------------ end of TxNode ------
+
+			------------ TxNode -----------
+			Values:
+			[0]=600
+			binary exists ? = false
+			------------ messages -----------
+			1.2
+			------------ end of TxNode ------
+
+			------------ TxNode -----------
+			Values:
+			[0]=651
+			binary exists ? = false
+			------------ messages -----------
+			true
+			------------ end of TxNode ------
+
+		------------ end of TxNode ------
+
+		------------ TxNode -----------
+		Values:
+		[0]=82
+		binary exists ? = false
+		------------ messages -----------
+		T-Mobile
+		ANDROID
+		6.2.01
+		generic480X320
+		6201119
+		
+		TMO_prem
+		
+		
+		------------ end of TxNode ------
+
+		------------ TxNode -----------
+		Values:
+		[0]=83
+		binary exists ? = false
+		------------ messages -----------
+		
+		
+		
+		
+		en_US
+		NA
+		mp3hi
+		------------ end of TxNode ------
+
+		------------ TxNode -----------
+		Values:
+		[0]=86
+		binary exists ? = false
+		------------ messages -----------
+		5555215554
+		5554
+		9945862
+		------------ end of TxNode ------
+
+		------------ TxNode -----------
+		Values:
+		[0]=87
+		binary exists ? = false
+		------------ messages -----------
+		
+		
+		480-320
+		320-480
+		------------ end of TxNode ------
+
+		------------ TxNode -----------
+		Values:
+		[0]=88
+		binary exists ? = false
+		------------ end of TxNode ------
+
+	------------ end of TxNode ------
+
+------------ end of TxNode ------

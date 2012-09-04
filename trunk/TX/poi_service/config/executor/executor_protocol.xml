@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="executor_data_factory" class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory">  	      
+        <property name="classMap">
+	        <map>
+	        	
+	        	<entry key="ValidateAddress">
+	            	<ref bean="ValidateAddressItem"/>
+	        	</entry>
+	        	
+	        	<entry key="Proto_ValidateAddress">
+	            	<ref bean="Proto_ValidateAddressItem"/>
+	        	</entry>
+	        	
+	        	<entry key="ShareAddress">
+	            	<ref bean="ShareAddressItem"/>
+	        	</entry>
+	        	
+	        	<entry key="Proto_ShareAddress">
+	            	<ref bean="Proto_ShareAddressItem"/>
+	        	</entry>
+	        	
+	        	<entry key="OneBox">
+	            	<ref bean="OneBoxSearchItem"/>
+	        	</entry>
+				
+				<entry key="Proto_OneBox">
+	            	<ref bean="Proto_OneBoxSearchItem"/>
+	        	</entry>
+
+				<entry key="SearchPoi">
+					<ref bean="SearchPoiItem"/>
+				</entry>
+				
+				<entry key="AdJuggler">
+					<ref bean="AdJugglerItem"/>
+				</entry>
+				
+				<entry key="Proto_SearchPoi">
+					<ref bean="Proto_SearchPoiItem"/>
+				</entry>
+
+				<entry key="ValidateAirport">
+					<ref bean="ValidateAirportItem"/>
+				</entry>
+				
+				<entry key="Proto_ValidateAirport">
+					<ref bean="Proto_ValidateAirportItem"/>
+				</entry>
+
+				<entry key="bannerAds">
+					<ref bean="BannerAdsItem"/>
+				</entry>
+				
+				<entry key="SentAddress">
+					<ref bean="SentAddressItem"/>
+				</entry>
+
+				<entry key="Proto_bannerAds">
+					<ref bean="Proto_BannerAdsItem"/>
+				</entry>
+				
+				<entry key="Proto_SentAddress">
+                    <ref bean="Proto_SentAddressItem"/>
+                </entry>
+                <entry key="Proto_BillBoardAds">
+		             <ref bean="Proto_BillBoardAdsItem"/>
+                </entry>
+				<entry key="PoiDetails">
+                    <ref bean="PoiDetailsItem"/>
+                </entry>
+
+				<entry key="Proto_I18NWeather">
+		             <ref bean="Proto_I18NWeatherItem"/>
+                </entry>
+
+	        	<entry key="ValidateAddress20">
+	            	<ref bean="ValidateAddressItem20"/>
+	        	</entry>
+	        	
+	        	<entry key="ShareAddress20">
+	            	<ref bean="ShareAddressItem20"/>
+	        	</entry>
+	        	
+				<entry key="SearchPoi20">
+					<ref bean="SearchPoiItem20"/>
+				</entry>
+				
+				<entry key="ValidateAirport20">
+					<ref bean="ValidateAirportItem20"/>
+				</entry>
+				
+				<entry key="PoiDetails20">
+                    <ref bean="PoiDetailsItem20"/>
+                </entry>
+                
+                <entry key="SentAddress20">
+					<ref bean="SentAddressItem20"/>
+				</entry>
+	    	</map>
+	</property>
+   </bean>   
+   
+    
+   
+    <bean id="SentAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.misc.protocol.SentAddressRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.misc.protocol.SentAddressResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.misc.executor.SentAddressResponse</value>
+        </property>
+   </bean>
+   
+    <bean id="OneBoxSearchItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.onebox.protocol.OneBoxSearchRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.onebox.protocol.OneBoxSearchResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.onebox.executor.OneBoxResponse</value>
+        </property>
+   </bean>
+   
+    <bean id="Proto_OneBoxSearchItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.onebox.protocol.protobuf.OneBoxSearchProtoRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.onebox.protocol.protobuf.OneBoxSearchProtoResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.onebox.executor.OneBoxResponse</value>
+        </property>
+   </bean>
+   
+    <bean id="ShareAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.ShareAddressRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.ShareAddressResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ShareAddressResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="Proto_ShareAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ShareAddressRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ShareAddressResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ShareAddressResponse</value>
+        </property>
+   </bean>
+   
+   
+    <bean id="ValidateAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+        <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.ValidateAddressRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.ValidateAddressResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ValidateAddressResponseACEWS</value>
+        </property>
+   </bean>
+   
+   <bean id="Proto_ValidateAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ValidateAddressRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ValidateAddressResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ValidateAddressResponseACEWS</value>
+        </property>
+   </bean>
+   
+   <bean id="SearchPoiItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.SearchPoiRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.SearchPoiResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.POISearchResponse_WS</value>
+        </property>
+   </bean>
+   
+    <bean id="Proto_SearchPoiItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.SearchPoiProtoRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.SearchPoiProtoResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.POISearchResponse_WS</value>
+        </property>
+   </bean>
+   
+   <bean id="AdJugglerItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.adjuggler.protocol.AdJugglerRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.adjuggler.protocol.AdJugglerResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.adjuggler.executor.AdJugglerResponse</value>
+        </property>
+   </bean>
+
+   <bean id="ValidateAirportItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.ValidateAirportRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.ValidateAirportResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ValidateAirportResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="Proto_ValidateAirportItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ValidateAirportRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.protobuf.ValidateAirportResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.ValidateAirportResponse</value>
+        </property>
+   </bean>
+   
+    <bean id="BannerAdsItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.BannerAdsRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.BannerAdsResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.BannerAdsReponse</value>
+        </property>
+   </bean>
+
+    <bean id="Proto_BannerAdsItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.BannerAdsProtoRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.BannerAdsProtoResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.BannerAdsReponse</value>
+        </property>
+   </bean>
+
+    <bean id="Proto_SentAddressItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.misc.protocol.protobuf.SentAddressProtoRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.misc.protocol.protobuf.SentAddressProtoResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.misc.executor.SentAddressResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="Proto_BillBoardAdsItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.BillBoardAdsRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.protobuf.BillBoardAdsResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.BillBoardAdsResponse</value>
+        </property>
+   </bean>
+
+   <bean id="PoiDetailsItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poidetail.protocol.POIDetailsRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poidetail.protocol.POIDetailsResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poidetail.executor.POIDetailsResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="Proto_I18NWeatherItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.weather.protocol.protobuf.I18NWeatherProtoRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.weather.protocol.protobuf.I18NWeatherProtoResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.weather.executor.I18NWeatherResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="ValidateAddressItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+        <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ValidateAddressRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ValidateAddressResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.v20.ValidateAddressResponseACEWS</value>
+        </property>
+   </bean>
+   
+   <bean id="ValidateAirportItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ValidateAirportRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ValidateAirportResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.v20.ValidateAirportResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="ShareAddressItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ShareAddressRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.ac.protocol.v20.ShareAddressResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.ac.executor.v20.ShareAddressResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="SearchPoiItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poi.protocol.v20.SearchPoiRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poi.protocol.v20.SearchPoiResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poi.executor.v20.POISearchResponse_WS</value>
+        </property>
+   </bean>
+   
+   <bean id="PoiDetailsItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.poidetail.protocol.v20.POIDetailsRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.poidetail.protocol.v20.POIDetailsResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.poidetail.executor.v20.POIDetailsResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="SentAddressItem20"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.misc.protocol.v20.SentAddressRequestParser_CS"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.misc.protocol.v20.SentAddressResponseFormatter_CS"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.misc.executor.v20.SentAddressResponse</value>
+        </property>
+   </bean>
+
+</beans>

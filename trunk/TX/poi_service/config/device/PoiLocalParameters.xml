@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Default category IDs is in the file of com.telenav.cserver.poi.holder.PoiCategoryCollection. 
+If you want to change a category ID for a carrier, you must add all its category IDs here. Or please DON'T add any category 
+ID property for a carrier-->
+<poiLocalParameters>
+	<carrier name="MMI_en_IN" poifindversion="TN_MMI_2">
+		<category id="1026" name="ATM" imageId="poiCategory1026" indicator="0" mostPopular="0" />
+		<category id="226" name="Food/Coffee" imageId="poiCategory226" indicator="1" mostPopular="0"/>
+		<category id="811" name="Petrol" imageId="poiCategory811" indicator="0" mostPopular="0"/>
+		<category id="100031" name="Market" imageId="poiCategory100031" indicator="0" mostPopular="0"/>
+		<category id="5850" name="Lodging" imageId="poiCategory5850" indicator="0" mostPopular="0"/>
+		<category id="181" name="Movies" imageId="poiCategory181" indicator="0" mostPopular="0"/>
+		<category id="165" name="Nightlife" imageId="poiCategory165" indicator="0" mostPopular="0"/>
+		<category id="600" name="Parking" imageId="poiCategory600" indicator="0" mostPopular="0"/>
+		<category id="4090" name="Shopping" imageId="poiCategory4090" indicator="0" mostPopular="0"/>
+		<category id="100040" name="Transport" imageId="poiCategory1005" indicator="1" mostPopular="0">
+			<subcategory id="100040" name="Bus Terminals" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="100041" name="Railway Stations" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="100039" name="Seaports" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="100042" name="Taxi Services&amp; Parking" imageId="" indicator="0" mostPopular="0" />
+		</category>
+		<category id="100019" name="Religion" imageId="poiCategory100019" indicator="0" mostPopular="0"/>
+		<category id="0" name="More" imageId="poiCategoryMore" indicator="2" mostPopular="0"/>
+	</carrier>
+	
+	<carrier name="VIVOGSM_pt_BR" poifindversion="TN_BR_2">
+		<category id="374" name="ATM" imageId="poiCategory374" indicator="0" mostPopular="0" />
+		<category id="226" name="Food/Coffee" imageId="poiCategory226" indicator="0" mostPopular="0"/>
+		<!-- We hard code on JSP to convert 50500 to 49, and show subcategory also controled by GAS_BY_PRICE in sdp. See SearchPoi.jsp -->
+		<category id="50500" name="Gas" imageId="poiCategory50500" indicator="1" mostPopular="0">
+			<subcategory id="50500" name="Any" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="702" name="By Price (Regular)" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="703" name="By Price (Plus)" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="704" name="By Price (Premium)" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="705" name="By Price (Diesel)" imageId="" indicator="0" mostPopular="0" />
+		</category>
+		<category id="221" name="Grocery" imageId="poiCategory221" indicator="0" mostPopular="0"/>
+		<category id="5850" name="Lodging" imageId="poiCategory5850" indicator="0" mostPopular="0" />
+		<category id="181" name="Theaters" imageId="poiCategory181" indicator="0" mostPopular="0"/>
+		<category id="163" name="Nightlife" imageId="poiCategory163" indicator="0" mostPopular="0"/>
+		<category id="600" name="Parking" imageId="poiCategory600" indicator="0" mostPopular="0"/>
+		<category id="641" name="Shopping" imageId="poiCategory641" indicator="0" mostPopular="0"/>
+		<category id="601" name="Transportation" imageId="poiCategory601" indicator="1" mostPopular="0">
+			<subcategory id="68" name="Car Rental" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="601" name="Taxi" imageId="" indicator="0" mostPopular="0" />
+			<subcategory id="599" name="Mass Transit" imageId="" indicator="0" mostPopular="0" />
+		</category>
+		<category id="730" name="Wi-Fi" imageId="poiCategory730" indicator="0" mostPopular="0"/>
+		<category id="0" name="More" imageId="poiCategoryMore" indicator="2" mostPopular="0"/>
+	</carrier>
+	
+	<carrier name="Telcel_en_US" poifindversion="YP50_MX_Telcel_EN">
+        <category id="374" name="ATM" imageId="poiCategory374" indicator="0" mostPopular="0" />
+        <category id="226" name="Food/Coffee" imageId="poiCategory226" indicator="0" mostPopular="0"/>
+        <!-- We hard code on JSP to convert 50500 to 49, and show subcategory also controled by GAS_BY_PRICE in sdp. See SearchPoi.jsp -->
+        <category id="50500" name="Gas" imageId="poiCategory50500" indicator="1" mostPopular="0">
+            <subcategory id="50500" name="Any" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="702" name="By Price (Regular)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="703" name="By Price (Plus)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="704" name="By Price (Premium)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="705" name="By Price (Diesel)" imageId="" indicator="0" mostPopular="0" />
+        </category>
+        <category id="221" name="Grocery" imageId="poiCategory221" indicator="0" mostPopular="0"/>
+        <category id="5850" name="Lodging" imageId="poiCategory5850" indicator="0" mostPopular="0" />
+        <category id="181" name="Theaters" imageId="poiCategory181" indicator="0" mostPopular="0"/>
+        <category id="163" name="Nightlife" imageId="poiCategory163" indicator="0" mostPopular="0"/>
+        <category id="600" name="Parking" imageId="poiCategory600" indicator="0" mostPopular="0"/>
+        <category id="641" name="Shopping" imageId="poiCategory641" indicator="0" mostPopular="0"/>
+        <category id="601" name="Transportation" imageId="poiCategory601" indicator="1" mostPopular="0">
+            <subcategory id="68" name="Car Rental" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="601" name="Taxi" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="599" name="Mass Transit" imageId="" indicator="0" mostPopular="0" />
+        </category>
+        <category id="730" name="Wi-Fi" imageId="poiCategory730" indicator="0" mostPopular="0"/>
+        <category id="0" name="More" imageId="poiCategoryMore" indicator="2" mostPopular="0"/> 
+    </carrier>
+
+	<carrier name="Telcel_es_MX" poifindversion="YP50_MX_Telcel">
+        <category id="374" name="ATM" imageId="poiCategory374" indicator="0" mostPopular="0" />
+        <category id="226" name="Food/Coffee" imageId="poiCategory226" indicator="0" mostPopular="0"/>
+        <!-- We hard code on JSP to convert 50500 to 49, and show subcategory also controled by GAS_BY_PRICE in sdp. See SearchPoi.jsp -->
+        <category id="50500" name="Gas" imageId="poiCategory50500" indicator="1" mostPopular="0">
+            <subcategory id="50500" name="Any" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="702" name="By Price (Regular)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="703" name="By Price (Plus)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="704" name="By Price (Premium)" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="705" name="By Price (Diesel)" imageId="" indicator="0" mostPopular="0" />
+        </category>
+        <category id="221" name="Grocery" imageId="poiCategory221" indicator="0" mostPopular="0"/>
+        <category id="5850" name="Lodging" imageId="poiCategory5850" indicator="0" mostPopular="0" />
+        <category id="181" name="Theaters" imageId="poiCategory181" indicator="0" mostPopular="0"/>
+        <category id="163" name="Nightlife" imageId="poiCategory163" indicator="0" mostPopular="0"/>
+        <category id="600" name="Parking" imageId="poiCategory600" indicator="0" mostPopular="0"/>
+        <category id="641" name="Shopping" imageId="poiCategory641" indicator="0" mostPopular="0"/>
+        <category id="601" name="Transportation" imageId="poiCategory601" indicator="1" mostPopular="0">
+            <subcategory id="68" name="Car Rental" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="601" name="Taxi" imageId="" indicator="0" mostPopular="0" />
+            <subcategory id="599" name="Mass Transit" imageId="" indicator="0" mostPopular="0" />
+        </category>
+        <category id="730" name="Wi-Fi" imageId="poiCategory730" indicator="0" mostPopular="0"/>
+        <category id="0" name="More" imageId="poiCategoryMore" indicator="2" mostPopular="0"/> 
+    </carrier>
+</poiLocalParameters>

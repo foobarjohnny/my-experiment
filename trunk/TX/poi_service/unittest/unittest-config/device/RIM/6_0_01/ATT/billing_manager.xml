@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<billingManagerRules>
+<rules>
+		<rule description="ATT 2.0 RIM global">
+					<input combination="and">
+						<param name="carrier" pattern="ATT"/>
+						<param name="platform" pattern="RIM"/>
+						<param name="version" pattern="6\.0\.01"/>
+					</input>
+					<output>
+						<response name="migrate_to_new_billing" value="true"/>
+						<response name="billing_manager" value="com.telenav.cserver.billing.impl.ATTWhiteLabelBillingManager"/>
+					</output>
+		</rule>
+</rules>
+</billingManagerRules>

@@ -1,0 +1,375 @@
+.clsBigButtonLabel {
+	white-space: nowrap;
+	padding-left: 3px;
+	padding-right: 3px;
+	overflow: hidden;
+	width: 92%;
+}
+
+.clsReviewButtonLabel {
+	white-space: nowrap;
+	overflow: hidden;
+	width: 97%;
+}
+
+.clsBodyDivStyle {
+	position: absolute;
+	background-color: #FFFFFF;
+	height: 100%;
+	width: 100%;
+	bottom: 0px;
+	top: 0px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+}
+
+.clsTdRating {
+	width: 22%;
+}
+
+.clsTdPhone {
+	width: 74%;
+}
+
+@media screen and (orientation: landscape){
+	.clsTdPhone {
+		width: 50%;
+	}
+}
+
+.clsPhoneWrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.clsBigGray {
+	color: #666666;
+	font-weight: bold;
+}
+
+.clsBigWhite {
+	color: white;
+	font-weight: bold;
+}
+
+
+.clsBigButtonStyle {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.clsBigButtonStyle img {
+	vertical-align: middle;
+}
+
+.clsBigButtonStyle b {
+	vertical-align: middle;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+}
+
+.clsTabBackground {
+	position: relative;
+}
+
+.clsRestaurantContent {
+	position: relative;
+	width: 100%;
+}
+
+.Astyle {
+	padding-right: 10px;
+}
+
+.clsMainInfoStyle {
+	font-weight: bold;
+	color: #818181;
+}
+
+.clsDollarOrange,.clsDollarGrey {
+	font-weight: bold;
+	height: 15px;
+	width: 15px;
+	color: #FFFFFF;
+	-webkit-border-radius: 3px;
+}
+
+.clsDollarOrange {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 170, 42)
+		), to(rgb(255, 136, 10) ) );
+}
+
+.clsDollarGrey {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(200, 200, 200)
+		), to(rgb(197, 197, 197) ) );
+}
+
+.clsMenuBodyDiv {
+	padding-top: 5px;
+}
+
+.clsMenuItemDiv {
+	position: relative;
+	margin: 10px 10px 0px 10px;
+	border-bottom: solid 1px #DADADA;
+}
+
+.clsMenuInfoDiv {
+	padding: 5px 10px;
+	color: #818181;
+}
+
+.clsDealItemDiv {
+	position: relative;
+	margin: 20px 10px 0px 10px;
+	border: dashed 1px #8C8C8C;
+	-webkit-border-radius: 5px;
+	-webkit-box-shadow: 2px 2px 4px #AEAEAE;
+}
+
+.clsExtraItemDiv {
+	position: relative;
+	margin: 20px 10px 0px 10px;
+}
+
+
+.clsDealTitleDiv {
+	margin: 10px 5px 0px 5px;
+}
+
+.clsDealInfoDiv {
+	margin: 0px 5px 5px 5px;
+}
+
+.clsReviewDiv {
+	position: absolute;
+	width: 100%;
+}
+
+.clsReviewerDivBg {
+	background-image: "";
+}
+
+.clsReviewMiddleBar {
+	height: 100%;
+	width: 2px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)
+		), color-stop(0.5, rgb(185, 185, 185) ), to(rgb(255, 255, 255) ) );
+}
+
+.clsReviewBottomDiv {
+	position: relative;
+	width: 100%;
+}
+
+.clsMapImageContainer {
+	width: 100%;
+	height: 100%;
+}
+
+.clsDivBar {
+	width: 100%;
+	border: 0px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(54, 54, 54)
+		), to(white) );
+}
+
+.clsMovieItemBg {
+	color: #5B5B5B;
+	position: relative;
+	width: 100%;
+	border-bottom: solid 1px rgb(165, 170, 165);
+	vertical-align: middle;
+}
+
+.clsGasPriceDiv {
+	padding: 10px;
+}
+
+#menuImageDiv {
+	height: 96%;
+	width: 94%;
+	align: center;
+}
+
+.clsPoiBlankLine {
+	height: 5%;
+}
+
+.clsPoiBlankLineLandScape {
+	height: 10%;
+}
+
+.bgImgH {
+	width: 0.2em;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)
+		), color-stop(0.1, rgb(246, 246, 246) ),
+		color-stop(0.45, rgb(197, 197, 197) ),
+		color-stop(0.9, rgb(246, 246, 246) ), to(rgb(255, 255, 255) ) );
+}
+
+.clsReviewWrapper {
+	padding-top: 5px;
+}
+
+.clsNavWrapper {
+	height: 100%;
+}
+
+.clsCommonButtonStyle {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.clsMovieDate {
+	vertical-align: middle;
+	text-align: center;
+	align: center;
+	text-decoration: none;
+}
+
+.clsAddressLineSpan {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.clsBusinessHour {
+	font-weight: bold;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.clsBigButtonStyle p {
+	vertical-align: middle;
+	height: 100%;
+}
+
+#writeReviewButton {
+	vertical-align: middle;
+}
+
+.clsMovieItemStyle {
+	font-weight: bold;
+	text-align: left;
+}
+
+.bgDiv {
+	display: none;
+	position: absolute;
+	z-index: 1001;
+	right: 14%;
+}
+
+.clsMainTabPadding {
+	padding: 0% 2%;
+}
+
+.favoriteStyle {
+	background: rgba(90, 90, 90, 0.9);
+	-webkit-border-radius: 7px;
+	color: #FFFFFF;
+}
+
+.clsAddressLine {
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.clsReviewBottomContentDiv {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.clsBuyButton {
+	color: #FFFFFF;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.clsReviewTopContentDiv {
+	position: relative;
+	width: 100%;
+}
+
+.clsDivFirst {
+	position: relative;
+	width: 100%;
+}
+
+.clsDivSecond {
+/* 	position: relative; */
+	width: 100%;
+}
+
+@media screen and (orientation: landscape){
+	.clsDivSecond {
+		float: left;
+		width: 60%;
+	}
+}
+
+.clsDivThird {
+	position: relative;
+	width: 100%;
+}
+
+.clsPoiTabNormalSmall {
+	width: 18%;
+}
+
+.clsPoiTabReview {
+	width: 27%;
+}
+
+.clsPoiTabGas ,.clsPoiTabTheater{
+	width: 30%;
+}
+
+.gasItem{
+	height: 13%;
+}
+
+.poiContentPadding{
+	padding: 0 2%;
+}
+
+/******************************* refactoring **********************************/
+/* top */
+.favoriteStyle {
+	padding: 1em 0;
+	width: 20em;
+}
+
+/* review tab */
+.clsReviewTitleDiv {
+	width: 90%;
+	height: 6em;
+	margin-top: 0.5em;
+}
+
+.clsWriteReviewDiv {
+	clear:both;
+	width: 98%;
+	padding: 1em 0 2em 0;
+}
+
+.clsReviewContentDiv {
+	width: 100%;
+	height: 13.5em;
+	padding: 1.5em 0 0;
+}
+
+.clsReviewerDiv {
+	width: 94%;
+	height: 7em;
+	border-top: 1px solid #B9B9B9;
+}

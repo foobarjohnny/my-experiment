@@ -1,0 +1,250 @@
+<!-- 
+/**
+ * (c) Copyright 2012 TeleNav.
+ */
+@author: xljiang@telenav.cn
+@version 1.0 2012-03-01
+@todo:	This script is used to concat several css file into one and compress it.
+		1. create temp folder: temp-|== style	: used to save the combined style.css file which consist of .../default/common/.../style.css and .../default/480x320_320x480/.../style.css(for eg.)
+									|			  In this step, 4 files will be generated: style_480x320_320x480.css, style_800x480_480x800.css, style_960x540_540x960.css, style_1280x800_800x1280.css
+									|== prog	:	Take SN for example: used to save the combined prog.css file which consist of .../SNNAVPROG/common/.../prog.css and .../SNNAVPROG/480x320_320x480/.../prog.css
+									|				4 files generated: prog_SNNAVPROG_ANDROID_7_1_480x320_320x480.css
+									|								   prog_SNNAVPROG_ANDROID_7_1_800x480_480x800.css
+									|								   prog_SNNAVPROG_ANDROID_7_1_960x540_540x960.css
+									|								   prog_SNNAVPROG_ANDROID_7_1_1280x800_800x1280.css
+									|				In much the same way, ATT will generate 5 files:
+									|					prog_ATTNAVPROG_ANDROID_7_0_480x320_320x480.css
+									|					prog_ATTNAVPROG_ANDROID_7_0_800x480_480x800.css
+									|					prog_ATTNAVPROG_ANDROID_7_0_960x540_540x960.css
+									|					prog_ATTNAVPROG_ANDROID_7_0_1280x800_800x1280.css
+									|					prog_ATTNAVPROG_TNVIEW_LINUX_7_0_800x480_480x800.css
+									|== style_prog:	used to save the combined file consist of style.css and prog.css, that is, common_compressed.css, which will be inclued on every jsp.
+									|				For instance, concat prog_ATTNAVPROG_ANDROID_7_0_800x480_480x800.css and style_800x480_480x800.css ==> style_prog_ATTNAVPROG_ANDROID_7_0_800x480_480x800.css
+									|									==> common_compressed.css (.../ATTNAVPROG/.../800x480_480x800/)
+									|							  concat prog_SNNAVPROG_ANDROID_7_1_960x540_540x960.css and style_960x540_540x960.css ==> style_prog_SNNAVPROG_ANDROID_7_1_960x540_540x960.css
+									|									==> common_compressed.css (.../SNNAVPROG/.../960x540_540x960/)
+									|							  concat prog_SCOUTPROG_IPHONE_7_0_480x320_320x480.css and style_480x320_320x480.css ==> style_prog_SCOUTPROG_IPHONE_7_0_480x320_320x480.css
+									|									==> common_compressed.css (.../SCOUTPROG/.../480x320_320x480/)
+									|== others-|== 480x320_320x480===|
+											   |== 800x480_480x800===|== others folder save other css: poidetail_480x320_320x480.css, poidetail_800x480_480x800.css, poidetail_960x540_540x960.css, poidetail_1280x800_800x1280.css
+											   |== 960x540_540x960===|	 and the sub-folders for saving each screen compressed css file. default_common_only folder stores the compressed css file that exist only under 
+											   |== 1280x800_800x1280-|	 device/default/default/7_0/default/common/style
+											   |==default_common_only-|
+		
+		2. step: (1) create folders
+				 (2) dealWith the css files exist only under device/default/default/7_0/default/common/style
+				 (3) concat common/style.css and screen/style.css ==> style_${screen}.css
+				 (4) concat common/poidetail.css and screen/poidetail.css ==> poidetail_${screen}.css
+				 (5) compress poidetail_${screen}.css ==> poidetail_compressed.css
+				 (6) concat ATT/.../common/prog.css and ATT/.../screen/.../prog.css ==> prog_ATTNAVPROG_ANDROID_7_0_${screen}.css
+				 (7) concat style_${screen}.css and prog_ATTNAVPROG_ANDROID_7_0_${screen}.css ==> style_prog_ATTNAVPROG_ANDROID_7_0_${screen}.css
+				 (8) compress style_prog_ATTNAVPROG_ANDROID_7_0_${screen}.css ==> common_compressed.css put it into .../ATTNAVPROG/.../${screen}
+				 (9) copy poidetail_compressed.css to every programcode/ every screen
+		
+		3. algorithm
+		begin{
+			createFolder();
+			dealWith_default_common();
+			for(i_screen in (480x320,800x480,960x540,1280x800)){
+				style_${i_screen}.css = concat(default/default/7_0/default/common/style/style.css, default/default/7_0/default/i_screen/style/style.css);
+				for(fileName in (default/default/7_0/default/i_screen/style)){
+					fileName_i_screen.css = concat(default/default/7_0/default/common/style/fileName, default/default/7_0/default/i_screen/style/fileName);
+					fileName_compressed.css = compress(fileName_i_screen.css);
+					putInto(fileName_compressed.css, "temp/others/i_screen");
+				}
+				putInto(default_common_css, "temp/others/i_screen");
+			}
+			
+			for(i_prog in (ATTNAVPROG,SCOUTPROG,SCOUTUSPROG,SNNAVPROG)){
+				if(!isExist(device/i_prog)) continue;
+				for(j_pf in (ANDROID,IPHONE,TNVIEW_LINUX)){
+					if(!isExist(device/i_prog/j_pf)) continue;
+					for(k_version in (7_0,7_1,7_2)){
+						if(!isExist(device/i_prog/j_pf/k_version)) continue;
+						for(l_screen in (480x320,800x480,960x540,1280x800)){
+							if(!isExist(device/i_prog/j_pf/k_version/default/l_screen)) continue;
+							prog_i_prog_j_pf_k_version_l_screen.css = concat(device/i_prog/j_pf/k_version/default/common/style/prog.css, device/i_prog/j_pf/k_version/default/l_screen/style/prog.css);
+							style_prog_i_prog_j_pf_k_version_l_screen.css = concat(style_l_screen.css, prog_i_prog_j_pf_k_version_l_screen.css);
+							common_compressed.css = compress(style_prog_i_prog_j_pf_k_version_l_screen.css);
+							putInto(common_compressed.css, "device/i_prog/j_pf/k_version/default/l_screen/style");
+							copy(*.css in "temp/others/i_screen", "device/i_prog/j_pf/k_version/default/l_screen/style");
+						}
+					}
+				}
+			}
+		}
+ -->
+<project name="compress_css" default="start">
+	<property file="build.properties"/>
+	<property name="device.dir" value="../../config/device" />
+	<property name="temp.dir" value="./temp" />
+	<property name="concatedStyle.dir" value="${temp.dir}/style" />
+	<property name="concatedProg.dir" value="${temp.dir}/prog" />
+	<property name="concatedOthers.dir" value="${temp.dir}/others" />
+	<property name="default_common_only.dir" value="${temp.dir}/others/default_common_only" />
+	<property name="concatedStyleProg.dir" value="${temp.dir}/style_prog" />
+	<property name="compressSuffix" value="_compressed"/>
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	
+	
+	
+	<!-- =================================== 1. create folders =================================== -->
+	<target name="init" description="create folders">
+		<antcall target="clean"/>
+		
+		<mkdir dir="${temp.dir}"/>
+		<mkdir dir="${concatedStyle.dir}"/>
+		<mkdir dir="${concatedProg.dir}"/>
+		<mkdir dir="${default_common_only.dir}"/>
+		<mkdir dir="${concatedStyleProg.dir}"/>
+		
+		<mkdir dir="${concatedOthers.dir}"/>
+		<foreach list="${screen}" target="init1" param="arg_res" delimiter="," inheritall="true" inheritrefs="true" />	
+	</target>
+	<!-- =================================== 1.1 create others/sub-folders ======================== -->
+	<target name="init1" description="get preparation">
+		<mkdir dir="${concatedOthers.dir}/${arg_res}"/>
+	</target>
+	<!-- =================================== 1.2 remove oringinal compressed css ======================== -->
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${device.dir}">
+			<include name="**/*${compressSuffix}.css"/>
+		</delete>
+	</target>
+	
+	<!-- =================================== 2. dealWith the css files exist only under device/default/default/7_0/default/common/style =================================== -->
+	<target name="dealWith_default_common_only">
+		<foreach list="${default_common_only_css}" target="compress_default_common_only" param="arg_cssFile" delimiter="," inheritall="true" inheritrefs="true"/>
+	</target>
+	
+	<target name="compress_default_common_only">
+		<basename property="simpleName" file="${arg_cssFile}" suffix="css"/>
+		<antcall target="compress" inheritall="true" inheritrefs="true">
+			<param name="srcFile" value="${device.dir}/default/default/7_0/default/common/style/${arg_cssFile}"/>
+			<param name="destFile" value="${default_common_only.dir}/${simpleName}${compressSuffix}.css"/>
+		</antcall>
+	</target>
+	<!-- =================================== 3. concat style.css =================================== -->
+	<target name="concatStyle">
+		<foreach list="${screen}" target="concatScreenStyle" param="arg_size" delimiter="," inheritall="true" inheritrefs="true" />	
+	</target>
+	
+	<target name="concatScreenStyle" description="concat style.css for each screen">
+		<echo>========= concat style.css for ${arg_size}</echo>
+		<!-- ======= 3.1 concat .../default.../common/.../style.css and .../default.../480*320(all screen)/.../style.css ====== -->
+		<concat destfile="${concatedStyle.dir}/style_${arg_size}.css" append="true" >
+			<filelist dir="${device.dir}/default/default/7_0/default/common/style" files="style.css"/>
+			<filelist dir="${device.dir}/default/default/7_0/default/${arg_size}/style" files="style.css"/>
+		</concat>
+		<!-- ======= 3.2 concat .../default.../common/.../poidetail.css and .../default.../480*320(all screen)/.../poidetail.css ====== -->
+		 <foreach target="concatOthers" param="aaa" inheritall="true" inheritrefs="true">
+			<fileset dir="${device.dir}/default/default/7_0/default/${arg_size}/style">
+				<include name="*.css"/>
+				<exclude name="style.css"/>
+			</fileset>
+        </foreach>
+		
+		<!-- ======= 3.3 copy the compressed css file from default_common_only to ${default_common_only.dir}/${arg_size} ====== -->
+		<copy todir="${concatedOthers.dir}/${arg_size}" overwrite="true">
+			<fileset dir="${default_common_only.dir}"/>
+		</copy>
+	</target>
+	
+	<target name="concatOthers" description="concat other css. e.g. concat common/poidetial.css and screen/poidetail.css">
+		<basename property="filename" file="${aaa}"/>
+		<basename property="simpleName" file="${aaa}" suffix="css"/>
+		<echo>=========concat other.css for ${filename}==============</echo>
+		<concat destfile="${concatedOthers.dir}/${simpleName}_${arg_size}.css" append="true" >
+			<filelist dir="${device.dir}/default/default/7_0/default/common/style" files="${filename}"/>
+			<filelist dir="${device.dir}/default/default/7_0/default/${arg_size}/style" files="${filename}"/>
+		</concat>
+		
+		
+		<antcall target="compress" inheritall="true" inheritrefs="true">
+			<param name="srcFile" value="${concatedOthers.dir}/${simpleName}_${arg_size}.css"/>
+			<param name="destFile" value="${concatedOthers.dir}/${arg_size}/${simpleName}${compressSuffix}.css"/>
+		</antcall>
+	</target>
+	<!-- =================================== 4.  concat prog.css =================================== -->
+	<target name="concatProg">
+		<echo>========= concat prog.css for each screen</echo>
+		<foreach list="${progCode}" target="testProg" param="arg_p" delimiter="," inheritall="true" inheritrefs="true" />	
+	</target>
+	<target name="testProg">
+		<if> <available file="${device.dir}/${arg_p}" type="dir"/>
+			<then>
+				<foreach list="${platform}" target="testPlatForm" param="arg_pf" delimiter="," inheritall="true" inheritrefs="true" />
+			</then>
+		</if>
+	</target>
+	<target name="testPlatForm">
+		<if> <available file="${device.dir}/${arg_p}/${arg_pf}" type="dir"/>
+			<then>
+				<foreach list="${version}" target="testVersion" param="arg_version" delimiter="," inheritall="true" inheritrefs="true" />
+			</then>
+		</if>
+	</target>
+	<target name="testVersion">
+		<if> <available file="${device.dir}/${arg_p}/${arg_pf}/${arg_version}" type="dir"/>
+			<then>
+				<foreach list="${screen}" target="testScreen" param="arg_screen" delimiter="," inheritall="true" inheritrefs="true" />
+			</then>
+		</if>
+	</target>
+	<target name="testScreen">
+		<if> <available file="${device.dir}/${arg_p}/${arg_pf}/${arg_version}/default/${arg_screen}" type="dir"/> <then>
+			<antcall target="concatScreenProg" inheritall="true" inheritrefs="true">
+				<param name="arg_path" value="${device.dir}/${arg_p}/${arg_pf}/${arg_version}/default/${arg_screen}"/>
+				<param name="arg_commonPath" value="${device.dir}/${arg_p}/${arg_pf}/${arg_version}/default/common"/>
+			</antcall>
+		</then>
+		</if>
+	</target>
+	<target name="concatScreenProg" description="concat prog.css for each screen">
+		<echo>========= concat prog.css for ${arg_path}</echo>
+		<concat destfile="${concatedProg.dir}/prog_${arg_p}_${arg_pf}_${arg_version}_${arg_screen}.css" append="true" >
+			<filelist dir="${arg_commonPath}/style" files="prog.css"/>
+			<filelist dir="${arg_path}/style" files="prog.css"/>
+		</concat>
+		<antcall target="concatStyleProg" inheritall="true" inheritrefs="true">
+			<param name="arg_progName" value="prog_${arg_p}_${arg_pf}_${arg_version}_${arg_screen}.css"/>
+		</antcall>
+	</target>
+	
+	<target name="concatStyleProg" description="concat style.css and prog.css for each screen">
+		<concat destfile="${concatedStyleProg.dir}/style_${arg_progName}" append="true" >
+			<filelist dir="${concatedStyle.dir}" files="style_${arg_screen}.css"/>
+			<filelist dir="${concatedProg.dir}" files="${arg_progName}"/>
+		</concat>
+		
+		<antcall target="compress" inheritall="true" inheritrefs="true">
+			<param name="srcFile" value="${concatedStyleProg.dir}/style_${arg_progName}"/>
+			<param name="destFile" value="${device.dir}/${arg_p}/${arg_pf}/${arg_version}/default/${arg_screen}/style/common${compressSuffix}.css"/>
+		</antcall>
+		
+ 		<copy todir="${device.dir}/${arg_p}/${arg_pf}/${arg_version}/default/${arg_screen}/style" overwrite="true">
+			<fileset dir="${concatedOthers.dir}/${arg_screen}">
+				<include name="*.css" />
+			</fileset>
+		</copy>
+	</target>
+	
+	
+	
+	
+	<target name="compress">
+		<java jar="yuicompressor-2.4.7.jar" fork="true">
+			<arg line="--type css --charset utf-8 ${srcFile} -o ${destFile}"/>
+		</java>
+	</target>
+	
+	<target name="start">
+		<antcall target="init"/>
+		<antcall target="dealWith_default_common_only"/>
+		<antcall target="concatStyle"/>
+		<antcall target="concatProg"/>
+		<delete dir="${temp.dir}" />
+	</target>
+</project>

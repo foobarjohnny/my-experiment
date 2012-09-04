@@ -1,0 +1,467 @@
+/* back button  */
+.back_button_unfocused,.back_button_focused{
+	background-size: 50px 60px;
+	width: 50px;
+	height: 30px;
+}
+
+.back_button_unfocused,.back_button_dashboard_unfocused{
+	background-position: 0 0;
+}
+
+.back_button_focused,.back_button_dashboard_focused{
+	background-position: 0 -30px;
+}
+
+.back_button_dashboard_unfocused,.back_button_dashboard_focused{
+	background-size: 83px 60px;
+	width: 83px;
+	height: 30px;
+}
+
+.clsImgDefaultPhoto{
+	width: 27px;
+	height: 27px;
+}
+
+
+.clsCityFS{
+	font-size: 14px;
+}
+
+.clsTabInSideTable {
+	height: 31px;
+}
+
+/* tab */
+.clsTabLeftOnBk,.clsTabMiddleOnBk,.clsTabRightOnBk,.clsTabLeftOffBk,.clsTabMiddleOffBk,.clsTabRightOffBk{
+	background-image: url(../image/tab_big.png);
+	background-size: 12px 192px;/*192px*/
+}
+
+.clsTabLeftOnBk{
+	background-repeat: no-repeat;
+	background-position: 0px -161px;
+}
+.clsTabMiddleOnBk{
+	color: #0097d7;
+	background-repeat: repeat-x;
+	background-position: 0px -129px;
+}
+.clsTabRightOnBk{
+	background-repeat: no-repeat;
+	background-position: 0px -1px;
+}
+.clsTabLeftOffBk{
+	background-repeat: no-repeat;
+	background-position: 0px -65px;
+}
+.clsTabMiddleOffBk{
+	color: white;
+	background-repeat: repeat-x;
+	background-position: 0px -33px;
+}
+.clsTabRightOffBk{
+	background-repeat: no-repeat;
+	background-position: 0px -97px;
+}
+
+.clsLoadingPopupBk{
+    background:url(../image/loading_icon_medium_unfocused.png) no-repeat;
+    background-size: cover;
+}
+
+
+/* for weather big image */
+.weatherBig{
+	background: url(../image/weatherBig.png) no-repeat;
+	width: 95px;
+	padding-top: 69px;
+	background-size: 3420px 67.5px;
+}
+
+.weatherSmall{
+	background: url(../image/weatherSmall.png) no-repeat;
+	width: 33px;
+	padding-top: 26px;
+	background-size: 1170px 25px;
+}
+
+.weatherBig_25{background-position: 0px 0px;}
+.weatherBig_24{background-position: -95px 0px;}
+.weatherBig_27{background-position: -190px 0px;}
+.weatherBig_26{background-position: -285px 0px;}
+.weatherBig_23{background-position: -380px 0px;}
+.weatherBig_20{background-position: -475px 0px;}
+.weatherBig_19{background-position: -570px 0px;}
+.weatherBig_22{background-position: -665px 0px;}
+.weatherBig_21{background-position: -760px 0px;}
+.weatherBig_34{background-position: -855px 0px;}
+.weatherBig_33{background-position: -950px 0px;}
+.weatherBig_36{background-position: -1045px 0px;}
+.weatherBig_35{background-position: -1140px 0px;}
+.weatherBig_32{background-position: -1235px 0px;}
+.weatherBig_29{background-position: -1330px 0px;}
+.weatherBig_28{background-position: -1425px 0px;}
+.weatherBig_31{background-position: -1520px 0px;}
+.weatherBig_30{background-position: -1615px 0px;}
+.weatherBig_7{background-position: -1710px 0px;}
+.weatherBig_6{background-position: -1805px 0px;}
+.weatherBig_9{background-position: -1900px 0px;}
+.weatherBig_8{background-position: -1995px 0px;}
+.weatherBig_5{background-position: -2090px 0px;}
+.weatherBig_2{background-position: -2185px 0px;}
+.weatherBig_1{background-position: -2280px 0px;}
+.weatherBig_4{background-position: -2375px 0px;}
+.weatherBig_3{background-position: -2470px 0px;}
+.weatherBig_16{background-position: -2565px 0px;}
+.weatherBig_15{background-position: -2660px 0px;}
+.weatherBig_18{background-position: -2755px 0px;}
+.weatherBig_17{background-position: -2850px 0px;}
+.weatherBig_14{background-position: -2945px 0px;}
+.weatherBig_11{background-position: -3040px 0px;}
+.weatherBig_10{background-position: -3135px 0px;}
+.weatherBig_13{background-position: -3230px 0px;}
+.weatherBig_12{background-position: -3325px 0px;}
+
+.weatherSmall_25{background-position: 0px 0px;}
+.weatherSmall_24{background-position: -33px 0px;}
+.weatherSmall_27{background-position: -65px 0px;}
+.weatherSmall_26{background-position: -98px 0px;}
+.weatherSmall_23{background-position: -130px 0px;}
+.weatherSmall_20{background-position: -163px 0px;}
+.weatherSmall_19{background-position: -195px 0px;}
+.weatherSmall_22{background-position: -228px 0px;}
+.weatherSmall_21{background-position: -260px 0px;}
+.weatherSmall_34{background-position: -293px 0px;}
+.weatherSmall_33{background-position: -325px 0px;}
+.weatherSmall_36{background-position: -358px 0px;}
+.weatherSmall_35{background-position: -390px 0px;}
+.weatherSmall_32{background-position: -423px 0px;}
+.weatherSmall_29{background-position: -455px 0px;}
+.weatherSmall_28{background-position: -488px 0px;}
+.weatherSmall_31{background-position: -520px 0px;}
+.weatherSmall_30{background-position: -553px 0px;}
+.weatherSmall_7{background-position: -585px 0px;}
+.weatherSmall_6{background-position: -618px 0px;}
+.weatherSmall_9{background-position: -650px 0px;}
+.weatherSmall_8{background-position: -683px 0px;}
+.weatherSmall_5{background-position: -715px 0px;}
+.weatherSmall_2{background-position: -748px 0px;}
+.weatherSmall_1{background-position: -780px 0px;}
+.weatherSmall_4{background-position: -813px 0px;}
+.weatherSmall_3{background-position: -845px 0px;}
+.weatherSmall_16{background-position: -878px 0px;}
+.weatherSmall_15{background-position: -910px 0px;}
+.weatherSmall_18{background-position: -943px 0px;}
+.weatherSmall_17{background-position: -975px 0px;}
+.weatherSmall_14{background-position: -1008px 0px;}
+.weatherSmall_11{background-position: -1040px 0px;}
+.weatherSmall_10{background-position: -1073px 0px;}
+.weatherSmall_13{background-position: -1105px 0px;}
+.weatherSmall_12{background-position: -1138px 0px;}
+
+/* review */
+.quotation_left,.quotation_right{
+	background-size:42px 18px; 
+	background: url(../image/quotation.png);
+	background-repeat: no-repeat;
+}
+.quotation_left{background-position: 0px 0px;width:21px;padding-top:18px;}
+.quotation_right{background-position: -21px 0px;width:22px;padding-top:19px;}
+
+/* evaluation */
+.good_button_unselected,.good_button_selected,.bad_button_selected,.bad_button_unselected,.good_icon_unfocused,.bad_icon_unfocused{
+	background:url(../image/evaluation.png) no-repeat;
+	background-size: 174px 34px;
+}
+
+.good_button_unselected{background-position: 0px 0px;width:32px;padding-top:33px;}
+.good_button_selected{background-position: -32px 0px;width:32px;padding-top:33px;}
+.bad_button_selected{background-position: -64px 0px;width:32px;padding-top:33px;}
+.bad_button_unselected{background-position: -96px 0px;width:32px;padding-top:33px;}
+.good_icon_unfocused{background-position: -128px 0px;width:23px;padding-top:35px;}
+.bad_icon_unfocused{background-position: -151px 0px;width:23px;padding-top:35px;}
+
+/* feedback */
+.check_box_unfocused,.toggler_button_OFF,.check_box_focused,.toggler_button_ON{
+	background-image: url(../image/checkbox.png);
+	background-repeat: no-repeat;
+	width:18px;
+	padding-top:19px;
+	background-size: 36px 18px;
+}
+.check_box_unfocused,.toggler_button_OFF{background-position: 0px 0px;}
+.check_box_focused,.toggler_button_ON{background-position: -18px 0px;}
+
+/* logo */
+.Groupon_logo,.TN_logo,.ATTi_logo,.CS_logo{
+	background-image: url(../image/logo.png);
+	background-repeat: no-repeat;
+	height:12px;
+	background-size: 58px 48px;
+}
+.Groupon_logo{background-position: 0px 0px;padding-left:59px;}
+.TN_logo{background-position: 0px -12px;padding-left:59px;}
+.ATTi_logo{background-position: 0px -24px;padding-left:59px;}
+.CS_logo{background-position: 0px -36px;padding-left:59px;}
+
+/* poi */
+/* poi.call_driveto */
+.poi_details_call_icon_unfocused,.poi_details_driveto_icon_focused,.poi_details_call_icon_focused,.poi_details_driveto_icon_unfocused,.poi_details_call_icon_disabled{
+	background-image: url(../image/call_driveto.png);
+	background-repeat: no-repeat;
+	width:21px;
+	padding-top:22px;
+	background-size: 105px 21px;
+}
+
+.poi_details_call_icon_unfocused{background-position: 0px 0px;}
+.poi_details_driveto_icon_focused{background-position: -21px 0px;}
+.poi_details_call_icon_focused{background-position: -42px 0px;}
+.poi_details_driveto_icon_unfocused{background-position: -63px 0px;}
+.poi_details_call_icon_disabled{background-position: -84px 0px;}
+
+/* poi.close_openPOI */
+.openPoi_focused,.openPoi,.closePoi,.closePoi_focused,.closePoi713,.openPoi713_focused,.closePoi713_focused,.openPoi713{
+	background-image: url(../image/close_openPOI.png);
+	background-repeat: no-repeat;
+	background-size: 47px 96px;
+}
+
+.openPoi_focused{background-position: 0px 0px;height:9px;padding-left:15px;}
+.openPoi{background-position: 0px -9px;height:9px;padding-left:15px;}
+.closePoi{background-position: 0px -18px;height:9px;padding-left:15px;}
+.closePoi_focused{background-position: 0px -27px;height:9px;padding-left:15px;}
+.closePoi713{background-position: 0px -36px;height:15px;padding-left:48px;}
+.openPoi713_focused{background-position: 0px -51px;height:15px;padding-left:48px;}
+.closePoi713_focused{background-position: 0px -66px;height:15px;padding-left:48px;}
+.openPoi713{background-position: 0px -81px;height:15px;padding-left:48px;}
+
+/* poi.favorites */
+.favorites_add_button_unfocused,.favorites_button_unfocused{
+	background-image: url(../image/favorites.png);
+	background-repeat: no-repeat;
+	background-size: 50px 25px;
+	width:25px;
+	padding-top:26px;
+}
+.favorites_add_button_unfocused{background-position: 0px 0px;}
+.favorites_button_unfocused{background-position: -25px 0px;}
+
+/* poi.stars */
+.full_small_star_icon_unfocused,.semi_small_star_icon_unfocused,
+.vacancy_small_star_icon_unfocused,.semi_medium_star_icon_unfocused,
+.vacancy_medium_star_icon_unfocused,.full_medium_star_icon_unfocused,
+.vacancy_big_star_icon_unfocused,.semi_big_star_icon_unfocused,
+.full_big_star_icon_unfocused,.semi_huge_star_icon_unfocused,
+.vacancy_huge_star_icon_unfocused,.full_huge_star_icon_unfocused{
+	background-image: url(../image/stars.png);
+	background-repeat: no-repeat;
+	background-size: 204px 32.5px;
+}
+
+.full_small_star_icon_unfocused{background-position: 0px 0px;width:9px;padding-top:10px;}
+.semi_small_star_icon_unfocused{background-position: -9px 0px;width:9px;padding-top:10px;}
+.vacancy_small_star_icon_unfocused{background-position: -17px 0px;width:9px;padding-top:10px;}
+.semi_medium_star_icon_unfocused{background-position: -26px 0px;width:12px;padding-top:13px;}
+.vacancy_medium_star_icon_unfocused{background-position: -37px 0px;width:12px;padding-top:13px;}
+.full_medium_star_icon_unfocused{background-position: -49px 0px;width:12px;padding-top:13px;}
+.vacancy_big_star_icon_unfocused{background-position: -60px 0px;width:16px;padding-top:17px;}
+.semi_big_star_icon_unfocused{background-position: -76px 0px;width:16px;padding-top:17px;}
+.full_big_star_icon_unfocused{background-position: -91px 0px;width:16px;padding-top:17px;}
+.semi_huge_star_icon_unfocused{background-position: -107px 0px;width:33px;padding-top:34px;}
+.vacancy_huge_star_icon_unfocused{background-position: -139px 0px;width:33px;padding-top:34px;}
+.full_huge_star_icon_unfocused{background-position: -172px 0px;width:33px;padding-top:34px;}
+
+/* poi.date */
+.date_next_button_unfocused,.date_previous_button_disabled,.date_previous_button_focused,.date_previous_button_unfocused,.date_next_button_disabled,.date_next_button_focused{
+	background-image: url(../image/date_big.png);
+	background-repeat: no-repeat;
+	background-size: 402px 28.5px;
+	width:67px;
+	padding-top:30px;
+}
+
+.date_next_button_unfocused{background-position: 0px 0px;}
+.date_previous_button_disabled{background-position: -67px 0px;}
+.date_previous_button_focused{background-position: -134px 0px;}
+.date_previous_button_unfocused{background-position: -201px 0px;}
+.date_next_button_disabled{background-position: -268px 0px;}
+.date_next_button_focused{background-position: -335px 0px;}
+
+/* poi.changeLocation */
+.change_location_button_focused,.change_location_button_unfocused{
+	background-image: url(../image/change_location_button_big.png);
+	background-repeat: no-repeat;
+	background-size: 50px 25px;
+	width:25px;
+	padding-top:26px;
+}
+
+.change_location_button_focused{background-position: 0px 0px;}
+.change_location_button_unfocused{background-position: -25px 0px;}
+
+/* poi.hotel_arrow */
+.hotel_next_arrow_icon_unfocused,.hotel_previous_arrow_icon_focused,.hotel_previous_arrow_icon_unfocused,.hotel_list_arrow_icon_focused,.hotel_list_arrow_icon_unfocused,.hotel_next_arrow_icon_focused{
+	background-image: url(../image/hotel_arrows.png);
+	background-repeat: no-repeat;
+	background-size: 48px 12.5px;
+	width:8px;
+	padding-top:14px;
+}
+
+.hotel_next_arrow_icon_unfocused{background-position: 0px 0px;}
+.hotel_previous_arrow_icon_focused{background-position: -8px 0px;}
+.hotel_previous_arrow_icon_unfocused{background-position: -16px 0px;}
+.hotel_list_arrow_icon_focused{background-position: -24px 0px;}
+.hotel_list_arrow_icon_unfocused{background-position: -32px 0px;}
+.hotel_next_arrow_icon_focused{background-position: -40px 0px;}
+
+/* yelp */
+.yelp_button
+{
+	background:url(../image/yelp.png);
+	width:115px;
+	height:25px;
+	background-size:115px 25px;
+}
+
+.yelpContainer,.tripContainer
+{
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wGFgA5D80hGzwAAABbSURBVAjXAVAAr/8A/9Is/+mY///9//75/+uhAf/tqQAKMQADDQDsoQD++gIAD0kAAQIA9McA+uQABRQA///9/+eN/9lL//C7//vuAf/nkQD/+QAEFAAQRwD77B26K1gJjcz0AAAAAElFTkSuQmCC);	
+}
+
+.yelp_no_star
+{
+	background-position:0px 0px;
+}
+
+.yelp_one_star
+{
+	background-position:0px -15px;
+}
+
+.yelp_one_half_star
+{
+	background-position:0px -30px;
+}
+
+.yelp_two_star
+{
+	background-position:0px -45px;
+}
+
+.yelp_two_half_star
+{
+	background-position:0px -60px;
+}
+
+.yelp_three_star
+{
+	background-position:0px -75px;
+}
+
+.yelp_three_half_star
+{
+	background-position:0px -90px;
+}
+
+.yelp_four_star
+{
+	background-position:0px -105px;
+}
+
+.yelp_four_half_star
+{
+	background-position:0px -120px;
+}
+
+.yelp_five_star
+{
+	background-position:0px -135px;
+}
+
+.yelp_no_star, .yelp_one_star, .yelp_one_half_star, .yelp_two_star,
+.yelp_two_half_star, .yelp_three_star, .yelp_three_half_star,
+.yelp_four_star, .yelp_four_half_star, .yelp_five_star
+{
+	background-image:url(../image/yelp_star.png);
+	width:83px;
+	height:15px;	
+	background-size:83px 150px;
+}
+
+/* trip */
+.trip_button
+{
+	background:url(../image/trip.png);
+	width:115px;
+	height:28px;
+	background-size:115px 28px;
+}
+
+.trip_no_circle
+{
+	background-position:0px 0px;
+}
+
+.trip_half_circle
+{
+	background-position:0px -13px;
+}
+
+.trip_one_circle
+{
+	background-position:0px -26px;
+}
+
+.trip_one_half_circle
+{
+	background-position:0px -39px;
+}
+
+.trip_two_circle
+{
+	background-position:0px -52px;
+}
+
+.trip_two_half_circle
+{
+	background-position:0px -65px;
+}
+
+.trip_three_circle
+{
+	background-position:0px -78px;
+}
+
+.trip_three_half_circle
+{
+	background-position:0px -91px;
+}
+
+.trip_four_circle
+{
+	background-position:0px -104px;
+}
+
+.trip_four_half_circle
+{
+	background-position:0px -117px;
+}
+
+.trip_five_circle
+{
+	background-position:0px -130px;
+}
+
+.trip_no_circle, .trip_half_circle, .trip_one_circle, .trip_one_half_circle, .trip_two_circle,
+.trip_two_half_circle, .trip_three_circle, .trip_three_half_circle,
+.trip_four_circle, .trip_four_half_circle, .trip_five_circle
+{
+	background-image:url(../image/trip_circle.png);
+	width:66px;
+	height:13px;	
+	background-size:66px 143px;
+}

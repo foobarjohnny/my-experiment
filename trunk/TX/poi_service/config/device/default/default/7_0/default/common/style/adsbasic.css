@@ -1,0 +1,67 @@
+.clsTopPart {
+	width: 100%;
+	height: 0%;
+	table-layout: fixed;
+}
+
+.clsTotal {
+	width: 97%;
+	padding : 0px 1.6%;
+}
+
+.clsAdsDescription {
+	color: #666666;
+	font-weight: bold;
+	overflow: hidden;
+	width: 95%;
+	word-wrap: break-word;
+}
+
+.firstCell{
+	width:2%;
+}
+
+.descDiv{
+	height:30%;
+}
+
+.buttonDiv{
+	height:29%;
+}
+
+.blankDiv{
+	height:5px;
+}
+
+.clsbigbuttonstyle {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.adWord{
+	-webkit-transform: rotate(270deg);
+	width : 2%;
+	font-size : 11px;
+}
+
+.logImageDiv{
+	width:20%;
+}
+
+.vbbBody{
+	background:transpresent;
+	margin : 0px;
+}
+
+.topRightDiv {
+	width:100%;
+	display:none;
+}
+
+.topRightFirstCell{
+	width:100%;
+	border-bottom-style: solid; 
+}

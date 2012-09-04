@@ -1,0 +1,55 @@
+/* Portrait */
+@media screen and (orientation:portrait) {
+	.reviewOwer{
+		height: 14%;
+	}
+	
+	.reviewOptions{
+		padding-top: 5%;
+		height: 25%;
+		min-height: 25%;
+		border-bottom: 1px solid #D1D1D1;
+	}
+}
+
+/* Landscape */
+@media screen and (orientation:landscape) {
+	.reviewOwer{
+		height: 20%;
+	}
+	
+	.reviewOptions{
+		padding-top: 4%;
+		height: 35%;
+		min-height: 35%;
+		border-bottom: 1px solid #D1D1D1;
+	}
+}
+
+.reviewerPhoto{
+	width: 15%;
+}
+
+.reviewerName{
+	width: 50%;
+}
+
+.reviewerRating{
+	width: 35%;
+}
+
+.reviewContent{
+	margin: 6% 2%;
+}
+
+.reviewComment{
+	margin: 2% 4%;
+	word-wrap: break-word;
+}
+
+.halvingLine{
+     width:2px;
+     background: -webkit-gradient(linear, left top, left bottom, 
+                            from(rgb(247,247,247)),
+                            color-stop(0.5, rgb(198,197,197)), to(rgb(247,247,247)));
+}

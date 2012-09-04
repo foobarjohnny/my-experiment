@@ -1,0 +1,36 @@
+body{
+	font-size: 75%;
+}
+
+.clsIphoneBackBtn {
+	text-align: left;
+	padding-left: 26px;
+	height: 60px;
+	width: 100px;
+}
+
+.backBtnLeftGap {
+	width: 12px;
+}
+
+.clsTitleFrame {
+	height: 70px;
+}
+
+.clsLargeRadius {
+    -webkit-border-radius: 10px;
+}
+
+.clsMiddleRadius {
+    -webkit-border-radius: 7px;
+}
+
+.clsSmallRadius {
+    -webkit-border-radius: 5px;
+}
+
+/* **************** from popup.css ********************** */
+.loadingPopup,.loadingPopupLandscape{
+   	width: 131px;
+    height: 132px;
+}

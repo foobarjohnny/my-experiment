@@ -1,0 +1,217 @@
+<!DOCTYPE project [
+  <!ENTITY base_ant_common     SYSTEM "base_ant_common.properties">
+]>
+<project name="poi_service" default="war"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+	<taskdef resource="antenna.properties" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	<!-- default build parameters -->
+	<property file="./../../../../../build/build_root.properties" />
+	<property name="version" value="x.x.x" />
+	<property name="base.dir" value="." />
+	<property name="project" value="poi_service" />
+	<property name="src.dir" value="./src" />
+	<property name="config.dir" value="./config" />
+	<property name="lib.dir" value="./WebRoot/WEB-INF/lib" />
+	<property name="app_path" value="./webapps" />
+	<property name="web.root" value="./WebRoot" />
+	<property name="temp.dir" value="./temp" />
+	<property name="build.dir" value="./build" />
+	<property name="output.dir" value="./dist" />
+	<property name="package" value="com/telenav/" />
+	<property name="webinif.dir" value="WEB-INF" />
+	<property name="web_classes.dir" value="${webinif.dir}/classes" />
+	<property name="origin.lib.dir" value="./lib" />
+
+	<property name="project.name" value="poi_service"/>
+	<property name="ivy.settings.file" value="./tnbuild/ivysettings.xml"/>
+	<property name="ivy.file" value="./tnbuild/ivy.xml"/>
+	
+	&base_ant_common;
+	
+	<target name="makelib"  depends ="retrieve-all" description="--> Retrieves all Ivy dependencies into the lib directory">
+			<!-- define our classpath -->
+			<path id="lib.class.path">
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</path>
+	</target>
+	
+	
+	<!-- properties for regressions-->
+	<target name="init-ivy">
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+			<classpath>
+				<pathelement location="ivy.jar" />
+			</classpath>
+		</taskdef>
+		<ivy:settings id="ivy.instance" file="${ivy.settings.file}" />
+	</target>
+	
+	<target name="retrieve-all" depends="init-ivy" unless="withoutivy" description="--> Retrieves all Ivy dependencies into the lib directory">
+		<delete dir="${origin.lib.dir}"  includes="**/*.jar"/>
+		<ivy:retrieve file="${ivy.file}"/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${lib.dir}" />
+		<delete dir="${temp.dir}" />
+		<delete dir="${output.dir}/${suffix}_${region}" />
+	</target>
+
+	<target name="create dir" depends="clean">
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${output.dir}/${suffix}_${region}" />
+	</target>
+
+	<target name="copy1" depends="create dir">
+
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="${origin.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}">
+			<fileset dir="${web.root}">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="WEB-INF/config/**" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="compile" depends="makelib,copy1,copy_common_browser,copyHtmlResource">
+
+		<mkdir dir="${temp.dir}/${webinif.dir}/classes" />
+
+		<javac srcdir="${src.dir}" destdir="${temp.dir}/${webinif.dir}/classes" fork="yes" debug="on" deprecation="on">
+			<classpath refid="lib.class.path" />
+		</javac>
+
+		<echo>build:${suffix}_${region}</echo>
+		<!-- Copy config file for Gateway filter -->
+		<copy file="${base.dir}/version.txt" todir="${temp.dir}/${webinif.dir}/classes/" />
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/text/">
+			<fileset dir="${config.dir}/text">
+				<include name="*.csv"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/">
+			<fileset dir="${config.dir}/${suffix}_${region}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/text/">
+			<fileset dir="${config.dir}/text">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/executor/">
+			<fileset dir="${config.dir}/executor">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/features/">
+			<fileset dir="${config.dir}/features">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/presentation/">
+			<fileset dir="${config.dir}/presentation">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/management/">
+			<fileset dir="${config.dir}/management">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/">
+			<fileset dir="${config.dir}/">
+				<include name="actemplate.xml"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/device/">
+			<fileset dir="${config.dir}/device">
+				<include name="**/**"/>
+				<exclude name="**/*.png" />
+				<exclude name="**/*.gif" />
+				<exclude name="**/*.css" />
+			</fileset>
+		</copy>
+	
+	</target>
+	
+	<target name="copyImage" >
+		<copy todir="${temp.dir}/">
+			<fileset dir="${config.dir}/device">
+				<include name="**/*.png" />
+			</fileset>
+		</copy>	
+	</target>
+	
+	<target name="copyHtmlResource" >
+		<copy todir="${temp.dir}/">
+			<fileset dir="${config.dir}/device">
+				<include name="**/7_*/**/*.png" />
+				<include name="**/7_*/**/*.gif" />
+				<include name="**/7_*/**/*.css" />
+			</fileset>
+		</copy>	
+	</target>
+	
+	<target name="copy_common_browser" >
+		<move file="${lib.dir}/common_browser-1.2.0.54.jar" tofile="${lib.dir}/common_browser.zip"/>
+		<unzip src="${lib.dir}/common_browser.zip" dest="${temp.dir}"> 
+			<patternset> 
+				<include name="**/**"/> 
+				<exclude name="**/.svn/**" />
+			</patternset> 
+		</unzip>
+	</target>
+			
+	<target name="copy2" depends="compile">
+		<copy todir="${temp.dir}/${web_classes.dir}/${package}">
+			<fileset dir="${src.dir}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<delete file="${temp.dir}/${webinif.dir}/lib/jsp-api-2.0.jar"/>
+		<delete file="${web.root}/${webinif.dir}/lib/jsp-api-2.0.jar"/>
+		<delete file="${temp.dir}/${webinif.dir}/lib/movie2-ws-stub-1.0.1.jar"/>
+	</target>
+
+	<target name="war" depends="copy2">
+		<taskdef name="MD5Dir" classname="com.telenav.util.MD5DirTask" classpathref="lib.class.path" />
+		<MD5Dir dir="${temp.dir}" />
+		<jar destfile="${output.dir}/${suffix}_${region}/${project}.war" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}"/> 
+	</target>
+
+	<target name="war-all">
+		<antcall target="war">
+			<param file="deploy.us.properties" />
+		</antcall>
+		<antcall target="war">
+			<param file="stage.us.properties" />
+		</antcall>
+		<antcall target="war">
+			<param file="dev.us.properties" />
+		</antcall> 
+	</target>
+</project>
+

@@ -1,0 +1,444 @@
+.clsBuyButtonBk {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(119, 199, 255) ), to(rgb(58, 165, 220) ) );
+	-webkit-box-shadow: 2px 2px 5px #666666;
+	-webkit-border-radius: 4px;
+	border: 0;
+}
+
+.clsScheduleMovieBk {
+	border-top: solid 1px #1C7FB0;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(55, 162, 216) ), to(rgb(43, 150, 204) ) );
+	border-bottom: solid 1px #2393CA;
+}
+
+.clsScheduleTheaterBk {
+	border-top: solid 1px #073D57;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(21, 126, 178) ), to(rgb(11, 122, 177) ) );
+	border-bottom: solid 1px #076C9E;
+	-webkit-box-shadow: 0px 3px 5px #073D57 inset;
+}
+
+.clsBuyTicketTopBk {
+	border-top: solid 1px #1C7FB0;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(58, 167, 222) ), to(rgb(11, 122, 177) ) );
+	border-bottom: solid 1px #076C9E;
+}
+
+.clsButtonBgNormal {
+	border: solid 1px #D4D4D4;
+	-webkit-box-shadow: 2px 2px 2px #AEAEAE;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255) ), color-stop(0.49, rgb(233, 233, 233) ), color-stop(0.5, rgb(221, 221, 221) ), to(rgb(243, 243, 243) ) );
+}
+
+.clsButtonBgHighlight {
+	border: solid 1px #067ab4;
+	-webkit-box-shadow: 2px 2px 2px #AEAEAE;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#46b3ee), color-stop(0.50, #2ea9f0), color-stop(0.51, #008ae1), to(#2babfd) );
+}
+
+.clsListBgNormal {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255) ), to(rgb(239, 239, 239) ) );
+}
+
+.clsListBgHighlight {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(72, 181, 204) ), color-stop(0.55, rgb(0, 137, 225) ), to(rgb(22, 156, 235) ) );
+}
+
+.clsFontColor_gray {
+	color: #666666;
+}
+
+.clsFontColor_white {
+	color: white;
+}
+
+.clsFontColor_blue {
+	color: #0097d7;
+}
+
+.clsFontColor_black {
+	color: #333333;
+}
+
+.clsBackground_tab {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(46, 157, 214) ), to(rgb(9, 119, 175) ) );
+}
+
+.clsTitleBg {
+	border-top: 2px solid #504F50;
+	border-bottom: 2px solid #737373;
+	background-color: #666666;
+}
+
+.clsTab {
+	background: url(../image/tab_big.png);
+	height: 28px;
+}
+
+.clsTabLeftOnBk {
+	background-repeat: no-repeat;
+	background-position: 0px -140px;
+}
+
+.clsTabMiddleOnBk {
+	background-repeat: repeat-x;
+	background-position: 0px -112px;
+}
+
+.clsTabRightOnBk {
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+.clsTabLeftOffBk {
+	background-repeat: no-repeat;
+	background-position: 0px -56px;
+}
+
+.clsTabMiddleOffBk {
+	background-repeat: repeat-x;
+	background-position: 0px -28px;
+}
+
+.clsTabRightOffBk {
+	background-repeat: no-repeat;
+	background-position: 0px -84px;
+}
+
+.clsLoadingPopupBk {
+	background:
+		url(data:image/png;base64,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)
+		no-repeat;
+}
+
+.smallLoadingPopupBk {
+	background:
+		url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAgCAYAAADqgqNBAAACX0lEQVR4XqzSP2vCQBjH8cS2EbFE0KFDCoIIBaF/BjsF+gK6dbFD6WJx696+Cyk4S5fi2NdQCi7BDroWu6kguHUoxZxf4YaHQ5SEe+DD84RL7ke4c5VSTtK6fF8c0O5whgF60U0xTrrPPtJUEy09X+n+hkSV2fGH93jBMwpyyXzV+G4PudThhIW0BioI8SCWI8iKZDCttsZ8nCocAWQdibmLDvpooyfWcvD07Kc980/cio0+HF1crn/aq2bWL+bIY7otfOtt59wC2ikmBA4dSyXDZVAdY4JGNkPkfWDvpTzzdbBPe8I1HnmuWw51ccJ4QQ/MC1dGVgRUYbM8HOq5ZIZ/Y6HnGF+wVhzjn95fYbbpzPO0c/zw8nRFThmkAAQFYXhMig0it7BWjmBr7ZAu4ADKNSyUohwA/9QT2U+zMPX13u57i/cNqc8jN4HJcBiJ5aAGFVB/DBw+iO4N14L0JRgUxVJUASS9hT/7NyHdEbnn7qHIe5fXBkZNMyraXWpyTua//Z/yq9kyV0EYCMKw8UBRtAgBC208CrUUbC1srXxSO0tfwEYQTKHg0YjiAYIgeH4JA4mihMSILnz8DMsyDMM/s2GbBTSkDAt6M/6CxeJIErb0/mTfaoY2JXmDOO23t5ESZKH43PObwU96jgVuSAd06BIvfbbYGRnBCib/v1joVQQykHLZ4xioEPrEalWhbux7F/O7AjnIO1vN+V6BhypkM6mwM8emdRRBivNeeR+mhtoTkFgRy2hQMGNrfh/lzRpmnisn4QF5942+SGXXF+82CHxhvIo1dZjDUGLX5w75G86MOp88MQAAAABJRU5ErkJggg==)
+		no-repeat;
+}
+
+/* Scout */
+.clsTabBottomBar {
+	height: 0px;
+}
+
+.clsBigTabBgBorder {
+	border-top: solid 1px #000000;
+}
+
+.clsDatePickerBgBorder {
+	border: 0px;
+}
+
+.clsDatePickerBgHeight {
+	height: 31px;
+}
+
+.clsFontColor_searchDate {
+	color: #0097d7;
+}
+
+.clsDatePickerBgColor {
+	background-color: #FFFFFF;
+}
+
+.clsFontColor_TheaterName {
+	color: #0097d7;
+}
+
+.arrowlistmenu .openheader { /*CSS class to apply to expandable header when it's expanded*/
+	background-color: #C3DAE6;
+}
+
+.showfilmdiv {
+	background-color: #C3DAE6;
+}
+
+.topstylebackground {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(135, 145, 154) ), color-stop(0.2, rgb(168, 188, 199) ), to(rgb(195, 218, 230) ) );
+}
+
+.bottomstylebackground {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(195, 218, 230) ), color-stop(0.8, rgb(195, 218, 230) ), to(rgb(135, 145, 154) ) );
+}
+
+.theaterMovieinfoDivBg {
+	-webkit-box-shadow: 1px 0px 1px #929292;
+	border: solid 1px #B8BFC3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255) ), color-stop(0.4, rgb(255, 255, 255) ), color-stop(0.44, rgb(227, 227, 227) ), to(rgb(255, 255, 255) ) );
+}
+
+.clsFontColor_nextAvailableShowTime {
+	color: #0097d7;
+}
+
+.clsFontColor_runTime {
+	color: #0097d7;
+}
+
+.filminfodivBg {
+	background-color: #eef5f9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255) ), color-stop(0.4, rgb(255, 255, 255) ), color-stop(0.44, rgb(227, 227, 227) ), to(rgb(255, 255, 255) ) );
+}
+
+.clsScheduleTopListBgComplement {
+	border-bottom: solid 1px rgb(165, 170, 165);
+	background-color: white;
+	height: 30px;
+}
+
+.clsScheduleTopContentColor {
+	color: white;
+}
+
+.clsScheduleTheaterAddressContentColor {
+	color: #AEE4FF;
+}
+
+.clsMovieDateColor {
+	color: white;
+}
+
+.barstyleBg {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(135, 145, 154) ), color-stop(0.4, rgb(168, 188, 199) ), to(rgb(195, 218, 230) ) );
+}
+
+.upDivBgColor {
+	background-color: #C3DAE6;
+}
+
+.bgImgW {
+	height: 3px;
+	width: 100%;
+	background: -webkit-gradient(linear, left top, right top, from(rgb(31, 139, 193) ), color-stop(0.5, white), to(rgb(31, 139, 193) ) );
+}
+
+.bgImgH {
+	width: 3px;
+	background: -webkit-gradient(linear, left top, left bottom, from(white), to(rgb(11, 122, 177) ) );
+}
+
+.clsFontColorFRDate {
+	color: #A5DEFB;
+}
+
+.clsFontColorSRTN {
+	color: white;
+}
+
+.clsFontColorSRAD {
+	color: #A5DEFB;
+}
+
+.clsbuyticketPageBackgroundColor {
+	background-color: #C3DAE6;
+}
+
+.ticketbarstyleBg {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(135, 145, 154) ), color-stop(0.4, rgb(168, 188, 199) ), to(rgb(195, 218, 230) ) );
+}
+
+.clsFontColor_unFocusedTab {
+	color: white;
+}
+
+.clsFontColor_focusedTab {
+	color: #0097d7;
+}
+
+.clsMTListTabBlank {
+	width: 18%;
+}
+
+.clsShowScheduleArrow {
+	width: 0%;
+}
+
+.clsShowScheduleArrowFocused {
+	width: 0%;
+}
+
+.clsBuyTicketBody {
+	background-color: #C3DAE6;
+}
+
+.clsFontColor_focusedBuyBT {
+	color: white;
+}
+
+.clsFontColor_unfocusedBuyBT {
+	color: #333333;
+}
+
+.ticketBuyButtonDisabledBg {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(238, 238, 238) ), color-stop(0.45, rgb(242, 242, 242) ), color-stop(0.5, rgb(238, 238, 238) ),
+		color-stop(0.6, rgb(240, 240, 240) ), to(rgb(250, 250, 250) ) );
+	color: #999999;
+	-webkit-border-radius: 4px;
+	border: 0;
+}
+
+/* for button hightLight */
+.clsButtonColorNormal {
+	color: #666666;
+}
+
+.clsButtonColorHighlight {
+	color: white;
+}
+
+/* for Common_Util_showAlert popup */
+.alertPopup,.alertPopupLandscape {
+	background: #787C7E;
+}
+
+.fdpopupdiv {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(0.93, rgb(167, 172, 174) ), to(rgb(130, 138, 143) ) );
+}
+
+.popbottomdivstyle {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(161, 169, 173) ), to(rgb(136, 149, 157) ) );
+}
+
+.clsSheducePageBackgroundColor {
+	background-color: #C3DAE6;
+}
+
+.arrowlistmenu .closeheader { /*CSS class to apply to expandable header when it's expanded*/
+	background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(rgb(239, 239, 239) ) );
+}
+
+@-webkit-keyframes rotate {
+ 0% {
+   -webkit-transform:  rotate(0deg);
+ }
+ 100% {
+   -webkit-transform: rotate(360deg);
+ }
+}
+
+.clsDateIcon {
+	background: url(../image/date_big.png) no-repeat;
+	width: 57px;
+	padding-top: 25px;
+}
+
+.clsDateNextButtonUnfocused {
+	background-position: 0px 0px;
+}
+
+.clsDatePreviousButtonDisabled {
+	background-position: -57px 0px;
+}
+
+.clsDatePreviousButtonFocused {
+	background-position: -114px 0px;
+}
+
+.clsDatePreviousButtonUnfocused {
+	background-position: -171px 0px;
+}
+
+.clsDateNextButtonDisabled {
+	background-position: -228px 0px;
+}
+
+.clsDateNextButtonFocused {
+	background-position: -285px 0px;
+}
+
+.clsChangeLocationIcon {
+	background: url(../image/change_location_button_big.png) no-repeat;
+	width: 21px;
+	padding-top: 23px;
+}
+
+.clsChangeLocationButtonFocused {
+	background-position: 0px 0px;
+}
+
+.clsChangeLocationButtonUnfocused {
+	background-position: -21px 0px;
+}
+
+.showfilmtr2Bg {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(182, 185, 186) ), to(rgb(147, 147, 147) ) );
+}
+
+.clsListTopBarHeight {
+	height: 4px;
+}
+
+.loadingPopup,.loadingPopupLandscape,.loadingWhitePopup,.loadingWhitePopupLandscape {
+	-webkit-animation: rotate 3s linear infinite;
+}
+
+.smallLoadingImage {
+	-webkit-animation: rotate 3s linear infinite;
+}
+
+.clsPlusSubIcon {
+	background: url(../image/substract_plus_big.png) no-repeat;
+	width: 23px;
+	height: 23px;
+}
+
+.clsSubtractIconUnfocused {
+	background-position: 0px 0px;
+}
+
+.clsSubtractIconDisabled {
+	background-position: -23px 0px;
+}
+
+.clsPlusIconUnfocused {
+	background-position: -46px 0px;
+}
+
+.clsTomatoIcon {
+	background: url(../image/tomato_big.png) no-repeat;
+	width: 16px;
+	padding-top: 18px;
+}
+
+.clsTomatoFreshUnfocused {
+	background-position: 0px 0px;
+}
+
+.clsTomatoRottenUnfocused {
+	background-position: -16px 0px;
+}
+
+.clsStarIcon {
+	background: url(../image/star_big.png) no-repeat;
+}
+
+.clsMediumFullStarIcon {
+	background-position: 0px 0px;
+	width: 9px;
+	padding-top: 11px;
+}
+
+.clsMediumVacancyStarIcon {
+	background-position: -9px 0px;
+	width: 9px;
+	padding-top: 11px;
+}
+
+.clsBigVacancyStarIcon {
+	background-position: -18px 0px;
+	width: 13px;
+	padding-top: 15px;
+}
+
+.clsBigFullStarIcon {
+	background-position: -31px 0px;
+	width: 13px;
+	padding-top: 15px;
+}
+
+.clsEmptyBlock {
+	width: 100%;
+	height: 68px;
+	text-align: center;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource_loader>	
+	
+	
+	<!-- resource holder -->
+	<holders>
+	
+		<holder name="device" type="resource_bundle" class="com.telenav.cserver.common.resource.device.DevicePropertiesHolder" 		
+			config_path="device" 
+			prefix_structure=""
+			floating_structure=""
+			suffix_structure=""/>
+		
+		
+		
+		<holder name="messages" type="resource_bundle" class="com.telenav.cserver.common.resource.message.MessagesHolder" 		
+		config_path="messages" 
+		prefix_structure="carrier" 
+		floating_structure=""
+		suffix_structure="locale"/>
+		
+		
+		<holder name="poi" type="spring" class="com.telenav.cserver.poi.holder.PoiCategoryHolder" 		
+		config_path="poiCategory" 
+		prefix_structure="carrier,platform,version" 
+		floating_structure="device"
+		suffix_structure="region,locale"/>
+
+	</holders>
+	
+</resource_loader>

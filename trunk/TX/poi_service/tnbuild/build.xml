@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY proj_ant_common     SYSTEM "ant_common.properties">
+  <!ENTITY base_ant_classpath  SYSTEM "../../tnbuild/ant_classpath.properties">
+  <!ENTITY proj_ant_classpath  SYSTEM "ant_classpath.properties">
+]>
+
+<project
+	name="poi_service"
+	default="all"
+	basedir="../.."
+	xmlns:ac="antlib:net.sf.antcontrib"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	&proj_ant_common;
+	&base_ant_classpath;
+	&proj_ant_classpath;
+
+	<!-- ================================================================================
+	= If you want to build on your local machine, uncomment the below <property file ...>
+	<property file="${tab.localsetup}"/>
+	================================================================================ -->
+	<taskdef classpathref="classpath.compile" resource="tasks.properties"/>
+	<import file="../../tnbuild/basebuild.xml"/>
+
+	<condition property="isUnix">
+      <os family="unix"/>
+   </condition>
+
+	<target name="runregressionex"/>
+	<target name="build.copy_resources"/>
+
+	<!-- ================================================================================
+	 Define what else to put in the poi_service.jar 
+	 beside all its .class files
+	================================================================================ -->
+	<target name="dist.jars.pre">
+		<echo>build:${suffix}_${region}</echo>
+		<mkdir dir="${temp.dir}/${webinif.dir}/classes"/>
+		<copy todir="${temp.dir}/${webinif.dir}/classes">
+			<fileset dir="${build.classes}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<!-- Copy config file for Gateway filter -->
+		<echo message="${version}" file="${temp.dir}/${webinif.dir}/classes/version.txt" />
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/">
+			<fileset dir="${src.config}/${suffix}_${region}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/text/">
+			<fileset dir="${src.config}/text">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/executor/">
+			<fileset dir="${src.config}/executor">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/features/">
+			<fileset dir="${src.config}/features">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/presentation/">
+			<fileset dir="${src.config}/presentation">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/management/">
+			<fileset dir="${src.config}/management">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/device/">
+			<fileset dir="${src.config}/device">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/">
+			<fileset dir="${src.config}/">
+				<include name="actemplate.xml"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/">
+			<fileset dir="${src.config}/device">
+				<include name="**/9000/**/*.png" />
+				<include name="**/8900/**/*.png" />
+				<include name="**/7_*/**/*.png" />
+				<include name="**/7_*/**/*.gif" />
+				<include name="**/7_*/**/*.css" />
+			</fileset>
+		</copy>	
+	</target>
+
+	<!-- ================================================================================
+	Define what else to do with the poi_service.jar 
+	after it is already built.  Usually none.
+	================================================================================ -->
+	<target name="dist.jars.post">
+	</target>
+
+	<target name="copy1">
+		<copy todir="${temp.dir}">
+			<fileset dir="${project.dir}/${web.root}">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="WEB-INF/config/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy2">
+		<copy todir="${temp.dir}/${webinif.dir}/classes/${package}">
+			<fileset dir="${src}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<delete file="${temp.dir}/${webinif.dir}/lib/jsp-api.jar"/>
+	</target>
+
+	<target name="copy_common_browser" >
+		<move file="${lib.dir}/common_browser-1.2.0.54.jar" tofile="${lib.dir}/common_browser.zip"/>
+		<unzip src="${lib.dir}/common_browser.zip" dest="${build.war}"> 
+			<patternset> 
+				<include name="**/**"/> 
+				<exclude name="**/.svn/**" />
+			</patternset> 
+		</unzip>
+	</target>
+	
+	<!-- ================================================================================
+	 Define what to put in before the poi_service.war packaged.
+	================================================================================ -->
+	<target name="dist.war.pre" depends="copy1, copy2,copy_common_browser">
+		<taskdef name="MD5Dir" classname="com.telenav.util.MD5DirTask" classpathref="classpath.compile" />
+		<MD5Dir dir="${temp.dir}" />
+	</target>
+   <target name="generateHtml" if="isUnix">
+      <loadfile property="build.Version" srcFile="${build.war}/${webinif.dir}/classes/version.txt"/>
+      <exec dir="${project.dir}" executable="/bin/sh" outputproperty="svn.lastCheckin">
+          <arg line="-c 'svn info | sed -n s/^Last\ Changed\ Rev://p'" />
+      </exec>
+      <exec dir="${project.dir}" executable="/bin/sh" outputproperty="host.name">
+          <arg line="-c 'hostname'"/>
+      </exec>
+      <exec dir="${project.dir}" executable="/bin/sh" outputproperty="revison">
+          <arg line="-c 'svn info | sed -n s/^Revision://p'" />
+      </exec>
+
+      <tstamp>
+    	  <format property="nowstamp" pattern="yyyy-MM-dd HH:mm:ss" locale="en"/>
+      </tstamp>
+      <echo file="${build.war}/buildinfo.html">
+         Ant-Version: ${ant.version}&lt;br&gt;
+      	Created-By: ${java.vm.version}(${java.vendor})&lt;br&gt;
+      	Implementation-Vendor: TeleNav Inc.&lt;br&gt;
+      	Implementation-Title: ${cRFComponentName}&lt;br&gt;
+      	Implementation-Version: ${revison}&lt;br&gt;
+      	Last-SVN-Checkin: ${env.SVN_REVISION}&lt;br&gt;
+      	Build-Date: ${nowstamp}&lt;br&gt;
+      	Build-Name: ${war.warname}&lt;br&gt;
+      	Build-Machine: ${host.name}&lt;br&gt;
+      	Build-By: ${user.name}@${host.name}&lt;br&gt;
+         Build-Version: ${build.Version}&lt;br&gt;
+      </echo>
+   </target>
+
+	<target name="dist.war.run" depends="generateHtml">   
+		<war destfile="${dist.lib}/${war.warname}" >
+			<manifest>
+				<attribute name="Implementation-Vendor"    value="TeleNav Inc."/>
+				<attribute name="Implementation-Title"     value="${project.name}"/>
+				<attribute name="Build-Name"               value="${war.warname}"/>
+				<attribute name="Build-By"                 value="${env.USER}@${env.HOSTNAME}"/>
+				<attribute name="Subversion-Number"        value="${env.SVN_REVISION}"/>
+				<attribute name="Subversion-Path"          value="${checkout.server-url}"/>
+				<attribute name="Release-Version"          value="${version}"/>
+			</manifest>
+			<lib dir="${src.lib}">
+				<include name="**/*.*"/>
+				<exclude name="servlet-*.jar"/>
+				<exclude name="jsp-api*.jar"/>
+				<exclude name="el-api*.jar"/>
+				<exclude name="jasper*.jar"/>
+				<exclude name="juli*.jar"/>
+				<exclude name="easymock*.jar"/>
+				<exclude name="cobertura*.jar"/>
+				<exclude name="jakarta-oro*.jar"/>
+				<exclude name="javassist*.jar"/>
+				<exclude name="objenesis*.jar"/>
+				<exclude name="powermock-easymock*.jar"/>
+				<exclude name="CompareTool*.jar"/>
+			</lib>
+			<lib dir="${dist.lib}">
+				<include name="${jar.jarname}"/>
+			</lib>
+			<fileset refid="fileset.war.buildclasses"/>
+		</war>
+	</target>
+	
+	<target name="compile.tests" depends="compile" if="run.tests">
+		<echo message="---------------------------------------------------------"/>
+		<echo message="Compile (TEST Source) Information"/>
+		<echo message="   destdir=${build.testclasses}"/>
+		<echo message="   debug=${compile.debug}"/>
+		<echo message="   optimize=${compile.optimize}"/>
+		<echo message="   src path=${test.src}"/>
+		<echo message="   src path=${regressionex.src}"/>
+		<echo message="   patternset refid=pattern.unittest.sources"/>
+		<echo message="---------------------------------------------------------"/>
+		<javac
+			debug="true"
+			deprecation="${compile.deprecation}"
+			destdir="${build.testclasses}"
+			encoding="${encoding.javac}"
+			fork="${fork.javac}"
+			memoryMaximumSize="${memoryMaximumSize.javac}"
+			optimize="${compile.optimize}"
+			source="${source.version}"
+			target="${target.version}"
+			
+			
+			failonerror="false" 
+		>
+			<src path="${test.src}"/>
+			<src path="${regressionex.src}"/>
+			<patternset refid="pattern.unittest.sources"/>
+			<classpath><path refid="classpath.compile"/></classpath>
+		</javac>
+
+		<delete file="${project.dir}/build/cobertura.ser" />
+		
+		<cobertura-instrument todir="${build.coberturaclasses}" datafile="${project.dir}/build/cobertura.ser">
+			<ignore regex="org.apache.log4j.*" />
+			<fileset dir="${build.classes}">
+				<include name="**/*.class" />
+				<exclude name="**/com/telenav/cserver/util/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<target name="junit.batchtest" depends="compile,compile.tests" if="run.tests">
+		<delete dir="${dist.testreport}" quiet="true"/>
+		<mkdir dir="${dist.testreport}"/>
+		<junit 
+			printsummary="yes" 
+			haltonfailure="${junit.haltonfailure}" 
+			haltonerror="${junit.haltonerror}" 
+			fork="yes"
+			maxmemory="${memoryMaximumSize.junit}"
+		>
+			<sysproperty key="net.sourceforge.cobertura.datafile"
+				file="${project.dir}/build/cobertura.ser"/>
+
+			<classpath location="${build.coberturaclasses}" />
+			<classpath>
+				<pathelement location="${test.resources}" />
+				<path refid="classpath.run"/>
+			</classpath>
+			<!-- add config files-->
+			<classpath location="${project.dir}/config" />
+			<formatter type="xml" />
+			<batchtest todir="${dist.testreport}">
+				<fileset dir="${test.src}">
+					<patternset refid="pattern.tests.sources"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<delete dir="${dist.testreport}/html" quiet="true"/>
+		<mkdir dir="${dist.testreport}/html"/>
+		<junitreport todir="${dist.testreport}">
+			<fileset dir="${dist.testreport}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${dist.testreport}/html"/>
+		</junitreport>
+		
+		<delete dir="${dist.cloverreport}" quiet="true"/>
+		<mkdir dir="${dist.cloverreport}"/>
+		<cobertura-report srcdir="${src}" destdir="${dist.cloverreport}" format="xml" datafile="${project.dir}/build/cobertura.ser"/>
+		<cobertura-report srcdir="${src}" destdir="${dist.cloverreport}/cobertura-summary-xml" format="summaryXml" datafile="${project.dir}/build/cobertura.ser"/>
+		<cobertura-report destdir="${dist.cloverreport}/cobertura-html" datafile="${project.dir}/build/cobertura.ser">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</cobertura-report>
+	</target>
+
+	<!-- ================================================================================
+	 Anything needed be done after the poi_service.war packaged. Usually, none.
+	================================================================================ -->
+	<target name="dist.war.post">
+	</target>
+
+</project>

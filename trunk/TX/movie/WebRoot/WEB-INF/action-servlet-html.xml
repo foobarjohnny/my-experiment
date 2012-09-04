@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Movies search -->
+
+	<bean id="TheaterListRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.TheaterListRequestParser">
+	</bean>
+	<bean id="TheaterListResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.TheaterListResponseFormatter">
+	</bean>
+	<bean name="/html/theaterList" class="com.telenav.cserver.movie.html.action.TheaterListAction">
+		<property name="requestParser">
+			<ref bean="TheaterListRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="TheaterListResponseFormatter" />
+		</property>
+	</bean>
+
+	<bean id="MovieListRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.MovieListRequestParser">
+	</bean>
+	<bean id="MovieListResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.MovieListResponseFormatter">
+	</bean>
+	<bean name="/html/movieList" class="com.telenav.cserver.movie.html.action.MovieListAction">
+		<property name="requestParser">
+			<ref bean="MovieListRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="MovieListResponseFormatter" />
+		</property>
+	</bean>
+
+	<bean id="LookUpScheduleRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.LookUpScheduleRequestParser">
+	</bean>
+	<bean id="LookUpScheduleResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.LookUpScheduleResponseFormatter">
+	</bean>
+	<bean name="/html/lookUpSchedule" class="com.telenav.cserver.movie.html.action.LookUpScheduleAction">
+		<property name="requestParser">
+			<ref bean="LookUpScheduleRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="LookUpScheduleResponseFormatter" />
+		</property>
+	</bean>
+	<bean name="/html/GetTicketQuantity"
+		class="com.telenav.cserver.movie.html.action.GetTicketQuantityAction">
+		<property name="requestParser">
+			<ref bean="GetTicketQuantityRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="GetTicketQuantityResponseFormatter" />
+		</property>
+	</bean>
+	<bean id="GetTicketQuantityRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.GetTicketQuantityRequestParser">
+	</bean>
+	<bean id="GetTicketQuantityResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.GetTicketQuantityResponseFormatter">
+	</bean>
+	
+	<bean name="/html/BookTicket"
+		class="com.telenav.cserver.movie.html.action.BookTicketAction">
+		<property name="requestParser">
+			<ref bean="BookTicketRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="BookTicketResponseFormatter" />
+		</property>
+	</bean>
+	<bean id="BookTicketRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.BookTicketRequestParser">
+	</bean>
+	<bean id="BookTicketResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.BookTicketResponseFormatter">
+	</bean>
+	
+
+	<bean name="/html/LoadImage"
+		class="com.telenav.cserver.movie.html.action.LoadImageAction">
+		<property name="requestParser">
+			<ref bean="LoadImageRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="LoadImageResponseFormatter" />
+		</property>
+	</bean>
+	<bean id="LoadImageRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.LoadImageRequestParser">
+	</bean>
+	<bean id="LoadImageResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.LoadImageResponseFormatter">
+	</bean>
+	
+	<bean id="LookUpMovieRequestParser"
+		class="com.telenav.cserver.movie.html.protocol.LookUpMovieRequestParser">
+	</bean>
+	<bean id="LookUpMovieResponseFormatter"
+		class="com.telenav.cserver.movie.html.protocol.LookUpMovieResponseFormatter">
+	</bean>
+	<bean name="/html/lookUpMovie" class="com.telenav.cserver.movie.html.action.LookUpMovieAction">
+		<property name="requestParser">
+			<ref bean="LookUpMovieRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="LookUpMovieResponseFormatter" />
+		</property>
+	</bean>
+	<!-- Get static pages. -->
+	<bean name="/html/goToJsp" class="com.telenav.cserver.movie.html.action.HtmlChooseJsp">
+	</bean>
+	<bean name="/html/startup" class="com.telenav.cserver.movie.html.action.HtmlStartUp">
+	</bean>
+	<bean name="/html/manifest" class="com.telenav.cserver.movie.html.action.HtmlManifest">
+	</bean>
+</beans>

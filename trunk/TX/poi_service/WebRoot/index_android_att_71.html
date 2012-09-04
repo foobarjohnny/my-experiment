@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Entry Page of Scout in Poi b-server</title>
+<meta name="viewport" content="width=device-width" />
+<style type="text/css">
+html {
+	font-size: 16pt;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	font-size: 1em;
+	font-family: Helvetica;
+}
+
+.d-table {
+	display: table;
+	border-collapse: separate;
+	border: 1px solid green;
+	border-spacing: 2px 2px;
+	width: 100%;
+}
+
+.d-row {
+	display: table-row;
+}
+
+.d-cell {
+	display: table-cell;
+	border: 1px solid green;
+}
+</style>
+<script type="text/javascript">
+	function goToPoiPage() {
+		location.href = "/poi_service/html/poidetail.do?dummyData=true" + "&" + getClientInfo();
+	}
+
+	function goToWeatherPage() {
+		location.href = "/poi_service/html/weather.do?" + getClientInfo();
+	}
+
+	function goToGeneralFeedbackPage() {
+		location.href = "/poi_service/html/feedback.do?" + getClientInfo();
+	}
+
+	function goToVbbPage() {
+		location.href = "/poi_service/html/adsinfo.do?adsId=4014&isDummy=true" + "&" + getClientInfo();
+	}
+
+	function goToAboutPage() {
+		location.href = "/poi_service/html/goToJsp.do?jsp=aboutAbout" + "&" + getClientInfo();
+	}
+
+	function getClientInfo() {
+		var clientInfo = 'clientInfo=' + JSON.stringify(clientInfoJSON) + '&width=480&height=320';
+		return clientInfo;
+	}
+
+	var clientInfoJSON = {
+		"programCode" : "ATTNAVPROG",
+		"deviceCarrier" : "ATT",
+		"platform" : "ANDROID",
+		"version" : "7.2.0",
+		"productType" : "default",
+		"device" : "genericTest",
+		"locale" : "en_US",
+		"buildNumber" : "7101213"
+	}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" bottommargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<div onClick="goToPoiPage()">
+		<a href="#">PoiDetail</a>
+	</div>
+	<div onClick="goToWeatherPage()">
+		<a href="#">Weather</a>
+	</div>
+	<div onClick="goToGeneralFeedbackPage()">
+		<a href="#">General Feedback</a>
+	</div>
+	<div onClick="goToVbbPage()">
+		<a href="#">VBB</a>
+	</div>
+	<div onClick="goToAboutPage()">
+		<a href="#">About</a>
+	</div>
+</body>
+</html>
