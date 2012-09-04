@@ -1,0 +1,36 @@
+<Client version="1.1">
+<Service name="NA-NT" url="http://ace-nt.mypna.com:8080/tnws/services/GeoCoding_v40" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CA/>
+<US/>
+<MX/>
+</country>
+</Service>
+<Service name="IN-MMI" url="http://ace-apac-mmi.mypna.com:8080/tnws/services/GeoCoding_v40" dataset="MMI">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<IN/>
+</country>
+</Service>
+
+<Service name="SA-TA" url="http://ace-sa-ta.mypna.com:8080/tnws/services/GeoCoding_v40" dataset="TA">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<BR/>
+</country>
+</Service>
+
+<Service name="EU" url="http://ace-eu-nt.mypna.com:8080/tnws/services/GeoCoding_v40" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<GB/>
+<FR/>
+<IT/>
+<NL/>
+<DE/>
+<ES/>
+</country>
+</Service>
+
+</Client>

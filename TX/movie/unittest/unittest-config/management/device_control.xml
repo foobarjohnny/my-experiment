@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>  
+   
+   <bean id="DeviceControlItem"
+         class="com.telenav.cserver.framework.trump.TrumpRunnable$DeviceConItem">
+         <property name="zipFolderPath">
+           <value>movie-zipFolder</value>
+        </property>
+       
+   </bean>
+</beans>

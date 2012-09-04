@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>  
+   
+   <bean id="HeartBeatConfiguration"
+         class="com.telenav.cserver.framework.management.heartbeat.HeartBeatConfiguration">
+         <property name="headString">
+            <value>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;admin&gt;&lt;status&gt;&lt;name&gt;&amp;1&amp;&lt;/name&gt;&lt;value&gt;&amp;2&amp;&lt;/value&gt;&lt;/status&gt;&lt;details&gt;&amp;4&amp;&lt;/details&gt;&amp;3&amp;&lt;/admin&gt;
+            </value>
+        </property>
+        <property name="connectionStatusString">
+            <value>&lt;connectionStatus&gt;&lt;port&gt;&amp;1&amp;&lt;/port&gt;&lt;totalKeepAliveConnectionCount&gt;&amp;2&amp;&lt;/totalKeepAliveConnectionCount&gt;&lt;usedKeepAliveConnectionCount&gt;&amp;3&amp;&lt;/usedKeepAliveConnectionCount&gt;&lt;freeKeepAliveConnectionCount&gt;&amp;4&amp;&lt;/freeKeepAliveConnectionCount&gt;&lt;/connectionStatus&gt;
+            </value>
+        </property>
+        <property name="transactionStatusString">
+            <value>&lt;transactionStatus&gt;&lt;port&gt;&amp;1&amp;&lt;/port&gt;&lt;transactionCount&gt;&amp;2&amp;&lt;/transactionCount&gt;&lt;/transactionStatus&gt;
+            </value>
+        </property>
+        <property name="serverName" value="movie"/>
+   </bean>
+</beans>

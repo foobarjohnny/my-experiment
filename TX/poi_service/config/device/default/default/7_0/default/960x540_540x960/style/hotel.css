@@ -1,0 +1,209 @@
+/* The following is for hotel reserve tab*/
+.clsReserveBodyDiv {
+	width: 100%;
+	height: 438px;
+}
+
+.clsConfigBorder {
+	height: 324px;
+	width: 94%;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 18px;
+	padding-bottom: 0px;
+}
+
+.clsHotelDate {
+	font-size: 19px;
+}
+
+.clsConfigRow {
+	font-size: 19px;
+	width: 100%;
+	height: 72px;
+	align: center;
+	vertical-align: middle;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)
+		), to(rgb(239, 239, 239) ) );
+	width: 100%;
+}
+
+.clsSearchBar {
+	width: 100%;
+	height: 102px;
+}
+
+.clsContentWrapper {
+	padding-left: 12px;
+}
+
+.clsSearchButtonWrapper {
+	height: 72px;
+	width: 360px;
+}
+
+.clsAddSubSyle {
+	width: 60px;
+	height: 60px;
+}
+
+.fs_smallest {
+	font-size: 19px;
+}
+
+.fs_verySmall {
+	font-size: 22px;
+}
+
+.fs_small {
+	font-size: 24px;
+}
+
+.fs_middle {
+	font-size: 26px;
+}
+
+.fs_large {
+	font-size: 29px;
+}
+
+.fs_veryLarge {
+	font-size: 31px;
+}
+
+.fs_huge {
+	font-size: 34px;
+}
+
+.fs_veryHuge {
+	font-size: 36px;
+}
+
+.fs_hugest {
+	font-size: 38px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.bolder {
+	font-weight: bolder;
+}
+
+.clsBtnSkeleton {
+	width: 100%;
+	height: 100%;
+	border: solid 1px #D4D4D4;
+	-webkit-box-shadow: 2px 2px 2px #AEAEAE;
+	vertical-align: middle;
+	align: center;
+	text-align: center;
+}
+
+.clsItemRadius {
+	border: solid 1px rgb(165, 170, 165);
+	-webkit-border-radius: 12px;
+}
+
+.clsMiddleItemRadius {
+	border-bottom: solid 1px rgb(165, 170, 165);
+	border-left: solid 1px rgb(165, 170, 165);
+	border-right: solid 1px rgb(165, 170, 165);
+}
+
+.clsTopItemRadius {
+	border: solid 1px rgb(165, 170, 165);
+	-webkit-border-top-left-radius: 12px;
+	-webkit-border-top-right-radius: 12px;
+}
+
+.clsBottomItemRadius {
+	border-bottom: solid 1px rgb(165, 170, 165);
+	border-left: solid 1px rgb(165, 170, 165);
+	border-right: solid 1px rgb(165, 170, 165);
+	-webkit-border-bottom-left-radius: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+}
+
+/*The Following part is for poi hotel main tab*/
+.clsPicsTable {
+	width: 100%;
+	height: 138px;
+}
+
+.clsContent {
+	width: 100%;
+	height: 100%;
+	padding: 18px 12px 18px 12px;
+}
+
+.clsAmenitiesTable {
+	height: 48px;
+	width: 100%;
+	border-top: #CCCCCC solid 1px;
+	border-bottom: #CCCCCC solid 1px;
+}
+
+.clsAmenities {
+	width: 30%;
+	height: 100%;
+}
+
+.clsAmenitiesItem {
+	width: 70%;
+	height: 100%;
+}
+
+.clsDescriptionTable {
+	width: 100%;
+}
+
+.clsSliderImg {
+	height: 108px;
+	width: 108px;
+	margin: 0px 8px;
+}
+
+.clsButtonWrapper {
+	height: 72px;
+	width: 360px;
+}
+
+.clsAddAndSub {
+	height: 100%;
+	width: 168px;
+}
+
+.clsLeftCheckInTd {
+	border-right: solid 1px rgb(165, 170, 165);
+}
+
+.DescTable {
+	width: 100%;
+	border-top: #CCCCCC solid 1px;
+}
+
+.clsCalendarHiddenDiv {
+	height: 100%;
+	width: 100%;
+	z-index: 3;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	-webkit-transform: scale(0);
+	-webkit-transition-timing-function: ease-out;
+	-webkit-transition-duration: 250ms;
+}
+
+.clsCalendarDiv {
+	height: 100%;
+	width: 100%;
+	z-index: 3;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	-webkit-transform: scale(1);
+	-webkit-transition-timing-function: ease-out;
+	-webkit-transition-duration: 250ms;
+}

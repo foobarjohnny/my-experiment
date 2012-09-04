@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- POI search -->
+	<bean id="PoiBrowserProtocolRequestParser"
+		class="com.telenav.cserver.poi.protocol.PoiBrowserProtocolRequestParser">
+	</bean>
+	<bean id="PoiBrowserProtocolResponseFormatter"
+		class="com.telenav.cserver.poi.protocol.PoiBrowserProtocolResponseFormatter">
+	</bean>
+	<bean name="/queryPoi" class="com.telenav.cserver.poi.struts.action.POIAction">
+		<property name="requestParser">
+			<ref bean="PoiBrowserProtocolRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="PoiBrowserProtocolResponseFormatter" />
+		</property>
+	</bean>
+
+	<!-- POI category -->
+	<bean id="POICategoryRequestParser"
+		class="com.telenav.cserver.poi.protocol.POICategoryRequestParser">
+	</bean>
+	<bean id="POICategoryResponseFormatter"
+		class="com.telenav.cserver.poi.protocol.POICategoryResponseFormatter">
+	</bean>
+	<bean name="/POICategory"
+		class="com.telenav.cserver.poi.struts.action.POICategoryAction">
+		<property name="requestParser">
+			<ref bean="POICategoryRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="POICategoryResponseFormatter" />
+		</property>
+	</bean>
+	
+	<!-- Address Capture -->
+	<bean id="ValidateAddressRequestParserACEWS"
+		class="com.telenav.cserver.ac.protocol.ValidateAddressRequestParserACEWS">
+	</bean>
+	<bean id="ValidateAddressResponseFormatterACEWS"
+		class="com.telenav.cserver.ac.protocol.ValidateAddressResponseFormatterACEWS">
+	</bean>
+	<bean name="/ValidateAddress"
+		class="com.telenav.cserver.ac.struts.action.ValidateAddressAction">
+		<property name="requestParser">
+			<ref bean="ValidateAddressRequestParserACEWS" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="ValidateAddressResponseFormatterACEWS" />
+		</property>
+	</bean>
+
+	<!-- Share Address -->
+	<bean id="ShareAddressRequestParser"
+		class="com.telenav.cserver.ac.protocol.ShareAddressRequestParser">
+	</bean>
+	<bean id="ShareAddressResponseFormatter"
+		class="com.telenav.cserver.ac.protocol.ShareAddressResponseFormatter">
+	</bean>
+	<bean name="/shareAddress"
+		class="com.telenav.cserver.ac.struts.action.ShareAddressAction">
+		<property name="requestParser">
+			<ref bean="ShareAddressRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="ShareAddressResponseFormatter" />
+		</property>
+	</bean>
+
+	<!--  UGC Content Manager integration Actions start -->
+	<!-- Edit POI -->
+	<bean id="EditPOIRequestParser"
+		class="com.telenav.cserver.poi.protocol.EditPOIRequestParser">
+	</bean>
+	<bean id="EditPOIResponseFormatter"
+		class="com.telenav.cserver.poi.protocol.EditPOIResponseFormatter">
+	</bean>
+	<bean name="/editPOI"
+		class="com.telenav.cserver.poi.struts.action.EditPOIStrutsAction">
+		<property name="requestParser">
+			<ref bean="EditPOIRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="EditPOIResponseFormatter" />
+		</property>
+	</bean>
+			
+	<!-- Get static pages. -->
+	<bean name="/goToJsp" class="com.telenav.cserver.poi.struts.action.ChooseJsp">
+	</bean>
+
+	<!-- Start up action. -->
+	<bean name="/startUp" class="com.telenav.cserver.poi.struts.action.StartUpAction">
+	</bean>
+
+	<!-- Tools Main action. -->
+	<bean name="/ToolsMain" class="com.telenav.cserver.poi.struts.action.ToolsMainAction">
+	</bean>
+
+	<!-- Speak Search action. -->
+	<bean name="/runDSR" class="com.telenav.cserver.dsr.struts.action.RunDSRAction">
+	</bean>
+	
+	<!-- Select Address action. -->
+	<bean name="/selectAddress"
+		class="com.telenav.cserver.ac.struts.action.SelectAddress">
+	</bean>
+	
+	<bean name="/searchPOIBrandNames"
+		class="com.telenav.cserver.ugc.struts.action.SearchPOIBrandNames">
+	</bean>
+	
+	<bean name="/FindAirPort"
+		class="com.telenav.cserver.ac.struts.action.FindAirPort">
+	</bean>
+
+	<bean name="/TrafficIncidents" class="com.telenav.cserver.misc.struts.action.TrafficIncidentsAction"/>
+	
+	<!-- Address Capture -->
+	<bean id="ValidateAirportRequestParser"
+		class="com.telenav.cserver.ac.protocol.ValidateAirportRequestParser">
+	</bean>
+	<bean id="ValidateAirportResponseFormatter"
+		class="com.telenav.cserver.ac.protocol.ValidateAirportResponseFormatter">
+	</bean>
+	<bean name="/ValidateAirport"
+		class="com.telenav.cserver.ac.struts.action.ValidateAirportAction">
+		<property name="requestParser">
+			<ref bean="ValidateAirportRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="ValidateAirportResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean name="/reviewPoi"
+		class="com.telenav.cserver.poi.struts.action.PoiReviewAction">
+	</bean>
+	
+	<bean name="/ReferFriend"
+		class="com.telenav.cserver.ReferFriendAction">
+	</bean>
+	
+	<!-- AdJuggler Capture -->
+	<bean id="AdJugglerRequestParser"
+		class="com.telenav.cserver.adjuggler.protocol.AdJugglerRequestParser">
+	</bean>
+	<bean id="AdJugglerResponseFormatter"
+		class="com.telenav.cserver.adjuggler.protocol.AdJugglerResponseFormatter">
+	</bean>
+	<bean name="/CheckAdJuggler"
+		class="com.telenav.cserver.adjuggler.struts.action.AdJugglerAction">
+		<property name="requestParser">
+			<ref bean="AdJugglerRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="AdJugglerResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean name="/getCurrentLocation"
+		class="com.telenav.cserver.ac.struts.action.GetCurrentLocationAction">
+	</bean>
+	
+	<bean name="/updateUserInfo"
+		class="com.telenav.cserver.UpdateUserInfoAction">
+	</bean>
+	
+	<bean id="SentAddressRequestParser"
+		class="com.telenav.cserver.misc.protocol.SentAddressRequestParser">
+	</bean>
+	
+	<bean id="SentAddressResponseFormatter"
+		class="com.telenav.cserver.misc.protocol.SentAddressResponseFormatter">
+	</bean>
+	
+	<bean name="/SentAddress" class="com.telenav.cserver.misc.struts.action.SentAddressAction">
+		<property name="requestParser">
+			<ref bean="SentAddressRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="SentAddressResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="WeatherRequestParser"
+		class="com.telenav.cserver.weather.protocol.WeatherRequestParser">
+	</bean>
+	<bean id="WeatherResponseFormatter"
+		class="com.telenav.cserver.weather.protocol.WeatherResponseFormatter">
+	</bean>
+	<bean name="/Weather" class="com.telenav.cserver.weather.struts.action.WeatherAction">
+		<property name="requestParser">
+			<ref bean="WeatherRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="WeatherResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="i18nWeatherRequestParser"
+		class="com.telenav.cserver.weather.protocol.I18NWeatherRequestParser">
+	</bean>
+	<bean id="i18nWeatherResponseFormatter"
+		class="com.telenav.cserver.weather.protocol.I18NWeatherResponseFormatter">
+	</bean>
+	<bean name="/I18NWeather" class="com.telenav.cserver.weather.struts.action.I18NWeatherAction">
+		<property name="requestParser">
+			<ref bean="i18nWeatherRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="i18nWeatherResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean name="/About" class="com.telenav.cserver.about.struts.action.AboutAction">
+	</bean>
+	
+	
+	<bean id="AboutFeedbackRequestParser"
+		class="com.telenav.cserver.about.protocol.AboutFeedbackRequestParser">
+	</bean>
+	<bean id="AboutFeedbackResponseFormatter"
+		class="com.telenav.cserver.about.protocol.AboutFeedbackResponseFormatter">
+	</bean>
+	<bean name="/AboutFeedbackSubmit" class="com.telenav.cserver.about.struts.action.AboutFeedbackAction">
+		<property name="requestParser">
+			<ref bean="AboutFeedbackRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="AboutFeedbackResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="GenericFeedbackRetrievalRequestParser"
+		class="com.telenav.cserver.poi.protocol.GenericFeedbackRetrievalRequestParser">
+	</bean>
+	<bean id="GenericFeedbackRetrievalResponseFormatter"
+		class="com.telenav.cserver.poi.protocol.GenericFeedbackRetrievalResponseFormatter">
+	</bean>
+	<bean name="/GenericFeedbackRetrieval" class="com.telenav.cserver.poi.struts.action.GenericFeedbackRetrievalAction">
+		<property name="requestParser">
+			<ref bean="GenericFeedbackRetrievalRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="GenericFeedbackRetrievalResponseFormatter" />
+		</property>
+	</bean>
+	
+	<bean id="GenericFeedbackSaveRequestParser"
+		class="com.telenav.cserver.poi.protocol.GenericFeedbackSaveRequestParser">
+	</bean>
+	<bean id="GenericFeedbackSaveResponseFormatter"
+		class="com.telenav.cserver.poi.protocol.GenericFeedbackSaveResponseFormatter">
+	</bean>
+	<bean name="/GenericFeedbackSave" class="com.telenav.cserver.poi.struts.action.GenericFeedbackSaveAction">
+		<property name="requestParser">
+			<ref bean="GenericFeedbackSaveRequestParser" />
+		</property>
+		<property name="responseFormatter">
+			<ref bean="GenericFeedbackSaveResponseFormatter" />
+		</property>
+	</bean>
+</beans>

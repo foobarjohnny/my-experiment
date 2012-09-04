@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="executor_data_factory" class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory">  	      
+        <property name="classMap">
+	        <map>
+	        <entry key="Test">
+	            <ref bean="TestClassItem"/>
+	        </entry>
+	    </map>
+	</property>
+   </bean>   
+   
+   
+   <bean id="TestClassItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        <property name="requestClassName">
+            <value>com.telenav.cserver.container.sample.executor.TestRequest</value>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.container.sample.executor.TestResponse</value>
+        </property>
+   </bean>
+   
+</beans>

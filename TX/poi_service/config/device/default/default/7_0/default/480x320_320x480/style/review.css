@@ -1,0 +1,74 @@
+@media screen and (orientation:landscape) {
+	.clsButtonsTd{
+		padding-bottom: 10px;
+	}
+}
+.clsButtonOpre{
+    font-size : 14px;
+}
+
+.clsButtonOpre{
+    width: 62.5%;
+    height: 30px;
+}
+
+.clsButton{
+	font-size:15pt;
+}
+
+.addTopDIV{
+	padding: 5px 10px 0px 10px;
+	height: 140px;
+	min-height:115px;
+}
+
+.viewTopDIVBg{
+	margin:	10px 10px 0px 10px;
+	height: 60px;
+}
+
+.reviewMiddleDiv{
+	margin:	8px 10px 0px 10px;
+}
+
+.clsButton{
+	height: 30px;
+}
+
+.reviewCommentsTextArea{
+	margin-bottom: 8px;
+	height:60px;
+}
+
+.clsReviewNameWrapper{
+	position: relative;
+	top:10px;	
+}
+
+.clsReviewTitleWrapper{
+	position: relative;
+	top:12px;	
+}
+
+.clsReviewOptions{
+	padding: 10px 0px;
+	height: 115px;
+}
+
+.clsRatingDiv{
+	width:140px;
+}
+
+/* .clsReviewAddress{ */
+/* 	height:35px; */
+/* 	font-weight:bold; */
+/* 	vertical-align: top; */
+/* } */
+
+/* .clsReviewTips */
+/* { */
+/* 	white-space: nowrap */
+/* 	height:16px; */
+/* 	font-weight:bold; */
+/* 	vertical-align: middle; */
+/* } */

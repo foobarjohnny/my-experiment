@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+   
+   <bean id="BrowserProtocolRequestParser"
+         class="com.telenav.cserver.poi.protocol.BrowserProtocolRequestParser">
+   </bean>   
+   
+   <bean id="BrowserProtocolResponseFormatter"
+         class="com.telenav.cserver.poi.protocol.BrowserProtocolResponseFormatter">
+   </bean>
+     
+   <bean id="BrowserTester"
+         class="test.BrowserTester">
+        <property name="requestParser">
+            <ref bean="BrowserProtocolRequestParser" />
+        </property>
+        <property name="responseFormatter">
+            <ref bean="BrowserProtocolResponseFormatter" />
+        </property>
+   </bean>
+   
+
+</beans>

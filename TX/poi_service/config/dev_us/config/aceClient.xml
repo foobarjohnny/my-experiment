@@ -1,0 +1,52 @@
+<Client version="1.1">
+<Service name="NA-NT" url="http://10.224.91.54:8080/tnws/services/GeoCoding" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CA/>
+<US/>
+<MX/>
+</country>
+</Service>
+<Service name="NA-TA" url="http://10.224.91.56:8080/tnws/services/GeoCoding" dataset="TA">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CA/>
+<US/>
+</country>
+</Service>
+<Service name="EU-NT" url="http://10.224.91.63:8080/tnws/services/GeoCoding" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<DE/>
+<SE/>
+<FR/>
+<NL/>
+<BE/>
+<FI/>
+<IT/>
+<ES/>
+<LU/>
+<AT/>
+<DK/>
+<IE/>
+<GB/>
+<NO/>
+<PT/>
+<CH/>
+<AD/>
+<GI/>
+<GR/>
+<IM/>
+<MC/>
+<SM/>
+<VA/>
+<LI/>
+</country>
+</Service>
+<Service name="CN-NT" url="http://172.16.100.206:8080/tnws/services/GeoCoding" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CN/>
+</country>
+</Service>
+</Client>

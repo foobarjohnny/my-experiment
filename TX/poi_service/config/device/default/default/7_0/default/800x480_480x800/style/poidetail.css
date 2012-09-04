@@ -1,0 +1,220 @@
+.clsBigGray,.clsBigWhite {
+	font-size: 22px;
+}
+
+.clsMenuInfoDiv,.clsNavButtonStyle,.clsReviewNo,.clsBusinessHour {
+	font-size: 20px;
+}
+
+.clsMainDiv {
+	padding: 0px 15px 0px 15px;
+	height: 245px;
+}
+
+.clsBigButtonStyle p {
+	margin: 16px 0px;
+}
+
+@media screen and (orientation: landscape) {
+	.clsMainDiv {
+		padding: 0px 20px 0px 20px;
+		height: 43%;
+		min-height: 175px;
+	}
+}
+
+.clsDivFirst {
+	height: 70px;
+}
+
+.clsDivSecond {
+	height: 80px;
+	padding-bottom: 20px;
+}
+
+.clsDivThird {
+	height: 54px;
+	margin-bottom: 20px;
+}
+
+.clsPoiDistance {
+	width: 110px;
+	padding-right: 5px;
+}
+
+.clsBusinessHour {
+	width: 220px;
+}
+
+.clsReviewNo {
+	line-height: 14pt;
+	height: 36px;
+}
+
+.clsBar {
+	position: relative;
+	height: 2%;
+	width: 100%;
+}
+
+.clsMainTabFirstLine {
+	height: 45px;
+	width: 100%;
+}
+
+.clsMainBottom {
+	height: 66px;
+	width: 100%;
+}
+
+.clsWriteReviewButton {
+	width: 180px;
+	height: 80%;
+}
+
+.clsLogoImageDiv {
+	width: 80px;
+	height: 80px;
+}
+
+.clsTabEdge {
+	width: 12px;
+}
+
+.clsButtonMiddleOn,.clsButtonMiddleOff {
+	padding-top: 10px;
+}
+
+.clsFavTD {
+	width: 45px;
+}
+
+@media all {
+	.clsAddressLineWidth {
+		width: 230px;
+	}
+}
+
+@media screen and (orientation: landscape) and (max-width:640px) {
+	.clsAddressLineWidth {
+		width: 180px;
+	}
+}
+
+.clsAddressLine {
+	line-height: 25px;
+}
+
+#ratingIcons {
+	height: 18px;
+}
+
+.clsShowTime {
+	height: 56px;
+	width: 100%;
+}
+
+#writeReviewButton {
+	height: 100%;
+	margin: 7px 0px 7px 0px;
+}
+
+.bgDiv {
+	top: 2.2%;
+}
+
+.clsBuyButton {
+	line-height: 1.318em;
+}
+
+.clsMovieItemStyle {
+	padding-left: 15px;
+}
+
+.claPaddingLR {
+	width: 15px;
+}
+
+.clsMainBody {
+	height: 54.5%;
+}
+
+@media screen and (orientation: landscape) {
+	.clsMainBody {
+		height: 52%;
+	}
+}
+
+.clsTabOutSideTable {
+	height: 58px;
+}
+
+.clsTabInSideTable {
+	height: 55px;
+}
+
+.clsPageMiddleDiv {
+	height: 8.5%;
+}
+
+@media screen and (orientation: landscape) {
+	.clsPageMiddleDiv {
+		height: 14.5%;
+		min-height: 58px;
+	}
+}
+
+.clsDatePicker {
+	height: 68px;
+}
+
+.clsDivThirdLandscape {
+	height: 54px;
+}
+
+.clsMainTabFirstLineEmpty {
+	height: 15px;
+	width: 100%;
+}
+
+.clsRateNoFS,.clsAddressFS {
+	font-size: 20px;
+}
+
+.clsPoiTabNormal {
+	width: 25%;
+}
+
+#yelpAndTrip {
+	margin: 2em 0 0 0;
+}
+
+#yelp,#trip {
+	padding: 2em 3% 2em 3%;
+	width: 88%;
+	height: 4em;
+}
+
+#yelpRating,#tripRating {
+	float: left;
+	width: 50%;
+}
+
+#yelpReviewCount,#tripReviewCount {
+	font-size: 1.8em;
+}
+
+#yelpBtnContainer,#tripBtnContainer {
+	float: left;
+	width: 50%;
+}
+
+.yelp_button,.trip_button {
+	float: right;
+}
+
+#reviewTitle {
+	margin: 0.86em 3% 0.86em 3%;
+	float: left;
+	font-size: 2.1em;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>   
+   
+   <bean id="AccountTypeLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.AccountTypeLoadOrder">
+   </bean>
+  
+  <bean id="CarrierLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.CarrierLoadOrder">
+   </bean>
+   
+   <bean id="DeviceLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.DeviceLoadOrder">
+   </bean>
+   
+   <bean id="LocaleLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.LocaleLoadOrder">
+   </bean>
+
+   <bean id="MajorVersionLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.MajorVersionLoadOrder">
+   </bean>
+   
+   <bean id="MapdataLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.MapdataLoadOrder">
+   </bean>
+   
+   <bean id="PlatformLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.PlatformLoadOrder">
+   </bean>
+   
+   <bean id="ProductLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.ProductLoadOrder">
+   </bean>
+   
+   <bean id="RegionLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.RegionLoadOrder">
+   </bean>
+   
+   <bean id="VersionLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.VersionLoadOrder">
+   </bean>
+   <bean id="ResolutionLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.ResolutionLoadOrder">
+   </bean>
+   <bean id="DeviceOrResolutionLoadOrder"
+         class="com.telenav.cserver.common.resource.orders.OrLoadOrder">
+                   <property name="type" value="device_resolution"/>
+                   <property name="loadOrderList">
+                            <list>
+                                     <ref bean="DeviceLoadOrder"/>
+                                     <ref bean="ResolutionLoadOrder"/>
+                            </list>
+                   </property>
+   </bean>    
+</beans>

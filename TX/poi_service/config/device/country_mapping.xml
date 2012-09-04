@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN"
+"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="CountryMappingParameters" class="com.telenav.cserver.ac.holder.CountryMessages">
+        <property name="regionMap">
+            <map>           
+                <entry key="NA">
+                   <list>
+                      <value>US</value>
+                      <value>CA</value>
+                      <value>MX</value>
+                   </list>
+                </entry>
+				<entry key="SA">
+                   <list>
+                      <value>BR</value>                      
+                   </list>
+                </entry>
+				
+                <entry key="EU">
+                   <list>
+                      <value>GB</value>
+                      <value>IT</value>
+                      <value>FR</value>
+                      <value>DE</value>
+                      <value>AT</value>
+                      <value>ES</value>
+                      <value>CH</value>
+                      <value>PT</value>
+                      <value>IE</value>
+                      <value>NL</value>
+                      <value>BE</value>
+                      <value>LU</value>
+                      <value>DK</value>
+                      <value>SE</value>
+                      <value>NO</value>
+                      <value>FI</value>
+                      <value>MC</value>
+                      <value>LI</value>
+                      <value>AD</value>
+                      <value>GR</value>
+                      <value>IM</value>
+                      <value>GI</value>
+                      <value>SM</value>
+                      <value>VA</value>
+                   </list>
+                </entry>
+                <entry key="IN">
+                   <list>
+                      <value>IN</value>
+                   </list>
+                </entry>
+                <entry key="CN">
+                    <list>
+                       <value>CN</value>
+                   </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

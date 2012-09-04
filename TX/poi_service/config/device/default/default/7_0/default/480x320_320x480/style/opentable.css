@@ -1,0 +1,141 @@
+.clsOTRserveConfigBoard {
+	width: 94%;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 9px;
+	padding-bottom: 0px;
+}
+
+.clsOpenTableReserveDiv {
+	width: 100%;
+	background-color: #f1f0e6;
+	height:300px;
+}
+
+.clsItemRadius {
+	border: solid 1px rgb(165, 170, 165);
+	-webkit-border-radius: 6px;
+}
+
+.clsConfigRow {
+	font-size: 10px;
+	width: 100%;
+	margin: auto;
+	height: 36px;
+	align: center;
+	vertical-align: middle;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)
+		), to(rgb(239, 239, 239) ) );
+}
+
+.clsMiddleItemRadius {
+	border-bottom: solid 1px rgb(165, 170, 165);
+	border-left: solid 1px rgb(165, 170, 165);
+	border-right: solid 1px rgb(165, 170, 165);
+}
+
+.clsTopItemRadius {
+	border: solid 1px rgb(165, 170, 165);
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+}
+
+.clsBottomItemRadius {
+	border-bottom: solid 1px rgb(165, 170, 165);
+	border-left: solid 1px rgb(165, 170, 165);
+	border-right: solid 1px rgb(165, 170, 165);
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+}
+
+.clsOpenTableImgTd {
+	width: 27px;
+}
+
+.clsOpenTableButtonRow {
+	margin-top: 9px;
+	width: 100%;
+	height: 36px;
+}
+
+.clsButtonBgRed {
+	border: 1px solid #670001;
+	-webkit-box-shadow: 1px 1px 1px #AEAEAE;
+	background-image: -webkit-gradient(linear, center top, center bottom, from(#b96b6b),
+		to(#670001) );
+}
+
+.clsButtonBgRedHover {
+	border-radius: 3px;
+	border: 1px solid #6c0708;
+	background-color: #460102;
+}
+
+.clsRestaurantMapImageDiv {
+	margin-top: 9px;
+	width: 247px;
+	height: 144px;
+}
+
+.clsRestaurantMapImg {
+	margin: auto;
+	border: solid 1px grey;
+}
+
+.clsRestaurantMapButtonTable {
+	margin-top: 9px;
+}
+
+/** ---------------- The Following is for Party Size Picker ---------------------------- */
+.partySizeWidget {
+	position: absolute;
+	top: 30px;
+	left: 5%;
+	width: 90%;
+	height: 192px;
+}
+
+.sizePickerInput {
+	width: 60px;
+	height: 48px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.sizePickerRow {
+	height: 30px;
+	width: 100%;
+	align: center;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.sizePickerBtnSize {
+	width: 80%;
+}
+
+/** ---------------- Open Table Main Tab ---------------------------- */
+.ot_allPadding {
+	width: 94%;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.bg_orange {
+	background-color: #ff780a;
+}
+
+.ot_deals {
+	width: 100%;
+	height: 18px;
+}
+
+.left_pad {
+	padding-left: 9px;
+}
+
+.ot_middleHeightLine {
+	height: 18px;
+}

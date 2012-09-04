@@ -1,0 +1,210 @@
+<html>
+<head>
+<title>Entry Page of Europa 72 in Poi b-server</title>
+<meta name="viewport" content="width=device-width" />
+<style type="text/css">
+html {
+	font-size: 16pt;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	font-size: 1em;
+	font-family: Helvetica;
+}
+
+.d-table {
+	display: table;
+	border-collapse: separate;
+	border: 1px solid green;
+	border-spacing: 2px 2px;
+	width: 100%;
+}
+
+.d-row {
+	display: table-row;
+}
+
+.d-cell {
+	display: table-cell;
+	border: 1px solid green;
+}
+</style>
+<script type="text/javascript">
+	function goToPoiPage() {
+		location.href = "/poi_service/html/poidetail.do?dummyData=true" + "&" + getClientInfo();
+	}
+
+	function goToWeatherPage() {
+		location.href = "/poi_service/html/weather.do?" + getClientInfo();
+	}
+
+	function goToGeneralFeedbackPage() {
+		location.href = "/poi_service/html/feedback.do?" + getClientInfo();
+	}
+
+	function goToVbbPage() {
+		location.href = "/poi_service/html/adsinfo.do?adsId=4014&isDummy=true" + "&" + getClientInfo();
+	}
+
+	function goToAboutPage() {
+		location.href = "/poi_service/html/goToJsp.do?jsp=aboutAbout" + "&" + getClientInfo();
+	}
+
+	function goToPoiListPage() {
+		alert("not support in scout iphone");
+	}
+
+	function getClientInfo() {
+		var clientInfo = 'clientInfo=' + JSON.stringify(clientInfoJSON) + '&width=480&height=800';
+		return clientInfo;
+	}
+
+	var clientInfoJSON = {
+		"programCode" : "SCOUTUSPROG",
+		"deviceCarrier" : "ATT",
+		"platform" : "ANDROID",
+		"version" : "7.2.0",
+		"productType" : "default",
+		"device" : "genericTest",
+		"locale" : "en_US",
+		"buildNumber" : "7201213",
+		"region" : "US"
+	};
+
+	function goToAcTemplate(region) {
+		var dummyData = document.getElementById("dummyData").value;
+		var fromPC = document.getElementById("fromPC").value;
+		var locale = document.getElementById("locale").value;
+		clientInfoJSON.region = region;
+		clientInfoJSON.locale = locale;
+		location.href = "/poi_service/html/acTemplate.do?width=480&height=320&clientInfo=" + JSON.stringify(clientInfoJSON) + "&dummyData=" + dummyData + "&fromPC=" + fromPC;
+	}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" bottommargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<div onClick="goToPoiPage()">
+		<a href="#">PoiDetail</a>
+	</div>
+	<div onClick="goToWeatherPage()">
+		<a href="#">Weather</a>
+	</div>
+	<div onClick="goToGeneralFeedbackPage()">
+		<a href="#">General Feedback</a>
+	</div>
+	<div onClick="goToVbbPage()">
+		<a href="#">VBB</a>
+	</div>
+	<div onClick="goToAboutPage()">
+		<a href="#">About</a>
+	</div>
+	<div onClick="goToPoiListPage()">
+		<a href="#">Poi List Feedback</a>
+	</div>
+	<div class="d-table">
+		<div class="d-row">
+			<div class="d-cell" style="text-align: center;">AC Template</div>
+		</div>
+	</div>
+	<div class="d-table">
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('US')">
+				<a href="#">US</a>
+			</div>
+			<div class="d-cell">United States</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('CA')">
+				<a href="#">CA</a>
+			</div>
+			<div class="d-cell">Canada</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('MX')">
+				<a href="#">MX</a>
+			</div>
+			<div class="d-cell">Mexico</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('BR')">
+				<a href="#">BR</a>
+			</div>
+			<div class="d-cell">Brazil</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('IN')">
+				<a href="#">IN</a>
+			</div>
+			<div class="d-cell">India</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('GB')">
+				<a href="#">GB</a>
+			</div>
+			<div class="d-cell">United Kingdom, Austria, Switzerland, Portugal, Ireland, Netherlands, Belgium, Luxembourg, Denmark, Sweden, Norway, Monaco, Liechenstein, Andora, Greece,Isle of man,
+				Gibraltar, San Marino, Vatican City</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('FI')">
+				<a href="#">FI</a>
+			</div>
+			<div class="d-cell">Finland</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('DE')">
+				<a href="#">DE</a>
+			</div>
+			<div class="d-cell">Germany</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('FR')">
+				<a href="#">FR</a>
+			</div>
+			<div class="d-cell">France</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell" onClick="goToAcTemplate('ES')">
+				<a href="#">ES</a>
+			</div>
+			<div class="d-cell">Italy, Spain</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell">dummyData</div>
+			<div class="d-cell">
+				<select id="dummyData">
+					<option value="true" selected="true">true</option>
+					<option value="false">false</option>
+				</select>
+			</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell">fromPC</div>
+			<div class="d-cell">
+				<select id="fromPC">
+					<option value="true" selected="true">true</option>
+					<option value="false">false</option>
+				</select>
+			</div>
+		</div>
+		<div class="d-row">
+			<div class="d-cell">locale</div>
+			<div class="d-cell">
+				<select id="locale">
+					<option value="en_US" selected="true">en_US</option>
+					<option value="es_MX">es_MX</option>
+					<option value="de_DE">de_DE</option>
+					<option value="en_GB">en_GB</option>
+					<option value="en_IN">en_IN</option>
+					<option value="en_US">en_US</option>
+					<option value="es_ES">es_ES</option>
+					<option value="fr_FR">fr_FR</option>
+					<option value="it_IT">it_IT</option>
+					<option value="nl_NL">nl_NL</option>
+					<option value="pt_BR">pt_BR</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

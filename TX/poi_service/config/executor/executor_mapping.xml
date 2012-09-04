@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<import resource="executor_framework.xml" />
+	<bean id="interceptor_manager"
+		class="com.telenav.cserver.framework.executor.impl.DefaultInterceptorManager">
+		<property name="interceptors">
+			<list>
+				<ref bean="interceptors_ValidateAddress" />
+				<ref bean="interceptors_ShareAddress" />
+				<ref bean="interceptors_Weather" />
+				<ref bean="interceptors_I18NWeather" />
+				<ref bean="interceptors_PoiService" />
+				<ref bean="interceptors_EditPOI" />
+				<ref bean="interceptors_BannerAds" />
+				<ref bean="interceptors_ValidateAirport" />
+				<ref bean="interceptors_LiveStat" />
+				<ref bean="interceptors_SentAddress" />
+				<ref bean="interceptors_PoiCategory" />
+				<ref bean="interceptors_OneBoxSearch" />
+				<ref bean="interceptors_AdJuggler" />
+				<ref bean="interceptors_HtmlAdJuggler" />
+				<ref bean="interceptors_SearchPoi" />
+				<ref bean="interceptors_BillBoardAds" />
+				<ref bean="interceptors_PoiDetails" />
+				<ref bean="interceptors_poiReview" />
+				<ref bean="interceptors_nickName" />
+				<ref bean="interceptors_getLogImage" />
+				<ref bean="interceptors_poidetail" />
+				<ref bean="interceptors_adsInfo" />	
+				<ref bean="interceptors_restaunrantDetail" />	
+				<ref bean="interceptors_tableAvailable" />	
+				<ref bean="interceptors_ValidateAddress20" />
+				<ref bean="interceptors_ShareAddress20" />
+				<ref bean="interceptors_ValidateAirport20" />	
+				<ref bean="interceptors_SentAddress20" />		
+				<ref bean="interceptors_SearchPoi20" />
+				<ref bean="interceptors_PoiDetails20" />
+				<ref bean="interceptors_PoiService20" />
+			</list>
+		</property>
+	</bean>
+	
+     <bean id="interceptors_LiveStat" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+	<property name="type">
+	    <value>Global</value>
+	</property>
+
+	<property name="postInterceptors">
+		<list>
+		       <ref bean="LiveStatInterceptor" />
+		</list>
+	</property>
+   </bean>
+
+     <bean id="interceptors_ValidateAirport" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ValidateAirport</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_ValidateAddress" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ValidateAddress</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+
+    <bean id="interceptors_ShareAddress" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ShareAddress</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+ 
+     <bean id="interceptors_SentAddress" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>SentAddressExecutor</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+ 
+      <bean id="interceptors_PoiCategory" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>POICategory</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+       
+     <bean id="interceptors_Weather" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>Weather</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+       
+     <bean id="interceptors_I18NWeather" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>I18NWeather</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+      
+<bean id="interceptors_PoiService" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>poi</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_EditPOI" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>editPOI</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+      
+    <bean id="interceptors_BannerAds" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>bannerAds</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    
+        <bean id="interceptors_OneBoxSearch" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>OneBox</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_AdJuggler" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>AdJuggler</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_HtmlAdJuggler" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>HtmlAdJuggler</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+
+	<bean id="interceptors_SearchPoi"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>SearchPoi</value>
+        </property>
+       <property name="preInterceptors">
+	        <list>
+	        	<ref bean="LoggingInterceptor" />
+	        	<ref bean="TnContextInterceptor_WithOutRegister" />
+	    	</list>
+	</property>
+	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+   </bean>
+   
+   <bean id="interceptors_PoiDetails"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>PoiDetails</value>
+        </property>
+       <property name="preInterceptors">
+	        <list>
+	        	<ref bean="LoggingInterceptor" />
+	        	<ref bean="TnContextInterceptor_WithOutRegister" />
+	    	</list>
+	</property>
+	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+   </bean>
+
+   <bean id="interceptors_BillBoardAds"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>BillBoardAds</value>
+        </property>
+       <property name="preInterceptors">
+            <list>
+                <ref bean="LoggingInterceptor" />
+                <ref bean="TnContextInterceptor_WithOutRegister" />
+            </list>
+    </property>
+    <property name="postInterceptors">
+            <list>
+               <ref bean="LoggingInterceptor" />
+            </list>
+    </property>
+   </bean>
+    
+    <bean id="interceptors_poiReview" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>poiReview</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+     <bean id="interceptors_nickName" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>nickName</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_getLogImage" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>getLogImage</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_poidetail" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>getPoiDetailData</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+     <bean id="interceptors_adsInfo" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>adsinfo</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+
+    <bean id="interceptors_restaunrantDetail" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>restaunrantDetail</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_tableAvailable" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>tableAvailable</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_ValidateAddress20" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ValidateAddress20</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+
+    <bean id="interceptors_ShareAddress20" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ShareAddress20</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+ 
+     <bean id="interceptors_SentAddress20" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>SentAddressExecutor20</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    <bean id="interceptors_SearchPoi20"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>SearchPoi20</value>
+        </property>
+       <property name="preInterceptors">
+	        <list>
+	        	<ref bean="LoggingInterceptor" />
+	        	<ref bean="TnContextInterceptor_WithOutRegister" />
+	    	</list>
+	</property>
+	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+   </bean>
+   
+   <bean id="interceptors_PoiDetails20"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>PoiDetails20</value>
+        </property>
+       <property name="preInterceptors">
+	        <list>
+	        	<ref bean="LoggingInterceptor" />
+	        	<ref bean="TnContextInterceptor_WithOutRegister" />
+	    	</list>
+	</property>
+	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+   </bean>
+   
+   <bean id="interceptors_ValidateAirport20" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>ValidateAirport20</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    <bean id="interceptors_PoiService20" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>poi20</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+    
+    
+	<bean id="executor_registry_loader"
+		class="com.telenav.cserver.framework.executor.impl.DefaultExecutorRegistryLoader">
+		<property name="executorList">
+			<list>
+				<ref bean="PoiService" />
+				<ref bean="PoiCategory" />
+				<ref bean="ValidateAddress" />
+				<ref bean="ShareAddress" />
+				<ref bean="EditPOI" />
+				<ref bean="BannerAds"/>
+				<ref bean="OneBoxSearch" />
+				<ref bean="AdJuggler" />
+				<ref bean="HtmlAdJuggler" />
+				<ref bean="SentAddressExecutor" />
+				<ref bean="Weather" />
+				<ref bean="I18NWeather" />
+				<ref bean="AboutFeedbackExecutor" />
+				<ref bean="POIFeedbackSaveExecutor" />
+				<ref bean="GenericFeedbackSaveExecutor" />
+				<ref bean="GenericFeedbackRetrievalExecutor" />
+				<ref bean="ValidateAirport" />
+				<ref bean="SearchPoi"/>
+				<ref bean="BillBoardAds"/>
+				<ref bean="PoiDetails"/>
+				<ref bean="poiReviewExecutor" />
+				<ref bean="nickNameExecutor"/>
+				<ref bean="getLogImageExecutor"/>
+				<ref bean="HtmlAdsExecutor"/>
+				<ref bean="HtmlPoiDetailExecutor"/>
+				<ref bean="HtmlHotelDetailExecutor"/>
+				<ref bean="htmlRestaurant"/>	
+				<ref bean="HtmlTableDetail"/>
+				<ref bean="ValidateAddress20" />
+				<ref bean="ShareAddress20" />
+				<ref bean="ValidateAirport20" />	
+				<ref bean="SentAddressExecutor20" />
+				<ref bean="SearchPoi20"/>
+				<ref bean="PoiDetails20"/>
+				<ref bean="PoiService20" />
+				<ref bean="HtmlAbout"/>
+			</list>
+		</property>
+	</bean>
+	
+
+	<bean id="PoiService" class="com.telenav.cserver.poi.executor.POISearchExecutor_WS">
+		<property name="executorType">
+			<value>poi</value>
+		</property>
+	</bean>
+	<bean id="PoiCategory" class="com.telenav.cserver.poi.executor.POICategoryExecutor">
+		<property name="executorType">
+			<value>POICategory</value>
+		</property>
+	</bean>
+	<bean id="ValidateAddress" class="com.telenav.cserver.ac.executor.ValidateAddressExecutorACEWS">
+		<property name="executorType">
+			<value>ValidateAddress</value>
+		</property>
+	</bean>
+	<bean id="ValidateAirport" class="com.telenav.cserver.ac.executor.ValidateAirportExecutor">
+		<property name="executorType">
+			<value>ValidateAirport</value>
+		</property>
+	</bean>
+	<bean id="ShareAddress" class="com.telenav.cserver.ac.executor.ShareAddressExecutor">
+		<property name="executorType">
+			<value>ShareAddress</value>
+		</property>
+	</bean>
+	<!-- Banner Ads -->
+	
+	<bean id="BannerAds" class="com.telenav.cserver.poi.executor.BannerAdsExecutor">
+		<property name="executorType">
+			<value>bannerAds</value>
+		</property>
+	</bean>
+	<!-- one box search -->
+	<bean id="OneBoxSearch" class="com.telenav.cserver.onebox.executor.OneBoxExecutor">
+		<property name="executorType">
+			<value>OneBox</value>
+		</property>
+	</bean>
+	
+	<bean id="AdJuggler" class="com.telenav.cserver.adjuggler.executor.AdJugglerExecutor">
+		<property name="executorType">
+			<value>AdJuggler</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlAdJuggler" class="com.telenav.cserver.html.executor.HtmlAdJugglerExecutor">
+		<property name="executorType">
+			<value>HtmlAdJuggler</value>
+		</property>
+	</bean>
+	<!--  UGC POI Management Executor beans -->
+	<bean id="EditPOI" class="com.telenav.cserver.poi.executor.EditPOIExecutor_WS">
+		<property name="executorType">
+			<value>editPOI</value>
+		</property>
+	</bean>
+	
+	<bean id="SentAddressExecutor" class="com.telenav.cserver.misc.executor.SentAddressExecutor">
+		<property name="executorType">
+			<value>SentAddress</value>
+		</property>
+	</bean>
+	
+	<bean id="Weather" class="com.telenav.cserver.weather.executor.WeatherExecutor">
+		<property name="executorType">
+			<value>Weather</value>
+		</property>
+	</bean>
+	
+	<bean id="I18NWeather" class="com.telenav.cserver.weather.executor.I18NWeatherExecutor">
+		<property name="executorType">
+			<value>I18NWeather</value>
+		</property>
+	</bean>
+	
+	<bean id="AboutFeedbackExecutor" class="com.telenav.cserver.about.executor.AboutFeedbackExecutor">
+		<property name="executorType">
+			<value>AboutFeedback</value>
+		</property>
+	</bean>
+
+	<bean id="POIFeedbackSaveExecutor" class="com.telenav.cserver.poi.executor.POIFeedbackSaveExecutor">
+		<property name="executorType">
+			<value>POIFeedbackSave</value>
+		</property>
+	</bean>
+	
+	<bean id="GenericFeedbackSaveExecutor" class="com.telenav.cserver.poi.executor.GenericFeedbackSaveExecutor">
+		<property name="executorType">
+			<value>GenericFeedbackSave</value>
+		</property>
+	</bean>
+	
+	<bean id="GenericFeedbackRetrievalExecutor" class="com.telenav.cserver.poi.executor.GenericFeedbackRetrievalExecutor">
+		<property name="executorType">
+			<value>GenericFeedbackRetrieval</value>
+		</property>
+	</bean>
+
+	<bean id="SearchPoi"
+			 class="com.telenav.cserver.poi.executor.POISearchExecutor_WS">
+			<property name="executorType">
+				<value>SearchPoi</value>
+			</property>
+	   </bean>
+	
+	<bean id="BillBoardAds" class="com.telenav.cserver.poi.executor.BillBoardAdsExecutor">
+		<property name="executorType">
+			<value>BillBoardAds</value>
+		</property>
+	</bean>
+
+	<bean id="PoiDetails" class="com.telenav.cserver.poidetail.executor.POIDetailsExecutor">
+		<property name="executorType">
+			<value>PoiDetails</value>
+		</property>
+	</bean>
+	<bean id="poiReviewExecutor" class="com.telenav.cserver.html.executor.HtmlPoiReviewExecutor">
+		<property name="executorType">
+			<value>poiReview</value>
+		</property>
+	</bean>
+	
+	<bean id="nickNameExecutor" class="com.telenav.cserver.html.executor.HtmlNickNameExecutor">
+		<property name="executorType">
+			<value>nickName</value>
+		</property>
+	</bean>
+	
+	<bean id="getLogImageExecutor" class="com.telenav.cserver.html.executor.HtmlGetLogImageExecutor">
+		<property name="executorType">
+			<value>getLogImage</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlAdsExecutor" class="com.telenav.cserver.html.executor.HtmlAdsExecutor">
+		<property name="executorType">
+			<value>adsinfo</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlPoiDetailExecutor" class="com.telenav.cserver.html.executor.HtmlPoiDetailExecutor">
+		<property name="executorType">
+			<value>getPoiDetailData</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlHotelDetailExecutor" class="com.telenav.cserver.html.executor.HtmlHotelExecutor">
+		<property name="executorType">
+			<value>getHotelDetailData</value>
+		</property>
+	</bean>
+	
+	<bean id="htmlRestaurant" class="com.telenav.cserver.html.executor.GetRestaurantDetailExecutor">
+		<property name="executorType">
+			<value>getHtmlRestaurantDetail</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlTableDetail" class="com.telenav.cserver.html.executor.GetTableDetailExecutor">
+		<property name="executorType">
+			<value>getHtmlTableDetail</value>
+		</property>
+	</bean>
+	
+	<bean id="HtmlAbout" class="com.telenav.cserver.html.executor.HtmlAboutExecutor">
+		<property name="executorType">
+			<value>HtmlAbout</value>
+		</property>
+	</bean>
+	
+	<bean id="ValidateAddress20" class="com.telenav.cserver.ac.executor.v20.ValidateAddressExecutorACEWS">
+		<property name="executorType">
+			<value>ValidateAddress20</value>
+		</property>
+	</bean>
+	<bean id="ValidateAirport20" class="com.telenav.cserver.ac.executor.v20.ValidateAirportExecutor">
+		<property name="executorType">
+			<value>ValidateAirport20</value>
+		</property>
+	</bean>
+	<bean id="ShareAddress20" class="com.telenav.cserver.ac.executor.v20.ShareAddressExecutor">
+		<property name="executorType">
+			<value>ShareAddress20</value>
+		</property>
+	</bean>
+	<bean id="SentAddressExecutor20" class="com.telenav.cserver.misc.executor.v20.SentAddressExecutor">
+		<property name="executorType">
+			<value>SentAddress20</value>
+		</property>
+	</bean>
+	<bean id="SearchPoi20"
+			 class="com.telenav.cserver.poi.executor.v20.POISearchExecutor_WS">
+			<property name="executorType">
+				<value>SearchPoi20</value>
+			</property>
+	</bean>
+	<bean id="PoiDetails20" class="com.telenav.cserver.poidetail.executor.v20.POIDetailsExecutor">
+		<property name="executorType">
+			<value>PoiDetails20</value>
+		</property>
+	</bean>
+	<bean id="PoiService20" class="com.telenav.cserver.poi.executor.v20.POISearchExecutor_WS">
+		<property name="executorType">
+			<value>poi20</value>
+		</property>
+	</bean>
+</beans>

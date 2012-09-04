@@ -1,0 +1,9 @@
+/* just for iphone(device 320x480) */
+.backButton{
+	padding: 5% 0;
+}
+
+.clsBackButton{
+	width: 50%;
+	height: 30px;
+}

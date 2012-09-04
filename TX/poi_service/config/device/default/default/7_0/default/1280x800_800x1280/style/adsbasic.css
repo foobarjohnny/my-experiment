@@ -1,0 +1,25 @@
+.clsTotal {
+	height: 288px;
+}
+
+.clsAdsDescription{
+	height: 65px;
+}
+
+.clsLogoImage{
+	margin: 5px 13px;
+	height: 80px;
+	width:	80px;
+}
+
+.topRightDiv {
+	height:40px;
+}
+
+.topRightFirstCell{
+	border-bottom-width: 2.5px;
+}
+
+.clsAddressFS{
+	font-size: 28px;
+}

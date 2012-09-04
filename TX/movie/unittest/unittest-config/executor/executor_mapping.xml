@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<import resource="executor_framework.xml" />
+	<bean id="interceptor_manager"
+		class="com.telenav.cserver.framework.executor.impl.DefaultInterceptorManager">
+		<property name="interceptors">
+			<list>
+				<ref bean="interceptors_test" />
+				<ref bean="interceptors_ShareMovie" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="interceptors_test"
+		class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+		<property name="type">
+			<value>Test</value>
+		</property>
+		<property name="preInterceptors">
+			<list>
+				<ref bean="LoggingInterceptor" />
+				<ref bean="LoggingInterceptor" />
+			</list>
+		</property>
+
+		<property name="postInterceptors">
+			<list>
+				<ref bean="LoggingInterceptor" />
+				<ref bean="LoggingInterceptor" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="interceptors_ShareMovie" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>shareMovie</value>
+    	</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="LoggingInterceptor" ></ref>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+		</property>
+    </bean>
+
+
+	<bean id="executor_registry_loader"
+		class="com.telenav.cserver.framework.executor.impl.DefaultExecutorRegistryLoader">
+		<property name="executorList">
+			<list>
+				<ref bean="MovieSearchService" />
+				<ref bean="ShareMovieService" />
+				<ref bean="TheaterListService" />
+				<ref bean="MovieListService" />
+				<ref bean="LookUpScheduleService" />
+				<ref bean="BookTicketService" />
+				<ref bean="GetTicketQuantityService" />
+				<ref bean="LoadImageService" />
+				<ref bean="LookUpMovieService" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="MovieSearchService" class="com.telenav.browser.movie.executor.MovieSearchExecutor">
+		<property name="executorType">
+			<value>movieSearch</value>
+		</property>
+	</bean>
+	
+	<bean id="ShareMovieService" class="com.telenav.browser.movie.executor.ShareMovieExecutor">
+		<property name="executorType">
+			<value>shareMovie</value>
+		</property>
+	</bean>
+
+	<bean id="TheaterListService" class="com.telenav.cserver.movie.html.executor.TheaterListExecutor">
+		<property name="executorType">
+			<value>theaterList</value>
+		</property>
+	</bean>
+	
+	<bean id="MovieListService" class="com.telenav.cserver.movie.html.executor.MovieListExecutor">
+		<property name="executorType">
+			<value>movieList</value>
+		</property>
+	</bean>
+	
+	<bean id="LookUpScheduleService" class="com.telenav.cserver.movie.html.executor.LookUpScheduleExecutor">
+		<property name="executorType">
+			<value>lookUpSchedule</value>
+		</property>
+	</bean>
+	
+	<bean id="GetTicketQuantityService" class="com.telenav.cserver.movie.html.executor.GetTicketQuantityExecutor">
+		<property name="executorType">
+			<value>getTicketQuantity</value>
+		</property>
+	</bean>
+	
+	<bean id="BookTicketService" class="com.telenav.cserver.movie.html.executor.BookTicketExecutor">
+		<property name="executorType">
+			<value>bookTicket</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="LoadImageService" class="com.telenav.cserver.movie.html.executor.LoadImageExecutor">
+		<property name="executorType">
+			<value>loadImage</value>
+		</property>
+	</bean>
+	
+	<bean id="LookUpMovieService" class="com.telenav.cserver.movie.html.executor.LookUpMovieExecutor">
+		<property name="executorType">
+			<value>lookUpMovie</value>
+		</property>
+	</bean>
+
+</beans>

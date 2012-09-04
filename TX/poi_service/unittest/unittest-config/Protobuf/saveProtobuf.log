@@ -1,0 +1,748 @@
+=====================================================================
+ProtoShareAddressReq
+{
+    label: label
+    senderPTN: 5555218135
+    stop: 
+        {
+            lat: 10000
+            lon: 10000
+            stopType: 0
+            stopStatus: 0
+            isGeocoded: false
+            isShareAddress: false
+            label: label
+            firstLine: firstline
+            city: city
+            state: state
+            stopId: null
+            zip: zip
+            country: country
+            county: null
+            lastLine: null
+            streetName: null
+            crossStreetName: null
+            door: null
+            geoCodeSubStatus: null
+        }
+    poi: 
+       {
+           avgRating: 1
+           isRatingEnable: true
+           poiId: 1234
+           popularity: 1
+           bizPoi: 
+                 {
+                     brand: null
+                     phoneNumber: null
+                     categoryId: null
+                     groupID: 0
+                     navigable: false
+                     distance: 0
+                     supportInfos: []
+                     supplementalInfos: []
+                     parentCatName: null
+                     price: null
+                     layout: 0
+                     vendorCode: null
+                     address: 
+                            {
+                                lat: 10000
+                                lon: 10000
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: label
+                                firstLine: firstline
+                                city: city
+                                state: state
+                                stopId: null
+                                zip: zip
+                                country: country
+                                county: null
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                 }
+           basePoiExtraInfo: null
+           localAppInfos: []
+       }
+    contactList: [
+                   {
+                       name: test@telenavsoftware.com
+                       ptn: 5555218135
+                   }
+                  ]
+}
+
+=====================================================================
+ProtoShareAddressResp
+{
+    status: 0
+    errorMessage: message
+}
+
+=====================================================================
+ProtoValidateAddressReq
+{
+    firstLine: firstline
+    lastLine: label
+    street1: street1
+    street2: street2
+    country: country
+    city: city
+    state: state
+    zip: null
+    addrSearchID: AddrSearchId
+    transactionID: transactionId
+    inputType: 0
+}
+
+=====================================================================
+ProtoValidateAddressResp
+{
+    status: 0
+    errorMessage: just for testing
+    totalCount: 1
+    addresses: [
+                 {
+                     lat: 1000000000
+                     lon: 1000000000
+                     stopType: 0
+                     stopStatus: 0
+                     isGeocoded: false
+                     isShareAddress: false
+                     label: label
+                     firstLine: first line
+                     city: city name
+                     state: null
+                     stopId: null
+                     zip: zip
+                     country: country
+                     county: county
+                     lastLine: last line
+                     streetName: street name
+                     crossStreetName: cross streee
+                     door: door
+                     geoCodeSubStatus: 
+                                     {
+                                         substatus_DOOR_CHANGED: false
+                                         substatus_STREET_CHANGED: false
+                                         substatus_ZIP_CHANGED: false
+                                         substatus_CITY_CHANGED: false
+                                         substatus_CROSSSTREET_CHANGED: false
+                                         substatus_STATE_CHANGED: false
+                                         substatus_COUNTY_CHANGED: false
+                                         substatus_COUNTRY_CHANGED: false
+                                     }
+                 }
+                ]
+    geoCodeStatusCode: 0
+}
+
+=====================================================================
+ProtoValidateAirportReq
+{
+    airportName: SFO
+    region: NA
+}
+
+=====================================================================
+ProtoValidateAirportResp
+{
+    status: 0
+    errorMessage: just for testing
+    airportStops: [
+                    {
+                        message: feature name: brand name
+                        stop: 
+                            {
+                                lat: 0
+                                lon: 0
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: 
+                                firstLine: brand name
+                                city: 
+                                state: 
+                                stopId: 
+                                zip: 
+                                country: 
+                                county: 
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                    }
+                   ]
+}
+
+=====================================================================
+ProtoShareAddressReq
+{
+    label: label
+    senderPTN: 5555218135
+    stop: 
+        {
+            lat: 10000
+            lon: 10000
+            stopType: 0
+            stopStatus: 0
+            isGeocoded: false
+            isShareAddress: false
+            label: label
+            firstLine: firstline
+            city: city
+            state: state
+            stopId: null
+            zip: zip
+            country: country
+            county: null
+            lastLine: null
+            streetName: null
+            crossStreetName: null
+            door: null
+            geoCodeSubStatus: null
+        }
+    poi: 
+       {
+           avgRating: 1
+           isRatingEnable: true
+           poiId: 1234
+           popularity: 1
+           bizPoi: 
+                 {
+                     brand: null
+                     phoneNumber: null
+                     categoryId: null
+                     groupID: 0
+                     navigable: false
+                     distance: 0
+                     supportInfos: []
+                     supplementalInfos: []
+                     parentCatName: null
+                     price: null
+                     layout: 0
+                     vendorCode: null
+                     address: 
+                            {
+                                lat: 10000
+                                lon: 10000
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: label
+                                firstLine: firstline
+                                city: city
+                                state: state
+                                stopId: null
+                                zip: zip
+                                country: country
+                                county: null
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                 }
+           basePoiExtraInfo: null
+           localAppInfos: []
+       }
+    contactList: [
+                   {
+                       name: test@telenavsoftware.com
+                       ptn: 5555218135
+                   }
+                  ]
+}
+
+=====================================================================
+ProtoShareAddressResp
+{
+    status: 0
+    errorMessage: message
+}
+
+=====================================================================
+ProtoValidateAddressReq
+{
+    firstLine: firstline
+    lastLine: label
+    street1: street1
+    street2: street2
+    country: country
+    city: city
+    state: state
+    zip: null
+    addrSearchID: AddrSearchId
+    transactionID: transactionId
+    inputType: 0
+}
+
+=====================================================================
+ProtoValidateAddressResp
+{
+    status: 0
+    errorMessage: just for testing
+    totalCount: 1
+    addresses: [
+                 {
+                     lat: 1000000000
+                     lon: 1000000000
+                     stopType: 0
+                     stopStatus: 0
+                     isGeocoded: false
+                     isShareAddress: false
+                     label: label
+                     firstLine: first line
+                     city: city name
+                     state: null
+                     stopId: null
+                     zip: zip
+                     country: country
+                     county: county
+                     lastLine: last line
+                     streetName: street name
+                     crossStreetName: cross streee
+                     door: door
+                     geoCodeSubStatus: 
+                                     {
+                                         substatus_DOOR_CHANGED: false
+                                         substatus_STREET_CHANGED: false
+                                         substatus_ZIP_CHANGED: false
+                                         substatus_CITY_CHANGED: false
+                                         substatus_CROSSSTREET_CHANGED: false
+                                         substatus_STATE_CHANGED: false
+                                         substatus_COUNTY_CHANGED: false
+                                         substatus_COUNTRY_CHANGED: false
+                                     }
+                 }
+                ]
+    geoCodeStatusCode: 0
+}
+
+=====================================================================
+ProtoValidateAirportReq
+{
+    airportName: SFO
+    region: NA
+}
+
+=====================================================================
+ProtoValidateAirportResp
+{
+    status: 0
+    errorMessage: just for testing
+    airportStops: [
+                    {
+                        message: feature name: brand name
+                        stop: 
+                            {
+                                lat: 0
+                                lon: 0
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: 
+                                firstLine: brand name
+                                city: 
+                                state: 
+                                stopId: 
+                                zip: 
+                                country: 
+                                county: 
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                    }
+                   ]
+}
+
+=====================================================================
+ProtoShareAddressReq
+{
+    label: label
+    senderPTN: 5555218135
+    stop: 
+        {
+            lat: 10000
+            lon: 10000
+            stopType: 0
+            stopStatus: 0
+            isGeocoded: false
+            isShareAddress: false
+            label: label
+            firstLine: firstline
+            city: city
+            state: state
+            stopId: null
+            zip: zip
+            country: country
+            county: null
+            lastLine: null
+            streetName: null
+            crossStreetName: null
+            door: null
+            geoCodeSubStatus: null
+        }
+    poi: 
+       {
+           avgRating: 1
+           isRatingEnable: true
+           poiId: 1234
+           popularity: 1
+           bizPoi: 
+                 {
+                     brand: null
+                     phoneNumber: null
+                     categoryId: null
+                     groupID: 0
+                     navigable: false
+                     distance: 0
+                     supportInfos: []
+                     supplementalInfos: []
+                     parentCatName: null
+                     price: null
+                     layout: 0
+                     vendorCode: null
+                     address: 
+                            {
+                                lat: 10000
+                                lon: 10000
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: label
+                                firstLine: firstline
+                                city: city
+                                state: state
+                                stopId: null
+                                zip: zip
+                                country: country
+                                county: null
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                 }
+           basePoiExtraInfo: null
+           localAppInfos: []
+       }
+    contactList: [
+                   {
+                       name: test@telenavsoftware.com
+                       ptn: 5555218135
+                   }
+                  ]
+}
+
+=====================================================================
+ProtoShareAddressResp
+{
+    status: 0
+    errorMessage: message
+}
+
+=====================================================================
+ProtoValidateAddressReq
+{
+    firstLine: firstline
+    lastLine: label
+    street1: street1
+    street2: street2
+    country: country
+    city: city
+    state: state
+    zip: null
+    addrSearchID: AddrSearchId
+    transactionID: transactionId
+    inputType: 0
+}
+
+=====================================================================
+ProtoValidateAddressResp
+{
+    status: 0
+    errorMessage: just for testing
+    totalCount: 1
+    addresses: [
+                 {
+                     lat: 1000000000
+                     lon: 1000000000
+                     stopType: 0
+                     stopStatus: 0
+                     isGeocoded: false
+                     isShareAddress: false
+                     label: label
+                     firstLine: first line
+                     city: city name
+                     state: null
+                     stopId: null
+                     zip: zip
+                     country: country
+                     county: county
+                     lastLine: last line
+                     streetName: street name
+                     crossStreetName: cross streee
+                     door: door
+                     geoCodeSubStatus: 
+                                     {
+                                         substatus_DOOR_CHANGED: false
+                                         substatus_STREET_CHANGED: false
+                                         substatus_ZIP_CHANGED: false
+                                         substatus_CITY_CHANGED: false
+                                         substatus_CROSSSTREET_CHANGED: false
+                                         substatus_STATE_CHANGED: false
+                                         substatus_COUNTY_CHANGED: false
+                                         substatus_COUNTRY_CHANGED: false
+                                     }
+                 }
+                ]
+    geoCodeStatusCode: 0
+}
+
+=====================================================================
+ProtoValidateAirportReq
+{
+    airportName: SFO
+    region: NA
+}
+
+=====================================================================
+ProtoValidateAirportResp
+{
+    status: 0
+    errorMessage: just for testing
+    airportStops: [
+                    {
+                        message: feature name: brand name
+                        stop: 
+                            {
+                                lat: 0
+                                lon: 0
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: 
+                                firstLine: brand name
+                                city: 
+                                state: 
+                                stopId: 
+                                zip: 
+                                country: 
+                                county: 
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                    }
+                   ]
+}
+
+=====================================================================
+ProtoShareAddressReq
+{
+    label: label
+    senderPTN: 5555218135
+    stop: 
+        {
+            lat: 10000
+            lon: 10000
+            stopType: 0
+            stopStatus: 0
+            isGeocoded: false
+            isShareAddress: false
+            label: label
+            firstLine: firstline
+            city: city
+            state: state
+            stopId: null
+            zip: zip
+            country: country
+            county: null
+            lastLine: null
+            streetName: null
+            crossStreetName: null
+            door: null
+            geoCodeSubStatus: null
+        }
+    poi: 
+       {
+           avgRating: 1
+           isRatingEnable: true
+           poiId: 1234
+           popularity: 1
+           bizPoi: 
+                 {
+                     brand: null
+                     phoneNumber: null
+                     categoryId: null
+                     groupID: 0
+                     navigable: false
+                     distance: 0
+                     supportInfos: []
+                     supplementalInfos: []
+                     parentCatName: null
+                     price: null
+                     layout: 0
+                     vendorCode: null
+                     address: 
+                            {
+                                lat: 10000
+                                lon: 10000
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: label
+                                firstLine: firstline
+                                city: city
+                                state: state
+                                stopId: null
+                                zip: zip
+                                country: country
+                                county: null
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                 }
+           basePoiExtraInfo: null
+           localAppInfos: []
+       }
+    contactList: [
+                   {
+                       name: test@telenavsoftware.com
+                       ptn: 5555218135
+                   }
+                  ]
+}
+
+=====================================================================
+ProtoShareAddressResp
+{
+    status: 0
+    errorMessage: message
+}
+
+=====================================================================
+ProtoValidateAddressReq
+{
+    firstLine: firstline
+    lastLine: label
+    street1: street1
+    street2: street2
+    country: country
+    city: city
+    state: state
+    zip: null
+    addrSearchID: AddrSearchId
+    transactionID: transactionId
+    inputType: 0
+}
+
+=====================================================================
+ProtoValidateAddressResp
+{
+    status: 0
+    errorMessage: just for testing
+    totalCount: 1
+    addresses: [
+                 {
+                     lat: 1000000000
+                     lon: 1000000000
+                     stopType: 0
+                     stopStatus: 0
+                     isGeocoded: false
+                     isShareAddress: false
+                     label: label
+                     firstLine: first line
+                     city: city name
+                     state: null
+                     stopId: null
+                     zip: zip
+                     country: country
+                     county: county
+                     lastLine: last line
+                     streetName: street name
+                     crossStreetName: cross streee
+                     door: door
+                     geoCodeSubStatus: 
+                                     {
+                                         substatus_DOOR_CHANGED: false
+                                         substatus_STREET_CHANGED: false
+                                         substatus_ZIP_CHANGED: false
+                                         substatus_CITY_CHANGED: false
+                                         substatus_CROSSSTREET_CHANGED: false
+                                         substatus_STATE_CHANGED: false
+                                         substatus_COUNTY_CHANGED: false
+                                         substatus_COUNTRY_CHANGED: false
+                                     }
+                 }
+                ]
+    geoCodeStatusCode: 0
+}
+
+=====================================================================
+ProtoValidateAirportReq
+{
+    airportName: SFO
+    region: NA
+}
+
+=====================================================================
+ProtoValidateAirportResp
+{
+    status: 0
+    errorMessage: just for testing
+    airportStops: [
+                    {
+                        message: feature name: brand name
+                        stop: 
+                            {
+                                lat: 0
+                                lon: 0
+                                stopType: 0
+                                stopStatus: 0
+                                isGeocoded: false
+                                isShareAddress: false
+                                label: 
+                                firstLine: brand name
+                                city: 
+                                state: 
+                                stopId: 
+                                zip: 
+                                country: 
+                                county: 
+                                lastLine: null
+                                streetName: null
+                                crossStreetName: null
+                                door: null
+                                geoCodeSubStatus: null
+                            }
+                    }
+                   ]
+}
+

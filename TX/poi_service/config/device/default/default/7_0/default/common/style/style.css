@@ -1,0 +1,260 @@
+body {
+	font-family: Arial;
+	margin: 0px;
+}
+
+form {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+input[type="button"], button{
+	padding:0;
+	margin:0;
+	border: 0;
+}
+
+button {
+	font-size: 1em;
+}
+
+a:link,a:visited {
+	text-decoration: none;
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-text-size-adjust: none;
+}
+
+.align_left {
+	text-align: left;
+}
+
+.align_center {
+	text-align: center;
+}
+
+.align_right {
+	text-align: right;
+}
+
+.div_tableOnly,.table {
+	display: table;
+}
+
+.div_table {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.div_row,.tr {
+	display: table-row;
+}
+
+.div_cell,.td {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.clsFixTable {
+	table-layout: fixed;
+}
+
+.clsEllipsis {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.text_cutoff {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.clsNoWrap {
+	position: absolute;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.clsNoWrapTable {
+	table-layout: fixed;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.clsWordBreak {
+	word-break: keep-all;
+}
+
+.lineThroughText {
+	TEXT-DECORATION: line-through
+}
+
+.valign_top {
+	vertical-align: top;
+}
+
+.fc_gray {
+	color: #666666;
+}
+
+.fc_white {
+	color: white;
+}
+
+.fc_black {
+	color: #333333;
+}
+
+.fc_red{
+	color: red;
+}
+
+.fw_bold {
+	font-weight: bold;
+}
+
+.clsPageBackground {
+	background-color: white;
+	width: 100%;
+	height: 100%;
+}
+
+.clsTitleContent {
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.clsTitleFrame {
+	position: relative;
+	width: 100%;
+}
+
+.fs_smallest {
+	font-size: 1.6em;
+}
+
+.fs_verySmall {
+	font-size: 1.8em;
+}
+
+.fs_small {
+	font-size: 2em;
+}
+
+.fs_middle {
+	font-size: 2.2em;
+}
+
+.fs_large {
+	font-size: 2.4em;
+}
+
+.fs_veryLarge {
+	font-size: 2.6em;
+}
+
+.fs_huge {
+	font-size: 2.8em;
+}
+
+.fs_veryHuge {
+	font-size: 3em;
+}
+
+.fs_hugest {
+	font-size: 3.2em;
+}
+
+.clsTitleContent {
+	font-size: 2.7em;
+}
+
+
+
+
+
+
+/* **************** for popup ********************** */
+.popupBackground{
+	display:none;
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:0px;
+	z-index:1;
+}
+
+.alertPopup{
+	display:none;
+	position:fixed;
+	-webkit-border-radius: 10px;
+	-webkit-box-shadow:3px 3px 7px #31312E;
+	z-index:2;
+}
+
+.loadingPopup{
+    position: relative;
+    display: none;
+    z-index:2;
+}
+
+/* alert message */
+.fdpopupdiv{
+	position:relative;
+	width: 100%;
+	height: 64%;
+	padding: 3% 0;
+    margin: auto;
+    border-top-left-radius:10px;
+	border-top-right-radius:10px;
+}
+
+.popupTextContainer{
+	width: 92%;
+	margin: auto;
+}
+
+#alertTitle{
+	height: 30%;
+}
+
+/* alert confirm button */
+.popbottomdivstyle{
+    position: relative;
+    height: 30%;
+    width: 100%;
+    border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.clsOKButton {
+	width: 50%;
+	height: 4.5em;
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+	.alertPopup{
+		height: 34%;
+		width: 92%;
+	}
+}
+
+/* Landscape */
+@media screen and (orientation:landscape) {
+	.alertPopup{
+		height: 50%;
+		width: 80%;
+	}
+}

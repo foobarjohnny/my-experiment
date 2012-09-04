@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Entry Page of Android VIVO 7.2 in Movie b-server</title>
+<meta name="viewport" content="width=device-width" />
+<style type="text/css">
+html {
+	font-size: 16pt;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	font-size: 1em;
+	font-family: Helvetica;
+}
+</style>
+<script type="text/javascript">
+	function goToMovieListPage() {
+		location.href = "/movie/html/startup.do?&dummyData=true" + "&" + getClientInfo();
+	}
+
+	function showSchedule() {
+		location.href = "/movie/html/goToJsp.do?jsp=showSchedule&dummyData=true" + "&" + getClientInfo();
+	}
+
+	function buyTicket() {
+		location.href = "/movie/html/goToJsp.do?jsp=buyTicket&dummyData=true" + "&" + getClientInfo();
+	}
+
+	function getClientInfo() {
+		var clientInfo = 'clientInfo=' + JSON.stringify(clientInfoJSON) + '&width=480&height=320';
+		return clientInfo;
+	}
+
+	var clientInfoJSON = {
+		"programCode" : "VIVONAVPROG",
+		"deviceCarrier" : "TN",
+		"platform" : "ANDROID",
+		"version" : "7.2.0",
+		"productType" : "SCOUT_FREE",
+		"device" : "genericTest",
+		"locale" : "en_US",
+		"buildNumber" : "7101213"
+	}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" bottommargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<div onClick="goToMovieListPage()">
+		<a href="#">Movie Theater List</a>
+	</div>
+	<div onClick="showSchedule()">
+		<a href="#">Show Schedule</a>
+	</div>
+	<div onClick="buyTicket()">
+		<a href="#">Buy Ticket</a>
+	</div>
+</body>
+</html>

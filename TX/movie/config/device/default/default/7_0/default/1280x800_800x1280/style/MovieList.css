@@ -1,0 +1,260 @@
+.clsajaxloadingmsg {
+	font-size: 20px;
+}
+
+.clsTabBackground {
+	width: 100%;
+	text-align: center;
+	background-color: #FFFFFF;
+	vertical-align: bottom;
+	z-index: 2;
+}
+
+.clsBigTabBackground {
+	height: 85px;
+	width: 100%;
+}
+
+.clsTabOutSideTable {
+	height: 65px;
+	cursor: pointer;
+}
+
+.clsTabInSideTable {
+	height: 62px;
+	cursor: pointer;
+}
+
+.clsDatePickerBg {
+	width: 100%;
+}
+
+.clsDatePickerTableBg {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	border: 0px;
+	padding: 0% 3%;
+}
+
+.clsListTopBar {
+	width: 100%;
+	border: 0px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(54, 54, 54) ), to(white) );
+}
+
+.clsMovieContent {
+	width: 100%;
+	height: 70%;
+}
+
+.clsPassedShowTime {
+	TEXT-DECORATION: line-through
+}
+
+.clsTabEdge {
+	height: 82px;
+	width: 25px;
+}
+
+.clsButtonMiddle {
+	padding-top: 10px;
+	height: 62px;
+	font-size: bold;
+}
+
+.clsChooseLocation {
+	padding-right: 3%;
+}
+
+.clsMovieImage {
+	width: 80px;
+	height: 120px;
+}
+
+.clsMovieDesc {
+	position: relative;
+	overflow: hidden;
+	height: 70px;
+	width: 95%;
+}
+
+.clsSearchDate {
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.arrowlistmenu {
+	width: 100%; /*width of accordion menu*/
+	overflow-x: hidden;
+}
+
+.arrowlistmenu .menuheader { /*CSS class for menu headers in general (expanding or not!)*/
+	margin-bottom: 10px;
+	/* bottom spacing between header and rest of content*/
+	padding: 4px 0 4px 10px; /* header text is indented 10px*/
+	cursor: hand;
+	cursor: pointer;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.arrowlistmenu ul { /*CSS for UL of each sub menu*/
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 0px;
+	/*bottom spacing between each UL and rest of content*/
+}
+
+.arrowlistmenu ul li {
+	padding-bottom: 2px; /*bottom spacing between menu items*/
+}
+
+.arrowlistmenu ul li a {
+	color: #A70303;
+	background: no-repeat center left; /*custom bullet list image*/
+	display: block;
+	padding: 0px 0;
+	padding-left: 0px; /*link text is indented 19px*/
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.arrowlistmenu ul li a:visited {
+	color: #A70303;
+}
+
+.arrowlistmenu ul li a:hover { /*hover state CSS*/
+	color: #A70303;
+	background-color: #F3F3F3;
+}
+
+.moviename {
+	padding-left: 10px;
+	font-weight: bold;
+	width: 70%;
+}
+
+.theatername {
+	padding-left: 10px;
+	font-weight: bold;
+	width: 85%;
+}
+
+.theateraddress {
+	padding: 5px 10px 5px 10px;;
+}
+
+.distance {
+	padding-right: 10px;
+}
+
+.tomatoRating {
+	font-weight: bold;
+	color: #7F7F7F;
+	text-decoration: inherit;
+}
+
+.showfilmtr2 {
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	height: 41px;
+	-webkit-box-shadow: 1px 0px 1px #929292;
+}
+
+.topstyle {
+	position: relative;
+	height: 5px;
+	width: 100%;
+	border: 0px;
+}
+
+.bottomstyle {
+	position: relative;
+	height: 5px;
+	width: 100%;
+	border: 0px;
+	border-bottom: 1px solid #9C9C9C;
+}
+
+.buttonstyle {
+	font-weight: bold;
+	color: #FFFFFF;
+	height: 35px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.filminfodiv {
+	width: 94%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	padding-top: 8px;
+	-webkit-border-radius: 5px;
+}
+
+.theaterMovieinfoDiv {
+	width: 94%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	padding-top: 8px;
+	-webkit-border-radius: 5px;
+}
+
+.bigredfont {
+	font-weight: bold;
+	color: red;
+}
+
+.imgplace {
+	padding: 0px 8px 8px 8px;
+}
+
+.movieTicShowTime {
+	padding: 0px 0px 15px 0px;
+}
+
+.blackborderstyle {
+	vertical-align: middle;
+	background-color: #FFFFFF;
+	border: 1px #000000;
+}
+
+.clsPStyle {
+	border: solid 1px #000000;
+	padding: 2px 2px 2px 2px;
+	background: #FFFFFF;
+	height: 15px;
+}
+
+.clsMovieTheater {
+	padding: 0px 8px 4px 8px;
+}
+
+.clsTomatoRatingUrl {
+	width: 12%;
+	align: right;
+	valign: bottom;
+}
+
+.clsTheaterListBuyTd {
+	padding-right: 2px;
+	width: 20%;
+	text-align: right;
+	vertical-align: bottom;
+}
+
+.clsFontColor_red {
+	color: #dd1b22;
+}
+
+.clsFontColor_green {
+	color: #8cab3c;
+}

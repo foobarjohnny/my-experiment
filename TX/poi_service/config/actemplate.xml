@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<mappings>
+		<mapping region="US" act="US" />
+
+		<mapping region="CA" act="CA" />
+
+		<mapping region="GB" act="GB" />
+		<mapping region="AT" act="GB" />
+		<mapping region="CH" act="GB" />
+		<mapping region="PT" act="GB" />
+		<mapping region="IE" act="GB" />
+		<mapping region="NL" act="GB" />
+		<mapping region="BE" act="GB" />
+		<mapping region="LU" act="GB" />
+		<mapping region="DK" act="GB" />
+		<mapping region="SE" act="GB" />
+		<mapping region="NO" act="GB" />
+		<mapping region="MC" act="GB" />
+		<mapping region="LI" act="GB" />
+		<mapping region="AD" act="GB" />
+		<mapping region="GR" act="GB" />
+		<mapping region="IM" act="GB" />
+		<mapping region="GI" act="GB" />
+		<mapping region="SM" act="GB" />
+		<mapping region="VA" act="GB" />
+
+		<mapping region="FI" act="FI" />
+
+		<mapping region="FR" act="FR" />
+
+		<mapping region="DE" act="DE" />
+
+		<mapping region="BR" act="BR" />
+
+		<mapping region="MX" act="MX" />
+
+		<mapping region="IN" act="IN" />
+
+		<mapping region="ES" act="ES" />
+		<mapping region="IT" act="ES" />
+	</mappings>
+
+	<ace_stop_mappings>
+		<mapping ace="CITY" stop="city" />
+		<mapping ace="STATE" stop="state" />
+		<mapping ace="POSTAL_CODE" stop="postalCode" />
+		<mapping ace="COUNTY" stop="county" />
+		<mapping ace="STREET" stop="street" />
+		<mapping ace="HOUSE_NUMBER" stop="houseNumber" />
+		<mapping ace="LOCALITY" stop="locality" />
+		<mapping ace="SUB_LOCALITY" stop="subLocality" />
+		<mapping ace="FIRST_LINE" stop="firstLine" />
+		<mapping ace="COUNTRY" stop="country" />
+		<mapping ace="CROSS_STREET" stop="crossStreet" />
+		<mapping ace="LAT" stop="lat" />
+		<mapping ace="LON" stop="lon" />
+		<mapping ace="SUITE" stop="suite" />
+		<mapping ace="LOCALE" stop="locale" />
+		<mapping ace="SUB_STREET" stop="subStreet" />
+		<mapping ace="BUILDING_NAME" stop="buildingName" />
+		<mapping ace="ADDRESS_ID" stop="addressId" />
+	</ace_stop_mappings>
+
+	<actemplates>
+		<actemplate id="US">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|STATE|POSTAL_CODE" label="ac.template.house_number.street"/>
+			</fields>
+			<fields>
+				<field name="CITY,STATE,POSTAL_CODE" stopField="CITY|STATE|POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY|STATE|POSTAL_CODE" label="ac.template.city.state.zip" />
+			</fields>
+		</actemplate>
+		<actemplate id="CA">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|STATE|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="CITY,STATE,POSTAL_CODE" stopField="CITY|STATE|POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY|STATE|POSTAL_CODE" label="ac.template.city.province.postal_code" />
+			</fields>
+		</actemplate>
+		<actemplate id="GB">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="GB_City" />
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="GB_Postalcode" />
+			</fields>
+		</actemplate>
+		<actemplate id="FI">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|POSTAL_CODE" label="ac.template.house_number.street.de" />
+			</fields>
+			<fields>
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="GB_City" />
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="GB_Postalcode" />
+			</fields>
+		</actemplate>
+		<actemplate id="FR">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="FR_Postalcode" />
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="FR_City" />
+			</fields>
+		</actemplate>
+		<actemplate id="DE">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|POSTAL_CODE" label="ac.template.house_number.street.de" />
+			</fields>
+			<fields>
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="DE_Postalcode" />
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="DE_City" />
+			</fields>
+		</actemplate>
+		<actemplate id="BR">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|LOCALITY|CITY|STATE|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="LOCALITY" stopField="LOCALITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="LOCALITY" label="ac.template.neighborhood" css="BR_Locality" />
+				<field name="CITY,STATE,POSTAL_CODE" stopField="CITY|STATE|POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY|STATE|POSTAL_CODE" label="ac.template.city.state.postal_code" css="BR_CityStatePostalcode" />
+			</fields>
+		</actemplate>
+		<actemplate id="MX">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|COUNTY|STATE|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="MX_City" />
+				<field name="COUNTY" stopField="COUNTY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="COUNTY" label="ac.template.county" css="MX_County" />
+				<field name="STATE" stopField="STATE" style="text" maxLen="-1" minLen="0"  autoSuggest="addressCache" autoSuggestFormat="STATE" label="ac.template.state" css="MX_State" />
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="MX_Postalcode" />
+			</fields>
+		</actemplate>
+		<actemplate id="IN">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET,SUB_LOCALITY" stopField="FIRST_LINE|SUB_LOCALITY" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|SUB_LOCALITY|LOCALITY|CITY|COUNTY|STATE|POSTAL_CODE" label="ac.template.house_number.street.sub_locality" />
+			</fields>
+			<fields>
+				<field name="LOCALITY,CITY,COUNTY,STATE,POSTAL_CODE" stopField="LOCALITY|CITY|COUNTY|STATE|POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="LOCALITY|CITY|COUNTY|STATE|POSTAL_CODE" label="ac.template.locality.city.county.state.postal_code" />
+			</fields>
+		</actemplate>
+		<actemplate id="ES">
+			<fields>
+				<field name="HOUSE_NUMBER,STREET" stopField="FIRST_LINE" style="text" maxLen="100" minLen="0" autoSuggest="recentAndFav" autoSuggestFormat="FIRST_LINE|CITY|STATE|POSTAL_CODE" label="ac.template.house_number.street" />
+			</fields>
+			<fields>
+				<field name="CITY" stopField="CITY" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="CITY" label="ac.template.city" css="ES_City" />
+				<field name="STATE" stopField="STATE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="STATE" optionsSize="5" label="ac.template.state" css="ES_State" />
+				<field name="POSTAL_CODE" stopField="POSTAL_CODE" style="text" maxLen="-1" minLen="0" autoSuggest="addressCache" autoSuggestFormat="POSTAL_CODE" label="ac.template.postal_code" css="ES_Postalcode" />
+			</fields>
+		</actemplate>
+	</actemplates>
+</root>

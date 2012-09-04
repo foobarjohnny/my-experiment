@@ -1,0 +1,25 @@
+body {
+	font-size: 62.5%;
+}
+
+.clsTitleFrame {
+	height: 70px;
+}
+
+.clsLargeRadius {
+    -webkit-border-radius: 10px;
+}
+
+.clsMiddleRadius {
+    -webkit-border-radius: 7px;
+}
+
+.clsSmallRadius {
+    -webkit-border-radius: 5px;
+}
+
+/* **************** from popup.css ********************** */
+.loadingPopup,.loadingPopupLandscape{
+	width: 116px;
+    height: 117px;
+}

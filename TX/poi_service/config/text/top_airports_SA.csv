@@ -1,0 +1,65 @@
+POI_ID *,LATITUDE,LONGTITUDE,STREET_NO,STREET,CITY,PROVINCE,COUNTRY,POSTAL_CODE,BRAND_NAME,FEATURE_NAME
+24001781303,-9.86637,-67.8973,18,Estrada BR- 364 18,RIO BRANCO,AC,BR,,Aeroporto Internacional de Rio Branco,RBR
+24001798216,-7.5966,-72.7736,12,Rodovia AC 407 12,CRUZEIRO DO SUL,AC,BR,,Aeroporto Internacional de Cruzeiro do Sul,CZS
+24002242487,-9.666252,-35.735098,91,Rod Barao 104 91,MACEIO,AL,BR,,Aeroporto Internacional de Maceió,MCZ
+24001782065,-3.356114,-64.72397,4485,Estrada do Aeroporto 4485,TEFE,AM,BR,,Aeroporto de Tefé,TFF
+24001778662,-3.031572,-60.032712,1350,AV. SANTOS DUMONT 1350,MANAUS,AM,BR,,Aeroporto Internacional Eduardo Gomes - Manaus,MAO
+24001785693,-4.2503,-69.9395,s/n,Praça Mal. do Ar Eduardo Gomes s/n,TABATINGA,AM,BR,,Aeroporto Internacional de Tabatinga,TBT
+24001801604,0.04966,-51.069556,S/N,R. HILDEMAR MAIA S/N,MACAPA,AP,BR,,Aeroporto Internacional de Macapá,MCP
+24001794727,-14.811802,-39.037256,s/n,R Brigadeiro Eduardo Gomes s/n,ILHEUS,BA,BR,,Aeroporto de Ihéus,IOS
+24002253194,-9.39917,-38.2491,3,BR 110 km 3,SALVADOR,BA,BR,,Aeroporto Paulo Afonso,PAV
+24002257584,-12.9144,-38.3349,s/n,Praça Gago Coutinho s/n,SALVADOR,BA,BR,,Aeroporto Internacional de Salvador-Deputado Luís Eduardo Magalhães,SSA
+24001780320,-7.214211,-39.27677,4000,AV. VIRGÍLIO TÁVORA 4000,JUAZEIRO DO NORTE,CE,BR,,Aeroporto de Juazeiro do Norte,JDO
+24002256132,-3.742687,-38.451631,3000,Av Senador Carlos Jereissati 3000,FORTALEZA,CE,BR,,Aeroporto Pinto Martins,FOR
+24002232997,-15.873284,-47.90782,s/n,Aeroporto Internacional Pres Jucelino Kubitschek s/n,LAGO SUL,DF,BR,,Aeroporto Internacional Pres. Jucelino Kubitschek,BSB
+24002239906,-20.286209,-40.303387,S/N,AV. FERNANDO FERRARI S/N,VITORIA,ES,BR,,Aeroporto de Vitória,VIX
+24001783688,-5.53168,-47.456,s/n,Aeroporto de Imperatriz s/n,IMPERATRIZ,MA,BR,,Aeroporto de Imperatriz- Prefeito Renato Moreira,IMP
+24002248228,-2.583351,-44.236753,s/n,Area Militar Gicla s/n,SAO LUIS,MA,BR,,Aeroporto Internacional Cunha Machado ,SLZ
+24001796450,-19.851348,-43.956381,204,Pca Bagatelle 204,BELO HORIZONTE,MG,BR,,Aeroporto de Belo Horizonte/Pampulha,PLU
+24002252091,-16.7049,-43.8196,s/n,Aeroporto de Montes Claros s/n,MONTES CLAROS,MG,BR,,Aeroporto de Montes Claros,MOC
+24001788469,-18.8895,-48.23,100,Praça José Alves dos Santos 100,UBERLANDIA,MG,BR,,Aeroporto de Uberlândia,UDI
+24001780956,-19.743187,-47.960256,2706,AV. NENÊ SABINO 2706,UBERABA,MG,BR,,Aeroporto de Uberaba,UBA
+24001785083,-22.550133,-55.706451,770,Rua Batista de Azevedo 770,PONTA PORA,MS,BR,,Aeroporto Internacional de Ponta Porã,PMG
+24001797857,-20.46256,-54.631603,S/N,AV. DQ. DE CAXIAS S/N,CAMPO GRANDE,MS,BR,,Aeroporto Internacional de Campo Grande,CGR
+24001784198,-19.014318,-57.659923,s/n,Rua Santos Dumont s/n,CORUMBA,MS,BR,,Aeroporto Internacional de Corumbá,CMG
+24002258807,-22.549228,-55.705058,s/n,R Aeroporto de Viracopos s/n,PONTA PORA,MS,BR,,Aeroporto Internacional Ponta Porã,PMG
+24002259605,-16.048407,-57.634509,S/N,VIA AEROPORTO S/N,CACERES,MT,BR,,Aeroporto Internacional de Cuiabá/Cáceres,CCX
+24001782412,-15.638902,-56.120882,s/n,Av. João Ponce de Arruda s/n,VARZEA GRANDE,MT,BR,,Aeroporto Internacional Marechal Rondom,CGB
+24002243453,-2.42467,-54.7864,s/n,Praça Eduardo Gomes s/n,SANTAREM,PA,BR,,Aeroporto de Santarém - Maestro Wilson Fonseca,STM
+24001781508,-1.443039,-48.490459,s/n,Av. Senador Lemos s/n,BELEM,PA,BR,,Aeroporto Julio Cesar,ZZZ
+24001798682,-3.253,-52.2497,s/n,Av. Tancredo Neves s/n,ALTAMIRA,PA,BR,,Aeroporto de Altamira,ATM
+24002253040,-1.42336,-48.450278,S/N,AV. JÚLIO CÉSAR S/N,BELEM,PA,BR,,Aeroporto Internacional de Belém,BEL
+24001781489,-6.11514,-50.0005,s/n,Aeroporto de Carajás s/n,PARAUAPEBAS,PA,BR,,Aeroporto de Carajás,CKS
+24002237331,-5.351166,-49.120517,1,ROD. TRANSAMAZÔNICA 1,MARABA,PA,BR,,Aeroporto de Marabá,MAB
+24001795517,-7.2693,-35.8942,s/n,Av. Uberaba s/n,CAMPINA GRANDE,PB,BR,,Aeroporto Presidente João Suassuna,CPV
+24002250092,-7.141522,-34.949669,2173,R Marechal Rondon 2173,SANTA RITA,PB,BR,,Aeroporto  Internacional  Presidente Castro Pinto,JPA
+24002256765,-9.36655,-40.5658,11,BR 235 Km 11,PETROLINA,PE,BR,,Aeroporto de Petrolina-Senador Nilo Coelho,PNZ
+24002239110,-8.13407,-34.9177,s/n,Praça Ministro Salgado Filho s/n,IMBIRIBEIRA,PE,BR,,Aeroporto Internacional do Recife / Guararapes-Gilberto Freyre,REC
+24002237476,-2.903929,-41.776261,S/N,ROD. BR-343 S/N,PARNAIBA,PI,BR,,Aeroporto Internacional de Parnaíba - Prefeito Dr.João Silva Filho,PHB
+24002261441,-25.675833,-54.434064,165,BR 469 165,FOZ DO IGUACU,PR,BR,,Aeroporto Internacional de Foz do Iguaçu,IGU
+24002253230,-25.396481,-49.232583,s/n,Rua Cícero Jaime Bley s/n,CURITIBA,PR,BR,,Aeroporto de Bacacheri,BFH
+24001790015,-25.534157,-49.188835,2730,Av Rocha Pombo 2730,SAO JOSE DOS PINHAIS,PR,BR,,Aeroporto Internacional Afonso Pena,CWB
+24001783804,-22.98863,-43.366123,2541,AV. AYRTON SENNA 2541,RIO DE JANEIRO,RJ,BR,,Aeroporto de Jacarepaguá,SBJR
+24001771173,-22.35541,-41.77012,s/n,Est. Hildebrando Alves Barbosa s/n,MACAE,RJ,BR,,Aeroporto de Macaé,MEA
+24002257452,-22.82638,-43.233386,s/n,Av Vinte de Janeiro s/n,RIO DE JANEIRO,RJ,BR,,Aeroporto Internacional do Rio de Janeiro/ Galeão,GIG
+24002256973,-22.469965,-44.479797,S/N,R. HOSTILIO DE SOUZA S/N,RESENDE,RJ,BR,,Aeroporto de Resende,RDE
+24002259422,-22.912021,-43.168182,s/n,Pca Senador Salgado Filho s/n,RIO DE JANEIRO,RJ,BR,,Aeroporto Santos Dumont / Rio de Janeiro,SDU
+24001787312,-5.890909,-35.247772,s/n,Av Rio Xingu s/n,PARNAMIRIM,RN,BR,,Aeroporto Internacional Agusto Severo,NAT
+24002241763,-8.715225,-63.898845,s/n,Aeroporto s/n,PORTO VELHO,RO,BR,,Aeroporto De Porto Velho - Belmont,PVH
+24002250368,-8.708207,-63.899125,s/n,Av. Jorge Teixeira s/n,PORTO VELHO,RO,BR,,Aeroporto Internacional Porto Velho/ Governador Jorge Teixeira de Oliv,PVH
+24001782732,2.821398,-60.673691,s/n,Av. Cap. Ene Garcez s/n,BOA VISTA,RR,BR,,Aeroporto Internacional de Boa Vista,BVB
+24001789459,-31.730962,-52.341914,s/n,Av. Zeferino Costa s/n,PELOTAS,RS,BR,,Aeroporto Internacional de Pelotas,PET
+24001792277,-31.3881,-54.1124,s/n,R. 14 Bis s/n,BAGE,RS,BR,,Aeroporto Internacional Comandante Gustavo Kraemer  ,BGX
+24002261868,-29.987309,-51.155571,90010,Av Severo Dullius 90010,PORTO ALEGRE,RS,BR,,Aeroporto Internacional Salgado Filho,POA
+24002246564,-29.785642,-57.040793,6002,R Marechal Setembrino de Carvalho 6002,URUGUAIANA,RS,BR,,Aeroporto Internacinal Rubem Berta,URG
+24002262104,-26.272672,-48.850278,9000,AV. SANTOS DUMONT 9000,JOINVILLE,SC,BR,,Aeroporto de Joinville - Lauro Carneiro de Loyola,JOI
+24001772501,-28.7229,-49.4223,1085,Av. Vante Rovaris 1085,FORQUILHINHA,SC,BR,,Aeroporto Diomício Freitas/ Forquilhinha,CCM
+24002238821,-27.663561,-48.543459,3393,AV. DEP. DIOMÍCIO FREITAS 3393,FLORIANOPOLIS,SC,BR,,Aeroporto Internacional de Florianópolis,FLN
+24001803490,-10.983864,-37.054524,50,Av Monteiro Lobato 50,ARACAJU,SE,BR,,Aeroporto de Aracajú,AJU
+24001778557,-20.811179,-49.391375,s/n,Av dos Estudantes s/n,SAO JOSE DO RIO PRETO,SP,BR,,Aeroporto Internacional de São José do Rio Preto,SJP
+24001782278,-23.626887,-46.661168,s/n,Pca Comandante Linneu Gomes s/n,SAO PAULO,SP,BR,,Aeroporto Internacional de Congonhas,CGH
+24001791068,-23.421473,-46.478987,s/n,Rod Helio Smidt s/n,GUARULHOS,SP,BR,,Aeroporto Internacional de São Paulo/Guarulhos (Cumbica),GRU
+24001787839,-23.509343,-46.628838,1979,AV. SANTOS DUMONT 1979,SAO PAULO,SP,BR,,Aeroporto Campo de Marte,MAE
+24002241142,-23.2283,-45.8589,s/n,Parque Martin Cererê s/n,SAO JOSE DOS CAMPOS,SP,BR,,Aeroporto de São José dos Campos,SJK
+24001792399,-22.89272,-47.058711,66,R. SANTOS DUMONT 66,CAMPINAS,SP,BR,,Aeroporto Internacional de Viracopos / Campinas,VCP
+24002238665,-10.2955,-48.358,s/n,AV. DONISIO FARIA 55,PALMA,TO,BR,,Aeroporto Internacional de Palmas,PMW

@@ -1,0 +1,17 @@
+.about{
+	padding: 1em;
+}
+	
+.line{
+	padding: .5em 0;
+}
+
+a:link, a:visited {
+	text-decoration: underline;
+}
+
+#copyRight{
+	font-weight: normal;
+	padding-bottom: 1em;
+	font-size: .9em;
+}

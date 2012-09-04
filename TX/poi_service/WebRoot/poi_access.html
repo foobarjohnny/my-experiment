@@ -1,0 +1,252 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+	</head>
+	<script language="javascript">
+		var Global_width, Global_height;
+		window.onload = function() {
+			changeUrl();
+		}
+		function changeUrl() {
+			beforeChange();
+			var ip = document.getElementById("ip").value;
+			if (document.getElementById("inputIP").checked) {
+				ip = document.getElementById("inputtedIP").value;
+			}
+			var port = document.getElementById("port").value;
+			var project = document.getElementById("project").value;
+			var action = document.getElementById("action").value;
+			var programCode = document.getElementById("programCode").value;
+			var platform = document.getElementById("platform").value;
+			var version = document.getElementById("version").value;
+			var screen = document.getElementById("screen").value;
+			var dummyData = document.getElementById("dummyData").value;
+			var locale = document.getElementById("locale").value;
+			var scaleArr = new Array();
+			computeScale(screen, scaleArr);
+			var jsp = getJsp();
+			var url = "http://";
+	
+			url = url + ip;
+			if (ip != 'tn7x-poi.telenav.com') {
+				url += ":" + port;
+			}
+			url += "/" + project + "/html/" + action;
+			if (url.indexOf("?") == -1) {
+				url += "?";
+			} else {
+				url += "&";
+			}
+			url += "dummyData=" + dummyData;
+			url = url + "&width=" + scaleArr[1] + "&height=" + scaleArr[0];
+			//for scout
+			var prog_suffix = "NAVPROG";
+			var productType_suffix = "_NAV";
+			if (programCode.indexOf("SCOUT") == 0) {
+				prog_suffix = "PROG";
+				productType_suffix = "";
+			}
+			//end
+			url = url + '&clientInfo={"programCode":"' + programCode + prog_suffix
+					+ '","platform":"' + platform + '","version":"' + version
+					+ '","productType":"' + programCode + productType_suffix
+					+ '","device":"generic","locale":"' + locale + '"}';
+			url = url + "&isFirstLogin=true";
+			if (jsp) {
+				url += "&jsp=" + jsp;
+			}
+	
+			document.getElementById("url").href = url;
+		}
+		function computeScale(screen, arr) {
+			var tmp = new Array();
+			var tmpInner = new Array();
+	
+			tmp = screen.split("_");
+			tmpInner = tmp[0].split("x");
+	
+			arr[0] = tmpInner[0];
+			arr[1] = tmpInner[1];
+	
+			Global_width = arr[1];
+			Global_height = arr[0];
+		}
+		function getJsp() {
+			return document.getElementById("jsp").value;
+		}
+	
+		function beforeChange() {
+			var project = document.getElementById("project").value;
+			var programCode = document.getElementById("programCode").value;
+			var platform = document.getElementById("platform").value;
+			document.getElementById("action").value = action;
+	
+			var version = -1, screen = -1, platform;
+			if (programCode == "ATT") {
+				version = -1;
+			} else if (programCode == "SN") {
+				platform = "ANDROID";
+				version = "7.1.1";
+			} else if (programCode == "SCOUT") {
+				version = "7.0.01";
+				platform = "IPHONE";
+			} else if (programCode == "SCOUTUS" || programCode == "SCOUTEU") {
+				platform = "ANDROID";
+				version = "7.2";
+			}
+			document.getElementById("version").value = version;
+	
+			if (screen != -1) {
+				document.getElementById("screen").value = screen;
+			}
+			if (version != -1) {
+				document.getElementById("version").value = version;
+			}
+	
+			document.getElementById("platform").value = platform;
+		}
+		function switchIP(cb) {
+			var selectIPObj = document.getElementById("ip");
+			var inputIPObj = document.getElementById("inputtedIP");
+			if (cb.checked) {
+				inputIPObj.disabled = '';
+				selectIPObj.disabled = 'disabled';
+			} else {
+				inputIPObj.disabled = 'disabled';
+				selectIPObj.disabled = '';
+			}
+		}
+	</script>
+	<body>
+		<table style="width:100%;height:100%;font-size: 1em;" >
+			<tr>
+				<td>IP: </td>
+				<td>
+					<select id="ip" onchange="changeUrl()">
+						<option value="10.224.77.63">Dev FP</option>
+						<option value="t-tn60-rim-poi.telenav.com">TEST</option>
+						<option value="tn7x-poi.telenav.com">PRODUCTION</option>
+						<option value="" disabled="disabled">---------------------</option>
+						<option value="hqd-fptn72csvr-01">Dev72 FP</option>
+						<option value="hqs-fptn72csvr-02.telenav.com">QA72 FP</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="inputIP" onclick="switchIP(this)">input IP: </td>
+				<td><input type="number" id="inputtedIP" disabled="disabled" onchange="changeUrl()" value="172.16.10."> </td>
+			</tr>
+			<tr>
+				<td>action</td>
+				<td>
+					<select id="action" onchange="changeUrl()">
+						<option value="poidetail.do" selected="true">poidetail.do</option>
+						<option value="feedback.do">feedback.do</option>
+						<option value="weather.do">weather.do</option>
+						<option value="upsell.do">upsell.do</option>
+						<option value="goToJsp.do">goToJsp.do</option>
+						<option value="adsinfo.do?adsId=4014&isDummy=true">ad basic</option>
+						<option value="adsinfo.do?operateType=detail&adsId=999000008867&isDummy=true">ad detail</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>programCode</td>
+				<td>
+					<select id="programCode" onchange="changeUrl()">
+						<option value="ATT" selected="true">ATT</option>
+						<option value="SN">SN</option>
+						<option value="SCOUT">SCOUT</option>
+						<option value="SCOUTEU">SCOUTEU</option>
+						<option value="SCOUTUS">SCOUTUS</option>
+						<option value="ROGERS">ROGERS</option>
+						<option value="BELL">BELL</option>
+						<option value="TELCEL">TELCEL</option>
+						<option value="VIVO">VIVO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>platform</td>
+				<td>
+					<select id="platform" onchange="changeUrl()">
+						<option value="ANDROID" selected="true">ANDROID</option>
+						<option value="IPHONE">IPHONE</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>version</td>
+				<td>
+					<select id="version" onchange="changeUrl()">
+						<option value="7.0.01">7.0.01</option>
+						<option value="7.1.0" selected="true">7.1.0</option>
+						<option value="7.1.1">7.1.1</option>
+						<option value="7.2">7.2</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>screen</td>
+				<td>
+					<select id="screen" onchange="changeUrl()">
+						<option value="480x320_320x480">480x320_320x480</option>
+						<option value="640x480_640x800">640x480_640x800</option>
+						<option value="800x480_480x800" selected="true">800x480_480x800</option>
+						<option value="960x540_540x960">960x540_540x960</option>
+						<option value="1280x800_800x1280">1280x800_800x1280</option>
+					</select> 
+				</td>
+			</tr>
+			<tr>
+				<td>locale</td>
+				<td>
+					<select id="locale" onchange="changeUrl()">
+						<option value="en_US" selected="true">en_US</option>
+						<option value="es_MX">es_MX</option>
+						<option value="de_DE">de_DE</option>
+						<option value="en_GB">en_GB</option>
+						<option value="en_IN">en_IN</option>
+						<option value="en_US">en_US</option>
+						<option value="es_ES">es_ES</option>
+						<option value="fr_FR">fr_FR</option>
+						<option value="it_IT">it_IT</option>
+						<option value="nl_NL">nl_NL</option>
+						<option value="pt_BR">pt_BR</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>jsp</td>
+				<td>
+					<select id="jsp" onchange="changeUrl()">
+						<option value=""></option>
+						<option value="aboutAbout">aboutAbout</option>
+						<option value="poilist">poilist</option>
+						<option value="poidetail">poidetail</option>
+						<option value="choosePOI">choosePOI</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>URL</td>
+				<td><a href="" id="url" target="_blank">Click me when you are ready!</a></td>
+			</tr>
+		</table>
+		
+		
+		
+		
+		
+		
+		<input type="text"	id="port" value="8080" onchange="changeUrl()" style="display:none;"></td>
+		<select	id="project" onchange="changeUrl()" style="display:none;">
+			<option value="poi_service" selected="true">poi_service</option>
+			<option value="login_startup_service">login_startup_service</option>
+		</select>
+		<select id="dummyData" onchange="changeUrl()" style="display:none;">
+			<option value="true" selected="true">true</option>
+			<option value="false">false</option>
+		</select> 
+	</body>
+</html>

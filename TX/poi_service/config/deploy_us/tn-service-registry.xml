@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service-registry>
+	<!-- Register the protocols first. Make sure this is ahead of service registrations -->
+	<protocols>
+		<protocol name="databus" class="com.telenav.kernel.service.protocol.DatabusProtocol" default="true"/>
+	</protocols>
+	
+	<!-- Service Registrations -->
+	<services>
+		<!-- AD service -->
+		<service code="12" name="AD" protocol="databus">
+			<request class="com.telenav.xnav.datatype.telenavfinder.ADRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="1201" name="LOAD_BANNER_AD"/>
+			</service-items>
+		</service>
+		<!-- CONTACT_SERVICE -->
+		<service code="20" name="CONTACT_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.contact.ContactRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="2010" name="CREATE CONTACT"/>
+				<service-item code="2015" name="CREATE_CONTACT_GROUP"/>
+				<service-item code="2020" name="DELETE CONTACT"/>
+				<service-item code="2025" name="DELETE CONTACT_GROUP"/>
+				<service-item code="2028" name="GET_ALL_CONTACTS"/>
+				<service-item code="2029" name="GET_CONTACT_BY_ID"/>
+				<service-item code="2030" name="GET_CONTACTS"/>
+				<service-item code="2033" name="GET_GROUPS_BY_CONTACT_ID"/>
+				<service-item code="2035" name="GET_SUB_GROUPS"/>
+				<service-item code="2040" name="QUERY_CONTACTS"/>
+				<service-item code="2042" name="REMOVE_CONTACT_FROM_GROUPS"/>
+				<service-item code="2043" name="REMOVE_CONTACTS_FROM_GROUP"/>
+				<service-item code="2044" name="SET_CONTACT_TO_GROUPS"/>
+				<service-item code="2045" name="SET_CONTACTS_TO_GROUP"/>
+				<service-item code="2050" name="SYNC_CONTACTS"/>
+				<service-item code="2060" name="UPDATE_CONTACT"/>
+				<service-item code="2065" name="UPDATE_CONTACT_GROUP"/>
+			</service-items>
+		</service>
+		<!-- FAVORITE_SERVICE -->
+		<service code="30" name="FAVORITE_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.teletrip.FavoriteRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="3010" name="CREATE_FAVORITE"/>
+				<service-item code="3015" name="CREATE_FAVORITE_CATEGORY"/>
+				<service-item code="3020" name="DELETE_FAVORITE"/>
+				<service-item code="3025" name="DELETE_FAVORITE_CATEGORY"/>
+				<service-item code="3027" name="GET_ALL_FAVORITES"/>
+				<service-item code="3028" name="GET_CATEGORIES_BY_FAVORITE_ID"/>
+				<service-item code="3029" name="GET_FAVORITE_BY_ID"/>
+				<service-item code="3030" name="GET_FAVORITES"/>
+				<service-item code="3035" name="GET_SUB_CATEGRORIES"/>
+				<service-item code="3040" name="QUERY_FAVORITES"/>
+				<service-item code="3042" name="REMOVE_FAVORITE_FROM_CATEGORIES"/>
+				<service-item code="3043" name="REMOVE_FAVORITES_FROM_CATEGORY"/>
+				<service-item code="3044" name="SET_FAVORITE_TO_CATEGORIES"/>
+				<service-item code="3045" name="SET_FAVORITES_TO_CATEGORY"/>
+				<service-item code="3050" name="SYNC_FAVORITES"/>
+				<service-item code="3060" name="UPDATE_FAVORITE"/>
+				<service-item code="3065" name="UPDATE_FAVORITE_CATEGORY"/>
+				<service-item code="3070" name="GET_ALL_FAVORITES_CLIENT"/>
+			</service-items>
+		</service>
+		
+		<!-- ADDRESS_SHARING_SERVICE -->
+		<service code="18" name="ADDRESS_SHARING_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.teletrip.AddressSharingRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="1801" name="SHARE"/>
+				<service-item code="1802" name="COUNT_NEWLY_RECEIVED_ADDR"/>
+				<service-item code="1803" name="FETCH_SHARED_ADDRESS"/>
+				<service-item code="1804" name="DELETE_SHARED_ADDRESS"/>
+			</service-items>
+		</service>
+		<!-- FINDER_SERVICE -->
+		<service code="35" name="FINDER_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.telenavfinder.AreaSearchParam"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="3501" name="TL_WITHIN_CITY_STATE"/>
+				<service-item code="3502" name="TL_WITHIN_DISTANCE"/>
+				<service-item code="3503" name="TL_WITHIN_ROUTE"/>
+				<service-item code="3504" name="TL_WITHIN_ZIPCODE"/>
+				<service-item code="3505" name="TL_TOP_BRAND_NAMES"/>
+			</service-items>
+		</service>
+		<!-- PERSONALIZE_SERVICE -->
+		<!-- service code="50" name="PERSONALIZE_SERVICE" protocol="databus">
+			<request class="xxxxxxxx"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="5030" name="FETCH_LOGIN_INFO_BY_CONTACT"/>
+			</service-items>
+		</service -->
+		<!-- REVIEW_SERVICE -->
+		<service code="60" name="REVIEW_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.telenavfinder.PoiRatingReviewRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="6001" name="REVIEW_SUMMARY"/>
+				<service-item code="6002" name="REVIEW_TAGS"/>
+				<service-item code="6003" name="REVIEW_DETAIL"/>
+				<service-item code="6004" name="RATE_IT"/>
+				<service-item code="6005" name="RATE_REVIEW_POI"/>
+				<service-item code="6006" name="REVIEW_COUNT"/>
+				<service-item code="6007" name="REVIEW_DETAIL_LIST"/>
+			</service-items>
+		</service>
+		<!-- STOP_SERVICE -->
+		<service code="70" name="STOP_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.teletrip.RecentStopRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="7002" name="ADD_ORU_RECENT_STOP"/>
+				<service-item code="7004" name="ADD_RECENT_STOP"/>
+				<service-item code="7008" name="COUNT_RECENT_STOP"/>
+				<service-item code="7010" name="CREATE_RECENT_STOP"/>
+				<service-item code="7020" name="DELETE_RECENT_STOP"/>
+				<service-item code="7025" name="FETCH_MORE_RECENT_STOP"/>
+				<service-item code="7026" name="FETCH_RECENT_STOP"/>
+				<service-item code="7027" name="FETCH_RECENT_ADDRESS_BY_ID"/>
+				<service-item code="7028" name="FETCH_ORU_RECENT_STOP"/>
+				<service-item code="7030" name="FETCH_ORU_RECENT_STOPS"/>
+				<service-item code="7040" name="GET_RECENT_STOPS"/>
+				<service-item code="7050" name="QUERY_RECENT_STOPS"/>
+				<service-item code="7060" name="SYNC_RECENT_STOPS"/>
+				<service-item code="7070" name="UPDATE_RECENT_STOP"/>
+			</service-items>
+		</service>
+		
+		<!-- SMS_SERVICE -->
+		<service code="17" name="MESSAGE_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.sms.MessageRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="1703" name="SMS_TO_CONTACTS"/>
+				<service-item code="1704" name="SEND_ME_LINK"/>
+			</service-items>
+		</service>
+		
+		<!-- SMS_SERVICE -->
+		<service code="75" name="TRAFFIC_SERVICE" protocol="databus">
+			<request class="com.telenav.xnav.datatype.traffic.TrafficRequest"/>
+			<server host="" port="1111" />
+			<service-items>
+				<service-item code="7501" name="USER_TRAFFIC_INFO"/>
+			</service-items>
+		</service>
+	</services>
+</service-registry>
