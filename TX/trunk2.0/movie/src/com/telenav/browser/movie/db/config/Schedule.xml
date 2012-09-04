@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Schedule">
+
+	<select id="getSchedule" parameterClass="long"	resultClass="com.telenav.browser.movie.datatype.Schedule">
+		SELECT 
+		ID as id, 
+		MOVIE_ID as movieId, 
+		THEATER_ID  as theaterId, 
+		SHOW_DATE as date, 
+		SHOW_TIME as showTime,
+		VENDOR_NAME as vendorName,
+		QUALS as quals,
+		TICKET_URI as ticketURI
+		FROM schedule WHERE ID=#value#
+	</select>
+	<select id="searchScheduleByTheater" parameterClass="java.util.Map"	resultClass="com.telenav.browser.movie.datatype.Schedule">
+		SELECT 
+		ID as id, 
+		MOVIE_ID as movieId, 
+		THEATER_ID  as theaterId, 
+		SHOW_DATE as date, 
+		SHOW_TIME as showTime,
+		VENDOR_NAME as vendorName,
+		QUALS as quals,
+		TICKET_URI as ticketURI
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID in ($theaterId$)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="searchSchedule" parameterClass="java.util.Map"	resultClass="com.telenav.browser.movie.datatype.Schedule">
+		SELECT 
+		ID as id, 
+		MOVIE_ID as movieId, 
+		THEATER_ID  as theaterId, 
+		SHOW_DATE as date, 
+		SHOW_TIME as showTime,
+		VENDOR_NAME as vendorName,
+		QUALS as quals,
+		TICKET_URI as ticketURI
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID=#theaterId#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="movieId">
+				MOVIE_ID=#movieId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="searchSchedules" parameterClass="java.util.Map"	resultClass="com.telenav.browser.movie.datatype.Schedule">
+		SELECT 
+		ID as id, 
+		MOVIE_ID as movieId, 
+		THEATER_ID  as theaterId, 
+		SHOW_DATE as date, 
+		SHOW_TIME as showTime,
+		VENDOR_NAME as vendorName,
+		QUALS as quals,
+		TICKET_URI as ticketURI
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID in ($theaterId$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="movieId">
+				MOVIE_ID in ($movieId$)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="searchTheaterIdsByMovie" parameterClass="java.util.Map"	resultClass="java.lang.Long">
+		SELECT
+		DISTINCT 
+		THEATER_ID  as theaterId
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID in ($theaterId$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="movieId">
+				MOVIE_ID in ($movieId$)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="searchMovieIds" parameterClass="java.util.Map"	resultClass="java.lang.Long">
+		SELECT 
+		DISTINCT
+		MOVIE_ID as movieId		
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID in ($theaterId$)
+			</isNotEmpty>
+			
+		</dynamic>
+	</select>
+	<select id="searchTheaterIds" parameterClass="java.util.Map"	resultClass="java.lang.Long">
+		SELECT 
+		DISTINCT
+		THEATER_ID as theaterId		
+		FROM schedule
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="theaterId">
+				THEATER_ID in ($theaterId$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="date">
+				SHOW_DATE=#date#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- Use Person object (Java Bean) properties as parameters for insert. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<insert id="insertSchedule" parameterClass="com.telenav.browser.movie.datatype.Schedule">
+		<selectKey resultClass="long" keyProperty="id" type="post">
+  			SELECT last_insert_id() as id
+		</selectKey>
+		INSERT INTO 
+		schedule_temp
+		(MOVIE_ID, THEATER_ID, SHOW_DATE,SHOW_TIME,VENDOR_NAME,QUALS,TICKET_URI) 
+		VALUES 
+		(#movieId#,#theaterId#, #date#, #showTime#,#vendorName#,#quals#,#ticketURI#)
+	</insert>
+	
+	
+	<delete id="truncateScheduleTable" parameterClass="java.lang.String">
+		TRUNCATE $value$
+	</delete>
+	<delete id="dropScheduleTable" parameterClass="java.lang.String">
+		DROP TABLE IF EXISTS $value$
+	</delete>
+	<select id="checkScheduleTable" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SHOW TABLES LIKE #value#
+	</select>
+	<update id="newScheduleTable" parameterClass="java.lang.String">
+		CREATE TABLE  
+		$value$
+        LIKE  
+        schedule
+	</update>
+	<update id="renameScheduleTable">
+		ALTER  TABLE 
+		schedule_temp 
+		RENAME TO 
+		schedule
+	</update>
+	<insert id="copyScheduleTable" parameterClass="java.lang.String">
+		INSERT INTO  
+		$value$
+        SELECT * 
+        FROM
+        schedule_temp
+	</insert>
+	
+	<update id="deleteScheduleData" parameterClass="java.lang.String">
+		DELETE FROM $value$
+	</update>
+		
+</sqlMap>

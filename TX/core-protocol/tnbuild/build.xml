@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY proj_ant_common     SYSTEM "ant_common.properties">
+  <!ENTITY base_ant_classpath  SYSTEM "../../tnbuild/ant_classpath.properties">
+  <!ENTITY proj_ant_classpath  SYSTEM "ant_classpath.properties">
+]>
+
+<project
+	name="tn60-core-protocol"
+	default="all"
+	basedir="../.."
+	xmlns:ac="antlib:net.sf.antcontrib"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	&proj_ant_common;
+	&base_ant_classpath;
+	&proj_ant_classpath;
+
+	<!-- ================================================================================
+	= If you want to build on your local machine, uncomment the below <property file ...>
+	<property file="${tab.localsetup}"/>
+	================================================================================ -->
+	<import file="../../tnbuild/basebuild.xml"/>
+
+	<target name="runregressionex"/>
+	<target name="build.copy_resources"/>
+
+	<!-- ================================================================================
+	 Define what else to put in the tn60-core-protocol.jar 
+	 beside all its .class files
+	================================================================================ -->
+	<target name="dist.jars.pre">
+	</target>
+
+	<!-- ================================================================================
+	 Define what else to do with the tn60-core-protocol.jar 
+	 after it is already built.  Usually none.
+	================================================================================ -->
+	<target name="dist.jars.post">
+	</target>
+
+</project>

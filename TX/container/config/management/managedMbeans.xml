@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mbeans>
+	<connector port="9999"/>
+
+	<mbean name="CServer HeartBeat Detect" domain="CServer"
+		className="com.telenav.cserver.framework.management.jmx.managedresource.HeartBeatManagedResource"
+		description="You can use this to check if CServer is working or not">
+		<op name="getWorkingStatus" type="java.lang.String" descritpion="Checking if CServer is working" url="heartBeat"/>
+	</mbean>
+	
+	<mbean name="Log level Modifier" domain="CServer" className="com.telenav.cserver.framework.management.jmx.managedresource.LogLevelModifier"
+	description="For modifying log level by its name">
+			<op name="modify" type="void">
+				<param name="level" type="java.lang.String"/>
+				<param name="loggerName" type="java.lang.String"/>
+			</op>
+	</mbean>
+	
+	<mbean name="Refresh Holder Manager" domain="CServer"
+		className="com.telenav.cserver.common.resource.ResourceHolderManager"
+		description="You can refresh the holder in cserver side">
+		<op name="refresh" type="java.lang.String" descritpion="Checking if CServer is working" url="refresh"/>
+	</mbean>
+</mbeans>

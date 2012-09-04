@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<html>
+	<input combination="or">
+		<param name="product" value="123d"></param>
+	</input>
+	
+	<output combination="or">
+		<response ></response>
+	</output>
+</html>

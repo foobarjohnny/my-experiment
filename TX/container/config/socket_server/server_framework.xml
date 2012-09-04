@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="socket_server" class="com.telenav.cserver.service.socket.DefaultSocketServer">
+        <property name="businessFilter">
+            <ref bean="business_filter" />
+        </property>
+        <property name="port" value="8123">
+        </property>
+        <property name="timeout" value="15000">
+        </property>
+        <property name="readThreadsCount" value="4">
+        </property>
+        <property name="corePoolSize" value="10">
+        </property>
+        <property name="maximumPoolSize" value="50">
+        </property>
+   </bean>
+   
+   <bean id="business_filter"
+         class="com.telenav.cserver.service.socket.DefaultFilter">
+   </bean>
+   
+   <bean id="LoggingInterceptor"
+         class="com.telenav.cserver.framework.executor.impl.interceptor.LoggingInterceptor">
+   </bean>
+  
+</beans>

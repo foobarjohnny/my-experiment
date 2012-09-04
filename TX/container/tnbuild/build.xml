@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY proj_ant_common     SYSTEM "ant_common.properties">
+  <!ENTITY base_ant_classpath  SYSTEM "../../tnbuild/ant_classpath.properties">
+  <!ENTITY proj_ant_classpath  SYSTEM "ant_classpath.properties">
+]>
+
+<project
+	name="cserver-container"
+	default="all"
+	basedir="../.."
+	xmlns:ac="antlib:net.sf.antcontrib"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	&proj_ant_common;
+	&base_ant_classpath;
+	&proj_ant_classpath;
+
+	<!-- ================================================================================
+	= If you want to build on your local machine, uncomment the below <property file ...>
+	<property file="${tab.localsetup}"/>
+	================================================================================ -->
+	<taskdef classpathref="classpath.compile" resource="tasks.properties"/>
+	<import file="../../tnbuild/basebuild.xml"/>
+
+	<target name="runregressionex"/>
+	<target name="build.copy_resources"/>
+
+	<!-- ================================================================================
+	 Define what else to put in the cserver-container.jar 
+	 beside all its .class files
+	================================================================================ -->
+	<target name="dist.jars.pre">
+	</target>
+	
+	<target name="compile.tests" depends="compile" if="run.tests">
+		<echo message="---------------------------------------------------------"/>
+		<echo message="Compile (TEST Source) Information"/>
+		<echo message="   destdir=${build.testclasses}"/>
+		<echo message="   debug=${compile.debug}"/>
+		<echo message="   optimize=${compile.optimize}"/>
+		<echo message="   src path=${test.src}"/>
+		<echo message="   src path=${regressionex.src}"/>
+		<echo message="   patternset refid=pattern.unittest.sources"/>
+		<echo message="---------------------------------------------------------"/>
+		
+		<javac
+			debug="true"
+			deprecation="${compile.deprecation}"
+			destdir="${build.testclasses}"
+			encoding="${encoding.javac}"
+			fork="${fork.javac}"
+			memoryMaximumSize="${memoryMaximumSize.javac}"
+			optimize="${compile.optimize}"
+			source="${source.version}"
+			target="${target.version}"
+			
+			
+			failonerror="false" 
+		>
+			<src path="${test.src}"/>
+			<src path="${regressionex.src}"/>
+			<patternset refid="pattern.unittest.sources"/>
+			<classpath><path refid="classpath.compile"/></classpath>
+		</javac>
+
+		<delete file="${project.dir}/build/cobertura.ser" />
+		
+		<copy todir="${build.coberturaclasses}">
+			<fileset dir="${src}">
+				<include name="**/**" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	
+		<cobertura-instrument todir="${build.coberturaclasses}" datafile="${project.dir}/build/cobertura.ser">
+			<ignore regex="org.apache.log4j.*" />
+			<fileset dir="${build.classes}">
+				<include name="**/*.class" />
+				<exclude name="**/com/telenav/cserver/util/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<target name="junit.batchtest" depends="compile,compile.tests">
+		<delete dir="${dist.testreport}" quiet="true"/>
+		<mkdir dir="${dist.testreport}"/>
+		<junit 
+			printsummary="yes" 
+			haltonfailure="${junit.haltonfailure}" 
+			haltonerror="${junit.haltonerror}" 
+			fork="yes"
+			maxmemory="${memoryMaximumSize.junit}"
+		>
+			<sysproperty key="net.sourceforge.cobertura.datafile"
+				file="${project.dir}/build/cobertura.ser"/>
+
+			<classpath location="${build.coberturaclasses}" />
+			<classpath>
+				<pathelement location="${test.resources}" />
+				<path refid="classpath.run"/>
+			</classpath>
+			<!-- add config files-->
+			<classpath location="${project.dir}/config" />
+			<formatter type="xml" />
+			<batchtest todir="${dist.testreport}">
+				<fileset dir="${test.src}">
+					<patternset refid="pattern.tests.sources"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<delete dir="${dist.testreport}/html" quiet="true"/>
+		<mkdir dir="${dist.testreport}/html"/>
+		<junitreport todir="${dist.testreport}">
+			<fileset dir="${dist.testreport}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${dist.testreport}/html"/>
+		</junitreport>
+		
+		<delete dir="${dist.cloverreport}" quiet="true"/>
+		<mkdir dir="${dist.cloverreport}"/>
+		<cobertura-report srcdir="${src}" destdir="${dist.cloverreport}" format="xml" datafile="${project.dir}/build/cobertura.ser"/>
+		<cobertura-report srcdir="${src}" destdir="${dist.cloverreport}/cobertura-summary-xml" format="summaryXml" datafile="${project.dir}/build/cobertura.ser"/>
+		<cobertura-report destdir="${dist.cloverreport}/cobertura-html" datafile="${project.dir}/build/cobertura.ser">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</cobertura-report>
+	</target>
+	<!-- ================================================================================
+	 Define what else to do with the cserver-container.jar 
+	 after it is already built.  Usually none.
+	================================================================================ -->
+	<target name="dist.jars.post">
+	</target>
+
+</project>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Movie">
+
+	<select id="getMovie" parameterClass="long"	resultClass="com.telenav.browser.movie.datatype.Movie">
+		SELECT 
+		ID as id, 
+		VENDOR_ID as vendorId, 
+		MOVIE_ALT_FILM_ID as altFilmId,
+		MOVIE_NAME  as name, 
+		MOVIE_CAST as cast, 
+		MOVIE_DIRECTOR as director, 
+		MOVIE_RATING as rating,
+		MOVIE_GRADE as grade,
+		MOVIE_GENRES as genres,
+		MOVIE_DESCRIPTION as description,
+		MOVIE_RUNTIME as runTime,
+		MOVIE_SMALL_IMAGE as smallImage,
+		MOVIE_BIG_IMAGE as bigImage,
+		MOVIE_RELEASE_DATE as releaseDate
+		FROM movie
+		WHERE ID = #value#
+	</select>
+	<select id="getMovies" parameterClass="java.util.Map"	resultClass="com.telenav.browser.movie.datatype.Movie">
+		SELECT 
+		ID as id, 
+		VENDOR_ID as vendorId, 
+		MOVIE_ALT_FILM_ID as altFilmId,
+		MOVIE_NAME  as name, 
+		MOVIE_CAST as cast, 
+		MOVIE_DIRECTOR as director, 
+		MOVIE_RATING as rating,
+		MOVIE_GRADE as grade,
+		MOVIE_GENRES as genres,
+		MOVIE_DESCRIPTION as description,
+		MOVIE_RUNTIME as runTime,
+		MOVIE_SMALL_IMAGE as smallImage,
+		MOVIE_BIG_IMAGE as bigImage,
+		MOVIE_RELEASE_DATE as releaseDate
+		FROM movie
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="movieIds">
+				ID in ($movieIds$)
+			</isNotEmpty>
+			<isNotEmpty  property="sortType">
+				$sortType$
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="getMovieIdsInOrder" parameterClass="java.util.Map"	resultClass="java.lang.Long">
+		SELECT 
+		ID as id
+		FROM movie
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="movieIds">
+				ID in ($movieIds$)
+			</isNotEmpty>
+			<isNotEmpty  property="sortType">
+				$sortType$
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="getMovieIdsByName" parameterClass="java.util.Map"	resultClass="java.lang.Long">
+		SELECT 
+		ID as id
+		FROM movie
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="movieIds">
+				ID in ($movieIds$)
+			</isNotEmpty>
+			<isNotEmpty  prepend="AND" property="movieName">
+				UPPER(MOVIE_NAME) LIKE '$movieName$'
+			</isNotEmpty>
+			<isNotEmpty  property="sortType">
+				$sortType$
+			</isNotEmpty>
+		</dynamic>
+	</select>	
+	<!-- Use Person object (Java Bean) properties as parameters for insert. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<insert id="insertMovie" parameterClass="com.telenav.browser.movie.datatype.Movie">
+		<selectKey resultClass="long" keyProperty="id" type="post">
+  			SELECT last_insert_id() as id
+		</selectKey>
+		INSERT INTO 
+		movie_temp 
+		(VENDOR_ID, MOVIE_ALT_FILM_ID, MOVIE_NAME, MOVIE_CAST,MOVIE_DIRECTOR,
+		MOVIE_RATING, MOVIE_GRADE, MOVIE_GENRES,
+		MOVIE_DESCRIPTION,MOVIE_RUNTIME,
+		MOVIE_SMALL_IMAGE,MOVIE_BIG_IMAGE,MOVIE_RELEASE_DATE) 
+		VALUES 
+		(#vendorId#,#altFilmId#,#name#, #cast#, #director#, #rating#,#grade#,
+		#genres#,#description#,#runTime#,#smallImage#,#bigImage#,#releaseDate#)
+	</insert>
+	<!-- Use Person object (Java Bean) "id" properties as parameters for delete. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<delete id="truncateMovieTable" parameterClass="java.lang.String">
+		TRUNCATE $value$
+	</delete>
+	<delete id="dropMovieTable" parameterClass="java.lang.String">
+		DROP TABLE IF EXISTS $value$
+	</delete>
+	<update id="deleteMovieData" parameterClass="java.lang.String">
+		DELETE FROM $value$
+	</update>
+	<select id="checkMovieTable" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SHOW TABLES LIKE #value#
+	</select>
+	<update id="newMovieTable" parameterClass="java.lang.String">
+		CREATE TABLE  
+		$value$
+        LIKE  
+        movie
+	</update>
+	<update id="renameMovieTable">
+		ALTER  TABLE 
+		movie_temp 
+		RENAME TO 
+		movie
+	</update>
+	<insert id="copyMovieTable" parameterClass="java.lang.String">
+		INSERT INTO  
+		$value$
+        SELECT * 
+        FROM
+        movie_temp
+	</insert>
+	
+</sqlMap>

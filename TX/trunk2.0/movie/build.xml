@@ -1,0 +1,180 @@
+<project name="movie_browser" default="war">
+	<taskdef resource="antenna.properties" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	<!-- default build parameters -->
+	<property file="./../../../../../build/build_root.properties" />
+	<property name="version" value="x.x.x" />
+	<property name="base.dir" value="." />
+	<property name="project" value="movies" />
+	<property name="src.dir" value="./src" />
+	<property name="web_content.dir" value="./WebContent" />
+	<property name="config.dir" value="./config" />
+	<property name="lib.dir" value="./WebRoot/WEB-INF/lib" />
+	<property name="app_path" value="./webapps" />
+	<property name="web.root" value="./WebRoot" />
+	<property name="temp.dir" value="./temp" />
+	<property name="build.dir" value="./build" />
+	<property name="output.dir" value="./dist" />
+	<property name="package" value="com/telenav/" />
+	<property name="webinif.dir" value="WEB-INF" />
+	<property name="web_classes.dir" value="${webinif.dir}/classes" />
+	<property name="build_lib" value="broswer-server-lib" />
+	<property name="build_rg.dir" value="build_rg" />
+
+	<property file="../../../common.properties" />
+	<property name="origin.browser.lib.dir" value="../lib/browser" />
+	<!-- define our classpath -->
+	<path id="lib.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${output.dir}/${suffix}-${region}" />
+	</target>
+
+	<target name="create dir" depends="clean">
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${output.dir}/${suffix}-${region}" />
+	</target>
+
+	<target name="copy1" depends="create dir">
+
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="${origin.browser.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}">
+			<fileset dir="${web.root}">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="WEB-INF/config/**" />
+			</fileset>
+		</copy>
+		
+		
+
+	</target>
+
+	<target name="jar" depends="create dir">
+		<javac srcdir="${src.dir}" destdir="${temp.dir}" fork="yes" debug="on" deprecation="on">
+			<classpath refid="lib.class.path" />
+		</javac>
+
+		<copy todir="${temp.dir}/${package}">
+			<fileset dir="${src.dir}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+
+		<jar destfile="${output.dir}/movies.jar" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}" />
+	</target>
+
+	<target name="compile" depends="copy1">
+
+		<mkdir dir="${temp.dir}/${webinif.dir}/classes" />
+
+		<javac srcdir="${src.dir}" destdir="${temp.dir}/${webinif.dir}/classes" fork="yes" debug="on" deprecation="on">
+			<classpath refid="lib.class.path" />
+		</javac>
+
+		<echo>build:${suffix}-${region}</echo>
+
+		<!-- Copy config file for Movies -->
+		<copy file="${config.dir}/sqlmapconfig-${suffix}-${region}.properties" tofile="${temp.dir}/${webinif.dir}/classes/config/sqlmapconfig.properties" />
+		<copy file="${config.dir}/movie-${suffix}-${region}.properties" tofile="${temp.dir}/${webinif.dir}/classes/config/movie.properties" />
+		<copy file="${config.dir}/com/televigation/log/config-${suffix}-${region}.xml" tofile="${temp.dir}/${webinif.dir}/classes/com/televigation/log/config.xml" />
+
+		<!-- Copy config file for Gateway filter -->
+		<copy file="${base.dir}/version.txt" todir="${temp.dir}/${webinif.dir}/config/" />
+		<copy file="${base.dir}/appversion.txt" todir="${temp.dir}/${webinif.dir}/config/" />
+		<copy file="${config.dir}/config/urlmappings-${suffix}-${region}.xml" tofile="${temp.dir}/${webinif.dir}/classes/config/urlmappings.xml" />
+
+		<!-- Copy resource files -->
+		<copy file="${src.dir}/resource_loader.xml" tofile="${temp.dir}/${webinif.dir}/classes/resource_loader.xml" />
+		<copy todir="${temp.dir}/${webinif.dir}/classes/device/">
+			<fileset dir="${src.dir}/device">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/layout/">
+			<fileset dir="${src.dir}/layout">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<copy todir="${temp.dir}/${webinif.dir}/classes/message/">
+			<fileset dir="${src.dir}/message">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${temp.dir}/${webinif.dir}/classes/com/telenav/browser/movie/resources/">
+			<fileset dir="${src.dir}/com/telenav/browser/movie/resources">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy2" depends="compile">
+		<copy todir="${temp.dir}/${web_classes.dir}/${package}">
+			<fileset dir="${src.dir}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="war" depends="copy2">
+		<jar destfile="${output.dir}/${suffix}-${region}/${project}.war" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}" />
+	</target>
+
+	<target name="war-all">
+		<antcall target="war">
+			<param file="deploy.us.properties" />
+		</antcall>
+		<antcall target="war">
+			<param file="stage.us.properties" />
+		</antcall>
+		<antcall target="war">
+			<param file="dev.us.properties" />
+		</antcall>
+		<antcall target="war">
+			<param file="featurepool.us.properties" />
+		</antcall>		
+	</target>
+
+	<!-- PUBLISH TARGETS ############################################## -->
+	<!-- publish jars into fs1 -->
+	<target name="publish" depends="war-all">
+		<!-- create version directory -->
+		<mkdir dir="${browser_movies_server_publish_dir}/archive/${version}" />
+		<!-- copy newly built jars into archive -->
+		<copy todir="${browser_movies_server_publish_dir}/archive/${version}">
+			<fileset dir="${output.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<!-- delete files in current version folder -->
+		<delete quiet="true" dir="${browser_movies_server_publish_dir}/current" />
+		<mkdir dir="${browser_movies_server_publish_dir}/current" />
+		<!-- copy newly built jars into current publish folder -->
+		<copy todir="${browser_movies_server_publish_dir}/current">
+			<fileset dir="${output.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+
+</project>
+

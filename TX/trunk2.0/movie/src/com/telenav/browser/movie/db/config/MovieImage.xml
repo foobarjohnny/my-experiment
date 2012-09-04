@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="MovieImage">
+	<!-- Use Person object (Java Bean) properties as parameters for insert. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<resultMap id="ibatisMovieImage"
+		class="com.telenav.browser.movie.datatype.MovieImage">
+		<result property="key" column="IMAGE_KEY" />
+		<result property="data" column="IMAGE_DATA" />
+		<result property="height" column="IMAGE_HEIGHT" />
+		<result property="width" column="IMAGE_WIDTH" />
+	</resultMap>
+	
+	<select id="getMovieImage" resultMap="ibatisMovieImage"
+		parameterClass="java.lang.String">
+		SELECT * 
+		FROM movieimage 
+		WHERE 
+		IMAGE_KEY=#value#
+	</select>
+	
+	<select id="getAllImageKeys" resultClass="java.lang.String">
+		SELECT 
+		IMAGE_KEY 
+		FROM movieimage
+	</select>
+	
+	<insert id="insertMovieImage"
+		parameterClass="com.telenav.browser.movie.datatype.MovieImage">
+		REPLACE INTO movieimage 
+		(IMAGE_KEY,IMAGE_DATA,IMAGE_HEIGHT,IMAGE_WIDTH) 
+		VALUES
+		(#key#,#data#,#height#,#width#)
+	</insert>
+	<!-- Use Person object (Java Bean) "id" properties as parameters for delete. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<delete id="truncateMovieImage"
+		parameterClass="com.telenav.browser.movie.datatype.MovieImage">
+		TRUNCATE movieimage
+	</delete>
+</sqlMap>
+
+
+
+

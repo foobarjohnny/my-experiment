@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+		Ivy version match rules
+
+	[1.0,2.0] matches all versions greater or equal to 1.0 and lower or equal to 2.0
+	[1.0,2.0[ matches all versions greater or equal to 1.0 and lower than 2.0
+	]1.0,2.0] matches all versions greater than 1.0 and lower or equal to 2.0
+	]1.0,2.0[ matches all versions greater than 1.0 and lower than 2.0
+	[1.0,) matches all versions greater or equal to 1.0
+	]1.0,) matches all versions greater than 1.0
+	(,2.0] matches all versions lower or equal to 2.0
+	(,2.0[ matches all versions lower than 2.0 
+-->
+
+<ivy-module version="2.0">
+	<info organisation="telenav" module="${project.name}" />
+	<configurations>
+		<conf name="master"/>
+	</configurations>
+	<publications>
+		<artifact name="${project.name}" ext="jar" />
+		<artifact name="${project.name}" ext="war" />
+	</publications>
+	<dependencies>
+		<dependency org="org/apache" name="commons-collections" rev="3.2"/>
+		<dependency org="org/apache" name="commons-logging" rev="1.1"/>
+		<dependency org="org/apache" name="commons-beanutils" rev="1.6.0"/>
+		<dependency org="org/apache" name="commons-net" rev="1.4.1"/>
+		<dependency org="com/telenav/kernel" name="log" rev="0.0.0.9"/>
+		<dependency org="org/apache" name="commons-codec" rev="1.3"/>
+		<dependency org="log4j" name="log4j" rev="1.2.8"/>
+		<dependency org="telenav" name="cliclient" rev="1.0.3"/>
+		<dependency org="commons-httpclient" name="commons-httpclient" rev="3.1"/>
+		<dependency org="commons-pool" name="commons-pool" rev="1.4"/>
+		<dependency org="telenav" name="kernel.release" rev="0621"/>
+		<dependency org="org/apache" name="commons-digester" rev="1.8"/>
+		<dependency org="org/apache/ibatis" name="ibatis" rev="2.3.0.677"/>
+		<dependency org="org/apache" name="jakarta-taglibs-standard" rev="1.1.2"/>
+		<dependency org="javax/servlet" name="servlet-api" rev="2.0"/>
+		<dependency org="org/apache/struts" name="struts" rev="1.1"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.0.7-bin"/>
+		<dependency org="telenav" name="protocol.server" rev="0.2.0.42"/>
+		<dependency org="telenav" name="telenav5x_i18n" rev="75650"/>
+		<dependency org="telenav" name="browser-common" rev="20090316"/>
+		<dependency org="telenav" name="tnbrowser-taglib" rev="1.1.37"/>
+		<dependency org="telenav" name="tnbrowser-filter" rev="1.3.18"/>
+		<dependency org="telenav" name="webserver-util" rev="0.9.7"/>
+		<dependency org="telenav" name="telenav_util" rev="1.0.0.14"/>
+	</dependencies>
+</ivy-module>
+

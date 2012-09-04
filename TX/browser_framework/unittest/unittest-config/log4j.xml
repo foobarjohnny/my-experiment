@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+	<appender name="SysFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/home/tnuser/logs/browser/tn60_movie/browser.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="MisSysFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/home/tnuser/logs/browser/tn60_movie/mis.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="MisFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/home/tnuser/logs/browser/tn60_movie/MisFile.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<!-- Log for filter. -->
+	<category name="org.apache">
+		<priority value="info" />
+		<appender-ref ref="SysFile" />
+		<appender-ref ref="STDOUT" />
+	</category>
+	
+	<!-- Log for filter. -->
+	<category name="com.telenav.tnbrowser">
+		<priority value="info" />
+		<appender-ref ref="SysFile" />
+		<appender-ref ref="STDOUT" />
+	</category>
+	
+	<category name="com.telenav.cserver">
+		<priority value="info" />
+		<appender-ref ref="SysFile" />
+		<appender-ref ref="STDOUT" />
+	</category>
+	
+	<category name="com.televigation.databus">
+		<priority value="fatal" />
+		<appender-ref ref="SysFile" />
+		<appender-ref ref="STDOUT" />
+	</category>	
+	
+
+	<category name="mislog">
+		<priority value="info" />
+		<appender-ref ref="MisSysFile" />
+	</category>
+	
+	<category name="com.telenav.cserver.framework.reporting.impl.ServerMISReportor">
+		<priority value="debug" />
+		<appender-ref ref="MisFile" />
+	</category>
+</log4j:configuration>

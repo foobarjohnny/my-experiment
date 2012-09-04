@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="GBK"?>
+ 
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="webservice-configuration" class="com.telenav.cserver.backend.util.WebServiceConfiguration">  	      
+        <property name="serviceConfigMap">
+	    	<map>
+		
+	        	
+	        	<entry key="POI_SEARCH">
+	            	<ref bean ="POI_SEARCH"/>
+	        	</entry>
+	        	
+	        	
+	        	<entry key="FEEDBACKSERVICE">
+	            	<ref bean ="FEEDBACKSERVICE_CONFIG"/>
+	        	</entry>
+	        	
+	        	
+	    	</map>
+		</property>
+   </bean> 
+ 
+ 
+   <bean id="FEEDBACKSERVICE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://feedback-ws.telenav.com:8080/tnws/services/FeedbackService30</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="POI_SEARCH" class="com.telenav.cserver.backend.config.PoiSearchServiceConfig">
+   		<property name="serviceUrlMapping">
+   			<map>
+	    		<entry key="POI.TA">
+	            	<value>http://poisearch-ws.mypna.com/tnws/services/ContentSearchService</value>
+	        	</entry>   
+	        	<entry key="POI.YPC">
+	            	<value>http://poisearch-ypc-ws.mypna.com/tnws/services/ContentSearchService</value>
+	        	</entry>
+	        	<entry key="POI.CN">
+	            	<value>http://172.16.101.67:8080/tnws/services/ContentSearchService</value>
+	        	</entry>
+	    	</map>
+		</property>
+   		
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   
+   <bean id="Default_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>default</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>5000</value>
+		</property>
+   </bean> 
+</beans>

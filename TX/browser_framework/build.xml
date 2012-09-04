@@ -1,0 +1,76 @@
+<!DOCTYPE project [
+  <!ENTITY base_ant_common     SYSTEM "base_ant_common.properties">
+]>
+<project name="browser_framework" 
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<!-- default build parameter -->
+	<property file="version.properties"/>
+	<property name="lib.dir" value="./lib" />
+	<property name="temp.dir" value="./temp"/>
+	<property name="output.dir" value="./dist" />
+	<property name="src.dir" value="./src" />
+	<property name="package" value="com/telenav" />
+	<property name="metainf.dir" value="META-INF"/>
+	<property name="lib.name" value="browser_framework" />
+	
+	<property name="project.name" value="browser_framework"/>
+	<property name="ivy.settings.file" value="./tnbuild/ivysettings.xml"/>
+	<property name="ivy.file" value="./tnbuild/ivy.xml"/>
+	
+	<property file="base_ant_common.properties"/>
+	
+	<!-- define our classpath -->
+	<path id="lib.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- properties for regressions-->
+	<target name="init-ivy">
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+			<classpath>
+				<pathelement location="ivy.jar" />
+			</classpath>
+		</taskdef>
+		<ivy:settings id="ivy.instance" file="${ivy.settings.file}" />
+	</target>
+	
+	<target name="retrieve-all" depends="init-ivy" unless="withoutivy" description="--> Retrieves all Ivy dependencies into the lib directory">
+		<delete dir="${lib.dir}"  includes="**/*.jar"/>
+		<ivy:retrieve file="${ivy.file}"/>
+	</target>
+	
+	
+	<!-- targets -->
+	<target name="clean">
+		<delete dir="${temp.dir}"/>
+		<delete dir="${output.dir}" />
+	</target>
+	
+	<target name="create dir" depends="clean">
+		<mkdir dir="${temp.dir}"/>
+		<mkdir dir="${output.dir}"/>
+
+		<copy todir="${temp.dir}/lib" flatten="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>	
+	
+
+	<target name="compile" depends="create dir,retrieve-all">
+		<javac srcdir="${src.dir}" destdir="${temp.dir}" fork="yes" debug="true" source="1.5" target="1.5">
+			<classpath refid="lib.class.path" />
+		</javac>
+	</target>
+	
+	<target name="createjar" depends="compile">
+		<delete dir="${temp.dir}/lib"/>
+		<jar destfile="${output.dir}/${lib.name}.jar" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}"/>
+	</target>
+
+</project>

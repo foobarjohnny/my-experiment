@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Filename: dsr-cserver\ivy.xml
+
+		Ivy version match rules
+
+	[1.0,2.0] matches all versions greater or equal to 1.0 and lower or equal to 2.0
+	[1.0,2.0[ matches all versions greater or equal to 1.0 and lower than 2.0
+	]1.0,2.0] matches all versions greater than 1.0 and lower or equal to 2.0
+	]1.0,2.0[ matches all versions greater than 1.0 and lower than 2.0
+	[1.0,) matches all versions greater or equal to 1.0
+	]1.0,) matches all versions greater than 1.0
+	(,2.0] matches all versions lower or equal to 2.0
+	(,2.0[ matches all versions lower than 2.0
+-->
+
+<ivy-module version="2.0">
+	<info organisation="telenav" module="${project.name}" />
+	<configurations>
+		<conf name="master"/>
+	</configurations>
+	<publications>
+		<artifact name="${project.name}" ext="jar" />
+		<artifact name="${project.name}" ext="war" />
+		<artifact name="${project.name}" ext="zip" />
+	</publications>
+	<dependencies>
+		<dependency org="com/sun" name="grizzly-http-webserver" rev="1.8.4"/>
+		<dependency org="org/springframework" name="spring-core" rev="2.5.6"/>
+		<dependency org="com/sun" name="grizzly-framework" rev="1.8.4"/>
+		<dependency org="edu/emory/mathcs" name="backport-util-concurrent" rev="2.2"/>
+		<dependency org="stax" name="stax-api" rev="1.0.1"/>
+		<dependency org="apache/ws/commons/axiom" name="axiom-impl" rev="1.2.5"/>
+		<dependency org="apache/woden" name="woden" rev="1.0-incubating-M7b"/>
+		<dependency org="com/telenav/kernel" name="log" rev="0.0.0.19"/>
+		<dependency org="apache/ws/commons/axiom" name="axiom-dom" rev="1.2.5"/>
+		<dependency org="org/apache" name="commons-codec" rev="1.3"/>
+		<dependency org="telenav" name="cliclient" rev="1.0.5"/>
+		<dependency org="log4j" name="log4j" rev="1.2.8"/>
+		<dependency org="apache/axis2" name="axis2-adb" rev="1.3"/>
+		<dependency org="org/apache" name="xbean" rev="2.2.0"/>
+		<dependency org="org/springframework" name="spring-context" rev="2.5.6"/>
+		<dependency org="org/codehaus/woodstox" name="wstx-asl" rev="3.2.1"/>
+		<dependency org="apache/ws/commons/axiom" name="axiom-api" rev="1.2.5"/>
+		<dependency org="apache/ws/commons/schema" name="XmlSchema" rev="1.3.2"/>
+		<dependency org="org/springframework" name="spring-beans" rev="2.5.6"/>
+		<dependency org="telenav" name="IdentityProvisioning-soap" rev="1.0.327"/>
+		<dependency org="com/sun" name="grizzly-servlet-webserver" rev="1.8.4"/>
+		<dependency org="apache/axis2" name="axis2-kernel" rev="1.3"/>
+		<dependency org="telenav" name="voicecommon2" rev="1.2.0.8"/>
+		<dependency org="org/apache" name="commons-pool" rev="1.4"/>
+		<dependency org="org/apache/xerces" name="xercesImpl" rev="2.5.0"/>
+		<dependency org="wsdl4j" name="wsdl4j" rev="1.6.2"/>
+		<dependency org="org/apache" name="commons-lang" rev="2.3"/>
+		<dependency org="org/apache" name="commons-beanutils" rev="1.8.0"/>
+		<dependency org="org/apache" name="commons-collections" rev="3.1"/>
+		<dependency org="org/apache" name="commons-digester" rev="1.8"/>
+		<dependency org="org/apache" name="commons-httpclient" rev="3.1"/>
+		<dependency org="org/apache" name="commons-logging" rev="1.1.1"/>
+		<dependency org="org/apache/xalan" name="xalan" rev="2.5.1"/>
+		<dependency org="org/springframework" name="spring-aop" rev="2.5.6"/>
+		<dependency org="org/springframework" name="spring-context-support" rev="2.5.6"/>
+		<dependency org="org/apache/axis2" name="axis2" rev="1.3"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.8-bin"/>
+		<dependency org="com/telenav/kernel" name="log" rev="0.0.0.10"/>
+		<dependency org="telenav" name="backend_service_stubs" rev="0.+"/>
+		<dependency org="telenav" name="ace-ws-client" rev="1.+"/>
+		<dependency org="telenav" name="protocol.server-notxnode" rev="x.x.x100"/>
+		<dependency org="telenav" name="tn-kernel-datatypes" rev="0.9.1-1.5"/>
+		<dependency org="telenav" name="tn-kernel-JDK1.5" rev="1.0-s17277b58"/>
+		<dependency org="telenav" name="tn-kernel-stubs-JDK1.5" rev="a1.3-b+"/>
+		<dependency org="telenav" name="tn-kernel-skel-JDK1.5" rev="a1.3-b+"/>
+		<dependency org="telenav" name="telenav_util" rev="1.0.0.14"/>
+		<dependency org="telenav" name="mapproxy" rev="1.1.0.52"/>
+		<!--dependency org="telenav" name="cserver-container" rev="0.2.+"/-->
+		<dependency org="telenav" name="cserver-container" rev="0.2.0.195"/>
+		<dependency org="telenav" name="livestats-client" rev="2.0"/>
+		<dependency org="org/json" name="json-lib-j2me" rev="1.0.0"/>
+		<dependency org="telenav" name="resource_client" rev="0.+"/>
+		<dependency org="telenav" name="nearbyCitySearch" rev="1.0.0.+"/>
+		<dependency org="telenav" name="streaming-common" rev="1.0.1.+"/>
+		<dependency org="telenav" name="audio-log-service" rev="1.0.0.+"/>
+       	<dependency org="telenav" name="xnav_common" rev="3.5.trunk.+"/>
+		<dependency org="telenav" name="xnav_client" rev="3.5.adapter.33"/>
+        <dependency org="telenav" name="tn-traffic-common-jdk1.4" rev="4.0.0"/>
+        <dependency org="telenav" name="tn-traffic-client-jdk1.4" rev="4.0.0"/>
+        <dependency org="telenav" name="tn-common-datatypes-jdk1.4" rev="4.0.0"/>
+		<dependency org="telenav/poi" name="SearchCommon" rev="1.8.final.3"/>
+		<dependency org="telenav" name="DsmClient" rev="0.0.0.28"/>
+		<dependency org="com/televigation" name="db_linux.release" rev="1.0.55"/>
+		<dependency org="com/televigation" name="db2.release" rev="1.0.2"/>	
+		<dependency org="com/televigation" name="util" rev="1.0.0.13" />
+		
+		<!-- THESE NEED TO BE AVAILABLE ON IVY-->
+		<dependency org="telenav" name="protobuf-javame" rev="1.0.0.+"/>
+		<!--dependency org="net/jarlehansen/protobuf/javame" name="protobuf-javame" rev="1.0.0.9"/-->
+		<dependency org="com/google/protobuf" name="protobuf-java" rev="2.+"/>
+		<dependency org="telenav" name="protocol-java" rev="1.1.0.170"/>
+		<dependency org="telenav" name="DSRServerProtocol" rev="1.0.0.+"/>
+		 
+		
+		<!-- evie specific -->
+		<dependency org="telenav/poi" name="CoSEUtilities" rev="1.12.final.1"/>
+		<dependency org="org/json" name="json-lib" rev="2.3-jdk15"/>
+		<dependency org="telenav/poi" name="LandmarkSearch" rev="1.10.final.2"/>
+		<dependency org="telenav" name="nluparser" rev="2.0.0.+"/>
+		<dependency org="org/apache" name="lucene-core" rev="2.3.2"/>
+		
+		<dependency org="telenav" name="databus-client" rev="1.1.6.4"/>																	
+		<dependency org="com/televigation" name="commonObjectPool" rev="0.0.0.10"/>
+		<dependency org="telenav" name="commonServices-client" rev="1.5"/>		
+		<dependency org="com/televigation" name="databus-common" rev="1.1.6.4"/>
+		<dependency org="telenav" name="AudioCodec" rev="1.0.0.6"/>
+		
+	</dependencies>
+</ivy-module>

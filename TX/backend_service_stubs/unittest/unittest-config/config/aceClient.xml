@@ -1,0 +1,52 @@
+<Client version="1.1">
+<Service name="NA-NT" url="http://hqd-mockbackend-01.telenav.com:8012/MockBackendServer/services/GeoCodingService" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CA/>
+<US/>
+<MX/>
+</country>
+</Service>
+<Service name="NA-TA" url="http://hqd-mockbackend-01.telenav.com:8012/MockBackendServer/services/GeoCodingService" dataset="TA">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CA/>
+<US/>
+</country>
+</Service>
+<Service name="EU-NT" url="http://hqd-mockbackend-01.telenav.com:8012/MockBackendServer/services/GeoCodingService" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<DE/>
+<SE/>
+<FR/>
+<NL/>
+<BE/>
+<FI/>
+<IT/>
+<ES/>
+<LU/>
+<AT/>
+<DK/>
+<IE/>
+<GB/>
+<NO/>
+<PT/>
+<CH/>
+<AD/>
+<GI/>
+<GR/>
+<IM/>
+<MC/>
+<SM/>
+<VA/>
+<LI/>
+</country>
+</Service>
+<Service name="CN-NT" url="http://172.16.100.206:8080/tnws/services/GeoCoding" dataset="NT">
+<ServicePool aceServiceTimeout="30000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+<country>
+<CN/>
+</country>
+</Service>
+</Client>

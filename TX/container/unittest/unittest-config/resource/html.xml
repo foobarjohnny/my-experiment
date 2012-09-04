@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<html>
+	<input combination="or">
+		<param name="p1" value="hello "></param>
+		<param name="p2" value="world"></param>
+		<param name="p3" value="!"></param>
+		<param name="p4" pattern="abcd">2</param>
+		<param name="p5" pattern="abcde">2</param>
+		<param name="p5" pattern="abcde">2</param>
+		<param name="p5" >2</param>
+	</input>
+	<output combination="or">
+		<response name="r1" value="I "></response>
+		<response name="r2" value="am "></response>
+		<response name="r3" value="a "></response>
+		<response name="r4" value="student">2</response>
+		<response name="r4" value="student">2</response>
+	</output>
+	<input combination="and">
+		<param name="p6" value="Let's "></param>
+		<param name="p7" value="go!"></param>
+		<param name="p8" pattern="one">1</param>
+	</input>
+	<output combination="and">
+		<response name="r5" ></response>
+	</output>
+</html>

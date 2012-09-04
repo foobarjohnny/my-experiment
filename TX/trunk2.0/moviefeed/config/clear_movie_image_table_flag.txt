@@ -1,0 +1,7 @@
+// To meet sn 28 brew requirement, all posters should be stored in
+// PNG not JPG format.
+// Clearing movieimage table which stores JPG images is first step
+// of process.
+// clear_movie_image_table_flag.txt is a flag indicator. If it
+// exists, feed program will clear movieimage table in movies db and
+// delete it after feeding automatically.

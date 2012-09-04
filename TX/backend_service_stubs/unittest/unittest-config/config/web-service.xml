@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="webservice-configuration" class="com.telenav.cserver.backend.util.WebServiceConfiguration">  	      
+        <property name="serviceConfigMap">
+	    	<map>
+				<entry key="IMAGE">
+	            	<ref bean ="IMAGE"/>
+	        	</entry>
+				<entry key="IMAGEURL">
+	            	<ref bean ="IMAGEURL"/>
+	        	</entry>
+				<entry key="TRAFFIC_IMAGE">
+	            	<ref bean ="TRAFFIC_IMAGE_CONFIG"/>
+	        	</entry>
+	        	<entry key="ETA_SERVICE">
+                    <ref bean="ETA_SERVICE_CONFIG" />
+                </entry>
+				<entry key="TIM_SERVICE">
+                    <ref bean="TIM_SERVICE_CONFIG" />
+                </entry>
+				<entry key="ALERT_SERVICE">
+                    <ref bean="ALERT_SERVICE_CONFIG" />
+                </entry>
+	    	</map>
+		</property>
+   </bean> 
+   
+  <bean id="ETA_SERVICE_CONFIG" class="com.telenav.cserver.backend.config.PoiSearchServiceConfig">
+   		<property name="serviceUrlMapping">
+	    	<map>
+	    		<entry key="NA_TeleAtlas" value="http://eta-ta.mypna.com:8080/tnws/services/eta"></entry>
+	    		<entry key="NA_Navteq" value="http://eta-nt.mypna.com:8080/tnws/services/eta"></entry>
+				<entry key="EU_Navteq" value="http://eta-eu.mypna.com:8080/tnws/services/eta"></entry>
+	    		<entry key="SA_TeleAtlas" value="http://eta-sa.mypna.com:8080/tnws/services/eta"></entry>
+				<entry key="IN_MMI" value="http://eta-mmi.mypna.com:8080/tnws/services/eta"></entry>
+	    		<entry key="NA_TeleAtlas_UGT" value="http://eta-ta-tntraffic.mypna.com:8080/tnws/services/eta"></entry>
+	    	</map>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="IMAGEURL" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://mapconfig.mypna.com/map-config/current/IMG/</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="IMAGE" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://tilecache-na-ntcdn.telenav.com/tile?layers={0}&amp;x={1}&amp;y={2}&amp;zoom={3}&amp;tnv={4}&amp;style=ts={5}</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="image_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="TRAFFIC_IMAGE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://tilecache-na-ntcdn.telenav.com/tile?layers={0}&amp;x={1}&amp;y={2}&amp;zoom={3}&amp;tnv={4}&amp;style=ts={5}</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="trafficImage_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="TIM_SERVICE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://10.224.91.238:8080/tnws/services/TIMService</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="ALERT_SERVICE_CONFIG" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    		<value>http://10.224.90.26:8080/tnws/services/AlertsService30</value>
+		</property>
+		<property name="webServiceItem">
+	    		<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="image_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>IMAGE</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>200</value>
+		</property>
+        <property name="webServiceMaxTotalConnection">
+            <value>200</value>
+        </property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>300</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>11000</value>
+		</property>
+   </bean> 
+   
+   <bean id="trafficImage_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>TRAFFIC_IMAGE</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>100</value>
+		</property>
+        <property name="webServiceMaxTotalConnection">
+            <value>100</value>
+        </property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>300</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>11000</value>
+		</property>
+   </bean> 
+   
+   <bean id="Default_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>default</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaxTotalConnection">
+            <value>20</value>
+        </property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>20000</value>
+		</property>
+   </bean> 
+</beans>

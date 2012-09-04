@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+    
+<beans>
+	<bean id="billingManager" class="com.telenav.cserver.billing.impl.ATTWhiteLabelBillingManager"/>
+
+	<bean id="billing_conf" class="com.telenav.cserver.billing.datatype.BillingConf">
+		<property name="loginFlow">
+			<bean class="com.telenav.cserver.billing.loginflow.ATTAndroidLoginFlow">
+				<property name="billingManagerInterface" ref="billingManager"/>
+			</bean>
+		</property>
+		<property name="purchaseFlow">
+			<bean class="com.telenav.cserver.billing.purchaseflow.CommonPurchaseFlow">
+				<property name="billingManagerInterface" ref="billingManager"/>
+			</bean>
+		</property>
+		<property name="cancelFlow">
+			<bean class="com.telenav.cserver.billing.cancellationflow.CommonCancelFlow">
+				<property name="billingManagerInterface" ref="billingManager"/>
+			</bean>
+		</property>
+		<property name="flowType">
+			<bean class="com.telenav.cserver.billing.loginflow.type.SmsUrlFlowType"/>
+		</property>
+	</bean>
+	
+</beans>

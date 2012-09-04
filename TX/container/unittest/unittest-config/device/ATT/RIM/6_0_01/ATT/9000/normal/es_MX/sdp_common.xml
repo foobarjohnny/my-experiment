@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+    
+<beans>
+	
+	<bean id="common" class="com.telenav.cserver.resource.common.server_driven.ServerDrivenMessagesItem">
+	   <property name="properties">
+	        <map>
+		        <entry key="BROWSER_PAGE_CACHE_COUNT" value="100"/>
+				<entry key="NAV_EXIT_FEEDBACK_POPUP_COUNT" value="6"/>
+		        <entry key="SPEED_LIMIT_THRESHOLD" value="65"/>
+				
+				<entry key="ATT_NAV...BROWSER_HELP_URL" value="http://www.telenav.com/sites/help/att/nav/rim/6_0_01/9000/"/>
+				<entry key="ATT_MAPS...BROWSER_HELP_URL" value="http://www.telenav.com/sites/help/att/map/rim/6_0_01/9000/"/>
+		        <entry key="ATT_NAV...DYNAMIC_NAV" value="1"/>
+		        <entry key="ATT_NAV...TRAFFIC" value="1"/>
+				<entry key="ATT_MAPS...DYNAMIC_NAV" value="0"/>
+		        <entry key="ATT_MAPS...TRAFFIC" value="0"/>
+		        <entry key="ATT_NAV...DSR" value="0"/>
+				<entry key="ATT_MAPS...DSR" value="0"/>
+		        <entry key="ATT_NAV...TRAFFIC_SPEED_TRAP" value="0"/>
+				<entry key="ATT_MAPS...TRAFFIC_SPEED_TRAP" value="0"/>
+		        <entry key="ATT_NAV...TRAFFIC_CAMERA" value="1"/>
+		        <entry key="ATT_MAPS...TRAFFIC_CAMERA" value="0"/>
+				
+		        <entry key="NEW_APP_VERSION" value="1.0"/>
+		        <entry key="CELL_LOCATION_ENABLE" value="1"/>
+		        <entry key="CELL_LOCATION_FIRST_WAITTIME" value="0"/>
+		        <entry key="CELL_LOCATION_RETRY_TIMES" value="0"/>
+		        <entry key="CELL_LOCATION_RETRY_INTERVAL" value="0"/>
+		        <entry key="CELL_LOCATION_LIVE_TIME" value="1800"/>
+		        <entry key="APP_BACKGROUND_LIVE_TIME" value="-1"/>
+				
+		        <entry key="FIRST_SPT_REQUEST_WAIT_TIME" value="20"/>
+		        <entry key="SPT_REQUEST_INTERVAL" value="90"/>
+		        <entry key="NETWORK_ERORR_WAIT_INTERVAL" value="60"/>
+		        <entry key="REVERSE_ROUTE_EDGE_REQUEST_INTERVER" value="240"/>
+		        <entry key="SPT_REQUEST_MIN_COVERAGE_DIST" value="20"/>
+		        <entry key="MAX_STORED_SPT_COVERAGE_DIST" value="100"/>
+		        <entry key="SPT_ALIVE_DISTANCE_THRESHOLD" value="20"/>
+		        <entry key="MAX_REVERSE_ROUTE_EDGE_REQUEST_LEN" value="250"/>
+		        <entry key="SPT_MAX_DEVIATION_TIME_IN_COVERAGE" value="3"/>
+		        <entry key="SPT_SMART_EDGE_MERGE_ENABLED" value="true"/>
+		       
+		        <entry key="DIAGNOSTIC_TOOLS" value="Nmero de tel\u00e9fono de inicio de sesi\u00f3n::1,C\u00f3digo de plan de servicio::2,Estado de GPS::3,Estado de red::4,Permiso de ubicaci\u00f3n::5,Netguard instelling:niet beschikbaar:,Estado de itinerancia de datos::6,Modo avi\u00f3n::7,Servicio de datos::8,Nivel de bater\u00eda::9"/>
+              
+	        </map>
+	  </property>
+	
+	</bean>
+
+</beans>

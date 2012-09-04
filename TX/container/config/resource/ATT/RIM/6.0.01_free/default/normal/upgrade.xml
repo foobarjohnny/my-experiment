@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="9000" class="com.telenav.cserver.resource.upgrade.UpgradeInfo">
+        <property name="mandatory">
+            <value>2</value>
+        </property>
+        <property name="fileName">
+            <value>telenav</value>
+        </property>        
+        <property name="version">
+            <value>6.0.01</value>
+        </property>
+        <property name="buildNumber">
+            <value>10</value>
+        </property>
+        <property name="url">
+            <value>http://att.telenav.com/nav</value>
+        </property>
+        <property name="summary">
+            <value>New features in this version:
+		1: Multi-lingual client
+		2: Enhanced Map
+	    </value>
+        </property>        
+   </bean>
+</beans>

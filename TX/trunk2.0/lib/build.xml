@@ -1,0 +1,31 @@
+<project name="Browser20Lib"  default="publish">
+	<property name="version" value="x.x.x"/>
+	<property name="app_path" value="."/>
+	<property file="./../../../../../build/build_root.properties"/>
+	<property name="browser20_lib_publish_dir" value="//${publish_server}/release/TN/TeleNav5.0/browser20/lib" />
+	
+	
+	<!-- PUBLISH TARGETS ############################################## -->
+	<target name="publish">
+		<!-- create version directory -->
+		<mkdir dir="${browser20_lib_publish_dir}/archive/${version}"/>
+		<!-- copy newly built jars into archive -->
+		<copy todir="${browser20_lib_publish_dir}/archive/${version}">
+			<fileset dir="${app_path}">
+				<include name="**/*"/>
+				<exclude name="build.xml"/>
+				<exclude name="version.txt"/>
+			</fileset>
+		</copy>
+		<!-- delete files in current version folder -->
+		<delete quiet="true" dir="${browser20_lib_publish_dir}/current"/>
+		<mkdir dir="${browser20_lib_publish_dir}/current"/>
+		<!-- copy newly built jars into current publish folder -->
+		<copy todir="${browser20_lib_publish_dir}/current">
+			<fileset dir="${app_path}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+
+</project>

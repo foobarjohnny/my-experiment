@@ -1,0 +1,111 @@
+.clsBuyButtonBk{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(rgb(119,199,255)), to(rgb(58,165,220)));
+	-webkit-box-shadow:2px 2px 5px #666666;
+	-webkit-border-radius: 4px;
+	border:0;
+}
+
+.clsButtonBgNormal{
+	border:solid 1px #D4D4D4;
+	-webkit-box-shadow:2px 2px 2px #AEAEAE;      
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(rgb(255,255,255)),color-stop(0.49, rgb(233,233,233)),color-stop(0.5, rgb(221,221,221)), to(rgb(243,243,243)));                 	
+}
+
+.clsButtonBgHighlight{
+	border:solid 1px #067ab4;
+	-webkit-box-shadow:2px 2px 2px #AEAEAE;
+	background-image: -webkit-gradient(linear, left top, left bottom,
+					 from(#46b3ee),color-stop(0.50, #2ea9f0),color-stop(0.51, #008ae1) ,to(#2babfd));      	
+}
+
+.clsListBgNormal{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(rgb(255,255,255)),to(rgb(239,239,239)));
+}
+
+.clsListBgHighlight{    
+	background-image: -webkit-gradient(linear, left top, left bottom,
+					from(rgb(72,181,204)),color-stop(0.55, rgb(0,137,225)) ,to(rgb(22,156,235)));	
+}
+
+.clsFontColor_gray{
+    color: #666666;
+}
+
+.clsFontColor_white{
+    color: white;
+}
+
+.clsFontColor_blue{
+    color: #0097d7;
+}
+
+.clsFontColor_black{
+    color: #333333;
+}
+
+.clsBackground_tab{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(rgb(46,157,214)),to(rgb(9,119,175)));
+}
+
+.clsTitleBg{
+	border-top: 1px solid #504F50;
+	border-bottom: 1px solid #737373;
+	background-color:#666666;
+}
+
+.clsWeatherItem0{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#96d3f3),to(#92ceed));
+}
+
+.clsWeatherItem1{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#7fc3e6),to(#7abcde));
+}
+
+.clsWeatherItem2{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#8bc6e4),to(#84bdd9));
+}
+
+.clsWeatherItem3{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#6db1d4),to(#67aacc));
+}
+
+.clsWeatherItem4{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#7cb3ce),to(#76abc5));
+}
+
+.clsWeatherItem5{
+	background-image: -webkit-gradient(linear, left top, left bottom,
+	                  from(#5ca1c3),to(#5b9ebf));
+}
+
+.clsTabLeftOnBk{
+	background:url(../image/tab_focused_left.png) no-repeat right;
+}
+.clsTabMiddleOnBk{
+	background:url(../image/tab_focused_center.png) repeat-x;
+}
+.clsTabRightOnBk{
+	background:url(../image/tab_focused_right.png) no-repeat left;
+}
+.clsTabLeftOffBk{
+	background:url(../image/tab_unfocused_left.png) no-repeat right;
+}
+.clsTabMiddleOffBk{
+	background:url(../image/tab_unfocused_center.png) repeat-x;
+}
+.clsTabRightOffBk{
+	background:url(../image/tab_unfocused_right.png) no-repeat left;
+}
+
+.clsLoadingPopupBk{
+    background:url(../image/loading_icon_medium_unfocused.png) no-repeat;
+}

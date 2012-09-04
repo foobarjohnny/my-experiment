@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<comment>ip address mapplingfor old client browser request</comment>
+	<redirectionConf>
+		<redirect>
+			<old>old-cserver</old>
+			<new>http://dtn1.telenav.com:8080/Browser_Server/Gate</new>
+		</redirect>
+		<redirect>
+			<old>movies/Startup.do</old>
+			<new>http://dtn1.telenav.com:8080/movies/Startup.do</new>
+		</redirect>
+	</redirectionConf>
+</config>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="test" class="com.telenav.cserver.class4test.SampleBean">
+	   <property name="value" value="Nmero de tel\u00e9fono"/>
+	</bean>
+	<bean id="spring_object" class="com.telenav.cserver.class4test.SampleBean">
+	   <property name="value" value="Nmero de tel\u00e9fono"/>
+	</bean>
+</beans>

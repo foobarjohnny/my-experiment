@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="executor_data_factory" class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory">  	      
+        <property name="classMap">
+	        <map>
+	        	<entry key="Proto_Dsr_Audio">
+	            	<ref bean="DsrAudioItem"/>
+	        	</entry>
+	        	<entry key="Proto_Dsr_Signal">
+	            	<ref bean="DsrSignalItem"/>
+	        	</entry>
+
+	    	</map>
+	</property>
+   </bean>   
+   
+    <bean id="DsrAudioItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.dsr.protocol.DSRAudioParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.dsr.protocol.ProtobufResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.dsr.framework.DSRExecutorResponse</value>
+        </property>
+   </bean>
+   
+    <bean id="DsrSignalItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+        <property name="requestParser">
+            <bean class="com.telenav.cserver.dsr.protocol.DsrRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.dsr.protocol.ProtobufResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.dsr.framework.DSRExecutorResponse</value>
+        </property>
+   </bean>
+
+</beans>

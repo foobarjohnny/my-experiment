@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<dsmRules>
+	<rules>
+		<rule description="TN 6.1 for att ANDROID">
+			<input combination="and">
+			</input>
+			<output>
+				<response name="needsponsor" value="TRUE" />
+				<response name="adengine" value="ALL" />
+				<response name="adtype"
+					value="SPONSORED_TEXT,MERCHANT_CONTENT,COUPON,MENU" />
+				<response name="needreview" value="FALSE" />
+				<response name="supportTouch" value="TRUE" />
+				<response name="isAndroid" value="TRUE" />
+				<response name="poiFinderVersion" value="YP50" />
+				<response name="defaultCountry" value="" />
+			</output>
+		</rule>
+	</rules>
+</dsmRules>

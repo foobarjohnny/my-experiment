@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="throttling_manager" class="com.telenav.cserver.framework.throttling.ThrottlingConfiguration">
+        <property name="enabled">
+            <value>true</value>
+        </property>
+        <property name="serviceList">
+            <list>
+	       <ref bean="ContentManageService" />
+	       <ref bean="POISearchService" />
+	        <ref bean="ACEService" />
+	        <ref bean="TelepersonalizationService"/>
+	        <ref bean="NavstarService" />
+     	    <ref bean="AlertService" />	
+     	    <ref bean="XnavService" /> 
+     	    <ref bean="AddressShareingService"/>
+     	    <ref bean="DummyProxy"/>
+			<ref bean="TrafficService"/>
+    	    </list>
+        </property>
+        
+   </bean>
+   
+   <bean id="DummyProxy"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>2</value>
+        </property>
+        <property name="serviceTypes">
+            <value>DummyProxy</value>
+        </property>
+   </bean>
+   
+    <bean id="TelepersonalizationService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>100</value>
+        </property>
+        <property name="serviceTypes">
+            <value>SERVICE_ONEBOXSEARCHxx</value>
+        </property>
+   </bean>
+   
+   
+   <bean id="ContentManageService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>CONTENTMANAGERSERVER</value>
+        </property>
+   </bean>
+   
+     <bean id="ACEService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>ACESERVER</value>
+        </property>
+   </bean>
+   
+      <bean id="POISearchService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>POISEARCHSERVER</value>
+        </property>
+   </bean>
+   
+   <bean id="POICATEGORYService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>POISEARCHSERVER</value>
+        </property>
+   </bean>
+
+   <!-- modified by mmwang on 2010-07-15. start move from nav_map -->
+   <bean id="NavstarService" class="com.telenav.cserver.framework.throttling.Service">
+        
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>SERVICE_NAVSTAR</value>
+        </property>
+   </bean>
+   
+   <bean id="AlertService" class="com.telenav.cserver.framework.throttling.Service">
+        
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>SERVICE_ALERT</value>
+        </property>
+   </bean>
+    <bean id="XnavService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>XNAVSERVER</value>
+        </property>
+   </bean>
+      <bean id="AddressShareingService"
+         class="com.telenav.cserver.framework.throttling.Service">
+		 
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>ADDRESSSHARINGSERVER</value>
+        </property>
+   </bean>
+
+	<bean id="TrafficService" class="com.telenav.cserver.framework.throttling.Service">
+        
+        <property name="maxAllowedOnlineNumber">
+            <value>300</value>
+        </property>
+        <property name="serviceTypes">
+            <value>SERVICE_TRAFFIC</value>
+        </property>
+   </bean>
+   <!-- modified by mmwang on 2010-07-15 end. move from nav_map -->
+</beans>

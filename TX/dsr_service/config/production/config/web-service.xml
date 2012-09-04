@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="webservice-configuration" class="com.telenav.cserver.backend.util.WebServiceConfiguration">  	      
+        <property name="serviceConfigMap">
+	    	<map>
+	    		<entry key="FEEDBACK">
+             		<ref bean ="FEEDBACK"/>
+         		</entry>
+	        
+	        	<entry key="POI_SEARCH">
+	            	<ref bean ="POI_SEARCH"/>
+	        	</entry>
+				
+				<entry key="RECENTSTOP">
+	            	<ref bean ="RECENTSTOP"/>
+	        	</entry>
+				
+				<entry key="CONTENT_MANAGER">
+	            	<ref bean ="CONTENT_MANAGER"/>
+	        	</entry>
+	        	
+	    	</map>
+		</property>
+   </bean> 
+   
+   <bean id="FEEDBACK" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://feedback-ws.telenav.com:8080/tnws/services/FeedbackService</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+    <bean id="CONTENT_MANAGER" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://contentmanager.mypna.com:8080/tnws/services/ContentManager</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   <bean id="RECENTSTOP" class="com.telenav.cserver.backend.config.SimpleServiceConfig">
+   		<property name="serviceUrl">
+	    	<value>http://recentstop-ws.mypna.com:8088/tnws/services/RecentstopServicePhase2</value>
+		</property>
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   <bean id="POI_SEARCH" class="com.telenav.cserver.backend.config.PoiSearchServiceConfig">
+   		<property name="serviceUrlMapping">
+   			<map>
+	    		<entry key="POI.TA">
+	            	<value>http://poisearch-ws.mypna.com/tnws/services/ContentSearchService</value>
+	        	</entry>   
+	        	<entry key="POI.YPC">
+	            	<value>http://poisearch-ypc-ws.mypna.com/tnws/services/ContentSearchService</value>
+	        	</entry>
+	    	</map>
+		</property>
+   		
+		<property name="webServiceItem">
+	    	<ref bean="Default_ServiceItem"/>
+		</property>
+   </bean>
+   
+   <bean id="Default_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>default</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>5000</value>
+		</property>
+   </bean> 
+   
+      <bean id="PoiSearch_ServiceItem" class="com.telenav.cserver.backend.config.WebServiceItem">  	      
+        <property name="serviceName">
+	    	<value>PoiSearch-WS</value>
+		</property>
+		<property name="webServiceMaxConnectionPerHost">
+	    	<value>11</value>
+		</property>
+		<property name="webServiceMinimumPoolSize">
+	    	<value>10</value>
+		</property>
+		<property name="webServiceMaximumPoolSize">
+	    	<value>30</value>
+		</property>
+		<property name="webServiceConnectionTimeout">
+	    	<value>2000</value>
+		</property>
+		<property name="webServiceTimeout">
+	    	<value>5000</value>
+		</property>
+   </bean>
+</beans>
