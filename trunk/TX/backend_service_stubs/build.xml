@@ -1,0 +1,66 @@
+<!DOCTYPE project [
+  <!ENTITY base_ant_common     SYSTEM "base_ant_common.properties">
+]>
+<project name="backend_service_stubs" default="create-jar" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="project.dir" value="."/>
+	<property name="src.dir" value="./src"/>
+	<property name="classes.dir" value="./classes"/>
+	<property name="lib.dir" value="./lib"/>
+	<property name="app_path" value="."/>
+	<property name="app_name" value="backend_service_stubs"/>
+	<property name="version" value="x.x.x"/>
+	<property name="dist" value="dist"/>
+	<property name="origin.lib.dir" value="../../lib" />
+
+        <property name="project.name" value="backend_service_stubs"/>
+        <property name="ivy.settings.file" value="./tnbuild/ivysettings.xml"/>
+        <property name="ivy.file" value="./tnbuild/ivy.xml"/>
+	
+	<!-- properties for regressions-->
+
+	<property file="base_ant_common.properties"/>
+	
+	<!-- define our classpath -->
+	<path id="compile.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+        <!-- properties for regressions-->
+        <target name="init-ivy">
+                <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+                        <classpath>
+                                <pathelement location="ivy.jar" />
+                        </classpath>
+                </taskdef>
+                <ivy:settings id="ivy.instance" file="${ivy.settings.file}" />
+        </target>
+
+        <target name="retrieve-all" depends="init-ivy" unless="withoutivy" description="--> Retrieves all Ivy dependencies into the lib directory">
+                <delete dir="${lib.dir}"  includes="**/*.jar"/>
+                <ivy:retrieve file="${ivy.file}"/>
+        </target>
+	
+	<!-- operation: compile -->
+	<target name="compile" depends="retrieve-all">
+		<!-- compile Web sources -->
+                <delete quiet="true" dir="${classes.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		
+		<copy todir="${classes.dir}" failonerror="false">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>	
+	
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="compile.class.path" debug="yes"/>
+	</target>
+	<target name="create-jar" depends="compile">
+		<delete dir="${app_path}/${dist}"/>
+		<mkdir dir="${app_path}/${dist}"/>
+		<jar jarfile="${app_name}-${version}.jar" basedir="${classes.dir}"/>
+		<delete quiet="true" dir="${classes.dir}"/>
+		<move todir="${app_path}/${dist}" file="${app_name}-${version}.jar"/>
+	</target>
+</project>

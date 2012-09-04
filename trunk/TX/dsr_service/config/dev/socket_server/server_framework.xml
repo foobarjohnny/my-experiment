@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="socket_server" class="com.telenav.cserver.service.socket.DefaultSocketServer">
+        <property name="businessFilter">
+            <ref bean="business_filter" />
+        </property>
+       <property name="httpAdapter">
+            <ref bean="http_adapter" />
+        </property>
+        <property name="port" value="8811">
+        </property>
+        <property name="timeout" value="180000">
+        </property>
+        <property name="readThreadsCount" value="4">
+        </property>
+        <property name="corePoolSize" value="10">
+        </property>
+        <property name="maximumPoolSize" value="50">
+        </property>
+   </bean>
+   
+   <bean id="business_filter"
+         class="com.telenav.audio.streaming.server.TeleNavStreamingFilter">
+        <constructor-arg index="0">   
+            <ref bean="listener_factory"/>   
+        </constructor-arg>            
+   </bean>
+   
+   <bean id="listener_factory"
+         class="com.telenav.cserver.dsr.StreamPacketArrivalListenerFactory">
+   </bean>
+
+    <bean id="http_adapter"
+         class="com.telenav.cserver.dsr.server.AudioLogAdapter">
+   </bean>
+  
+</beans>

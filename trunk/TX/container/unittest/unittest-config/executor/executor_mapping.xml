@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   
+   <import resource="executor_framework.xml"/>
+   <bean id="interceptor_manager" class="com.telenav.cserver.framework.executor.impl.DefaultInterceptorManager">  	      
+        <property name="interceptors">
+            <list>
+	       <ref bean="interceptors_test" />
+    	    </list>
+        </property>
+   </bean>
+   
+   <bean id="interceptors_test"
+         class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+        <property name="type">
+            <value>Test</value>
+        </property>
+        <property name="preInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+	
+	<property name="postInterceptors">
+	        <list>
+		       <ref bean="LoggingInterceptor" />
+		       <ref bean="LoggingInterceptor" />
+	    	</list>
+	</property>
+   </bean>
+   
+   
+   <bean id="executor_registry_loader" class="com.telenav.cserver.framework.executor.impl.DefaultExecutorRegistryLoader">
+   	<property name="executorList">
+            <list>
+	       <ref bean="TestExecutor" />
+    	    </list>
+        </property>
+   </bean>   
+  
+   
+   <bean id="TestExecutor"
+         class="com.telenav.cserver.framework.executor.test.TestExecutor">
+        <property name="executorType">
+            <value>Test</value>
+        </property>
+        <property name="desc">
+            <value>this is a test executor</value>
+        </property>
+   </bean>
+   
+</beans>

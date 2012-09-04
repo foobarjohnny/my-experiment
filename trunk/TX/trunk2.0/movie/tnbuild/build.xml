@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY proj_ant_common     SYSTEM "ant_common.properties">
+  <!ENTITY base_ant_classpath  SYSTEM "../../tnbuild/ant_classpath.properties">
+  <!ENTITY proj_ant_classpath  SYSTEM "ant_classpath.properties">
+]>
+
+
+<!-- ================================================================================
+= Please modify '$$$ProjectName$$$ with your specific project name
+================================================================================ -->
+<project name="movie" default="all" basedir="../.." 
+	xmlns:ac="antlib:net.sf.antcontrib">
+
+
+	<!-- ================================================================================
+	= Common properties to this project
+	= Please modify your local 'ant_common.properties' file to suite your project.
+	================================================================================ -->
+	&proj_ant_common;
+	&base_ant_classpath;
+	&proj_ant_classpath;
+
+	<!-- ================================================================================
+	= If you want to build on your local machine, uncommented the below <property file ...>
+	<property file="${tab.localsetup}"/>
+	================================================================================ -->
+	<import file="../../tnbuild/basebuild.xml"/>
+
+	<target name="dist.jars.pre">
+		<!-- ================================================================================
+		<copy todir="${build.classes}/${package}">
+			<fileset dir="${src}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		================================================================================ -->
+	</target>
+
+	<target name="dist.jars.post">
+		<copy todir="${temp.dir}">
+			<fileset dir="${project.dir}/${web.root}">
+				<exclude name="**/.svn/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="WEB-INF/config/**" />
+			</fileset>
+		</copy>
+		<mkdir dir="${temp.dir}/${webinif.dir}/classes" />
+		<echo>build:${suffix}-${region}</echo>
+
+		<!-- Copy config file for Movies -->
+		<copy file="${src.config}/sqlmapconfig-${suffix}-${region}.properties" 
+			tofile="${temp.dir}/${webinif.dir}/classes/config/sqlmapconfig.properties" />
+		<copy file="${src.config}/movie-${suffix}-${region}.properties" 
+			tofile="${temp.dir}/${webinif.dir}/classes/config/movie.properties" />
+		<copy file="${src.config}/com/televigation/log/config-${suffix}-${region}.xml" 
+			tofile="${temp.dir}/${webinif.dir}/classes/com/televigation/log/config.xml" />
+
+		<!-- Copy config file for Gateway filter -->
+		<copy file="${project.dir}/appversion.txt" 
+			todir="${temp.dir}/${webinif.dir}/config/" />
+		<echo message="${version}" file="${temp.dir}/${webinif.dir}/config/version.txt" />
+		<copy file="${src.config}/config/urlmappings-${suffix}-${region}.xml" 
+			tofile="${temp.dir}/${webinif.dir}/classes/config/urlmappings.xml" />
+
+		<!-- Copy resource files -->
+		<copy file="${src}/resource_loader.xml" 
+			tofile="${temp.dir}/${webinif.dir}/classes/resource_loader.xml" />
+		<copy todir="${temp.dir}/${webinif.dir}/classes/device/">
+			<fileset dir="${src}/device">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${temp.dir}/${webinif.dir}/classes/layout/">
+			<fileset dir="${src}/layout">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${temp.dir}/${webinif.dir}/classes/message/">
+			<fileset dir="${src}/message">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${temp.dir}/${webinif.dir}/classes/com/telenav/browser/movie/resources/">
+			<fileset dir="${src}/com/telenav/browser/movie/resources">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${temp.dir}/${web_classes.dir}/${package}">
+			<fileset dir="${src}/${package}">
+				<include name="**/config/**" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="dist.war">
+		<war destfile="${dist.lib}/${war.warname}" 
+			basedir="${temp.dir}">
+			<classes dir="${build.classes}" />
+			<manifest>
+				<attribute name="Implementation-Vendor"    value="TeleNav Inc."/>
+				<attribute name="Implementation-Title"     value="${project.name}"/>
+				<attribute name="Implementation-Version"   value="${env.SVN_REVISION}"/>
+				<attribute name="Build-Name"               value="${war.warname}"/>
+				<attribute name="Build-By"                 value="${env.USER}@${env.HOSTNAME}"/>
+				<attribute name="Build-Version"            value="${version}"/>
+			</manifest>
+		</war>
+	</target>
+
+	<target name="runregressionex"/>
+
+	<target name="ivy.publish.post">
+		<property name="file01.Release.dir" value="/file01/Release/TN/TeleNav5.0/browser20/movies/archive"/>
+		<copy todir="${file01.Release.dir}/${version}/${buildConf}">
+			<fileset dir="${dist.lib}">
+				<include name="${jar.jarname}"/>
+			</fileset>
+		</copy>
+		<copy file="${dist.lib}/${war.warname}"
+			tofile="${file01.Release.dir}/${version}/${buildConf}/movies.war">
+		</copy>
+	</target>
+
+</project>
+

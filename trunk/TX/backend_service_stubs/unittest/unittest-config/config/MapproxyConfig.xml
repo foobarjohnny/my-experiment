@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<mapproxyConfig defaultServerSet="NA_PRODUCTION">
+    <requestTypeSet defaultRequestType="routing">
+		<!--content-->
+		<requestPair service="CONTENT" 	command="SRC" 		requestType="contents"	/>
+		
+		<!--image-->
+		<requestPair service="IMAGE" 		command="MAG" 		requestType="image"	/>
+		<requestPair service="IMAGE" 		command="TRAFFIC" requestType="globalimage"	/>
+		<requestPair service="IMAGE" 		command="TILE" 		requestType="globalimage"	/>
+		
+		<!--tms does not support poi-->
+		
+		<!--ptp for CN only-->
+		<requestPair service="PTP" 			command="LAP" 		requestType="ptp"	/>
+		<requestPair service="PTP" 			command="LLS" 		requestType="ptp"	/>
+		<requestPair service="PTP" 			command="PTP" 		requestType="ptp"	/>
+		<requestPair service="PTP" 			command="QBN" 		requestType="ptp"	/>
+		
+		<!--rev gc-->
+		<requestPair service="REVGC" 		command="BRG" 		requestType="rgc"	/>
+		<requestPair service="REVGC" 		command="NBX" 		requestType="rgc"	/>
+		<requestPair service="REVGC" 		command="RGC" 		requestType="rgc"	/>
+		
+		<!--routing-->
+		<requestPair service="ROUTING" 	command="MRD" 		requestType="routing" />
+		<requestPair service="ROUTING" 	command="TRT" 		requestType="routing" />
+		
+		<!--tngeo, it seems that it used for CN only-->
+		<requestPair service="TNGEO" 		command="ADR" 		requestType="geocoding"	/>
+		<requestPair service="TNGEO" 		command="CNT" 		requestType="geocoding"	/>
+		<requestPair service="TNGEO" 		command="SPI" 		requestType="geocoding"	/>	
+		
+		<!--traffic-->
+		<requestPair service="TRAFFIC" 	command="ALT" 		requestType="traffic"	/>
+		<requestPair service="TRAFFIC" 	command="CNT" 		requestType="traffic"	/>
+		<requestPair service="TRAFFIC" 	command="INF" 		requestType="traffic"	/>	
+		
+		<!--vector map-->
+		<requestPair service="VECMAP" 	command="VEC" 		requestType="vectormap"	/>	
+	</requestTypeSet>
+	<!-- NA server cluster ################################################### -->
+	<serverSet name="NA_PRODUCTION">		
+		<serverSetConfig 
+			useTimedSocket="false"
+			socketCreateTimeout="2000" 
+			retryAttempts="1"
+			trafficSupport="true" />	
+		<region>
+			<countries countryCodes="US,CA,MX,PR,VI" />
+			<area>
+				<boundingBox llMin="6.768654,-166.985015" llMax="75.712758, -31.123344" />
+			</area>
+		</region>
+		<hostMapping>
+			<server requestType="geocoding" host="geocode.mypna.com" port="11199" timeout="60000" />
+			<server requestType="rgc" host="10.224.91.114" port="11100" timeout="30000" />
+			<server requestType="routing" host="10.224.91.66" port="11199" timeout="60000" />
+			<server requestType="contents" host="tms-contents.mypna.com" port="11199" timeout="30000" />			
+			<server requestType="image" host="imageservice-na.mypna.com" port="9500" timeout="30000" />
+			<server requestType="poi" host="poi.mypna.com" port="11199" timeout="30000" />
+			<server requestType="vectormap" host="mmde-c-na.mypna.com" port="9800" timeout="30000" />			
+		</hostMapping>
+	</serverSet>
+
+	<!-- SA server cluster ################################################### -->
+	<serverSet name="SA_PRODUCTION">
+		<serverSetConfig 
+			useTimedSocket="false"
+			socketCreateTimeout="2000" 
+			retryAttempts="1"/>	
+		<region>
+			<countries countryCodes="BR" />
+			<area>
+				<boundingBox llMin="-58.455446,-90.494651" llMax="-0.0000001, -30.712778" />
+				<boundingBox llMin="0.0,-90.494651" llMax="13.915546, -30.712778" />
+			</area>
+		</region>
+		<hostMapping>
+			<server requestType="geocoding" host="vivo-map.mypna.com" port="11133" timeout="30000" />
+            		<server requestType="rgc" host="10.224.91.114" port="11133" timeout="30000" />
+            		<server requestType="routing" host="tms-br-direction.mypna.com" port="11133" timeout="30000" />
+            		<server requestType="contents" host="tms-br-lb-contents.mypna.com" port="9500" timeout="30000" />
+            		<server requestType="image" host="imageservice-sa.mypna.com" port="11133" timeout="30000" />
+            		<server requestType="poi" host="vivo-map.mypna.com" port="11133" timeout="30000" />
+            		<server requestType="vectormap" host="mmde-c-sa.mypna.com" port="9800" timeout="30000" />
+		</hostMapping>
+	</serverSet>
+	
+	<!-- EU server cluster ################################################### -->
+	<serverSet name="EU_PRODUCTION">
+		<serverSetConfig 
+			useTimedSocket="false"
+			socketCreateTimeout="2000" 
+			retryAttempts="1"/>	
+		<region>
+			<countries countryCodes="FR,DE,IE,IT,ES,GB,CH,AT,PT,BE,NL,LU,DK,NO,SE,FI,AD,GI,GR,IM,LI,MC,SM,VA,CZ,PL,HU,CS" />
+			<area>
+				<boundingBox llMin="33.531686,-10.30361" llMax="72.845101,-0.0000001" />
+				<boundingBox llMin="33.531686,0.0" llMax="72.845101,55.725381" />
+			</area>
+		</region>
+		<hostMapping>
+			<server requestType="geocoding" host="eu-map.telenav.com" port="11155" timeout="30000" />
+			<server requestType="rgc" host="10.224.91.114" port="11155" timeout="30000" />
+			<server requestType="routing" host="10.224.91.66" port="11155" timeout="30000" />
+			<server requestType="contents" host="tms-eu-nt-contents.mypna.com" port="11155" timeout="30000" />
+			<server requestType="image" host="imageservice-eu.mypna.com" port="9500" timeout="30000" />
+			<server requestType="poi" host="eu-map.telenav.com" port="11155" timeout="30000" />
+			<server requestType="vectormap" host="mmde-c-eu.mypna.com" port="9800" timeout="30000" />						
+		</hostMapping>
+	</serverSet>
+	
+	<!-- MMI server cluster ################################################### -->
+	<serverSet name="IN_PRODUCTION">
+		<serverSetConfig
+			useTimedSocket="true"
+			socketCreateTimeout="2000"
+			retryAttempts="2"
+			trafficSupport="true" />
+		<region>
+			<countries countryCodes="IN" />
+			<area>
+				<boundingBox llMin="5.935970,65.753870" llMax="37.087770,97.602410" />
+			</area>
+		</region>
+		<hostMapping>
+			<server requestType="geocoding" host="geocode.mypna.com" port="11199" timeout="30000" />
+			<server requestType="rgc" host="hqs-rgcglobal-01" port="11100" timeout="30000" />
+			<server requestType="routing" host="10.224.91.66" port="11199" timeout="60000" />
+			<server requestType="contents" host="tms-contents.mypna.com" port="11199" timeout="30000" />
+			<server requestType="image" host="image.mypna.com" port="22299" timeout="30000" />
+			<server requestType="poi" host="poi.mypna.com" port="11199" timeout="30000" />
+			<server requestType="vectormap" host="mapdata.mypna.com" port="11199" timeout="30000" />
+		</hostMapping>
+	</serverSet>	
+		
+	<!-- CN server cluster ################################################### 
+	<serverSet name="CN_PRODUCTION">
+		<serverSetConfig 
+			useTimedSocket="false"
+			socketCreateTimeout="2000"
+			retryAttempts="1"
+			cngeocoding="true" 
+			cnversion="5.0"/>	
+		<region>
+			<countries countryCodes="CN,TW" />
+			<area>
+				 <boundingBox llMin="-7.297032, 17.626092" llMax="66.187591,163.164653" />
+			</area>
+		</region>
+		<hostMapping>
+			<server requestType="geocoding" host="lbmap.idc.telenav.cn" port="11132" timeout="30000" />
+			<server requestType="rgc" host="lbmap.idc.telenav.cn" port="11132" timeout="30000" />
+			<server requestType="routing" host="lbmap.idc.telenav.cn" port="11132" timeout="30000" />
+			<server requestType="contents" host="lbmap.idc.telenav.cn" port="11132" timeout="30000" />
+			<server requestType="image" host="lbimage.idc.telenav.cn" port="9500" timeout="30000" />
+			<server requestType="poi" host="lbpoi.idc.telenav.cn" port="11111" timeout="30000" />
+			<server requestType="vectormap" host="lbimage.idc.telenav.cn" port="11187" timeout="30000" />						
+		</hostMapping>
+	</serverSet>	-->
+</mapproxyConfig>

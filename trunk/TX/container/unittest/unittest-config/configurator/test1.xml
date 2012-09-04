@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="childJim1" class="com.telenav.cserver.class4test.configurator.ChildJim1"></bean>
+	<bean id="childBen2" class="com.telenav.cserver.class4test.configurator.ChildBen2"></bean>
+</beans>

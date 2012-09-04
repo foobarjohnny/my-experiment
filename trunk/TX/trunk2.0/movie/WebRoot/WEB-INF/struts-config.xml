@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<data-sources></data-sources>
+	<form-beans></form-beans>
+
+	<global-exceptions></global-exceptions>
+	<global-forwards>
+		<forward contextRelative="yes" name="Globe_Exception"
+			path="/WEB-INF/jsp/ErrorPage.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/Startup"
+			type="com.telenav.browser.movie.action.Startup" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/InputCondition.jsp" />
+		</action>
+		<action path="/SelectDate"
+			type="com.telenav.browser.movie.action.SelectDate" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/SelectDate.jsp" />
+		</action>
+		<action path="/SearchMovies"
+			type="com.telenav.browser.movie.action.SearchMovies" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/SearchMoviesWrap.jsp" />
+			<forward name="fail" path="/WEB-INF/jsp/NoResult.jsp" />
+		</action>
+		<action path="/ChangePage"
+			type="com.telenav.browser.movie.action.ChangePage" scope="request">
+			<forward name="wrap"
+				path="/WEB-INF/jsp/SearchMoviesWrap.jsp" />
+			<forward name="success"
+				path="/WEB-INF/jsp/SearchMovies.jsp" />
+		</action>
+		<action path="/ChangeTheaterPage"
+			type="com.telenav.browser.movie.action.ChangeTheaterPage"
+			scope="request">
+			<forward name="wrap"
+				path="/WEB-INF/jsp/SearchTheatersWrap.jsp" />
+			<forward name="success"
+				path="/WEB-INF/jsp/SearchTheaters.jsp" />
+		</action>
+		<action path="/SelectMovie"
+			type="com.telenav.browser.movie.action.SelectMovie" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/SelectMovie.jsp" />
+		</action>
+		<action path="/SelectTheater"
+			type="com.telenav.browser.movie.action.SelectTheater" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/SelectTheater.jsp" />
+		</action>
+		<action path="/MoviesInfoTickets"
+			type="com.telenav.browser.movie.action.SelectSchedule" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/MoviesInfoTickets.jsp" />
+			<forward name="noticket" path="/WEB-INF/jsp/NoTicket.jsp" />
+		</action>
+		<action path="/MoviesInfoShowTimes"
+			type="com.telenav.browser.movie.action.SelectTheater" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/MoviesInfoShowTimes.jsp" />
+		</action>
+		<action path="/MovieDetails"
+			type="com.telenav.browser.movie.action.MovieDetails" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/MovieDetails.jsp" />
+		</action>
+		<action path="/SearchTheaters"
+			type="com.telenav.browser.movie.action.SearchTheaters" scope="request">
+			<forward name="success"
+				path="/WEB-INF/jsp/SearchTheatersWrap.jsp" />
+			<forward name="fail" path="/WEB-INF/jsp/NoResult.jsp" />
+		</action>
+		<action path="/BuyTickets"
+			type="com.telenav.browser.movie.action.SelectSchedule" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/BuyTickets.jsp" />
+			<forward name="noticket" path="/WEB-INF/jsp/NoTicket.jsp" />
+		</action>
+	</action-mappings>
+
+	<message-resources null="false"
+		parameter="com.telenav.browser.movie.resources.ApplicationResources" />
+</struts-config>

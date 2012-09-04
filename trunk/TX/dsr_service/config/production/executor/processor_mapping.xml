@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+	
+<beans>
+    <bean id="processor_factory" class="com.telenav.cserver.service.chunkhandler.ChunkProcessorFactory">
+        <property name="classMap">
+            <map>
+                <entry key="Dsr_Signal">
+                    <ref bean="DSRProcessorItem" />
+                </entry>
+                
+                <entry key="Dsr_Audio">
+                    <ref bean="DSRProcessorItem" />
+                </entry>
+	    </map>
+        </property>
+    </bean>
+	
+    <bean id="DSRProcessorItem" class="com.telenav.cserver.dsr.DSRStreamingChunkProcessor">
+        <property name="processorName">
+            <value>DSR_Chunk_Processor</value>
+        </property>
+    </bean>
+</beans>

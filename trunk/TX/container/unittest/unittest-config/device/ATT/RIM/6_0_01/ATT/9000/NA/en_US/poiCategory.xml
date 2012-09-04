@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+    
+<beans>
+	<bean id="PoiCategories" class="com.telenav.cserver.resource.common.poi.PoiCategoryCollection">
+	
+		<property name="version" value="1.0.0"/>
+		
+		<property name="poiFinderVersion" value="YP50"/>
+		
+		<!--category id #category label#image id if any-->
+		<property name="poiCategories">
+			<list>
+				<value>-1#All categories</value>
+			</list>
+		</property>
+		
+		
+		<property name="poiCategoryLabels">
+			<map>
+				<entry key="DIRECTORY" value="Directory"/>
+				<entry key="ANY" value="Any"/>
+				<entry key="MOST_POPULAR" value="Most Popular"/>
+				<entry key="COMPLETE_LIST" value="Complete List"/>
+			</map>
+		</property>
+	
+	
+	</bean>
+
+
+
+</beans>

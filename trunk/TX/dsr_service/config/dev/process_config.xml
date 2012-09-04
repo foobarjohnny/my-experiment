@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration> 
+ 
+    <case configId="0" description="City State">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.CityStateHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.ValidateCitiesHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>
+
+	<case configId="1" description="POI">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.POIHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>   
+    
+    <case configId="5" description="Airport">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.AirportHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>
+       
+ 	<case configId="6" description="Command And Control">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.CCFilterHandler</handler>	
+			<handler>com.telenav.cserver.dsr.handler.CommandControlHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>
+          
+    <case configId="8" description="Number">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.NumberHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>
+     
+	<case configId="11" description="OneShot POI">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.OneShotPOIHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>   
+       
+    <case configId="9" description="One Shot Address">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.OneshotAddressHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>
+               
+    <case configId="10" description="OneShot Intersection">
+        <proxy>com.telenav.cserver.dsr.streaming.proxy.DSRStreamingProxy</proxy>
+        <handlerList>
+        	<handler>com.telenav.cserver.dsr.handler.OneshotAddressHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.AudioListHandler</handler>
+        	<handler>com.telenav.cserver.dsr.handler.SaveLogHandler</handler>
+        </handlerList>
+    </case>       
+    
+</configuration>

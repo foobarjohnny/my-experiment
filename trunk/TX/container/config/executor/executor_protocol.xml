@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+   <bean id="executor_data_factory" class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory">  	      
+        <property name="classMap">
+	    <map>
+	    	<entry key="DEFAULT">
+	            <ref bean="DefaultItem"/>
+	        </entry>
+	        
+	        <entry key="Test">
+	            <ref bean="TestClassItem"/>
+	        </entry>
+	    </map>
+	</property>
+   </bean>   
+   
+   <bean id="DefaultItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        
+         <property name="requestParser">
+            <bean class="com.telenav.cserver.framework.executor.protocol.txnode.DefaultTxNodeParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.framework.executor.protocol.txnode.DefaultTxNodeFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.framework.executor.ExecutorResponse</value>
+        </property>
+   </bean>
+   
+   <bean id="TestClassItem"
+         class="com.telenav.cserver.framework.executor.protocol.txnode.ExecutorDataFactory$Item">
+        <property name="requestParser">
+            <bean class="com.telenav.cserver.container.sample.executor.TestRequestParser"/>
+        </property>
+        <property name="responseFormatter">
+            <bean class="com.telenav.cserver.container.sample.executor.TestResponseFormatter"/>
+        </property>
+        <property name="responseClassName">
+            <value>com.telenav.cserver.container.sample.executor.TestResponse</value>
+        </property>
+   </bean>
+   
+</beans>

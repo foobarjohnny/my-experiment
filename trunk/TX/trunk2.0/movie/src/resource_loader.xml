@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource_loader>
+	<!-- resource sets, i.e. layout_set -->
+	<sets>
+
+		<set name="layout_set" path="layout.layout_set" />
+
+	</sets>
+
+
+	<!-- resource holder -->
+	<holders>
+
+		<!-- device properties: resource mapper-->
+		<holder name="device_properties_holder" type="resource_bundle"
+			class="com.telenav.browser.common.resource.holder.DevicePropertiesHolder"
+			config_path="device.resource" orders="platform,version,carrier,device" />
+
+		<holder name="layout_holder" type="resource_bundle"
+			class="com.telenav.browser.common.resource.holder.LayoutHolder" set="layout_set"
+			orders="locale" />
+
+		<holder name="error_message_holder" type="resource_bundle"
+			class="com.telenav.j2me.server.resource.ErrorMessageHolder"
+			config_path="message.messages" orders="platform,version,carrier,device,locale" />
+	</holders>
+
+</resource_loader>

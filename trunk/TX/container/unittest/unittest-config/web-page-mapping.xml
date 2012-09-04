@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+    
+<beans>
+	<bean id="web_page_mapping" class="com.telenav.cserver.resource.datatypes.WebPageMapping">
+        <property name="webPageMapping">
+            <list>
+	      	 	<ref bean="poi_web_page_mapping" />
+    	    </list>
+        </property>
+   </bean>
+
+	<bean id="poi_web_page_mapping" class="com.telenav.cserver.resource.datatypes.WebPageMappingItem">
+		<property name="service">
+			<value>poi</value>
+		</property>
+		<property name="urlEntry">
+			<value>poi.http</value>
+		</property>
+		<property name="webpageMapping"> 
+            <map> 
+               <entry key="poidetail" value="/poi_service/html/poidetail.do"/>
+            </map> 
+        </property> 
+	</bean>
+	
+</beans>

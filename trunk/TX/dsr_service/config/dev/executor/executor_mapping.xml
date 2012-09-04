@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<import resource="executor_framework.xml" />
+	<bean id="interceptor_manager"
+		class="com.telenav.cserver.framework.executor.impl.DefaultInterceptorManager">
+		<property name="interceptors">
+			<list>
+				<ref bean="interceptors_DSRSignal" />
+				<ref bean="interceptors_DSRAudio" />
+				<!-- <ref bean="interceptors_LiveStat" /> -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 
+    <bean id="interceptors_LiveStat" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+		<property name="type">
+		    <value>Global</value>
+		</property>
+	
+		<property name="postInterceptors">
+			<list>
+			       <ref bean="LiveStatInterceptor" />
+			</list>
+		</property>
+    </bean>
+     -->
+    <bean id="interceptors_DSRSignal" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>Dsr_Signal</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    </bean>
+    
+    <bean id="interceptors_DSRAudio" class="com.telenav.cserver.framework.executor.impl.InterceptorConfigurationItem">
+    	<property name="type">
+    		<value>Dsr_Audio</value>
+		</property>
+    	<property name="preInterceptors">
+    		<list>
+    			<ref bean="TnContextInterceptor_WithOutRegister" />
+    		</list>
+    	</property>
+    </bean>
+       <bean id="executor_registry_loader" class="com.telenav.cserver.framework.executor.impl.DefaultExecutorRegistryLoader">
+   	<property name="executorList">
+            <list>
+	       <ref bean="TestExecutor" />
+    	    </list>
+        </property>
+   </bean>   
+  
+   
+   <bean id="TestExecutor" class="com.telenav.cserver.framework.executor.TestExecutor">
+        <property name="executorType">
+            <value>Test</value>
+        </property>
+        <property name="desc">
+            <value>this is a test executor</value>
+        </property>
+   </bean>
+ 
+</beans>

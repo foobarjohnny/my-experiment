@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+	       
+	       
+	      <bean id="actionVersion" class="java.lang.String">
+	      		<constructor-arg>
+	      			<value>1.0.01</value>
+	      		</constructor-arg>
+	      </bean>
+	       
+	      <util:list id="common_actions">
+		         <value>SyncNewStops</value>
+	        	 <value>SyncPreference</value>
+	        	 <value>Feedback</value>
+	        	 <value>FetchAllStops</value>
+	        	 <value>Logging</value>
+				 <value>AutoSuggestList</value>
+				 <value>Dsm</value>
+				 <value>ConfirmRecentStops</value>
+	    	</util:list>
+	    	
+	    	
+	    	<util:list id="commuteAlert_actions">
+		        	 
+	    	</util:list>
+			
+			
+		<util:list id="cs_login_actions">
+			<value>Login</value>
+	        	<value>Purchase</value>	
+		        <value>Cancel</value>	
+		        <value>forgetPin</value>
+		        <value>Get_Account_Status</value>
+		        <value>SyncPurchased</value>
+		        <value>SendPTNVerificationCode</value>
+		        <value>ConfirmPurchase</value>
+		        <value>DeclinePurchase</value>
+	    	</util:list>
+	    	
+	    	
+	    	<util:list id="cs_poi_actions">
+		        <value>ShareAddress</value>
+	        	 <value>OneBox</value>	  
+				 <value>SearchPoi</value>
+				 <value>ValidateAirport</value>
+				 <value>ValidateAddress</value>
+				 <value>bannerAds</value>
+				 <value>SentAddress</value>
+				 <value>BillBoardAds</value>
+				<value>I18NWeather</value>
+	    	</util:list>
+	    	
+	    	
+	    	<util:list id="login_actions">
+			<value>Login</value>
+	        	<value>Purchase</value>	
+		        <value>Cancel</value>	
+	    	</util:list>
+	    	
+	    	
+	    	<util:list id="poi_actions">
+		        <value>ShareAddress</value>
+	        	 <value>OneBox</value>	  
+				 <value>SearchPoi</value>
+				 <value>ValidateAirport</value>
+				 <value>ValidateAddress</value>
+				 <value>BannerAds</value>
+	    	</util:list>
+			
+		<util:list id="addon_actions">
+		        	  
+	    	</util:list>	
+			
+				<util:list id="movie_actions">
+		        	  
+	    	</util:list>
+
+				<util:list id="localappfwk_actions">
+		        	  
+	    	</util:list>
+				<util:list id="restaurant_actions">
+		        	  
+	    	</util:list>
+	    	
+
+                <util:list id="spt_actions">
+                            <value>Get_SPT</value>
+                </util:list>
+	    	
+	    	<util:list id="routing_actions">
+		        	  <value>Streaming_Map</value>
+		        	 <value>Map</value>
+		        	  <value>Dynamic_Route</value>
+		        	  <value>Get_Extra_Edge</value>
+		        	 <value>Check_Deviation</value>
+		        	  <value>Static_Route</value>
+		        	 <value>Reverse_Route</value>
+		        	  <value>Decimated_Route</value>
+		        	 <value>Traffic_Summary</value>
+		        	  <value>Traffic_Alerts_Moving_Map</value>
+		        	 <value>Traffic_Avoid_Selected_Seg_Reroute</value>
+		        	  <value>Traffic_Min_Delay_Reroute</value>
+		        	 <value>Traffic_Selected_Reroute</value>
+		        	  <value>Traffic_Avoid_Incidents_Reroute</value>
+		        	 <value>Traffic_Static_Avoid_Selected_Seg_Reroute</value>
+		        	  <value>Traffic_Static_Min_Delay_Reroute</value>
+		        	  <value>Traffic_Incident_Report</value>
+		        	  <value>Commute_Alert_Details</value>
+		        	  <value>Reverse_Geocoding</value>
+					  
+					  <value>CheckSelected_Deviation</value>
+					  <value>Chunked_Dynamic_Route</value>
+					  <value>Chunk_CheckSelected_Deviation</value>
+					  <value>Chunk_Selection_Route</value>
+					  <value>Decimated_MultiRoute</value>
+					  <value>Traffic_Avoid_Selected_Seg_Deci_Reroute</value>
+					  <value>Traffic_Min_Delay_Deci_Reroute</value>
+					  <value>Traffic_Static_Avoid_Selected_Seg_Deci_Reroute</value>
+					  <value>Traffic_Static_Min_Delay_Deci_Reroute</value>
+					  <value>Get_Extra_Info</value>
+					  <value>Selection_Route</value>
+					  <value>TrafficMap</value>
+					  <value>GET_ETA</value>
+					  
+	    	</util:list>
+	    	
+	    	
+	    	
+	    	
+	    	<util:list id="resource_actions">
+		        	   <value>GetMissingAudio</value>
+	        	 <value>SwitchLocale</value>
+	        	 <value>SwitchRegion</value>
+	        	 <value>SyncResource</value>
+	        	 <value>CellTower</value>
+	        	<value>GetServiceLocator</value>
+	        	<value>Startup</value>
+	        	<value>LocationSearch</value>
+	        	<value>MISReporting</value>
+	        	<value>CacheCities</value>
+	        	<value>CombinationSyncResource</value>
+	        	<value>SyncServiceLocator</value>
+				<value>SyncClientSettingData</value>
+	    	</util:list>
+			
+			<util:list id="resource_actions_without_mislog">
+		        	   <value>GetMissingAudio</value>
+	        	 <value>SwitchLocale</value>
+	        	 <value>SwitchRegion</value>
+	        	 <value>SyncResource</value>
+	        	 <value>CellTower</value>
+	        	<value>GetServiceLocator</value>
+	        	<value>Startup</value>
+	        	<value>LocationSearch</value>
+	        	<value>CacheCities</value>
+	        	<value>CombinationSyncResource</value>
+	        	<value>SyncServiceLocator</value>
+				<value>SyncClientSettingData</value>
+	    	</util:list>
+	    	
+	    	
+	    	<util:list id="mislog_actions">
+	        	<value>MISReporting</value>
+	    	</util:list>
+	    	
+	    	<util:list id="dsr_actions">
+		        	 
+	    	</util:list>
+	    	
+	    	<util:list id="trackingpolicy_actions">
+				        	 
+	    	</util:list>
+	    	
+	    	<util:list id="ldl_actions">
+						        	 
+	    	</util:list>
+	    	
+	    	<util:list id="postlocation_actions">
+								        	 
+	    	</util:list>
+	    	
+	    	<util:list id="dim_actions">
+			<value>GetToken</value>    	 
+			<value>GetPTN</value>
+			<value>GetEncryptionPtn</value>
+	    	</util:list>
+	    	
+	    	<util:list id="ecommerce_actions">
+								        	 
+	    	</util:list>
+	    	
+	    	<util:list id="clientRes_actions">
+								        	 
+	    	</util:list>
+	    	
+	    	<util:list id="vectorMap_actions">
+								        	 
+	    	</util:list>
+	    	
+	    	<util:list id="trafficTile_actions">
+								        	 
+	    	</util:list>
+
+			<util:list id="cs_addons_actions">
+								        	 
+	    	</util:list>
+                <util:list id="feedbacksurvey_actions">
+								        	 
+	    	</util:list>
+	    	
+	    	<util:list id="getaboutpage_actions">
+								        	 
+	    	</util:list>
+		<util:list id="browserappworld_actions">
+								        	 
+	    	</util:list>
+			<util:list id="urlforflowtype_actions">
+								        	 
+	    	</util:list>
+	    	<util:list id="urlforweather_actions">
+								        	 
+	    	</util:list>
+	    	
+</beans>

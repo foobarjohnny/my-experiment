@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<beans>
+		<action type="" carrier="" value="" />
+		<action type="" carrier="" value="" />
+		<bean></bean>
+	</beans>
+	
+	<actions>
+		<action type="type0" carrier="carrier0" value="false" />
+		<action type="type1" carrier="carrier1" value="true" />
+		<action type="type2" carrier="" value="false" />
+		<bean></bean>
+	</actions>
+</root>

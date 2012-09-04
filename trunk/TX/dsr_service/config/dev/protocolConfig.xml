@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocolHandlerList>
+    <protocolHandler version="00">com.telenav.cserver.dsr.protocol.TxNodeProtocolHandler</protocolHandler>
+</protocolHandlerList>

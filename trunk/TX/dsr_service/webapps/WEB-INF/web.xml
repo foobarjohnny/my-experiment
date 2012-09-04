@@ -1,0 +1,88 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+
+<web-app>
+<!-- init paramters for entire application these params are passed to all the jsp and servlets -->
+   
+    <servlet>
+        <servlet-name>telenav-server</servlet-name>
+        <servlet-class>com.telenav.cserver.service.servlet.TelenavServiceServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>telenav-server-pb</servlet-name>
+        <servlet-class>com.telenav.cserver.service.servlet.TelenavServicePbServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>telenav-server-chunk</servlet-name>
+        <servlet-class>com.telenav.cserver.service.servlet.TelenavServiceChunkServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>resource-management</servlet-name>
+        <servlet-class>com.telenav.cserver.service.servlet.ResourceManagementServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>monitor-server</servlet-name>
+        <servlet-class>com.telenav.cserver.framework.management.heartbeat.HeartBeatServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarkUp</servlet-name>
+        <servlet-class>com.telenav.cserver.framework.management.external_service.MarkUpServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarkDown</servlet-name>
+        <servlet-class>com.telenav.cserver.framework.management.external_service.MarkDownServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceQuery</servlet-name>
+        <servlet-class>com.telenav.cserver.framework.management.external_service.ServiceQueryServlet</servlet-class>
+    </servlet>
+    
+  
+    
+
+<!-- mapping of servlets to the jsp files -->
+
+    <servlet-mapping>
+        <servlet-name>telenav-server</servlet-name>
+        <url-pattern>/telenav-server</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>telenav-server-pb</servlet-name>
+        <url-pattern>/telenav-server-pb</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>telenav-server-chunk</servlet-name>
+        <url-pattern>/telenav-server-chunk</url-pattern>
+    </servlet-mapping>
+
+    
+    <servlet-mapping>
+        <servlet-name>monitor-server</servlet-name>
+        <url-pattern>/validate</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>MarkUp</servlet-name>
+        <url-pattern>/MarkUp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarkDown</servlet-name>
+        <url-pattern>/MarkDown</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ServiceQuery</servlet-name>
+        <url-pattern>/ServiceQuery</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>resource-management</servlet-name>
+        <url-pattern>/resource-management</url-pattern>
+    </servlet-mapping>
+
+</web-app>

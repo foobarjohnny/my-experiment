@@ -1,0 +1,277 @@
+﻿<project name="dsr-cserver" default="ivy.resolve" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property file="build.properties"/>
+	<property name="project.dir" value="."/>
+	<property name="version" value="1.0"/>
+	<property name="src.dir" value="./src"/>
+	<property name="config.dir" value="./config"/>
+	<property name="classes.dir" value="./binary"/>
+	<property name="lib.dir" value="./lib"/>
+	<property name="app_path" value="."/>
+	<property name="app_name" value="dsr-cserver"/>
+	<property name="dist" value="dist"/>
+	<property name="build.war" value="${project.dir}/build/war"/>
+	<property name="webapps.dir" value="${project.dir}/webapps"/>
+	<!-- Settings for Ivy2 -->	
+	<property name="ivy.project.dir"                           location="${project.dir}/tnbuild" />
+	<property name="ivy.default.ivy.user.dir"                  location="/tmp/.ivy2" />
+	<property name="ivy.default.cache"                         location="/tmp/.ivy2/cache" />
+	<property name="ivy.cache.dir"                             location="/tmp/.ivy2/cache" />
+	<property name="repository.dir"                            location="/tmp/repository" />
+	<!--property name="repository.dir"                            location="/opt/apache-tomcat-6.0.29/webapps/repository" /-->
+	<property name="ivy.lib.dir"                               location="${lib.dir}" />
+	<property name="ivy.resolver.default.check.modified"       value="false" />
+	<property name="ivy.default.always.check.exact.revision"   value="true" />
+	<property name="ivy.configurations"                        value="*" />
+	<property name="ivy.resolve.default.type.filter"           value="*" />
+	<property name="ivy.dep.file"                              location="${ivy.project.dir}/ivy.xml" />
+	<property name="ivy.dep.testlib"                           location="${ivy.project.dir}/ivy-test.xml" />
+	<property name="ivy.settings.file"                         location="${ivy.project.dir}/ivysettings.xml" />
+	<property name="ivy.organisation"                          value="telenav" />
+	<property name="ivy.module"                                value="${app_name}" />
+	<property name="ivy.revision"                              value="${version}" />
+	<property name="ivy.report.todir"                          value="${dist.ivyreport}" />
+	<property name="ivy.checksums"                             value="sha1,md5" />
+	<property name="ivy.publish.resolver"                      value="telenav-artifact-repository-release" />
+	<property name="ivy.default.resolver"                      value="default"/>
+	<property name="telenav.artifact.repository"               value="http://tar1.telenav.com:8080/repository/"/>
+	<!-- End settings of Ivy2 -->
+
+
+	<!-- properties for regressions-->
+	
+	<!-- define our classpath -->
+	<path id="compile.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>	
+	
+    <target name="clean">
+        <delete dir="${classes.dir}" quiet="true"></delete>
+        <delete dir="${dist}" quiet="true"></delete>
+        <mkdir dir="${dist}" />
+        <mkdir dir="${dist}/lib" />
+        <mkdir dir="${dist}/script" />
+				<mkdir dir="${dist}/config" />
+        <mkdir dir="${classes.dir}" />
+    </target>
+    	
+	
+	<!-- operation: compile -->
+	<target name="compile" depends="clean">
+		<!-- compile Web sources -->
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="compile.class.path" debug="yes"/>
+	</target>
+	
+	<target name="create-jar" depends="compile">
+		<delete dir="${app_path}/${dist}"/>
+		<mkdir dir="${app_path}/${dist}"/>
+		<jar jarfile="${app_name}-${version}.jar" basedir="${classes.dir}"/>
+		<!--delete quiet="true" dir="${classes.dir}"/-->
+		<move todir="${app_path}/${dist}/lib" file="${app_name}-${version}.jar"/>
+	</target>
+	
+    <target name="zipdev" depends="create-jar">
+        <copy todir="${dist}/lib" flatten="true">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/script">
+            <fileset dir="script/dev">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}">
+            <fileset dir="script">
+                <include name="*.sh" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/config">
+            <fileset dir="config/dev">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/">
+            <fileset dir="${basedir}/">
+                <include name="versions.txt" />
+            </fileset>
+        </copy>
+        <zip destfile="${app_name}-dev-${version}.zip">
+        	<zipfileset prefix="${app_name}" dir="${dist}"/>
+            <!--zipfileset prefix="${app_name}-dev" dir="${dist}"/-->
+        </zip>
+				<delete dir="${dist}/script" quiet="true"></delete>
+				<delete dir="${dist}/config" quiet="true"></delete>
+        <mkdir dir="${dist}/script" />	
+				<mkdir dir="${dist}/config" />
+    </target>
+    
+	    	
+    <target name="zipproduction" depends="create-jar">
+        <copy todir="${dist}/lib" flatten="true">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/script">
+            <fileset dir="script/production">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/config">
+            <fileset dir="config/production">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+        <copy todir="${dist}/">
+            <fileset dir="${basedir}/">
+                <include name="versions.txt" />
+            </fileset>
+        </copy>
+        <zip destfile="${app_name}-production-${version}.zip">
+        	<zipfileset prefix="${app_name}" dir="${dist}"/>
+            <!--zipfileset prefix="${app_name}-production" dir="${dist}"/-->
+        </zip>
+    </target>
+    
+	<target name="zip" depends="zipdev,zipproduction">
+	</target>
+	
+	<target name="war" depends="war-dev,war-production">
+	</target>
+	
+	<target name="war-production">
+		<mkdir dir="${build.war}"/>
+		<copy todir="${build.war}">
+			<fileset dir="${webapps.dir}">
+				<exclude name="log*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.war}/WEB-INF/classes">
+			<fileset dir="${classes.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+			<fileset dir="${config.dir}/production">
+				<include name="**/*.*"/>
+				<exclude name="log*"/>
+			</fileset>
+			<fileset dir="${webapps.dir}">
+				<include name="log*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.war}/WEB-INF/lib">
+			<fileset dir="${lib.dir}">
+				<exclude name="servlet.jar"/>
+				<exclude name="jai*.jar"/>
+				<exclude name="*servlet*.jar"/>
+				<exclude name="**/apache/*"/>
+				<exclude name="**/spring/*"/>
+				<exclude name="**/webservice/*"/>
+				<exclude name="**/xnav/*"/>
+			</fileset>
+			<fileset dir="${lib.dir}/apache"/>
+			<fileset dir="${lib.dir}/spring"/>
+			<fileset dir="${lib.dir}/webservice"/>
+			<fileset dir="${lib.dir}/xnav"/>
+		</copy>
+
+        <war destfile="${app_name}-production.war">
+                <manifest>
+                        <attribute name="Implementation-Vendor"    value="TeleNav Inc."/>
+                        <attribute name="Implementation-Title"     value="${project.name}"/>
+                        <attribute name="Implementation-Version"   value="${implementation.version}"/>
+                        <attribute name="Build-Name"               value="${war.warname}"/>
+                        <attribute name="Build-By"                 value="${env.USER}@${env.HOSTNAME}"/>
+                        <attribute name="Build-Version"            value="${version}"/>
+                        <attribute name="Build-Date"               value="${BUILD_TIME}"/>
+                        <attribute name="Build-SVN-URL"            value="${checkout.server-url}"/>
+                        <attribute name="Build-SVN-tag"            value="${checkout.tags-url}"/>
+                        <attribute name="Build-SVN-Revision"       value="${env.SVN_REVISION}"/>
+                </manifest>
+                <!--fileset refid="fileset.war.buildclasses"/-->
+        		<fileset dir="${build.war}/"/>
+        </war>
+
+	
+	</target>
+	
+	<target name="war-dev">
+		<mkdir dir="${build.war}"/>
+		<copy todir="${build.war}">
+			<fileset dir="${webapps.dir}">
+				<exclude name="log*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.war}/WEB-INF/classes">
+			<fileset dir="${classes.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+			<fileset dir="${config.dir}/dev">
+				<include name="**/*.*"/>
+				<exclude name="log*"/>
+			</fileset>
+			<fileset dir="${webapps.dir}">
+				<include name="log*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.war}/WEB-INF/lib">
+			<fileset dir="${lib.dir}">
+				<exclude name="servlet.jar"/>
+				<exclude name="jai*.jar"/>
+				<exclude name="*servlet*.jar"/>
+				<exclude name="**/apache/*"/>
+				<exclude name="**/spring/*"/>
+				<exclude name="**/webservice/*"/>
+				<exclude name="**/xnav/*"/>
+			</fileset>
+			<fileset dir="${lib.dir}/apache"/>
+			<fileset dir="${lib.dir}/spring"/>
+			<fileset dir="${lib.dir}/webservice"/>
+			<fileset dir="${lib.dir}/xnav"/>
+		</copy>
+
+        <war destfile="${app_name}-dev.war">
+                <manifest>
+                        <attribute name="Implementation-Vendor"    value="TeleNav Inc."/>
+                        <attribute name="Implementation-Title"     value="${project.name}"/>
+                        <attribute name="Implementation-Version"   value="${implementation.version}"/>
+                        <attribute name="Build-Name"               value="${war.warname}"/>
+                        <attribute name="Build-By"                 value="${env.USER}@${env.HOSTNAME}"/>
+                        <attribute name="Build-Version"            value="${version}"/>
+                        <attribute name="Build-Date"               value="${BUILD_TIME}"/>
+                        <attribute name="Build-SVN-URL"            value="${checkout.server-url}"/>
+                        <attribute name="Build-SVN-tag"            value="${checkout.tags-url}"/>
+                        <attribute name="Build-SVN-Revision"       value="${env.SVN_REVISION}"/>
+                </manifest>
+        		<fileset dir="${build.war}/"/>
+        </war>
+
+	
+	</target>
+
+	
+    <target name="ivy.init">
+            <ivy:settings id="ivy.instance" file="${ivy.settings.file}" />
+    </target>
+
+	<target name="ivy.resolve" depends="ivy.init" description="Retrieve dependencies with Ivy">
+		<ivy:retrieve/>
+	</target>
+		
+
+	
+	<target name="all" depends="zip, war"/>
+	
+    <target name="publish" depends="create-jar">
+    	<scp file="dist/lib/dsr-cserver-1.0.jar" todir="${publish_dir}" trust="true"/>
+    </target>
+	
+    <target name="deploy" depends="publish">
+    	<sshexec host="${host}" username="${user}" password="${password}" trust="true" command="cd ${script_dir}; sh shutdown.sh ; sleep 3 ; sh startup.sh"/>
+    </target>
+	
+</project>

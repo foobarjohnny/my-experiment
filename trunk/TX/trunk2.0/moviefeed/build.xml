@@ -1,0 +1,115 @@
+<project name="movie_browser" default="zip">
+	<taskdef resource="antenna.properties" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	<!-- default build parameters -->
+	<property file="./../../../../../build/build_root.properties" />
+	<property name="version" value="x.x.x" />
+	<property name="base.dir" value="." />
+	<property name="project" value="moviesfeed" />
+	<property name="src.dir" value="./src" />
+	<property name="config.dir" value="./config" />
+	<property name="lib.dir" value="./lib" />
+	<property name="temp.dir" value="./temp" />
+	<property name="output.dir" value="./dist" />
+	<property name="package" value="com/telenav/" />
+	<property name="jar.name" value="movies_feed.jar" />
+	<property name="zip.dir" value="movies_feed" />
+	<property file="../../../common.properties" />
+
+	<!-- define our classpath -->
+	<path id="lib.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${output.dir}/${suffix}-${region}" />
+	</target>
+
+	<target name="create dir" depends="clean">
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${output.dir}/${suffix}-${region}/${zip.dir}" />
+		<mkdir dir="${output.dir}/${suffix}-${region}/${zip.dir}/lib" />
+		<mkdir dir="${output.dir}/${suffix}-${region}/${zip.dir}/config" />
+	</target>
+
+	<target name="jar" depends="create dir">
+		<javac srcdir="${src.dir}" destdir="${temp.dir}" fork="yes" debug="on" deprecation="on">
+			<classpath refid="lib.class.path" />
+		</javac>
+		<copy file="${config.dir}/com/televigation/log/config-${suffix}-${region}.xml" tofile="${temp.dir}/com/televigation/log/config.xml" />
+
+		<jar destfile="${output.dir}/${jar.name}" basedir="${temp.dir}" />
+	</target>
+
+	<target name="zip" depends="jar">
+		<!-- Copy jars-->
+		<copy file="${output.dir}/${jar.name}" todir="${output.dir}/${suffix}-${region}/${zip.dir}/lib" />
+		<copy todir="${output.dir}/${suffix}-${region}/${zip.dir}/lib">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<!-- Copy config files -->
+		<copy file="${config.dir}/tms_feed-${suffix}-${region}.properties" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/config/tms_feed.properties" />
+		<copy file="${config.dir}/sqlmapconfig-${suffix}-${region}.properties" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/config/sqlmapconfig.properties" />
+		<copy file="${config.dir}/feed-${suffix}-${region}.properties" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/config/feed.properties" />
+		<copy file="${config.dir}/data_length.properties" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/config/data_length.properties" />		
+		<copy file="${base.dir}/version.txt" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/version.txt" />
+		<!--
+		<copy file="${config.dir}/clear_movie_image_table_flag.txt" tofile="${output.dir}/${suffix}-${region}/${zip.dir}/config/clear_movie_image_table_flag.txt" />
+		-->
+		
+		<!-- Copy sh files -->
+		<copy file="${base.dir}/start_feed.sh" todir="${output.dir}/${suffix}-${region}" />
+		<fixcrlf srcdir="${output.dir}/${suffix}-${region}" includes="**/*.sh" eol="unix"/>
+		<zip destfile="${output.dir}/${suffix}-${region}/movies_feed.zip" >
+			<zipfileset dir="${output.dir}/${suffix}-${region}/${zip.dir}" prefix="movies_feed" />
+			<zipfileset file="${output.dir}/${suffix}-${region}/start_feed.sh" filemode="755"  prefix="movies_feed" />
+		</zip>
+		
+		<!-- Copy mail config files -->
+		<copy file="${config.dir}/mail.properties" todir="${output.dir}/${suffix}-${region}" />
+
+		<delete dir="${temp.dir}" />
+	</target>
+
+	<target name="zip-all">
+		<antcall target="zip">
+			<param file="dev.us.properties" />
+		</antcall>
+		<antcall target="zip">
+			<param file="deploy.us.properties" />
+		</antcall>
+		<antcall target="zip">
+			<param file="stage.us.properties" />
+		</antcall>
+	</target>
+
+	<!-- PUBLISH TARGETS ############################################## -->
+	<!-- publish jars into fs1 -->
+	<target name="publish" depends="zip-all">
+		<!-- create version directory -->
+		<mkdir dir="${browser_movies_feed_server_publish_dir}/archive/${version}" />
+		<!-- copy newly built jars into archive -->
+		<copy todir="${browser_movies_feed_server_publish_dir}/archive/${version}">
+			<fileset dir="${output.dir}">
+				<include name="**/*.zip" />
+				<include name="**/mail.properties" />
+			</fileset>
+		</copy>
+		<!-- delete files in current version folder -->
+		<delete quiet="true" dir="${browser_movies_feed_server_publish_dir}/current" />
+		<mkdir dir="${browser_movies_feed_server_publish_dir}/current" />
+		<!-- copy newly built jars into current publish folder -->
+		<copy todir="${browser_movies_feed_server_publish_dir}/current">
+			<fileset dir="${output.dir}">
+				<include name="**/*.zip" />
+				<include name="**/mail.properties" />
+			</fileset>
+		</copy>
+	</target>
+</project>
+

@@ -1,0 +1,39 @@
+<project name="tn60-core-protocol" default="create-jar">
+	<property name="project.dir" value="."/>
+	<property name="src.dir" value="./src"/>
+	<property name="classes.dir" value="./classes"/>
+	<property name="lib.dir" value="./lib"/>
+	<property name="app_path" value="."/>
+	<property name="app_name" value="tn60-core-protocol"/>
+	<property name="version" value="x.x.x"/>
+	<property name="dist" value="dist"/>
+	<!-- properties for regressions-->
+	
+	<!-- define our classpath -->
+	<path id="compile.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- operation: compile -->
+	<target name="compile">
+		<!-- compile Web sources -->
+		<mkdir dir="${classes.dir}"/>
+		
+		<copy todir="${classes.dir}" failonerror="false">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>	
+	
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="compile.class.path" debug="yes"/>
+	</target>
+	<target name="create-jar" depends="compile">
+		<delete dir="${app_path}/${dist}"/>
+		<mkdir dir="${app_path}/${dist}"/>
+		<jar jarfile="${app_name}-${version}.jar" basedir="${classes.dir}"/>
+		<delete quiet="true" dir="${classes.dir}"/>
+		<move todir="${app_path}/${dist}" file="${app_name}-${version}.jar"/>
+	</target>
+</project>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY proj_ant_common     SYSTEM "ant_common.properties">
+  <!ENTITY base_ant_classpath  SYSTEM "../../tnbuild/ant_classpath.properties">
+  <!ENTITY proj_ant_classpath  SYSTEM "ant_classpath.properties">
+]>
+
+<project
+	name="dsr-cserver"
+	default="all"
+	basedir="../.."
+	xmlns:ac="antlib:net.sf.antcontrib"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	&proj_ant_common;
+	&base_ant_classpath;
+	&proj_ant_classpath;
+
+	<!-- ================================================================================
+	= If you want to build on your local machine, uncomment the below <property file ...>
+	<property file="${tab.localsetup}"/>
+	================================================================================ -->
+	<import file="../../tnbuild/basebuild.xml"/>
+
+	<target name="runregressionex"/>
+	<target name="build.copy_resources"/>
+
+	<!-- ================================================================================
+	 Define what else to put in the dsr-cserver.jar 
+	 beside all its .class files
+	================================================================================ -->
+	<target name="dist.jars.pre">
+	</target>
+
+	<!-- ================================================================================
+	 Define what else to do with the dsr-cserver.jar 
+	 after it is already built.  Usually none.
+	================================================================================ -->
+	<target name="dist.jars.post">
+	</target>
+
+	<target name="dist.war.pre" >
+	
+		<!-- prepare classes for war -->
+		
+		<mkdir dir="${build.war}"/>
+		<copy todir="${build.war}">
+			<fileset dir="${webapps.dir}">
+				<exclude name="log*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.war}/WEB-INF/classes">
+			<fileset dir="${build.classes}">
+				<include name="**/*.*"/>
+			</fileset>
+			<fileset dir="${src.config}/${target}">
+				<include name="**/*.*"/>
+				<exclude name="log*"/>
+			</fileset>
+			<fileset dir="${webapps.dir}">
+				<include name="log*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.war}/WEB-INF/lib">
+			<fileset dir="${src.lib}">
+				<exclude name="servlet.jar"/>
+				<exclude name="jai*.jar"/>
+				<exclude name="*servlet*.jar"/>
+				<exclude name="**/apache/*"/>
+				<exclude name="**/spring/*"/>
+				<exclude name="**/webservice/*"/>
+				<exclude name="**/xnav/*"/>
+			</fileset>
+			<fileset dir="${src.lib}/apache"/>
+			<fileset dir="${src.lib}/spring"/>
+			<fileset dir="${src.lib}/webservice"/>
+			<fileset dir="${src.lib}/xnav"/>
+		</copy>
+	</target>
+
+	<!-- ================================================================================
+	 Define what to put in before the dsr-cserver.zip zipped
+	================================================================================ -->
+	<target name="dist.zips">
+		<mkdir dir="${build.zip}"/>
+		<copy todir="${build.zip}/lib" flatten="true">
+			<fileset dir="${src.lib}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${dist.lib}">
+				<include name="${jar.jarname}"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.zip}/script">
+			<fileset dir="${project.dir}/script/${buildConf}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+    <copy todir="${build.zip}">
+      <fileset dir="${project.dir}/script">
+          <include name="*.sh" />
+      </fileset>
+    </copy>
+		<copy todir="${build.zip}/config">
+			<fileset dir="${src.config}/${buildConf}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<echo message="${version}" file="${build.zip}/version.txt"/>
+		<echo message="${buildConf}" file="${build.zip}/env.txt"/>
+		<zip destfile="${dist.lib}/${zip.zipname}">
+			<zipfileset prefix="${project.name}" dir="${build.zip}"/>
+		</zip>
+	</target>
+
+</project>

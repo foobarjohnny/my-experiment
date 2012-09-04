@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource_loader>	
+	
+	
+	<!-- resource holder -->
+	<holders>
+		<holder name="device" type="bar_iteration" class="com.telenav.cserver.common.resource.device.DevicePropertiesHolder" 		
+		config_path="device" 
+		prefix_structure="carrier,platform,version" 
+		floating_structure="device"
+		suffix_structure=""/>
+	</holders>
+	
+</resource_loader>

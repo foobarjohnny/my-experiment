@@ -1,0 +1,155 @@
+<!DOCTYPE project [
+  <!ENTITY base_ant_common     SYSTEM "base_ant_common.properties">
+]>
+<project name="cserver-container" default="create-jar"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="project.dir" value="." />
+	<property name="src.dir" value="./src" />
+	<property name="classes.dir" value="./classes" />
+	<property name="lib.dir" value="./lib" />
+	<property name="app_path" value="." />
+	<property name="app_name" value="cserver-container" />
+	<property name="version" value="x.x.x" />
+	<property name="dist" value="dist" />
+	
+	<property name="project.name" value="cserver-container"/>
+	<property name="ivy.settings.file" value="./tnbuild/ivysettings.xml"/>
+	<property name="ivy.file" value="./tnbuild/ivy.xml"/>
+	
+	<property file="base_ant_common.properties"/>
+	
+	<!-- define our classpath -->
+	<path id="compile.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	
+	<!-- properties for regressions-->
+	<target name="init-ivy">
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+			<classpath>
+				<pathelement location="ivy.jar" />
+			</classpath>
+		</taskdef>
+		<ivy:settings id="ivy.instance" file="${ivy.settings.file}" />
+	</target>
+	
+	<target name="retrieve-all" depends="init-ivy" unless="withoutivy" description="--> Retrieves all Ivy dependencies into the lib directory">
+		<delete dir="${lib.dir}"  includes="**/*.jar"/>
+		<ivy:retrieve file="${ivy.file}"/>
+	</target>
+
+	<!-- operation: compile -->
+	<target name="compile" depends="retrieve-all">
+		<!-- compile Web sources -->
+		<delete quiet="true" dir="${classes.dir}" />
+		<mkdir dir="${classes.dir}" />
+
+		<copy todir="${classes.dir}" failonerror="false">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="compile.class.path" debug="yes" />
+	</target>
+	
+	<target name="create-jar" depends="unittest">
+		<delete dir="${app_path}/${dist}" />
+		<mkdir dir="${app_path}/${dist}" />
+		<jar jarfile="${app_name}-${version}.jar" basedir="${classes.dir}" />
+		<delete quiet="true" dir="${classes.dir}" />
+		<move todir="${app_path}/${dist}" file="${app_name}-${version}.jar" />
+	</target>
+
+	<path id="test.classpath">
+		<pathelement location="${lib.dir}/junit-*.jar" />
+		<pathelement location="${classes.dir}" />
+	</path>
+	<property name="testclasses.dir" value="./testclasses" />
+	<property name="unittest.dir" value="./unittest" />
+	<property name="unittest.report" value="./unitTestReport" />
+	<property name="unittest.report.data" value="./unitTestReport/data" />
+	<target name="compiletests" depends="compile">
+		<mkdir dir="${testclasses.dir}" />
+		<javac srcdir="${unittest.dir}" destdir="${testclasses.dir}">
+			<classpath refid="test.classpath" />
+			<classpath refid="compile.class.path" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+	
+	
+	<target name="unittest" depends="compiletests, instrument">
+		<delete dir="${unittest.report}" />
+		<mkdir dir="${unittest.report}" />
+		<mkdir dir="${unittest.report.data}" />
+		<junit printsummary="yes" haltonfailure="yes" haltonerror="yes">
+			<classpath location="${instrumented.classes.dir}" />
+			<classpath>
+				<pathelement location="./unittest/unittest-config/" />
+				<path refid="test.classpath" />
+				<path refid="compile.class.path" />
+				<pathelement location="${testclasses.dir}" />
+
+			</classpath>
+			<formatter type="plain" />
+			<formatter type="xml" />
+
+			<batchtest fork="yes" todir="${unittest.report.data}/">
+				<fileset dir="${unittest.dir}">
+					<include name="**/*Test.java" />
+					<include name="**/Test*.java" />
+					
+					<exclude name="**/class4test/*.java"/>
+					<exclude name="**/matcher/*.java"/>
+					<exclude name="**/unittestutil/*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<antcall target="report" />
+
+		<delete dir="${coverage.cobertura.html.dir}" />
+	 	<mkdir dir="${coverage.cobertura.html.dir}" />
+		<!-- Generate a series of HTML files containing the coverage data in a user-readable form using nested source filesets -->
+		<cobertura-report destdir="${coverage.cobertura.html.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java"/>
+			</fileset>
+		</cobertura-report>
+	</target>
+
+	<target name="report">
+		<junitreport todir="${unittest.report}">
+			<fileset dir="${unittest.report.data}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${unittest.report}" />
+		</junitreport>
+	</target>
+
+	<property name="instrumented.classes.dir" value="./instrumented-classes"/>
+	<property name="coverage.cobertura.html.dir" value="./coverage/report/"/>
+	<target name="instrument">
+		<!-- Remove the coverage data file and any old instrumentation classes -->
+		<delete file="cobertura.ser" />
+		<touch  file="cobertura.ser" />
+		<delete dir="${instrumented.classes.dir}" />
+		<mkdir dir="${instrumented.classes.dir}" />
+		
+		<!-- for cobertura-instrument -->
+		<taskdef classpathref="compile.class.path" resource="tasks.properties"/>
+
+		<!-- Instrument the application classes, writing the instrumented classes into ${instrumented.classes.dir} -->
+		<cobertura-instrument todir="${instrumented.classes.dir}">
+			<!-- The following line causes instrument to ignore any source line containing a reference to log4j, for the purpose of coverage reporting -->
+			<ignore regex="org.apache.log4j.*"/>
+			<fileset dir="${classes.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+	</target>
+</project>

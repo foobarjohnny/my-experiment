@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+	<!-- 0 means disable, 1 means unpurchased, 2 means purchased but we need 
+		not configure 2 here, purchased status is from billing -->
+	<feature name="FE_SATELLITE_VIEW">
+		<sub-feature name="FE_MAP_LAYER_SATELLITE" />
+	</feature>
+	<feature name="FE_NAVIGATION">
+		<sub-feature name="FE_DYNAMIC_ROUTE" />
+		<sub-feature name="FE_NAV_JUNCTION_VIEW" />
+		<sub-feature name="FE_ROUTE_PLANNING_MULTI_ROUTE" />
+	</feature>
+	<feature name="FE_DSR">
+		<sub-feature name="FE_DSR" />
+	</feature>
+	<feature name="FE_TRAFFIC">
+		<sub-feature name="FE_MAP_LAYER_TRAFFIC" />
+		<sub-feature name="FE_NAV_TRAFFIC" />
+		<sub-feature name="FE_NAV_SPEED_TRAP" />
+		<sub-feature name="FE_TRAFFIC" />
+	</feature>
+	<feature name="FE_TRAFFIC_CAMERA">
+		<sub-feature name="FE_MAP_LAYER_CAMERA" />
+		<sub-feature name="FE_NAV_TRAFFIC_CAMERA" />
+	</feature>
+	<feature name="FE_NAV_LANE_ASSIST">
+		<sub-feature name="FE_NAV_LANE_ASSIST" />
+	</feature>
+	<feature name="FE_NAV_SPEED_LIMIT">
+		<sub-feature name="FE_NAV_SPEED_LIMIT" />
+	</feature>
+</features>

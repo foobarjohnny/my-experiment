@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+		Ivy version match rules
+
+	[1.0,2.0] matches all versions greater or equal to 1.0 and lower or equal to 2.0
+	[1.0,2.0[ matches all versions greater or equal to 1.0 and lower than 2.0
+	]1.0,2.0] matches all versions greater than 1.0 and lower or equal to 2.0
+	]1.0,2.0[ matches all versions greater than 1.0 and lower than 2.0
+	[1.0,) matches all versions greater or equal to 1.0
+	]1.0,) matches all versions greater than 1.0
+	(,2.0] matches all versions lower or equal to 2.0
+	(,2.0[ matches all versions lower than 2.0 
+-->
+
+<ivy-module version="2.0">
+	<info organisation="telenav" module="${project.name}" />
+	<configurations>
+		<conf name="master"/>
+	</configurations>
+	<publications>
+		<artifact name="${project.name}" ext="jar" />
+		<artifact name="${project.name}" ext="zip" />
+	</publications>
+	<dependencies>
+	</dependencies>
+</ivy-module>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Client version="1.1">
+    <Service name="NA-NT" url="http://d-ace02.telenav.com:8080/tnws/services/GeoCoding" dataset="NT">
+        <ServicePool aceServiceTimeout="10000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+        <Country>
+            <CA/>
+            <US/>
+            <MX/>
+        </Country>
+    </Service>
+    <Service name="http://d-ace03.telenav.com:8080/tnws/services/GeoCoding" dataset="TA">
+        <ServicePool aceServiceTimeout="10000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+        <Country>
+            <CA/>
+            <US/>
+        </Country>
+    </Service>
+    <Service name="EU-NT" url="http://d-ace-eu02:8080/tnws/services/GeoCoding" dataset="NT">
+        <ServicePool aceServiceTimeout="10000" aceServicePoolSizePerHost="5" aceServiceMaximumPoolSize="20"/>
+        <Country>
+            <DE/>
+            <SE/>
+            <FR/>
+            <NL/>
+            <BE/>
+            <FI/>
+            <IT/>
+            <ES/>
+            <LU/>
+            <AT/>
+            <DK/>
+            <IE/>
+            <GB/>
+            <NO/>
+            <PT/>
+            <CH/>
+            <AD/>
+            <GI/>
+            <GR/>
+            <IM/>
+            <MC/>
+            <SM/>
+            <VA/>
+            <LI/>
+        </Country>
+    </Service>
+</Client>

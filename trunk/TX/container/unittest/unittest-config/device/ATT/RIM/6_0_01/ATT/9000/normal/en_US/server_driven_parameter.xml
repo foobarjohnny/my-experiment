@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+	
+<beans>
+  
+    <import resource="sdp_common.xml"/>
+	
+	<bean id="ServerDrivenParameters" class="com.telenav.cserver.resource.common.server_driven.ServerDrivenMessages">
+	    <property name="version" value="1.0.1"/>
+	    <property name="parameterMap">
+		    <map>
+			    <entry key="common">
+				    <ref bean="common"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

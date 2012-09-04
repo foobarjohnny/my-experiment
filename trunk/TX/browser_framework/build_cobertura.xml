@@ -1,0 +1,163 @@
+<project name="browser_framework" default="coverage">
+
+	<!-- default build parameter -->
+	<property file="version.properties"/>
+	<property name="lib.dir" value="./lib" />
+	<property name="temp.dir" value="./temp"/>
+	<property name="output.dir" value="./dist" />
+	<property name="src.dir" value="./src" />
+	<property name="package" value="com/telenav" />
+	<property name="metainf.dir" value="META-INF"/>
+	<property name="lib.name" value="browser_framework" />
+	<property name="origin.lib.dir" value="./lib" />
+	<property name="cobertura.lib.dir" value="./lib_cobertura" />
+	<property name="unittest.dir" value="./unittest" />
+	<property name="instrumented.classes.dir" value="${temp.dir}/classesOfInst"/>
+	<property name="original.classes.dir" value="${temp.dir}"/>
+	<property name="report.dir" value="./cobertura/report" />
+	<property name="coverage.cobertura.summary.dir" location="${report.dir}/cobertura-summary-xml"/>
+	<property name="coverage.cobertura.html.dir" location="${report.dir}/cobertura-html"/>
+	<property name="test.classes.dir" value="${temp.dir}/testclass" />
+	<property name="config.dir" value="./unittest/unittest-config" />
+	<property name="junit.report.dir" value="./junit/report" />
+	<property name="junit.report.html.dir" value="${junit.report.dir}/html" />
+	
+	<!-- define classpath -->
+	<path id="lib.class.path">
+		<fileset dir="${temp.dir}/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="lib.class.path1">
+		<fileset dir="${origin.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${cobertura.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<taskdef classpathref="lib.class.path1" resource="tasks.properties" />
+	<!-- targets -->
+	<target name="clean">
+		<delete dir="${temp.dir}"/>
+		<delete dir="${output.dir}" />
+	</target>
+	
+	<target name="create dir" depends="clean">
+		<mkdir dir="${temp.dir}"/>
+		<mkdir dir="${output.dir}"/>
+
+		<copy todir="${temp.dir}/lib" flatten="true">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${temp.dir}/lib" flatten="true">
+			<fileset dir="${cobertura.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>	
+	
+
+	<target name="compile" depends="create dir">
+		<javac srcdir="${src.dir}" destdir="${temp.dir}" fork="yes" debug="true" source="1.5" target="1.5">
+			<classpath refid="lib.class.path" />
+		</javac>
+	</target>
+	
+	<target name="createjar" depends="compile">
+		<delete dir="${temp.dir}/lib"/>
+		<jar destfile="${output.dir}/${lib.name}.jar" basedir="${temp.dir}" />
+		<delete dir="${temp.dir}"/>
+	</target>
+
+
+	<target name="instrument">
+		<!-- Remove the coverage data file and any old instrumentation classes -->
+		<delete file="cobertura.ser" />
+		<delete dir="${instrumented.classes.dir}" />
+		<!-- Instrument the application classes, writing the instrumented classes into ${instrumented.classes.dir} -->
+		<cobertura-instrument todir="${instrumented.classes.dir}">
+			<!-- The following line causes instrument to ignore any source line containing a reference to log4j, for the purpose of coverage reporting -->
+			<ignore regex="org.apache.log4j.*"/>
+			<fileset dir="${original.classes.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<target name="coverage-report">
+        <!-- Generate an XML file containing the coverage data using the 'srcdir' attribute -->
+    	<cobertura-report srcdir="${src.dir}" destdir="${report.dir}" format="xml" />
+    </target>
+    
+    <path id="compile.unittestclass.path">
+		<path refid="lib.class.path"/>
+		<pathelement path="${original.classes.dir}"/> 
+		<pathelement path="${test.classes.dir}"/> 
+	</path>
+	
+   <target name="compiletest" depends="compile">
+		<!-- compile Web sources -->
+		<mkdir dir="${test.classes.dir}" />
+		<javac srcdir="${unittest.dir}" destdir="${test.classes.dir}" classpathref="compile.unittestclass.path" debug="yes"/>
+	</target>
+	
+	<path id="test.classpath">   
+		<pathelement path="${instrumented.classes.dir}"/> 
+		<pathelement path="${original.classes.dir}"/>
+		<pathelement path="${test.classes.dir}"/>
+		<pathelement path="${config.dir}"/>
+		<path refid="lib.class.path"/>
+	</path> 
+	 	
+	<target name="junittest" depends="compiletest">
+	  <mkdir dir="${report.dir}" />
+	  <mkdir dir="${junit.report.dir}" />
+	  
+	  <junit printSummary="yes">
+	    <formatter type="xml"/>
+    	<classpath refid="test.classpath" /> 
+	  	<batchtest fork="yes" todir="${junit.report.dir}">
+	      <fileset dir="${unittest.dir}">
+	        <include name="**/*Test*.java" />
+	      </fileset>
+	    </batchtest>
+	  </junit>
+	</target>
+	
+	<target name="junitreport" depends="junittest">
+        <junitreport todir="${junit.report.dir}">
+            <fileset dir="${junit.report.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.report.html.dir}"/>
+        </junitreport>
+    </target>
+	
+		<!-- ================================= 
+          target: summary-coverage-report              
+         ================================= -->
+    <target name="summary-coverage-report">
+        <!-- Generate an summary XML file containing the coverage data using the 'srcidir' attribute -->
+    	<cobertura-report srcdir="${src.dir}" destdir="${coverage.cobertura.summary.dir}" format="summaryXml" />
+    </target>
+	
+	<!-- ================================= 
+          target: alternate-coverage-report              
+         ================================= -->
+    <target name="alternate-coverage-report">
+        <!-- Generate a series of HTML files containing the coverage data in a user-readable form using nested source filesets -->
+    	<cobertura-report destdir="${coverage.cobertura.html.dir}">
+    		<fileset dir="${src.dir}">
+    			<include name="**/*.java"/>
+    		</fileset>
+    	</cobertura-report>
+    	<delete dir="${temp.dir}" />
+    </target>
+    
+	<target name="coverage" depends="compile,instrument,junitreport,coverage-report,summary-coverage-report,alternate-coverage-report" description="Compile, instrument ourself, run the tests and generate JUnit and coverage reports." />	
+</project>

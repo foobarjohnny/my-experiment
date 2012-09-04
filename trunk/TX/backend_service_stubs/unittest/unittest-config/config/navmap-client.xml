@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<navmap-client>
+	<!--================ server configuration ========================-->
+	<servers server_timeout="10000"  
+			 socket_create_timeout="2000" request_queue_size="0">
+	<!--
+		<server name="svm13-navmap9" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap8" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap7" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap6" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap5" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap4" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap3" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap2" serverip="192.168.109.239" port="64000" connection_pool_size="3"/>
+	-->
+	<server name="svm13-navmap9" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap8" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap7" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm13-navmap6" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap5" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap4" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap3" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		<server name="svm5-navmap2" serverip="192.168.96.61" port="64000" connection_pool_size="3"/>
+		
+  <!--
+		<server name="svm13-navmap9" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm13-navmap8" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm13-navmap7" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm13-navmap6" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm5-navmap5" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm5-navmap4" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm5-navmap3" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="svm5-navmap2" serverip="192.168.117.140" port="54000" connection_pool_size="3"/>
+		<server name="navmap-CN-1" serverip="172.16.40.204" port="64000" connection_pool_size="5"/>
+		 <server name="navmap-CN-2" serverip="172.16.40.204" port="64000" connection_pool_size="5"/>
+	-->
+	</servers>
+	
+	<!--================ Area configuration ==========================-->
+	<areaCollections>
+		<areaCollection name="area_collection_1">
+			<area name="area1" minLat="24.00000" minLon="-126.00000" maxLat="37.00000" maxLon="-111"/>
+			<!--<area name="area2" minLat="0" minLon="10" maxLat="10" maxLon="20"/>
+			<area name="area3" minLat="0" minLon="20" maxLat="10" maxLon="30"/>-->
+		</areaCollection>
+		
+		<areaCollection name="area_collection_2">
+			<area name="area2" minLat="24.00000" minLon="-111.00000" maxLat="37.00000" maxLon="-96"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_3">
+			<area name="area3" minLat="24.00000" minLon="-96.00000" maxLat="37.00000" maxLon="-81"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_4">
+			<area name="area3" minLat="24.00000" minLon="-81.00000" maxLat="37.00000" maxLon="-66"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_5">
+			<area name="area3" minLat="37.00000" minLon="-126.00000" maxLat="50.00000" maxLon="-111"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_6">
+			<area name="area3" minLat="37.00000" minLon="-111.00000" maxLat="50.00000" maxLon="-96"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_7">
+			<area name="area3" minLat="37.00000" minLon="-96.00000" maxLat="50.00000" maxLon="-81"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_8">
+			<area name="area3" minLat="37.00000" minLon="-81.00000" maxLat="50.00000" maxLon="-66"/>
+		</areaCollection>
+		
+		<areaCollection name="area_collection_CN_1">
+                        <!--South China-->
+			<area name="area1" minLat="15.00000" minLon="70.00000" maxLat="32.00000" maxLon="140.00000"/>                        
+		</areaCollection>
+		
+		<areaCollection name="area_collection_CN_2">
+                        <!--North China-->
+			<area name="area2" minLat="32.00000" minLon="70.00000" maxLat="55.00000" maxLon="140.00000"/>                        
+		</areaCollection>
+	</areaCollections>
+	
+	<!--=========== action-server mapping configuration ==============-->
+	<action-server-mapping default_zoom="0">
+		
+		<!-- -1 is not a navmap server action id. when the request action id is not 
+			 in the configuration, we will use -1 to get a default configuration-->
+		<navmap_action id="-1">
+			<navmap_server areaCollection="default" name="svm13-navmap9"/>
+			<navmap_server areaCollection="area_collection_1" name="svm5-navmap2"/>
+			<navmap_server areaCollection="area_collection_2" name="svm5-navmap3"/>
+			<navmap_server areaCollection="area_collection_3" name="svm5-navmap4"/>
+			<navmap_server areaCollection="area_collection_4" name="svm5-navmap5"/>
+			<navmap_server areaCollection="area_collection_5" name="svm13-navmap6"/>
+			<navmap_server areaCollection="area_collection_6" name="svm13-navmap7"/>
+			<navmap_server areaCollection="area_collection_7" name="svm13-navmap8"/>
+			<navmap_server areaCollection="area_collection_8" name="svm13-navmap9"/>
+			<navmap_server areaCollection="area_collection_CN_1" name="navmap-CN-1"/>
+			<navmap_server areaCollection="area_collection_CN_2" name="navmap-CN-2"/>
+		</navmap_action>
+		
+		<navmap_action id="2">
+			<!--<navmap_server areaCollection="ccc" name="444"/>-->
+		</navmap_action>
+		
+		<navmap_action id="1234">
+			<!--<navmap_server areaCollection="ccc" name="444"/>-->
+		</navmap_action>
+		
+		<navmap_action id="1235">
+
+		</navmap_action>
+		
+		<navmap_action id="1239">
+
+		</navmap_action>
+	</action-server-mapping>
+	
+	<!--============ action-zoom position in TxNode mapping ============-->
+	<action-zoomPos-mapping>
+    	<!-- MAP_TILE -->
+		<protocol actionId="1234" zoomPos="2"/>
+		<protocol actionId="1235" zoomPos="2"/>
+		<!--  vector tile-->
+		<protocol actionId="2" zoomPos="2"/>
+
+		<!-- png -->
+		<!-- e.g. a png request tile node 
+            TxNode
+			Values:
+			[0]=1239 // action id
+			[1]=3124445 // lat
+			[2]=12143552 // lon
+			[3]=6  // zoom level
+			binary exists ? = false
+			end of TxNode  -->
+		<protocol actionId="1239" zoomPos="3"/> 
+		<!-- traffic png -->
+		<protocol actionId="1240" zoomPos="3"/>
+		<protocol actionId="1241" zoomPos="3"/>
+		<protocol actionId="9000" zoomPos="3"/>
+			<!-- traffic vector tile : ACT_TRAFFIC_VECTOR_TILE -->
+		<protocol actionId="1243" zoomPos="2"/>
+		<protocol actionId="1244" zoomPos="2"/>
+
+		<!-- All in one PNG -->
+		<protocol actionId="1250" zoomPos="2"/>
+		<protocol actionId="1251" zoomPos="2"/>
+	</action-zoomPos-mapping>
+</navmap-client>

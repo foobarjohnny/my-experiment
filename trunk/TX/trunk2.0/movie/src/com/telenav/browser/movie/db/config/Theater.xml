@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Theater">
+
+	<select id="getTheaterById" parameterClass="long"	resultClass="com.telenav.browser.movie.datatype.Theater">
+		SELECT 
+		ID as id, 
+		VENDOR_ID as vendorId, 
+		THEATER_NAME  as name, 
+		THEATER_STREET as street, 
+		THEATER_CITY as city,
+		THEATER_STATE as state,
+		THEATER_COUNTRY as country,
+		THEATER_POSTCODE as postalcode,
+		THEATER_TELEPHONE as telephone,
+		THEATER_LAT as lat,
+		THEATER_LON as lon,
+		THEATER_ACTIVE as active
+		FROM theater
+		WHERE THEATER_ACTIVE=1 AND ID = $value$
+	</select>
+	<select id="getTheaters" parameterClass="java.util.Map"	resultClass="com.telenav.browser.movie.datatype.Theater">
+		SELECT 
+		ID as id, 
+		VENDOR_ID as vendorId, 
+		THEATER_NAME  as name, 
+		THEATER_STREET as street, 
+		THEATER_CITY as city,
+		THEATER_STATE as state,
+		THEATER_COUNTRY as country,
+		THEATER_POSTCODE as postalcode,
+		THEATER_TELEPHONE as telephone,
+		THEATER_LAT as lat,
+		THEATER_LON as lon,
+		THEATER_ACTIVE as active
+		FROM theater
+		WHERE THEATER_ACTIVE=1 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="theaterIds">
+				ID in ($theaterIds$)
+			</isNotEmpty>
+			<isNotEmpty  property="sortType">
+				$sortType$
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="searchBoundTheaters" parameterClass="com.telenav.browser.movie.datatype.BoundingBox" resultClass="com.telenav.browser.movie.datatype.Theater">
+		<![CDATA[
+		SELECT 
+		ID as id, 
+		VENDOR_ID as vendorId, 
+		THEATER_NAME  as name, 
+		THEATER_STREET as street, 
+		THEATER_CITY as city,
+		THEATER_STATE as state,
+		THEATER_COUNTRY as country,
+		THEATER_POSTCODE as postalcode,
+		THEATER_TELEPHONE as telephone,
+		THEATER_LAT as lat,
+		THEATER_LON as lon,
+		THEATER_ACTIVE as active
+		FROM theater
+		WHERE THEATER_ACTIVE=1 
+		AND THEATER_LON<=#maxLon# 
+		AND THEATER_LON>=#minLon#
+		AND THEATER_LAT<=#maxLat# 
+		AND THEATER_LAT>=#minLat#
+		]]>
+	</select>
+	
+	<!-- Use Person object (Java Bean) properties as parameters for insert. Each of the
+		parameters in the #hash# symbols is a Java Beans property. -->
+	<insert id="insertTheater" parameterClass="com.telenav.browser.movie.datatype.Theater">
+		<selectKey resultClass="long" keyProperty="id" type="post">
+  			SELECT last_insert_id() as id
+		</selectKey>
+		INSERT INTO 
+		theater_temp 
+		(VENDOR_ID, THEATER_NAME, THEATER_STREET,THEATER_CITY,
+		THEATER_STATE, THEATER_COUNTRY, THEATER_POSTCODE,
+		THEATER_TELEPHONE,THEATER_LAT,
+		THEATER_LON,THEATER_ACTIVE) 
+		VALUES 
+		(#vendorId#,#name#, #street#, #city#, #state#,#country#,
+		#postalcode#,#telephone#,#lat#,#lon#,#active#)
+	</insert>
+	
+	<delete id="truncateTheaterTable" parameterClass="java.lang.String">
+		TRUNCATE $value$
+	</delete>
+	<delete id="dropTheaterTable" parameterClass="java.lang.String">
+		DROP TABLE IF EXISTS $value$
+	</delete>
+	<select id="checkTheaterTable" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SHOW TABLES LIKE #value#
+	</select>
+	<update id="newTheaterTable" parameterClass="java.lang.String">
+		CREATE TABLE  
+		$value$
+        LIKE  
+        theater
+	</update>
+	<update id="renameTheaterTable">
+		ALTER  TABLE 
+		theater_temp 
+		RENAME TO 
+		theater
+	</update>
+	<insert id="copyTheaterTable" parameterClass="java.lang.String">
+		INSERT INTO  
+		$value$
+        SELECT * 
+        FROM
+        theater_temp
+	</insert>
+	
+	<update id="deleteTheaterData" parameterClass="java.lang.String">
+		DELETE FROM $value$
+	</update>
+	
+</sqlMap>

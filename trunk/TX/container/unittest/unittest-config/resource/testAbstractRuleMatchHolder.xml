@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" 
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<html>
+	<input combination="or">
+		<param name="product" value="ATT1"></param>
+		<param name="platform" value="RIM"></param>
+		<param name="device" value="9000"></param>
+		<param name="carrier" value="ATT">2</param>
+		<param name="version" value="6_0_01">2</param>
+	</input>
+	
+	<output combination="or">
+		<response name="r1" value="I "></response>
+		<response name="r2" value="am "></response>
+		<response name="r3" value="a "></response>
+		<response name="r4" value="student">2</response>
+	</output>
+</html>
