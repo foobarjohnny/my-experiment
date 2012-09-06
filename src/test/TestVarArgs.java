@@ -66,6 +66,12 @@ public class TestVarArgs
 	public static void g(Integer... a)
 	{
 		System.out.println("g2...");
+		if (a != null) {
+			System.out.println(a);
+			if (a.length > 2) {
+				System.out.println(a[1]);
+			}
+		}
 	}
 
 	public static void main(String[] args)
@@ -74,20 +80,27 @@ public class TestVarArgs
 		c();
 		d();
 		// e(); e()会报错 对比d()
-		g();
 		d(1);
 		d(1.2);
 		d(1.2f);
 		int[] a = { 1, 2, 3 };
 		f(a);
+		g();
+		g(1, 2, 3);
 		// output 慢慢体会结果吧
 		// f2...
 		// c2...
 		// d2...
-		// g2...
 		// d2
 		// d1
 		// d3
+		// f1...
+		// g2...
+		// [Ljava.lang.Integer;@190d11
+		// g2...
+		// [Ljava.lang.Integer;@a90653
+		// 2
+
 	}
 
 }
