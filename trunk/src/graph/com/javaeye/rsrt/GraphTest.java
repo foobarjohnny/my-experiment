@@ -1,4 +1,4 @@
-package com.javaeye.rsrt;
+package graph.com.javaeye.rsrt;
 
 public class GraphTest
 {
