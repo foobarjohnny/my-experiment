@@ -1,4 +1,4 @@
-package com.javaeye.rsrt;
+package graph.com.javaeye.rsrt;
 
 /**
  * 栈，遵循先进后出的原则，用来保存元素
