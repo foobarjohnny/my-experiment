@@ -1,0 +1,97 @@
+Thanks to Kevin Hilton and Karuna Govind of NZ/UK
+
+http://www.kgx.net.nz/2010/03/cygwin-sshd-and-windows-7/
+
+
+How to uninstall/install cygwin under Vista or Windows 7:
+
+Uninstall Steps
+(From previous attempted failed installations)
+In Administrator shell
+1. net stop sshd
+2. cygrunsrv -R sshd
+3. net user
+
+Delete any user listed like sshd or sshd_server.  
+The following syntax is to be used:
+  net user sshd /DELETE
+
+4. rm -R /etc/ssh*
+5. mkpasswd -cl > /etc/passwd
+6. mkgroup --local > /etc/group
+
+In User shell
+1. cd ~
+2. rm -R .ssh
+
+***********************************************
+
+Windows Vista:
+
+Installation Steps (by Kevin Hilton)
+
+In Administrator shell
+1. ssh-host-config -y
+2. net start sshd
+
+In User shell
+1. ssh-user-config (Answer questions as appropriate to your situation)
+2. Test connection:
+   ssh -vvv localhost
+   
+Then go to Control Panel ... Windows Firewall, open inbound TCP port 22.
+(Thanks to Frank Gerlach of Baden-Wurttemberg of Germany)  
+
+Windows 7:  (thanks to David Shanks for his contribution)
+
+Find the setup.exe and right click that icon and select "Run As Administrator"
+For Windows 7, even if you are a user with administrative rights, it does not have the same power
+as "right click.. Run as Administrator".
+
+
+***********************************************
+
+Installation Steps (by Karuna Govind from NZ/UK)
+
+How to run sshd as an existing user (Cygwin 1.7.1 and Windows 7):
+
+(I think for Windows 7, if you invoke setup.exe with "right click...Run as Administrator, 
+the messy additional privileges tweaks will not be necessary).
+
+1. Follow Kevin's "Uninstall Steps" if required.
+
+2. Decide on a user account that you want to run the sshd process under. This can be Administrator as well except its disabled on Windows 7 by default (it can be enabled by running lusrmgr.msc). For these instructions, lets say you want a user called MyUser to run sshd.
+
+3. Check existing permissions for MyUser (in case you need to rollback):
+
+      	editrights -l -u MyUser 
+
+4. Add additional privileges to allow sshd to run properly:
+
+      	editrights.exe -a SeAssignPrimaryTokenPrivilege -u MyUser 
+
+      	editrights.exe -a SeCreateTokenPrivilege -u MyUser 
+
+      	editrights.exe -a SeTcbPrivilege -u MyUser 
+
+      	editrights.exe -a SeServiceLogonRight -u MyUser 
+
+5. Run ssh-host-config (don't force the -y option)
+
+      	ssh-host-config
+
+6. Answer yes to all questions making sure when it asks "Do you want to use a different name?", say "yes" (this question is different with the -y option)
+
+7. Enter your desired username (MyUser) and password when you are prompted. You should *not* see any warnings. If you do, you might not have set all privileges correctly
+
+8. If all goes well, start sshd:
+
+      net start sshd
+          
+
+Disclaimer: 
+Do this at your risk. Since your user gets these additional permissions, it may cause a few security issues (I can't see any major issues though). More info: http://technet.microsoft.com/en-us/library/dd277311.aspx
+
+
+
+Last updated: 2010-03-30
