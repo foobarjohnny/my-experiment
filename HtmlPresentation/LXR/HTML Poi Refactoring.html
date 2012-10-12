@@ -1,0 +1,1031 @@
+﻿<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mah� (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+  <head>
+    <title>HTML Poi Refactoring</title>
+
+    <meta charset='utf-8'>
+	<link type="text/css" href="css/html.css" rel="stylesheet">
+    <script
+      src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+  </head>
+  
+
+  <body style='display: none'>
+<!-- layout-regular to layout-faux-widescreen or layout-widescreen -->
+    <section class='slides layout-regular template-default'>
+      
+    <!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+        
+    <article class='logo'>
+        <h1 style="font-size:55px">
+          HTML Poi Refactoring
+        </h1>
+        <i><br/>What's new and the performance</i><br><br><br>
+        <p>
+          XinRong Liu
+          <br>
+          July 9, 2012
+        </p>
+    </article>
+      
+    <article class='logo'>
+        <h3>
+          Rules
+        </h3>
+        <ul class="build" style="margin-top:10px">
+          <li>
+			<i>Rule 1: HTML focus on structure</i>
+			<div class="note">Exception is it uses HTML attribute "align" to center align the non text child component</div>
+          </li>
+          <li>
+            <i>Rule 2: CSS focus on layout and color schema</i>
+          </li>
+          <li>
+            <i>Rule 3: Javascript focus on business logic</i>
+			<div class="note">Exception is it handles "ontouchstart" and "ontouchend" event since css doesn't have pseudo classes for them
+          </li>
+        </ul>
+    </article>
+
+    <article class='smaller logo'>
+        <h3>
+          HTML - HTML 5 Tag
+        </h3>
+        <ul class="build">
+          <li>
+            <pre>"&lt;!DOCTYPE html&gt;"</pre>
+          </li>
+		  <li>
+		  Benefit for future
+		  </li>
+        </ul>
+    </article>
+	  
+    <article class='smaller logo'>
+        <h3>
+          HTML - Meta Tag
+        </h3>
+        <ul class="build">
+          <li>
+		  viewport:
+          </li>
+		  <li>
+			<ul>
+				<li>minimum-scale=1</li>
+				<li>initial-scale=1.0</li>
+				<li>maximum-scale=1</li>
+				<li>user-scalable=0</li>
+				<li>target-densitydpi=device-dpi (android)</li>
+				<li>width=device-width (android)</li>
+			</ul>
+		  </li>
+        </ul>
+    </article>
+	
+    <article class='logo smaller'>
+        <h3>
+          HTML - Remove table
+        </h3>
+        <ul class="build" style="margin-top:10px">
+          <li>
+            Using float instead of it
+          </li>
+          <li>
+            <pre>
+&lt;div id="addrContainer"&gt;
+    &lt;div id="car"align="center"&gt;
+        &lt;div class="carIcon"&gt;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+    &lt;div id="addrArrow" class="driveArrowIcon"&gt;&lt;&#47;div&gt;
+    &lt;div id="addr"&gt;
+        &lt;div id="firstLine" class="oneLine"&gt;&lt;&#47;div&gt;
+        &lt;div id="lastLine" class="oneLine"&gt;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+&lt;&#47;div&gt;			
+			</pre>
+          </li>
+          <li>
+		  <pre>
+#addrContainer { float:right; width:75%;}
+#addrArrow     { float:right; }
+#car           { float:left; width:22%; }
+#addr          { float:left; width:78%; }
+		  </pre>
+          </li>
+        </ul>
+    </article>
+
+    <article  class='smaller logo'>
+        <h3> 
+          HTML - Only contains div/span/img
+        </h3>
+		<ul class="build" style="margin-top:10px">
+			<li>
+			<pre>
+&lt;div class="movieTimeContainer"&gt;
+    &lt;div class="movieName oneLine"&gt;Madagascar 3: Europe's Most Wanted&lt;&#47;div&gt;
+    &lt;div class="movieTime"&gt;
+        &lt;span class="passedMovieTime"&gt;11:15am&lt;&#47;span&gt;
+        &lt;span class="separator"&gt;&nbsp;|&nbsp;&lt;&#47;span&gt;
+        &lt;span class="currentMovieTime"&gt;11:55am&lt;&#47;span&gt;
+        &lt;span class="separator"&gt;&nbsp;|&nbsp;&lt;&#47;span&gt;
+        &lt;span class="futureMovieTime"&gt;1:50pm&lt;&#47;span&gt;
+    &lt;&#47;div&gt;
+    &lt;div class="movieBuyContainer"&gt;
+        &lt;div class="movieBuy"&gt;&nbsp;BUY&nbsp;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+&lt;&#47;div&gt;
+			</pre>
+			</li>
+		</ul>
+    </article>
+	  
+    <article class='logo smaller'>
+        <h3>
+           HTML - One class for one element
+        </h3>
+         <ul class="build" style="margin-top:10px">
+          <li>
+            Except is the "oneLine/oneLineClip" if you want to limit the element show in one line
+          </li>
+		  <li>
+		  <pre>
+&lt;div class="focusedTab"&gt;
+    &lt;div class="leftTabImageFocused"&gt;&lt;&#47;div&gt;
+    &lt;div class="rightTabImageFocused"&gt;&lt;&#47;div&gt;
+    &lt;div class="centerTabImageFocused"&gt;
+        &lt;div class="tabName <font color="red">oneLineClip</font>"&gt;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+&lt;&#47;div&gt;
+		  </pre>
+		  </li>
+        </ul>
+    </article>
+	  
+    <article class='logo smaller'>
+        <h3>
+           HTML - Static elements prepared in HTML instead of dynamically create them
+        </h3>
+        <ul class="build" style="margin:0">
+			<li>
+				<pre>
+&lt;div id="ratings"&gt;
+    &lt;span id="ratingStar1"&gt;
+        &lt;span class="smallFullStar"&gt;&lt;&#47;span&gt;
+    &lt;&#47;span&gt;
+    &lt;span id="ratingStar2"&gt;
+        &lt;span class="smallFullStar"&gt;&lt;&#47;span&gt;
+    &lt;&#47;span&gt;
+    &lt;span id="ratingStar3"&gt;
+        &lt;span class="smallFullStar"&gt;&lt;&#47;span&gt;
+    &lt;&#47;span&gt;
+    &lt;span id="ratingStar4"&gt;
+        &lt;span class="smallFullStar"&gt;&lt;&#47;span&gt;
+    &lt;&#47;span&gt;
+    &lt;span id="ratingStar5"&gt;
+        &lt;span class="smallFullStar"&gt;&lt;&#47;span&gt;
+    &lt;&#47;span&gt;
+&lt;&#47;div&gt;</pre>
+			</li>
+        </ul>
+    </article>
+	  
+    <article class='smaller logo'>
+        <h3>
+           HTML - Dynamic elements have reference structure and use cloneNode to create it
+        </h3>
+         <ul class="build" style="margin-top:10px">
+			<li>
+				Why? - Refer to Rule 1 and 3
+			</li>
+			<li>
+				<pre style="margin:10px 0 10px 0">
+&lt;div id="refTab" class="tabItem"&gt;
+    &lt;div class="focusedTab"&gt;
+        &lt;div class="leftTabImageFocused"&gt;&lt;&#47;div&gt;
+        &lt;div class="rightTabImageFocused"&gt;&lt;&#47;div&gt;
+        &lt;div class="centerTabImageFocused"&gt;
+            &lt;div class="tabName oneLineClip"&gt;&lt;&#47;div&gt;
+        &lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+    &lt;div class="unfocusedTab" style="display:none"&gt;
+        &lt;div class="leftTabImage"&gt;&lt;&#47;div&gt;
+        &lt;div class="rightTabImage"&gt;&lt;&#47;div&gt;
+        &lt;div class="centerTabImage"&gt;
+            &lt;div class="tabName oneLineClip"&gt;&lt;&#47;div&gt;
+        &lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+&lt;&#47;div&gt;
+&lt;&#47;div&gt;
+				</pre>
+			</li>
+			<li>
+				<pre style="margin:10px 0 10px 0">
+var refTab = document.querySelector("#refTab");
+var tabItemDiv = refTab.cloneNode(true);
+				</pre>
+			</li>
+        </ul>
+    </article>
+	
+    <article class='logo smaller'>
+        <h3>
+           HTML - Contains all structures of the page
+        </h3>
+         <ul class="build" style="margin-top:10px">
+         <li>
+            <pre>
+&lt;div id="tabPages"&gt;
+    &lt;%@ include file="poiMainTab.jsp"%&gt;
+    &lt;%@ include file="reviewsTab.jsp"%&gt;
+    &lt;%@ include file="menuTab.jsp"%&gt;
+    &lt;%@ include file="dealsTab.jsp"%&gt;
+    &lt;%@ include file="extraTab.jsp"%&gt;
+    &lt;%@ include file="gasPriceTab.jsp"%&gt;
+    &lt;%@ include file="showtimeTab.jsp"%&gt;
+&lt;&#47;div&gt;
+			</pre>
+          </li>
+		  <li>
+		  No need to use Javascript dynamically insert into HTML. So there is no HTML structure in Javascript
+		  </li>
+          </ul>
+    </article>
+	  
+    <article class='logo smaller'>
+        <h3>
+           HTML - Use "@ include" to separate blocks into files to better maintain the code
+        </h3>
+         <ul class="build" style="margin-top:10px">
+         <li>
+            <pre>
+&lt;div id="tabPages"&gt;
+    &lt;%@ include file="poiMainTab.jsp"%&gt;
+    &lt;%@ include file="reviewsTab.jsp"%&gt;
+    &lt;%@ include file="menuTab.jsp"%&gt;
+    &lt;%@ include file="dealsTab.jsp"%&gt;
+    &lt;%@ include file="extraTab.jsp"%&gt;
+    &lt;%@ include file="gasPriceTab.jsp"%&gt;
+    &lt;%@ include file="showtimeTab.jsp"%&gt;
+&lt;&#47;div&gt;
+			</pre>
+          </li>
+          </ul>
+    </article>
+	  
+    <article class='logo smaller'>
+        <h3>
+           CSS - Overview
+        </h3>
+        <ul class="build">
+			<li>
+				Css set per program code
+			</li>
+			<li>
+				Two css types: one defines layout, one defines image
+			</li>
+			<li>
+				Each page contains its own layout css and image css
+			</li>
+			<li>
+				Layout css shared by all resolutions
+			</li>
+			<li>
+				Resolutions fallback to three category: medium/large/xlarge
+			</li>
+			<li>
+				Different resolution has different image css set
+			<li>
+				Each page contains all of the css, no fetch dynamically
+			</li>
+			</li>
+		</ul>
+	</article>
+	  
+    <article class='logo smaller'>
+        <h3>
+           CSS - Folder structure
+        </h3>
+        <ul class="build">
+			<li>
+				<pre>
+├─ATTNAVPROG
+│  └─css                         (Contains layout css)
+│  	├─poidetail.css              (layout for poidetail page)
+│  	├─dealstab.css               (layout for poidetail page)
+│  	├─gaspricetab.css            (layout for poidetail page)
+│  	├─menutab.css                (layout for poidetail page)
+│  	├─poimaintab.css             (layout for poidetail page)
+│  	├─reviewstab.css             (layout for poidetail page)
+│  	├─showtimetab.css            (layout for poidetail page)
+│  	├─addreview.css              (layout for addreview page)
+│  	└─viewreview.css             (layout for viewreview page)
+│  └─image                       
+│      ├─poidetail_image.css     (poidetail's images css)
+│      ├─addreview_image.css     (addreview's images css)
+│      ├─viewreview_image.css    (viewreview's images css)
+│      ├─large                   (Large images folder)
+│      ├─medium                  (Medium images folder)
+│      └─xlarge                  (Xlarge images folder)
+├─SCOUTPROG
+│  ......
+├─SCOUTUSPROG
+│  ......
+└─SNNAVPROG
+│  ......</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           CSS - Layout rule: Percentage in width, em in height
+        </h3>
+        <ul class="build">
+			<li>
+				Example:
+			</li>
+			<li>
+				<pre>
+#top
+{
+    padding:0.6em 3% 0 3%;
+}
+				</pre>
+			</li>
+			<li>
+				Exception is if one element has fixed width/height regardless resolution
+			</li>
+			<li>
+				<pre>
+.separator
+{
+    float:left;
+    width:2px;
+    height:13.3em;
+    background:-webkit-gradient(linear, left top, left bottom, 
+	    from(rgb(247,247,247)),color-stop(0.5,rgb(198,197,197)), 
+	    to(rgb(247,247,247)));
+}
+				</pre>
+			</li>
+		</ul>
+	</article>
+
+    <article class='logo smaller'>
+        <h3>
+           CSS - image rule: Use pixel directly
+        </h3>
+        <ul class="build">
+			<li>
+				Example:
+			</li>
+			<li>
+				<pre>
+.leftTabImageFocused
+{
+	background:url(medium/tab_big.png) no-repeat 0px -185px;
+	width:8px;
+	height:37px;
+}
+
+.centerTabImageFocused
+{
+	background:url(medium/tab_big.png) repeat-x 0px -148px;
+	height:37px;
+	margin-left:8px;
+	margin-right:8px;
+}
+
+.rightTabImageFocused
+{
+	background:url(medium/tab_big.png) no-repeat 0px 0px;
+	width:8px;
+	height:37px;
+}
+				</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           CSS - Float instead of table
+        </h3>
+        <ul class="build">
+			<li>
+			Better performance
+			</li>
+			<li>
+			Flexible than table, table's column and row is fixed however float isn't
+			</li>
+			<li>
+				<table>
+					<tr>
+						<td width="50%">Portrait</td>
+						<td width="50%">Landscape</td>
+					</tr>
+					<tr>
+						<td width="50%"><img src="img/portrait.PNG"></td>
+						<td width="50%"><img src="img/landscape.PNG"></td>
+					</tr>
+				</table>
+			</li>
+		</ul>
+	</article>
+			
+    <article class='logo smaller'>
+        <h3>
+           CSS - Show or hide element
+        </h3>
+        <ul class="build">
+			<li>
+				No javascript at all<br>
+				Example: AT&T has car icon but doesn't have arrow<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scout has arrow but doesn't have car icon
+			</li>
+			<li>
+				<pre style="margin:10px 0 10px 0">
+&lt;div id="addrContainer"&gt;
+    &lt;div id="car"align="center"&gt;
+        &lt;div class="carIcon"&gt;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+    &lt;div id="addrArrow" class="driveArrowIcon"&gt;&lt;&#47;div&gt;
+    &lt;div id="addr"&gt;
+        &lt;div id="firstLine" class="oneLine"&gt;&lt;&#47;div&gt;
+        &lt;div id="lastLine" class="oneLine"&gt;&lt;&#47;div&gt;
+    &lt;&#47;div&gt;
+&lt;&#47;div&gt;</pre>
+			</li>
+			<li>
+				<table>
+					<tr>
+						<td style="width:50%">
+							AT&T
+						</td>
+						<td style="width:50%">
+							Scout
+						</td>
+					</tr>
+					<tr>
+						<td style="width:50%">
+							<pre>
+#car { float:left; width:22%; }
+#addr { float:left; }
+#addrArrow { display:none; }
+							</pre>
+						</td>
+						<td style="width:50%">
+							<pre>
+#car { display:none; }
+#addr { float:left; }
+#addrArrow { float:right; }
+							</pre>
+						</td>
+					</tr>
+				</table>
+			</li>
+		</ul>
+	</article>
+
+    <article class='logo smaller'>
+        <h3>
+           CSS - Inline images
+        </h3>
+        <ul class="build">
+			<li>
+				Only small images and can be shared across resolution
+			</li>
+			<li>
+				<pre>
+.yelpContainer
+{
+    background-image: url(data:image/png;base64,
+	iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAAAXNSR
+	0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wGFgA
+	5D80hGzwAAABbSURBVAjXAVAAr/8A/9Is/+mY///9//75/+uhAf/tq
+	QAKMQADDQDsoQD++gIAD0kAAQIA9McA+uQABRQA///9/+eN/9lL//
+	C7//vuAf/nkQD/+QAEFAAQRwD77B26K1gJjcz0AAAAAElFTkSuQmCC);	
+}
+				</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           CSS - Media query for orientation
+        </h3>
+        <ul class="build">
+			<li>
+				Defined in layout css, shared by all resolutions
+			</li>
+			<li>
+				<pre>
+@media screen and (orientation:portrait) {
+    #addrContainer {
+        float:right;
+        width:75%;
+    }
+    
+    #addrArrow {
+        float:right;
+    }
+    ...
+}
+@media screen and (orientation:landscape) {
+    #addrContainer {
+        float:left;
+        width:40%;
+    }
+    
+    #addrArrow {
+        float:right;
+    }
+    ...
+}</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           CSS - Media query for resolution (android)
+        </h3>
+        <ul class="build">
+			<li>
+				Use min-device-width/min-device-height/max-device-width/max-device-height to determine the resolution
+			</li>
+			<li>
+				<pre>
+
+@media screen and (max-device-width:320px) and (orientation:portrait)
+, screen and (max-device-width:480px) and (orientation:landscape)
+{
+...	
+}
+
+@media screen and (min-device-width:321px) and (max-device-width:799px) and (orientation:portrait)
+, screen and (min-device-width:481px) and (max-device-width:960px) and (orientation:landscape)
+{
+...
+}
+
+@media screen and (min-device-width:800px) and (orientation:portrait)
+, screen and (min-device-width:961px) and (orientation:landscape)
+{
+...
+}
+				</pre>
+			</li>
+		</ul>
+	</article>
+			
+    <article class='logo smaller'>
+        <h3>
+           CSS - Media query for resolution (iphone)
+        </h3>
+        <ul class="build">
+			<li>
+				Use device pixel ratio to determine the device
+			</li>
+			<li>
+				<pre style="margin:20px 0 20px 0">
+@media screen and (-webkit-max-device-pixel-ratio:1.4) {
+...
+}
+@media screen and (-webkit-min-device-pixel-ratio:1.5) {	
+...
+}</pre>
+			</li>
+			<li>
+			Why is it different from android?
+			</li>
+			<li>
+			Ios doesn't provide meta tag "target-densitydpi=device-dpi" like android, so the pixels defined in ios will be multipled by device pixel ratio. <br>
+			The device pixel ratio in iphone 4/4S is 2. 
+			</li>
+			<li>
+			Use "background-size" to shrink the images divided by 2 in iphone 4/4S
+			</li>
+			<li>
+			Ios will then multiple the value by 2 and get the correct image size
+			</li>
+			<li>
+				<pre style="margin:20px 0 20px 0">
+.userIcon {
+    background:url(large/default_photo_icon_unfocused.png) no-repeat;
+    width:32px;
+    height:32px;
+    background-size:32px 32px;
+}</pre>
+			</li>
+		</ul>
+	</article>
+			
+    <article class='logo smaller'>
+        <h3>
+           CSS - Why media query images in one css?
+        </h3>
+        <ul class="build">
+			<li>
+				Use media query calling in external stylesheet will fetch all of the requests, for example:
+			</li>
+			<li>
+				<pre>
+&lt;link rel='stylesheet' media='screen and (min-device-width: 320px) 
+    and (max-device-width: 480px) and (orientation: portrait)' href='css&#47;medium.css' &#47;&gt;
+&lt;link rel='stylesheet' media='screen and (min-device-width: 481px) 
+    and (max-device-width: 960px) and (orientation: portrait)' href='css&#47;large.css' &#47;&gt;</pre>
+			</li>
+			<li>
+			Will send two requests, one is getting medium.css, one is getting large.css
+			</li>
+			<li>
+			However, if the media query is in one css, browser will dynamically calculate the value based on media query and fetch the correct request
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           CSS - Layout exception
+        </h3>
+        <ul class="build">
+			<li>
+				Normally layout defined in layout css. However, due to UI design issue, here is one exception and we have to define one layout in image css:
+			</li>
+			<li>
+				<pre>
+/*
+This is the only exception we define non image style here.
+Because the UI design is not consistent in xlarge screen size.
+*/
+.tabName
+{
+    padding-top:0.4em;
+}				</pre>
+			</li>
+			<li>
+			Lesson: We need train UI designer how to design the layout especially in different resolutions.<br>
+			They need understand percentage, em correctly and provide the correct images.
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Overview
+        </h3>
+        <ul class="build">
+			<li>
+				Object oriented
+			</li>
+			<li>
+				No jqInterface/Lazyloader
+			</li>
+			<li>
+				Tab width auto adjusted
+			</li>
+			<li>
+				Fetch map once
+			</li>
+			<li>
+				No logic difference between android and iphone
+			</li>
+			<li>
+				Scroller support
+			</li>
+		</ul>
+	</article>
+
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Namespace
+        </h3>
+        <ul class="build">
+			<li>
+				<pre style="margin:20px 0 20px 0">
+function namespace(namespaceString) {
+    var parts = namespaceString.split('.'),
+        module = window,
+        currentPart = '';
+		
+    for(var i = 0, length = parts.length; i < length; i++) {
+        currentPart = parts[i];
+        module[currentPart] = module[currentPart] || {};
+        module = module[currentPart];
+    };
+
+    return module;
+};</pre>
+			</li>
+			<li>
+				Usage:
+				<pre style="margin:20px 0 20px 0">
+namespace("com.telenav.map");
+
+com.telenav.map.StaticMap = function(mapDiv, mapOptions)
+{
+...
+}</pre>
+			</li>
+		</ul>
+	</article>
+
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Constructor pattern
+        </h3>
+        <ul class="build">
+			<li>
+				Used for the object that doesn't need be inheritanted by others
+			</li>
+			<li>
+				Basically the object created one instance in the page's life cycle
+			</li>
+			<li>
+				More flexible which can define private variables/functions
+			</li>
+			<li>
+				<pre>
+com.telenav.module.PoiDetailController = function() 
+{
+	//private variables
+	var model;
+	var view;
+	
+	//private functions
+	function onDeviceReady() {}
+	...
+}</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Singleton pattern 1
+        </h3>
+        <ul class="build">
+			<li>
+				Can define private variables and functions
+			</li>
+			<li>
+				<pre>
+com.telenav.util.Servlets = (function()
+{
+    //private variables
+    var ACTION_DUMMY_DATA 		= "dummyDataAction.do";
+	
+    //private functions
+    function getAdsPoiCriteria(adsId, categoryId){
+        ...
+    };
+	
+    return {
+        getAdsMainServlet: function(adsId, categoryId)
+        {
+            var criteria = getAdsPoiCriteria(adsId, categoryId);
+			
+            var url = ServerConfig.rootPath + ACTION_POIDETAIL + "?operateType=mainnew&jsonStr=" + JSON.stringify(criteria) + "&" + clientInfo.toString();
+
+            return url;
+        },
+        ...
+    }
+})();</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Singleton pattern 2
+        </h3>
+        <ul class="build">
+			<li>
+				Simple and doesn't need define private variables or functions
+			</li>
+			<li>
+				<pre>
+com.telenav.util.Log = function() {
+};
+
+//debug log
+com.telenav.util.Log.d = function(msg) {
+    console.log("[BSERVER][D]--" + msg);
+};
+
+//warning log
+com.telenav.util.Log.w = function(msg) {
+    console.log("[BSERVER][W]--" + msg);
+};
+
+//error log
+com.telenav.util.Log.e = function(msg) {
+    console.log("[BSERVER][E]--" + msg);
+};</pre>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - MVC pattern
+        </h3>
+        <ul class="build">
+			<li>
+				Controller - business logic and event handler
+				Model - Memory and permanent data handler
+				View - Visual representation
+			</li>
+			<li>
+				Save bandwidth and rendering performance in iphone 3gs (No shrink at all)
+			</li>
+			<li>
+				<pre style="margin:0 0 0 0">
+com.telenav.module.PoiDetailController = function() 
+{
+    var model;
+    var view;
+	
+    this.init = function() {
+        model = new com.telenav.module.PoiDetailModel();
+        view = new com.telenav.module.PoiDetailView(poiDetailObj, onClick, onChangeTab);
+        ...
+    }
+	
+    function onClick(div, clickFunc) {};
+}
+com.telenav.module.PoiDetailModel = function() {
+    this.load = function(){};
+    this.save = function(){};
+}
+com.telenav.module.PoiDetailView = function(poiDetailObj, onClick, onChangeTab) {
+    this.showPoiMain = function(poiMainObj) {};
+    ...
+}</pre>
+			</li>			
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - microfw.js
+        </h3>
+        <ul class="build">
+			<li>
+				Use querySelectorAll native method to handle the css selector in javascript
+			</li>
+			<li>
+				Provide jquery coding style
+			</li>
+			<li>
+				Wrap the DOM methods
+			</li>
+			<li>
+				Remove some functions like bind/unbind, etc. <br>
+				Add some functions like show/hide/children/removeChildren, etc
+			</li>
+			<li>
+				Very tiny and high performance, 3.2KB minified (1.12KB gzipped)
+			</li>
+			<li>
+				Original file see http://cubiq.org/dropbox/microfw.js
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - No jqInterface and lazyLoader
+        </h3>
+        <ul class="build">
+			<li>
+				Use microfw.js instead of jqInterface
+			</li>
+			<li>
+				Page contains all css/js and doesn't need download dynamically
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Auto adjusted tab's width
+        </h3>
+        <ul class="build">
+			<li>
+				No worry to handle i18n for tab's name
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Fetch maps once
+        </h3>
+        <ul class="build">
+			<li>
+				Try get the larger maps at the first time and used in portrait/landscape mode
+			</li>
+			<li>
+				For OpenGl map, it doesn't allow fetch the map larger than screen size. <br>
+				Still fetch the map in different orientation
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Scroller support
+        </h3>
+        <ul class="build">
+			<li>
+				
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           JavaScript - Merge android and iphone specific code together
+        </h3>
+        <ul class="build">
+			<li>
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           Performance - Separate iphone 3gs images from iphone 4/4S
+        </h3>
+        <ul class="build">
+			<li>
+				Now they don't share the same images which means iphone 3gs get the smaller images
+			</li>
+			<li>
+				Save bandwidth and rendering performance in iphone 3gs (No shrink at all)
+			</li>
+		</ul>
+	</article>
+	
+    <article class='logo smaller'>
+        <h3>
+           Performance - Less DOM Depth Length
+        </h3>
+        <ul class="build">
+          <li>
+		  Benefit from removing the table
+          </li>
+		  <li>
+			<table>
+				<tr>
+					<td style="width:50%"><img src="img/Old_DOM_Depth.PNG"></td>
+					<td style="width:50%"><img src="img/New_DOM_Depth.PNG"></td>
+				</tr>
+				<tr>
+					<td style="width:50%">
+						<div>Old Page</div>
+						<div>Max Depth: 11</div>
+					</td>
+					<td style="width:50%">
+						<div>New Page</div>
+						<div>Max Depth: 8</div>
+					</td>
+				</tr>
+			</table>
+		  </li>
+        </ul>
+    </article>
+
+    <article class='logo'>
+        <h3>
+           Q & A
+        </h3>
+        <h1 style="font-size:55px;text-align:center">
+          Thanks!
+        </h1>
+		
+    </article>
+	  
+    </section>
+
+  </body>
+</html>
