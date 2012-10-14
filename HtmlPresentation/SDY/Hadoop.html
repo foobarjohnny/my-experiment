@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mah� (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+<head>
+<title>Hadoop SDY</title>
+
+<meta charset='utf-8'>
+<link type="text/css" href="css/html.css" rel="stylesheet">
+<script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+</head>
+
+
+<body style='display: none'>
+	<!-- layout-regular to layout-faux-widescreen or layout-widescreen -->
+	<section class='slides layout-regular template-default'>
+
+		<!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+
+		<article class='logo'>
+			<h1 style="font-size: 55px">Hadoop Introduction</h1>
+			<br> <br> <br>
+			<p>
+				Dongyi Song <br> Oct 13, 2012
+			</p>
+		</article>
+
+		<article class='logo'>
+			<h3>Hadoop</h3>
+			<ul class="build" style="margin-top: 10px">
+				<li><i>HDSF</i></li>
+				<li><i>MapReduce</i></li>
+				<li><i>Install Hadoop</i></li>
+			</ul>
+		</article>
+
+
+
+
+		<article class='smaller logo'>
+			<h3>HDFS (Hadoop Distributed File System)</h3>
+			<ul class="build">
+				<li><i><b>What?</b></i></li>
+				<ul>
+					<li>The primary storage system used by Hadoop applications.
+						HDFS creates multiple replicas of data blocks and distributes them
+						on compute nodes throughout a cluster to enable reliable,
+						extremely rapid computations.</li>
+				</ul>
+
+				<li><i><b>NameNode</b></i></li>
+				<ul>
+					<li>存储元数据</li>
+					<li>元数据保存在内存中</li>
+					<li>保存文件,block ，datanode之间的映射关系</li>
+				</ul>
+				<li><i><b>DataNode</b></i></li>
+				<ul>
+					<li>存储文件内容</li>
+					<li>文件内容保存在磁盘</li>
+					<li>维护了block id到datanode本地文件的映射关系</li>
+				</ul>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Architecture</h3>
+			<ul class="build">
+				<li><img class="images" src="img/1.jpg"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Architecture</h3>
+			<ul class="build">
+				<li><img class="images" src="img/hdfs.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Write</h3>
+			<ul class="build">
+				<li><img class="images" src="img/Write.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Read</h3>
+			<ul class="build">
+				<li><img class="images" src="img/read.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Features</h3>
+			<ul class="build">
+				<li>Write-once-read-many</li>
+				<li>Not support to concurrent write</li>
+				<li>Not support to modify file</li>
+				<li>Single NameNode</li>
+				<li>Block storage (64M)</li>
+				<li>Replication</li>
+				<li>Big file</li>
+				<li>Not suit for low latency App</li>
+				<li>Not suit for large numbers of small file 150 millions files
+					need 32G memory</li>
+				<li>Single user write</li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Map Reduce</h3>
+			<ul class="build">
+				<li>Divide and Conquer</li>
+				<li>Why?</li>
+				<ul>
+					<li>vs RDBMS</li>
+					<ul>
+						<li>Addressing speed</li>
+					</ul>
+				</ul>
+				<ul>
+					<li>vs MPI(Grid computing)</li>
+					<ul>
+						<li>Network bandwidth -> Local Computing</li>
+					</ul>
+				</ul>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Architecture</h3>
+			<ul class="build">
+				<li><img class="images" src="img/mapreduce.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>MapReduce Model</h3>
+			<ul class="build">
+				<li><img class="images" src="img/m.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>word count</h3>
+			<ul class="build">
+				<li><img class="images" src="img/word1.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>word count</h3>
+			<ul class="build">
+				<li><img class="images" src="img/word2.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>word count</h3>
+			<ul class="build">
+				<li><img class="images" src="img/word3.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>word count</h3>
+			<ul class="build">
+				<li><img class="images" src="img/word4.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>MapReduce</h3>
+			<ul class="build">
+				<li>InputFormat</li>
+				<ul>
+					<li>InputSpliter</li>
+					<li>RecordReader</li>
+				</ul>
+				<li>Combiner -- Same as Reducer，but run in Map local machine</li>
+				<li>Partitioner -- Control the load of each reducer,default is
+					even</li>
+				<li>Reducer
+					<ul>
+						<li>RecodWriter</li>
+					</ul>
+				</li>
+				<li>OutputFormat</li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Driver</h3>
+			<ul class="build">
+				<li><pre> 
+public static void main(String[] args) throws Exception {
+ Configuration conf = new Configuration();   
+ Job job = new Job(conf, “word count”); //设置一个用户定义的job名称    
+ job.setJarByClass(WordCount.class);    
+ job.setMapperClass(TokenizerMapper.class); //为job设置Mapper类 
+ job.setCombinerClass(IntSumReducer.class); //为job设置Combiner类    
+ job.setReducerClass(IntSumReducer.class); //为job设置Reducer类   
+ job.setOutputKeyClass(Text.class); //为job的输出数据设置Key类   
+ job.setOutputValueClass(IntWritable.class); //为job输出设置value类  
+ FileInputFormat.addInputPath(job, new Path(otherArgs[0])); //为job设置输入路径    
+ FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));//为job设置输出路径    
+ System.exit(job.waitForCompletion(true) ? 0 : 1); //运行job}
+}</pre></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Mapper</h3>
+			<ul class="build">
+				<li><pre>
+public static class TokenizerMapper extends Mapper&lt;Object, Text, Text, IntWritable&gt;{
+	private final static IntWritable one = new IntWritable(1);
+	private Text word = new Text();
+	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+		StringTokenizer itr = new StringTokenizer(value.toString());       
+	 	while (itr.hasMoreTokens()) {
+		 	word.set(itr.nextToken()); 
+	 		context.write(word, one); 
+		 } 
+ 	} 
+ }
+				</pre></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Flow</h3>
+			<ul class="build">
+				<li><img class="images" src="img/shuffle.png"></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>MapReduce</h3>
+			<ul class="build">
+				<li><img class="images" src="img/jobtask.png"></li>
+			</ul>
+		</article>
+
+		<article class='logo'>
+			<h3>Hadoop</h3>
+			<ul class="build">
+				<li><img class="images" src="img/w1.png"></li>
+			</ul>
+		</article>
+
+		<article class='logo'>
+			<h3>Hadoop</h3>
+			<ul class="build">
+				<li><img class="images" src="img/w2.png"></li>
+			</ul>
+		</article>
+
+
+
+
+		<article class='smaller logo'>
+			<h3>Install Hadoop</h3>
+			<ul class="build">
+				<li>Download and unzip Hadoop</li>
+				<li>Install JDK 1.6 or higher version</li>
+				<li>SSH Key Authentication</li>
+				<li>master/salves</li>
+				<li>Config hadoop-env.sh
+					<div class="note">export JAVA_HOME=/usr/local/jdk1.6.0_16</div>
+				</li>
+				<li>core-site.xml/hdfs-site.xml/mapred-site.xml</li>
+				<li>Startup/Shutdown
+					<div class="note">sh start-all.sh sh stop-all.sh</div>
+				</li>
+				<li>Monitor Hadoop:http://172.16.101.227:50030
+					http://172.16.101.227:50070</li>
+				<li>Shell commands :hadoop dsf -ls hadoop jar
+					../hadoop-0.20.2-examples.jar wordcount input/ output/</li>
+				<li>http://blog.csdn.net/m13666368773/article/details/7586096</li>
+
+			</ul>
+		</article>
+
+
+		<article class='logo'>
+			<h3>Q & A</h3>
+			<h1 style="font-size: 55px; text-align: center">Thanks!</h1>
+
+		</article>
+
+	</section>
+
+</body>
+</html>

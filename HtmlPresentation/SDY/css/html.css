@@ -1,0 +1,46 @@
+﻿@CHARSET "UTF-8";
+    /* Your individual styles here, or just use inline styles if that's
+       what you want. */
+    .slides.template-default > article:not(.nobackground):not(.biglogo).logo {
+        background: white url(../img/logo.png) 710px 625px no-repeat;
+        background-size: 160px auto;
+    }
+    
+    .tiny {
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
+    .current td {
+        padding: 0;
+    }
+    span.author::before {
+        content: '—';
+    }
+    
+    article ul{
+        margin-top:10px;
+    }
+    
+    article th{
+        text-align:center;
+        padding:5px;
+    }
+
+	.note {
+		font-size:20px;
+	}
+	
+	.note::before {
+        content: '-';
+    }
+    
+    .images {
+		vertical-align: middle;
+		max-height:  490px;
+		height: expression(this.height > 490  ?  490:  true);
+		max-width:  763px;
+		width: expression(this.width > 763 &&   this.height <   this.width ?   763:  true);
+	}
