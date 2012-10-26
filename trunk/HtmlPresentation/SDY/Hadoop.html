@@ -36,13 +36,88 @@
 				Dongyi Song <br> Oct 13, 2012
 			</p>
 		</article>
-
+		
 		<article class='logo'>
-			<h3>Hadoop</h3>
+			<h3>Agenda</h3>
 			<ul class="build" style="margin-top: 10px">
-				<li><i>HDSF</i></li>
-				<li><i>MapReduce</i></li>
-				<li><i>Install Hadoop</i></li>
+				<li><i><b>Hadoop</b></i></li>
+				<ul><li><i>HDSF</i></li>
+				<li><i>MapReduce</i></li></ul>
+				<li><i>Install Hadoop & Sample</i></li>
+				<li><i>QA</i></li>
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Hadoop</h3>
+			<ul class="build">
+				<li><i><b>What?</b></i></li>
+				<ul>
+					<li>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is
+						designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-avaiability, the library itself is
+						designed to detect and handle failures at the application layer, so delivering a highly-availabile service on top of a cluster of computers, each of which may be prone to failures.</li>
+				</ul>
+
+				<ul>
+					<li>Apache Hadoop is a framework for running applications on large cluster built of commodity hardware. The Hadoop framework transparently provides applications both reliability and data
+						motion. Hadoop implements a computational paradigm named Map/Reduce, where the application is divided into many small fragments of work, each of which may be executed or re-executed on any node
+						in the cluster. In addition, it provides a distributed file system (HDFS) that stores data on the compute nodes, providing very high aggregate bandwidth across the cluster. Both MapReduce and
+						the Hadoop Distributed File System are designed so that node failures are automatically handled by the framework.</li>
+				</ul>
+			</ul>
+		</article>
+		
+		<article class='smaller logo'>
+			<h3>Hadoop Modules</h3>
+			<ul class="build">
+				<li><i><b>Hadoop Common</b></i></li>
+				<ul>
+					<li>The common utilities that support the other Hadoop modules.</li>
+				</ul>
+				
+				<li><i><b>Hadoop Distributed File System (HDFS™)</b></i></li>
+				<ul>
+					<li>A distributed file system that provides high-throughput access to application data.</li>
+				</ul>
+				
+				<li><i><b>Hadoop YARN</b></i></li>
+				<ul>
+					<li>A framework for job scheduling and cluster resource management.</li>
+				</ul>
+				
+				<li><i><b>Hadoop MapReduce</b></i></li>
+				<ul>
+					<li>A YARN-based system for parallel processing of large data sets.</li>
+				</ul>
+
+			</ul>
+		</article>
+
+		<article class='smaller logo'>
+			<h3>Hadoop Features</h3>
+			<ul class="build">
+				<li><i><b>Scalable</b></i></li>
+				<ul>
+					<li>New nodes can be added as needed, and added without needing to change data formats, how data is loaded, how jobs are written, or the applications on top.</li>
+				</ul>
+
+				<li><i><b>Cost effective</b></i></li>
+				<ul>
+					<li>Hadoop brings massively parallel computing to commodity servers. The result is a sizeable decrease in the cost per terabyte of storage, which in turn makes it affordable to model all
+						your data.</li>
+				</ul>
+
+				<li><i><b>Flexible</b></i></li>
+				<ul>
+					<li>Hadoop is schema-less, and can absorb any type of data, structured or not, from any number of sources. Data from multiple sources can be joined and aggregated in arbitrary ways enabling
+						deeper analyses than any one system can provide.</li>
+				</ul>
+
+				<li><i><b>Fault tolerant</b></i></li>
+				<ul>
+					<li>When you lose a node, the system redirects work to another location of the data and continues processing without missing a beat.</li>
+				</ul>
+
 			</ul>
 		</article>
 
@@ -62,15 +137,15 @@
 
 				<li><i><b>NameNode</b></i></li>
 				<ul>
-					<li>存储元数据</li>
-					<li>元数据保存在内存中</li>
-					<li>保存文件,block ，datanode之间的映射关系</li>
+					<li>Store Meta data</li>
+					<li>Memory</li>
+					<li>Mapping of file block or file to datanode</li>
 				</ul>
 				<li><i><b>DataNode</b></i></li>
 				<ul>
-					<li>存储文件内容</li>
-					<li>文件内容保存在磁盘</li>
-					<li>维护了block id到datanode本地文件的映射关系</li>
+					<li>Store file data</li>
+					<li>Disk</li>
+					<li>Mapping of block to local file in datanode</li>
 				</ul>
 			</ul>
 		</article>
@@ -291,7 +366,7 @@ public static class TokenizerMapper extends Mapper&lt;Object, Text, Text, IntWri
 				<li>Shell commands :hadoop dsf -ls hadoop jar
 					../hadoop-0.20.2-examples.jar wordcount input/ output/</li>
 				<li>http://blog.csdn.net/m13666368773/article/details/7586096</li>
-
+				<li>http://blog.csdn.net/lifeising/article/details/7505712</li>
 			</ul>
 		</article>
 
