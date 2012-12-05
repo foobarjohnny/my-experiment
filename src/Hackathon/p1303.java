@@ -22,12 +22,23 @@ import java.util.Scanner;
  * Catalan Number 扩展资料：
  * 
  * http://www.cppblog.com/abilitytao/archive/2010/04/12/112378.html
+ * ②1000！的末尾0的个数249个。（现在有的小学奥数书上出现了100！末尾有几个零的题目：24个）
  * 
- * http://blog.csdn.net/famousdt/article/details/7378023
- * SIGMA序列得要想想呀 m<n
+ * 解：1000÷5＝200，
+ * 
+ * 200÷5＝40，
+ * 
+ * 40÷5＝8，
+ * 
+ * 8÷5＝1……3
+ * 
+ * 以上各商相加，即得1000！末尾0的个数＝200＋40＋8＋1＝249个。
+ * 
+ * ③n！的质因数分解式中质因子p的幂次数：n/p + n/p*p + .....
+ * 
+ * http://blog.csdn.net/famousdt/article/details/7378023 SIGMA序列得要想想呀 m<n
  * http://blog.csdn.net/wangzhewang/article/details/6842844
- * http://en.wikipedia.org/wiki/Catalan_number
- * 这个最详细:
+ * http://en.wikipedia.org/wiki/Catalan_number 这个最详细:
  * http://blog.csdn.net/wuzhekai1985/article/details/6764858
  * 
  * 鉴于JAVA C++没带阶乘组合排列的API,还不如用DP呢,以空间换时间,不然每次算一大堆超时呀
