@@ -49,8 +49,9 @@ def gGetHtmlLines(url):
         html = page.readlines()
         page.close()
         return html
-    except:
-        print "gGetHtmlLines() error!"
+    except Exception, e: 
+        print "gGetHtmlLines() error! Exception ==>>" + e 
+        logging.debug( "gGetHtmlLines() error! Exception ==>>" + e )
         return
 """get html src,return string"""
 def gGetHtml(url):
@@ -61,26 +62,26 @@ def gGetHtml(url):
         html = page.read()
         page.close()
         return html
-    except:
-        print "gGetHtml() error!"
-        logging.debug( "gGetHtml() error!")
+    except Exception, e: 
+        print "gGetHtml() error! Exception ==>>" + e 
+        logging.debug( "gGetHtml() error! Exception ==>>" + e )
         return
 
-"""¸ù¾İurl»ñÈ¡ÎÄ¼şÃû"""
+"""æ ¹æ®urlè·å–æ–‡ä»¶å"""
 def gGetFileName(url):
     if url==None: return None
     if url=="" : return ""
     arr=url.split("/")
     return arr[len(arr)-1]
 
-"""Éú³ÉËæ»úÎÄ¼şÃû"""
+"""ç”Ÿæˆéšæœºæ–‡ä»¶å"""
 def gRandFilename(type):
     fname = ''
     for i in range(16):
         fname = fname + chr(random.randint(65,90))
         fname = fname + chr(random.randint(48,57))
     return fname + '.' + type
-"""¸ù¾İurlºÍÆäÉÏµÄlink£¬µÃµ½linkµÄ¾ø¶ÔµØÖ·"""
+"""æ ¹æ®urlå’Œå…¶ä¸Šçš„linkï¼Œå¾—åˆ°linkçš„ç»å¯¹åœ°å€"""
 def gGetAbslLink(url,link):
     if url==None or link == None : return 
     if url=='' or link=='' : return url 
@@ -96,7 +97,7 @@ def gGetAbslLink(url,link):
 
     return addr 
 
-"""¸ù¾İÊäÈëµÄlines£¬Æ¥ÅäÕıÔò±í´ïÊ½£¬·µ»Ølist"""
+"""æ ¹æ®è¾“å…¥çš„linesï¼ŒåŒ¹é…æ­£åˆ™è¡¨è¾¾å¼ï¼Œè¿”å›list"""
 def gGetRegList(linesList,regx):
     if linesList==None : return 
     rtnList=[]
@@ -108,9 +109,9 @@ def gGetRegList(linesList,regx):
                 if foundStr not in rtnList:
                     rtnList.append(foundStr)
     return rtnList
-"""¸ù¾İurlÏÂÔØÎÄ¼ş£¬ÎÄ¼şÃû²ÎÊıÖ¸¶¨"""
+"""æ ¹æ®urlä¸‹è½½æ–‡ä»¶ï¼Œæ–‡ä»¶åå‚æ•°æŒ‡å®š"""
 def gDownloadWithFilename(url,savePath,file):
-    #²ÎÊı¼ì²é£¬ÏÖºöÂÔ
+    #å‚æ•°æ£€æŸ¥ï¼Œç°å¿½ç•¥
     try:
         urlopen=urllib.URLopener()
         fp = urlopen.open(url)
@@ -125,14 +126,14 @@ def gDownloadWithFilename(url,savePath,file):
         print "download error!"+ url
 	logging.debug( "download error!"+ url)
         
-"""¸ù¾İurlÏÂÔØÎÄ¼ş£¬ÎÄ¼şÃû×Ô¶¯´Óurl»ñÈ¡"""
+"""æ ¹æ®urlä¸‹è½½æ–‡ä»¶ï¼Œæ–‡ä»¶åè‡ªåŠ¨ä»urlè·å–"""
 def gDownload(url,savePath):
-    #²ÎÊı¼ì²é£¬ÏÖºöÂÔ
+    #å‚æ•°æ£€æŸ¥ï¼Œç°å¿½ç•¥
     fileName = gGetFileName(url)
     #fileName =gRandFilename('jpg')
     gDownloadWithFilename(url,savePath,fileName)
         
-"""¸ù¾İÄ³ÍøÒ³µÄurl,ÏÂÔØ¸ÃÍøÒ³µÄjpg"""
+"""æ ¹æ®æŸç½‘é¡µçš„url,ä¸‹è½½è¯¥ç½‘é¡µçš„jpg"""
 def gDownloadHtmlJpg(downloadUrl,savePath):
     lines= gGetHtmlLines(downloadUrl)
     regx = r"""src\s*="?(\S+)\.jpg"""
@@ -142,12 +143,12 @@ def gDownloadHtmlJpg(downloadUrl,savePath):
         jpg = gGetAbslLink(downloadUrl,jpg) + '.jpg'
         gDownload(jpg,savePath)
    ###     print gGetFileName(jpg)
-"""¸ù¾İurlÈ¡Ö÷Õ¾µØÖ·"""
+"""æ ¹æ®urlå–ä¸»ç«™åœ°å€"""
 def gGetHttpAddr(url):
     if url== '' : return ''
     arr=url.split("/")
     return arr[0]+"//"+arr[2]
-"""¸ù¾İurlÈ¡ÉÏ¼¶Ä¿Â¼"""
+"""æ ¹æ®urlå–ä¸Šçº§ç›®å½•"""
 def gGetHttpAddrFather(url):
     if url=='' : return ''
     arr=url.split("/")
@@ -157,7 +158,7 @@ def gGetHttpAddrFather(url):
             addr = addr + arr[i] + '/'
     return addr
 
-"""¸ù¾İurlºÍÉÏ¼¶µÄlinkÈ¡linkµÄ¾ø¶ÔµØÖ·"""
+"""æ ¹æ®urlå’Œä¸Šçº§çš„linkå–linkçš„ç»å¯¹åœ°å€"""
 def gGetHttpAddrFatherAssign(url,link):
     if url=='' : return ''
     if link=='': return ''
@@ -167,7 +168,7 @@ def gGetHttpAddrFatherAssign(url,link):
     partUrl = ''
     for i in range(len(linkArray)):        
         if linkArray[i]=='..': 
-            numOfFather = i + 1    #ÉÏ¼¶Êı
+            numOfFather = i + 1    #ä¸Šçº§æ•°
         else:
             partLink = partLink + '/'  + linkArray[i]
     for i in range(len(urlArray)-1-numOfFather):
@@ -176,9 +177,9 @@ def gGetHttpAddrFatherAssign(url,link):
             partUrl = partUrl + '/'
     return  partUrl + partLink
 
-"""¸ù¾İurl»ñÈ¡ÆäÉÏµÄÏà¹Øhtm¡¢htmlÁ´½Ó£¬·µ»Ølist"""
+"""æ ¹æ®urlè·å–å…¶ä¸Šçš„ç›¸å…³htmã€htmlé“¾æ¥ï¼Œè¿”å›list"""
 def gGetHtmlLink(url):
-    #²ÎÊı¼ì²é£¬ÏÖºöÂÔ
+    #å‚æ•°æ£€æŸ¥ï¼Œç°å¿½ç•¥
     rtnList=[]
     lines=gGetHtmlLines(url)
     regx = r"""href="?(\S+)\.htm"""
@@ -189,11 +190,11 @@ def gGetHtmlLink(url):
             print link
     return rtnList
 
-"""¸ù¾İurl£¬×¥È¡ÆäÉÏµÄjpgºÍÆäÁ´½ÓhtmÉÏµÄjpg"""
+"""æ ¹æ®urlï¼ŒæŠ“å–å…¶ä¸Šçš„jpgå’Œå…¶é“¾æ¥htmä¸Šçš„jpg"""
 def gDownloadAllJpg(url,savePath):
-    #²ÎÊı¼ì²é£¬ÏÖºöÂÔ
+    #å‚æ•°æ£€æŸ¥ï¼Œç°å¿½ç•¥
     gDownloadHtmlJpg(url,savePath)
-    #×¥È¡linkÉÏµÄjpg
+    #æŠ“å–linkä¸Šçš„jpg
     links=gGetHtmlLink(url)
     for link in links:
         gDownloadHtmlJpg(link,savePath)
