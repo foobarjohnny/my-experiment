@@ -275,10 +275,10 @@ def gGetFileName2(disposition):
 
 def convertTime(s):
 #    s = "December 3rd, 2006, 08:20 AM"
-    s = s.replace("nd", "")
+    s = s.replace("2nd", "2")
     s = s.replace("th", "")
-    s = s.replace("rd", "")
-    s = s.replace("st", "")
+    s = s.replace("3rd", "3")
+    s = s.replace("1st", "1")
     ch = s.split(",")
     s = ch[0] + " " + ch[1]
     FROM_FORMAT = '%B %d %Y' 
@@ -330,6 +330,7 @@ def test():
                 if os.path.exists(save) and os.path.isdir(save):
                     print save + ' exist!'
                     logging.debug(save + ' exist!')
+                    continue
                 else:
                     print save + ' make dirs!'
                     logging.debug(save + ' make dirs!')
