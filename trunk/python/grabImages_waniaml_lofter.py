@@ -66,21 +66,21 @@ def gGetHtml(url):
         logging.debug( "gGetHtml() error!")
         return
 
-"""���url��ȡ�ļ���"""
+"""根据url获取文件名"""
 def gGetFileName(url):
     if url==None: return None
     if url=="" : return ""
     arr=url.split("/")
     return arr[len(arr)-1]
 
-"""�������ļ���"""
+"""生成随机文件名"""
 def gRandFilename(type):
     fname = ''
     for i in range(16):
         fname = fname + chr(random.randint(65,90))
         fname = fname + chr(random.randint(48,57))
     return fname + '.' + type
-"""���url�����ϵ�link���õ�link�ľ�Ե�ַ"""
+"""根据url和其上的link，得到link的绝对地址"""
 def gGetAbslLink(url,link):
     if url==None or link == None : return 
     if url=='' or link=='' : return url 
@@ -96,7 +96,7 @@ def gGetAbslLink(url,link):
 
     return addr 
 
-"""��������lines��ƥ��������ʽ������list"""
+"""根据输入的lines，匹配正则表达式，返回list"""
 def gGetRegList(linesList,regx):
     if linesList==None : return 
     rtnList=[]
@@ -108,9 +108,9 @@ def gGetRegList(linesList,regx):
                 if foundStr not in rtnList:
                     rtnList.append(foundStr)
     return rtnList
-"""���url�����ļ����ļ������ָ��"""
+"""根据url下载文件，文件名参数指定"""
 def gDownloadWithFilename(url,savePath,file):
-    #�����飬�ֺ���
+    #参数检查，现忽略
     try:
         urlopen=urllib.URLopener()
         fp = urlopen.open(url)
@@ -125,14 +125,14 @@ def gDownloadWithFilename(url,savePath,file):
         print "download error!"+ url
 	logging.debug( "download error!"+ url)
         
-"""���url�����ļ����ļ����Զ���url��ȡ"""
+"""根据url下载文件，文件名自动从url获取"""
 def gDownload(url,savePath):
-    #�����飬�ֺ���
+    #参数检查，现忽略
     fileName = gGetFileName(url)
     #fileName =gRandFilename('jpg')
     gDownloadWithFilename(url,savePath,fileName)
         
-"""���ĳ��ҳ��url,���ظ���ҳ��jpg"""
+"""根据某网页的url,下载该网页的jpg"""
 def gDownloadHtmlJpg(downloadUrl,savePath):
     lines= gGetHtmlLines(downloadUrl)
     regx = r"""src\s*="?(\S+)\.jpg"""
@@ -144,12 +144,12 @@ def gDownloadHtmlJpg(downloadUrl,savePath):
         if jpg.find(sStr2) == -1:
             gDownload(jpg,savePath)
    ###     print gGetFileName(jpg)
-"""���urlȡ��վ��ַ"""
+"""根据url取主站地址"""
 def gGetHttpAddr(url):
     if url== '' : return ''
     arr=url.split("/")
     return arr[0]+"//"+arr[2]
-"""���urlȡ�ϼ�Ŀ¼"""
+"""根据url取上级目录"""
 def gGetHttpAddrFather(url):
     if url=='' : return ''
     arr=url.split("/")
@@ -159,7 +159,7 @@ def gGetHttpAddrFather(url):
             addr = addr + arr[i] + '/'
     return addr
 
-"""���url���ϼ���linkȡlink�ľ�Ե�ַ"""
+"""根据url和上级的link取link的绝对地址"""
 def gGetHttpAddrFatherAssign(url,link):
     if url=='' : return ''
     if link=='': return ''
@@ -169,7 +169,7 @@ def gGetHttpAddrFatherAssign(url,link):
     partUrl = ''
     for i in range(len(linkArray)):        
         if linkArray[i]=='..': 
-            numOfFather = i + 1    #�ϼ���
+            numOfFather = i + 1    #上级数
         else:
             partLink = partLink + '/'  + linkArray[i]
     for i in range(len(urlArray)-1-numOfFather):
@@ -178,9 +178,9 @@ def gGetHttpAddrFatherAssign(url,link):
             partUrl = partUrl + '/'
     return  partUrl + partLink
 
-"""���url��ȡ���ϵ����htm��html���ӣ�����list"""
+"""根据url获取其上的相关htm、html链接，返回list"""
 def gGetHtmlLink(url):
-    #�����飬�ֺ���
+    #参数检查，现忽略
     rtnList=[]
     lines=gGetHtmlLines(url)
     regx = r"""href="?(\S+)\.htm"""
@@ -192,7 +192,6 @@ def gGetHtmlLink(url):
     return rtnList
 
 def gGetPostLink(url):
-    #�����飬�ֺ���
     rtnList=[]
     lines=gGetFileLines(url)
     regx = r"""href="?(/post/\S+)\""""
@@ -231,11 +230,11 @@ def gDownloadTime(downloadUrl):
 
 
 
-"""���url��ץȡ���ϵ�jpg��������htm�ϵ�jpg"""
+"""根据url，抓取其上的jpg和其链接htm上的jpg"""
 def gDownloadAllJpg(url,savePath):
-    #�����飬�ֺ���
+    #参数检查，现忽略
     gDownloadHtmlJpg(url,savePath)
-    #ץȡlink�ϵ�jpg
+    #抓取link上的jpg
     links=gGetHtmlLink(url)
     for link in links:
         gDownloadHtmlJpg(link,savePath)
