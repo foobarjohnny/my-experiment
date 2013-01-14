@@ -10,7 +10,6 @@ import os
 import logging  
 import datetime
 from bs4 import BeautifulSoup
-from string import capwords
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='log.txt', filemode='a+') 
 
 """judge url exists or not,by others"""
@@ -213,9 +212,9 @@ def getPostAuthor(post):
 def getPostTime(post):
     span = post.find("span", attrs={"class":"date"});
 #    print "span", span
-    time = capwords(span.text)
+    time = span.text.strip()
     time = convertTime(time)
-    time = capwords(time)
+    time = time.strip()
 #    print "time ", time
     return time
 
@@ -226,7 +225,7 @@ def getPost(postList):
 
 def getPostName(post):
     a = post.find(attrs={"class":"postcontent restore"});
-    name = capwords(a.text)
+    name = a.text.replace("\n", " ").replace("\r", " ").strip()
     return name
 
 def getPostAttachImageUrls(post):
@@ -271,7 +270,7 @@ def gGetFileName2(disposition):
         for foundStr in allGroups:
             fileName = foundStr
             break;
-    return unicode(capwords(fileName))
+    return unicode(fileName.strip())
 
 def convertTime(s):
 #    s = "December 3rd, 2006, 08:20 AM"
@@ -290,7 +289,7 @@ def convertTime(s):
 """test"""
 def test():
     start = 75
-    end = 1
+    end = 0
     for i in range(start, end, -1):
         print "page ", i
         url = "http://conceptart.org/forums/showthread.php?83464-Wanimal-s-NSFW/page" + str(i)
@@ -315,14 +314,14 @@ def test():
                 print "time ", time
                 name = getPostName(post)
                 print "name ", name
-                folderName = time + '_' + name
+                folderName = 'P' + str(i) + "_" + time + '_' + name
                 folderName = folderName.replace('?', '')
                 folderName = folderName.replace('&nbsp;', ' ')
                 folderName = folderName.replace('&amp;', '&')
                 folderName = folderName.replace(':', '')
-                folderName = capwords(folderName);
+                folderName = folderName.strip()
                 if len(folderName) > 150:
-                     folderName = capwords(folderName[1:150])
+                     folderName = (folderName[1:150]).strip()
                 save = unicode('c:/WANIMAL_conceptart.org/' + folderName + '/')
                 imgUrls = getPostAttachImageUrls(post)
     #            print "imgUrls ", imgUrls
