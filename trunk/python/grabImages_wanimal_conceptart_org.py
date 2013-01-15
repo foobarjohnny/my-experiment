@@ -9,8 +9,9 @@ import random
 import os
 import logging  
 import datetime
+import time
 from bs4 import BeautifulSoup
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='log.txt', filemode='a+') 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='log2.txt', filemode='a+') 
 
 """judge url exists or not,by others"""
 def httpExists(url):
@@ -126,7 +127,7 @@ def gDownloadWithFilename(url, savePath, file):
         logging.debug("download success!" + url)
     except IOError:
         print "download error!" + url
-	logging.debug("download error!" + url)
+        logging.debug("download error!" + url)
         
 """根据url下载文件，文件名自动从url获取"""
 def gDownload(url, savePath):
@@ -203,7 +204,7 @@ def gDownloadAllJpg(url, savePath):
 
 def getPostAuthor(post):
     titleP = re.compile("(\s+?\w+)?username(\s+?\w+)?")
-    a = post.find(attrs={"class":titleP});
+    a = post.find("a", attrs={"class":titleP});
     author = "null"
     strong = a.find("strong");
     if strong != None: author = strong.string;
@@ -212,20 +213,20 @@ def getPostAuthor(post):
 def getPostTime(post):
     span = post.find("span", attrs={"class":"date"});
 #    print "span", span
-    time = span.text.strip()
-    time = convertTime(time)
-    time = time.strip()
+    postTime = span.text.strip()
+    postTime = convertTime(postTime)
+    postTime = postTime.strip()
 #    print "time ", time
-    return time
+    return postTime
 
 def getPost(postList):
     titleP = re.compile("(\s+?\w+)?postcontainer(\s+?\w+)?")
-    a = postList.findAll(attrs={"class":titleP});
+    a = postList.findAll("li", attrs={"class":titleP});
     return a
 
 def getPostName(post):
-    a = post.find(attrs={"class":"postcontent restore"});
-    name = a.text.replace("\n", " ").replace("\r", " ").strip()
+    blockquote = post.find(attrs={"class":"postcontent restore"});
+    name = blockquote.text.replace("\n", " ").replace("\r", " ").strip()
     return name
 
 def getPostAttachImageUrls(post):
@@ -244,12 +245,25 @@ def gDownloadImgs(imgUrls, savePath):
 def gDownload2(url, savePath):
     # 参数检查，现忽略
     print "downloading.... " + url
+    logging.debug("downloading.... " + url)
     try:
         urlopen = urllib.URLopener()
         fp = urlopen.open(url)
         disposition = fp.info().getheader('Content-disposition')
         file = gGetFileName2(disposition)
         print "file ", file
+        logging.debug("file " + file)
+        save = savePath + file
+        if os.path.exists(save) and os.path.isfile(save):
+            print save + ' exist!'
+            logging.debug(save + ' exist!')
+            print "Cancel download !" 
+            logging.debug("Cancel download !")
+            fp.close()
+            return
+        print 'save as [' + save + '] ...'
+        logging.debug('save as [' + save + '] ...')
+        
         data = fp.read()
         fp.close()
         file = open(savePath + file, 'w+b')
@@ -297,20 +311,46 @@ def optimizeName(folderName):
     return folderName
 
 def test():
-    start = 75
-    end = 0
+    start = 64
+    end = 63
     for i in range(start, end, -1):
         print "page ", i
+        logging.debug("page " + str(i))
         url = "http://conceptart.org/forums/showthread.php?83464-Wanimal-s-NSFW/page" + str(i)
-        print "url", url
+        print "url ", url
+        
+        logging.debug("url " + url)
+        start = time.time()
         doc = urllib.urlopen(url)
+        elapsed = (time.time() - start) 
+        print "open url : " + str(elapsed) + " s"
+        logging.debug("open url : " + str(elapsed) + " s")
+        
+        
+        start = time.time()
         soup = BeautifulSoup(doc)
+        elapsed = (time.time() - start) 
+        print "Build BeautifulSoup: " + str(elapsed) + " s"
+        logging.debug("Build BeautifulSoup: " + str(elapsed) + " s")
+        doc.close();
+        
+        start = time.time()
         postList = soup.find("div", {"id":"postlist"},);
+        elapsed = (time.time() - start) 
+        print "Get PostList: " + str(elapsed) + " s"
+        logging.debug("Get PostList: " + str(elapsed) + " s")
 #        print (len(postList))
     #    print "postList=",postList;
+        start = time.time()
         posts = getPost(postList);
+        elapsed = (time.time() - start) 
+        print "Get Post: " + str(elapsed) + " s"
+        logging.debug("Get Post: " + str(elapsed) + " s")
+        
         length = len(posts)
         print "length ", length
+        logging.debug("length " + str(length))
+        
         j = 0
         for post in posts:
                 j = j + 1
@@ -319,11 +359,11 @@ def test():
 #                print "author ", author
                 if author != "wanimal": 
                     continue
-                time = getPostTime(post)
-                print "time ", time
+                postTime = getPostTime(post)
+                print "postTime ", postTime
                 name = getPostName(post)
                 print "name ", name
-                folderName = 'P' + str(i) + "_" + time + '_' + name
+                folderName = 'P' + str(i) + "_" + postTime + '_' + name
                 folderName = optimizeName(folderName)
                 save = unicode('c:/WANIMAL_conceptart.org/' + folderName + '/')
                 imgUrls = getPostAttachImageUrls(post)
@@ -332,7 +372,6 @@ def test():
                 if os.path.exists(save) and os.path.isdir(save):
                     print save + ' exist!'
                     logging.debug(save + ' exist!')
-                    continue
                 else:
                     print save + ' make dirs!'
                     logging.debug(save + ' make dirs!')
@@ -340,6 +379,8 @@ def test():
                 print 'save to [' + save + '] ...'
                 logging.debug('save to [' + save + '] ...')
                 gDownloadImgs(imgUrls, save)
-        print "page", i, " finished"
+        print "page ", i, " finished"
+        logging.debug("page " + str(i) + " finished")
     print "All over"
+    logging.debug("All over")
 test()                         
