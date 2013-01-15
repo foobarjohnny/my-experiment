@@ -249,7 +249,8 @@ def gDownload2(url, savePath):
     try:
         urlopen = urllib.URLopener()
         fp = urlopen.open(url)
-        disposition = fp.info().getheader('Content-disposition')
+        # url decode
+        disposition = urllib.unquote(fp.info().getheader('Content-disposition'))
         file = gGetFileName2(disposition)
         print "file ", file
         logging.debug("file " + file)
@@ -271,9 +272,9 @@ def gDownload2(url, savePath):
         file.close()
         print "download success!" 
         logging.debug("download success!")
-    except IOError:
-        print "download error!" 
-        logging.debug("download error!")
+    except IOError, e:
+        print "download error!" + str(e) 
+        logging.debug("download error!" + str(e))
     
 def gGetFileName2(disposition):
     fileName = "null"
@@ -282,6 +283,7 @@ def gGetFileName2(disposition):
     if matchs != None:
         allGroups = matchs.groups()
         for foundStr in allGroups:
+            print "foundStr", foundStr
             fileName = foundStr
             break;
     return unicode(fileName.strip())
@@ -311,9 +313,10 @@ def optimizeName(folderName):
     return folderName
 
 def test():
-    start = 64
-    end = 63
+    start = 43
+    end = 0
     for i in range(start, end, -1):
+         
         print "page ", i
         logging.debug("page " + str(i))
         url = "http://conceptart.org/forums/showthread.php?83464-Wanimal-s-NSFW/page" + str(i)
