@@ -10,8 +10,9 @@ import os
 import logging  
 import datetime
 import time
+import sys
+import string
 from bs4 import BeautifulSoup
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='log2.txt', filemode='a+') 
 
 """judge url exists or not,by others"""
 def httpExists(url):
@@ -206,8 +207,10 @@ def getPostAuthor(post):
     titleP = re.compile("(\s+?\w+)?username(\s+?\w+)?")
     a = post.find("a", attrs={"class":titleP});
     author = "null"
-    strong = a.find("strong");
-    if strong != None: author = strong.string;
+    if a != None:
+        strong = a.find("strong");
+        if strong != None: 
+            author = strong.string;
     return author
 
 def getPostTime(post):
@@ -250,7 +253,10 @@ def gDownload2(url, savePath):
         urlopen = urllib.URLopener()
         fp = urlopen.open(url)
         # url decode
-        disposition = urllib.unquote(fp.info().getheader('Content-disposition'))
+        print "dd", fp.info().getheader('Content-disposition')
+        disposition = urllib.unquote(urllib.unquote(fp.info().getheader('Content-disposition')))
+        print "disposition ", disposition
+        logging.debug("disposition " + disposition)
         file = gGetFileName2(disposition)
         print "file ", file
         logging.debug("file " + file)
@@ -312,10 +318,28 @@ def optimizeName(folderName):
                      folderName = (folderName[0:149]).strip()
     return folderName
 
+
+def TryTry():
+    imgUrl = "http://conceptart.org/forums/attachment.php?s=d588b86cadff7969ebc3bdf00eede261&attachmentid=1155973&stc=1&d=1296221498"
+    imgUrl = "http://conceptart.org/forums/attachment.php?s=d588b86cadff7969ebc3bdf00eede261&attachmentid=57840&stc=1&d=1165162467"
+    imgUrl = "http://conceptart.org/forums/attachment.php?s=d588b86cadff7969ebc3bdf00eede261&attachmentid=308656&stc=1&d=1203655346"
+    savePath = "c:/WANIMAL/"
+    gDownload2(imgUrl, savePath)
+    disposition = 'inline; filename="11副本.jpg"'
+    gGetFileName2(disposition)
+
 def test():
-    start = 43
-    end = 0
-    for i in range(start, end, -1):
+    TryTry()
+    return
+    n = 0
+    if n > 0:
+        start = (n - 1) * 10 + 1 
+        end = start + 9
+    else:
+        start = 10
+        end = 10
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='log_' + str(start) + '-' + str(end) + '.txt', filemode='a+') 
+    for i in range(start, end + 1):
          
         print "page ", i
         logging.debug("page " + str(i))
@@ -386,4 +410,5 @@ def test():
         logging.debug("page " + str(i) + " finished")
     print "All over"
     logging.debug("All over")
+    
 test()                         
