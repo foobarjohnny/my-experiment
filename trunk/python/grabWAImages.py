@@ -287,6 +287,15 @@ def convertTime(s):
     return time
 
 """test"""
+
+def optimizeName(folderName):
+    if folderName != None:  
+        folderName = folderName.replace('?', '').replace('"', '').replace('>', '').replace('<', '').replace('|', '').replace('\\', '')
+        folderName = folderName.replace('/', '').replace('*', '').replace('&nbsp;', ' ').replace('&amp;', '&').replace(':', '').strip()
+        if len(folderName) > 150:
+                     folderName = (folderName[0:149]).strip()
+    return folderName
+
 def test():
     start = 75
     end = 0
@@ -315,13 +324,7 @@ def test():
                 name = getPostName(post)
                 print "name ", name
                 folderName = 'P' + str(i) + "_" + time + '_' + name
-                folderName = folderName.replace('?', '')
-                folderName = folderName.replace('&nbsp;', ' ')
-                folderName = folderName.replace('&amp;', '&')
-                folderName = folderName.replace(':', '')
-                folderName = folderName.strip()
-                if len(folderName) > 150:
-                     folderName = (folderName[1:150]).strip()
+                folderName = optimizeName(folderName)
                 save = unicode('c:/WANIMAL_conceptart.org/' + folderName + '/')
                 imgUrls = getPostAttachImageUrls(post)
     #            print "imgUrls ", imgUrls
