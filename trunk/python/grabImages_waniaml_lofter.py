@@ -110,20 +110,36 @@ def gGetRegList(linesList,regx):
     return rtnList
 """根据url下载文件，文件名参数指定"""
 def gDownloadWithFilename(url,savePath,file):
-    #参数检查，现忽略
+    # 参数检查，现忽略
+    print "downloading.... " + url
+    logging.debug("downloading.... " + url)
     try:
-        urlopen=urllib.URLopener()
+        urlopen = urllib.URLopener()
         fp = urlopen.open(url)
+        # url decode
+        print "file ", file
+        logging.debug("file " + file)
+        save = savePath + file
+        if os.path.exists(save) and os.path.isfile(save):
+            print save + ' exist!'
+            logging.debug(save + ' exist!')
+            print "Cancel download !" 
+            logging.debug("Cancel download !")
+            fp.close()
+            return
+        print 'save as [' + save + '] ...'
+        logging.debug('save as [' + save + '] ...')
+        
         data = fp.read()
         fp.close()
-        file=open(savePath + file,'w+b')
+        file = open(savePath + file, 'w+b')
         file.write(data)
         file.close()
-        print "download success!"+ url
-        logging.debug( "download success!"+ url)
-    except IOError:
-        print "download error!"+ url
-	logging.debug( "download error!"+ url)
+        print "download success!" 
+        logging.debug("download success!")
+    except IOError, e:
+        print "download error!" + str(e) 
+        logging.debug("download error!" + str(e))
         
 """根据url下载文件，文件名自动从url获取"""
 def gDownload(url,savePath):
@@ -268,7 +284,6 @@ def test():
         if os.path.exists(save) and os.path.isdir(save):
             print save + ' exist!'
             logging.debug(save + ' exist!')
-            continue
         else:
             print save + ' make dirs!'
             logging.debug(save + ' make dirs!')
