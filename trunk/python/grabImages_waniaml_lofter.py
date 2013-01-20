@@ -11,7 +11,7 @@ import thread
 import time  
 import logging  
 import threading  
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='logThread2102.txt', filemode='a+') 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='logThre32.txt', filemode='a+') 
 logging.getLogger('').addHandler(logging.StreamHandler())
 
 mylock = threading.RLock()  
@@ -293,16 +293,12 @@ def test():
     return 
 num = 0
 def testThread():
-    li = ["a", "b", "mpilgrim", "z", "example"]
-    print li[0:2]
-    print li[2:5]
-    print li[2:6]
     posts = gGetPostLink("c.html")
     i = 0
     length = len(posts)
     logging.debug(len(posts))
     saves = set([])
-    dict = {"abc":["a", "b"]};
+    dict = {};
     print dict
     x = 150
     interval = length / x
