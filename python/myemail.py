@@ -25,9 +25,10 @@ mail_user = "godlikewho"
 mail_pass = "godlikewho1"
 mail_postfix = "126.com"
 me = mail_user + "126<" + mail_user + "@" + mail_postfix + ">"
-port = "465";
+port = "465"
+osCodePage = "gbk"
 ######################
-def send_mail(to_list, sub, content):
+def send_mail(to_list, sub, contents):
     '''
     to_list:发给谁
     sub:主题
@@ -42,11 +43,12 @@ def send_mail(to_list, sub, content):
         msg['From'] = me
         msg['To'] = ";".join(to_list)
         
-        f = open("D:/sdy-experiment.googlecode.com/svn/trunk/python" + "/" + content, 'rb')
-        msgText = MIMEText(f.read())
-        f.close()
-        msgText.add_header('Content-Disposition', 'attachment', filename=content)
-        msg.attach(msgText)
+        for content in contents:
+            f = open("D:/sdy-experiment.googlecode.com/svn/trunk/python" + "/" + content, 'rb')
+            msgText = MIMEText(f.read())
+            f.close()
+            msgText.add_header('Content-Disposition', 'attachment', filename=content)
+            msg.attach(msgText)
         
         s = smtplib.SMTP_SSL()
         s.set_debuglevel(True)
@@ -85,13 +87,13 @@ def get_email_msg(sub, content, picfiles , directory):
     try:
         # 创建实例,构造MIMEMultipart对象做为根容器
         msg = MIMEMultipart()
-        msg['Subject'] = sub
+        msg['Subject'] = sub.decode(osCodePage).encode('utf-8')
         msg['From'] = me
         msg['To'] = ";".join(mailto_list)
-        logging.debug("msg : " + msg.as_string())
         # 构造MIMEText对象做为邮件显示内容并附加到根容器
         txt = MIMEText(content, 'plain', 'utf-8')
         msg.attach(txt)
+        logging.debug("msg : " + msg.as_string())
         for file in picfiles:
             f = open(directory + "/" + file, 'rb')
             img = MIMEImage(f.read())
@@ -133,15 +135,21 @@ def get_subjects(directory):
     
 def send_images(directory, sucs):
     smtpClient = None
+    fileHandle = None
     try:
         subjects = get_subjects(directory)
+        completedList = getCompletedList()
+        fileHandle = getCompletedTxt()
         length = len(subjects)
         logging.debug("Folder Count:" + str(length))
         i = 0
         for subject in subjects:
-            smtpClient = get_smtp();
             i = i + 1
-            logging.debug(str(i) + "/" + str(length) + ":" + subject)
+            if subject + "\n" in completedList:
+                logging.debug(str(i) + "/" + str(length) + ":" + subject.decode(osCodePage) + " has been sent before!")
+                continue
+            smtpClient = get_smtp();
+            logging.debug(str(i) + "/" + str(length) + ":" + subject.decode(osCodePage))
             pics = get_pic_files(directory + "/" + subject)
             msg = get_email_msg("WANIMAL LOFTER_" + subject, subject, pics , directory + "/" + subject)
             logging.debug("Sending....")
@@ -149,24 +157,49 @@ def send_images(directory, sucs):
             if result == True:
                 logging.debug("Sent successfully")
                 sucs.append(subject)
+                completedList.append(subject + "\n")
+                fileHandle.write(subject + "\n")
+                fileHandle.flush()
             else:
                 logging.debug("Sent failed")
-            logging.debug(str(i) + "/" + str(length) + ":" + subject + " finished!")
+            logging.debug(str(i) + "/" + str(length) + ":" + subject.decode(osCodePage) + " finished!")
             smtpClient.close()
         logging.debug("All over:" + str(length))
         return False
     except Exception, e:
-        smtpClient.close()
         logging.debug('Exception in send_images' + str(e)) 
+        fileHandle.close()
+        smtpClient.close()
         return False
+        
+    
+completedTxt = "D:/sdy-experiment.googlecode.com/svn/trunk/python/WANIMAL_LOFTER_EMAILED_completed.txt"
+def getCompletedList():
+    lines = []
+    try:
+        f = open(completedTxt, 'rb')
+        lines = f.readlines()
+        f.close()
+    except Exception, e:
+        logging.debug('Exception in getCompletedList()' + str(e)) 
+    return lines
 
+def getCompletedTxt():
+    try:
+        f = open(completedTxt, 'ab')
+        return f
+    except Exception, e:
+        logging.debug('Exception in getCompletedTxt()' + str(e)) 
+        return None
+
+    
 if __name__ == '__main__':
-    directory = "c:/WANIMAL/"
+    directory = "c:/WANIMAL_LOFTER/"
     sucs = []
     send_images(directory, sucs)
     print "SUC FOLDERS:" + str(sucs)
-    logging.debug("SUC FOLDERS:" + str(sucs))
-    if send_mail(mailto_list2, "log_email", "log_email.txt"):
+    logging.debug("SUC FOLDERS:" + str(sucs).decode(osCodePage))
+    if send_mail(mailto_list2, "email_logs_WANIMAL_LOFTER", ["log_email.txt", "WANIMAL_LOFTER_EMAILED_completed.txt"]):
         print "发送成功"
         logging.debug("发送成功")
     else:
