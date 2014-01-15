@@ -10,6 +10,7 @@ import os
 import thread  
 import time  
 import logging  
+import datetime
 import threading  
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', filename='logThre32.txt', filemode='a+') 
 logging.getLogger('').addHandler(logging.StreamHandler())
@@ -149,7 +150,7 @@ def gDownload(url, savePath):
 """根据某网页的url,下载该网页的jpg"""
 def gDownloadHtmlJpg(downloadUrl, savePath):
     lines = gGetHtmlLines(downloadUrl)
-    regx = r"""src\s*="?(\S+)\.jpg"""
+    regx = r"""bigimgsrc\s*="?(\S+)\.jpg"""
     lists = gGetRegList(lines, regx)
     if lists == None: return 
     sStr2 = "imgurl"
@@ -227,7 +228,7 @@ def gGetFileLines(url):
     
 def gDownloadName(downloadUrl):
     lines = gGetHtmlLines(downloadUrl)
-    regx = r"""<p>?([^<]*)</p>"""
+    regx = r"""<p>([^<]*)</p>"""
     lists = gGetRegList(lines, regx)
     if lists == None: return 
     if len(lists) <= 0: return "null"
@@ -235,7 +236,8 @@ def gDownloadName(downloadUrl):
 
 def gDownloadTime(downloadUrl):
     lines = gGetHtmlLines(downloadUrl)
-    regx = r"""<a href=\"""" + downloadUrl + """\">?([^<]*)</a>"""
+    c = '<a href="' + downloadUrl + '">([^<]*)</a>'
+    regx = r'<a href="' + downloadUrl + '">([^<]*)</a>'
     lists = gGetRegList(lines, regx)
     if lists == None: return 
     return lists[0]
@@ -257,6 +259,11 @@ def test():
     i = 0
     x = 750
     length = str(len(posts))
+    posts=['http://wanimal.lofter.com/post/17d0d7_c8b5f1'];
+#     posts = [ 'http://wanimal.lofter.com/post/17d0d7_506503', 'http://wanimal.lofter.com/post/17d0d7_5064ff',
+#         'http://wanimal.lofter.com/post/17d0d7_5064fd', 'http://wanimal.lofter.com/post/17d0d7_5064f9',
+#         'http://wanimal.lofter.com/post/17d0d7_4fa3e7', 'http://wanimal.lofter.com/post/17d0d7_4f9a64',
+#         'http://wanimal.lofter.com/post/17d0d7_4f9830' ];
     logging.debug("type:" + str(type(posts)))
     sss = set(posts)
     logging.debug("sss length:" + str(len(sss)))
@@ -274,12 +281,11 @@ def test():
         name = name.replace('&amp;', '&')
         name = name.replace(':', '')
         name = name.strip()
-        save = unicode('c:/WANIMAL/' + name + '/')
+        save = unicode('I:/WANIMAL_LOFTER/' + name + '/')
         ll.append(save)
         logging.debug(save)
         if os.path.exists(save) and os.path.isdir(save):
             logging.debug(save + ' exist!')
-            continue
         else:
             logging.debug(save + ' make dirs!')
             os.makedirs(save)
@@ -291,41 +297,46 @@ def test():
     logging.debug(len(posts))
     logging.debug(len(set(ll)))
     return 
-num = 0
+    
+threadMap = {};
+ 
 def testThread():
     posts = gGetPostLink("c.html")
+    logging.debug(posts)
     i = 0
     length = len(posts)
     logging.debug(len(posts))
     saves = set([])
     dict = {};
     print dict
-    x = 150
+    x = 50
     interval = length / x
-    print str(interval)
+    if interval < 1:
+        interval = 1
+    logging.debug(str(interval))
     j = 0
     while i < length:
         j = j + 1
         start = i
         end = i + interval
         print "start", start, "end", end
-        thread1 = getImgsThread(posts[start:end], saves, dict, "Thread_" + str(j))  
+        threadName = "Thread_" + str(j);
+        threadPosts = posts[start:end];
+        thread1 = getImgsThread(threadPosts, saves, dict, threadName);
+        global threadMap;
+        threadMap[threadName] = threadPosts;
         thread1.start()
         i = i + interval
     
-    
-    global num
-    num = j
+    sleepTime = 10;
     while True :
-        time.sleep(5)
-        mylock.acquire()
-        logging.debug('num:' + str(num) + '----========================--')
-        if num > 0:
-            mylock.release()
+        threadCount = len(threadMap);
+        logging.warn('thread count:' + str(threadCount) + '----========================--');
+        if threadCount > 0:
+            logging.warn('thread map:' + str(threadMap) + '----========================--');
+            time.sleep(sleepTime);
         else:
-            mylock.release()
-            break
-    
+            break;
     m = 0
     n = 0
     for s in dict:
@@ -341,18 +352,18 @@ class getImgsThread(threading.Thread):
 
     def __init__ (self, m1, m2, m3, m4):
         threading.Thread.__init__(self)
-        self.ps = m1
-        self.ss = m2
+        self.postUrls = m1
+        self.saveFolders = m2
         self.dic = m3
         self.name = m4
 
     def run(self):
-        self.ps = set(self.ps)
-        length = str(len(self.ps))
+        self.postUrls = set(self.postUrls)
+        length = str(len(self.postUrls))
         i = 0;
         while True:
-            if len(self.ps) > 0:
-                link = self.ps.pop()
+            if len(self.postUrls) > 0:
+                link = self.postUrls.pop()
                 i = i + 1
                 time = gDownloadTime(link).strip()
                 name = gDownloadName(link).strip()
@@ -362,11 +373,11 @@ class getImgsThread(threading.Thread):
                 name = name.replace('&amp;', '&')
                 name = name.replace(':', '')
                 name = name.strip()
-                save = unicode('c:/WANIMAL/' + name + '/')
-                if save in self.ss:
+                save = unicode('I:/WANIMAL_LOFTER/' + name + '/')
+                if save in self.saveFolders:
                     logging.debug('save has in [' + save + ']---' + self.name)
                 else:
-                    self.ss.add(save)
+                    self.saveFolders.add(save)
                     self.dic[save] = []
                 self.dic[save].append(link)
                 logging.debug(save)
@@ -378,14 +389,16 @@ class getImgsThread(threading.Thread):
                 logging.debug('download pic from [' + link + ']---' + self.name)
                 logging.debug('save to [' + save + '] ...---' + self.name)
                 gDownloadHtmlJpg(link, save)
-                logging.debug("download finished! " + str(i) + "/" + length + ":" + link + " ---" + self.name)
+                global threadMap;
+                threadLinks = threadMap[self.name];
+                for z in range(len(threadLinks) - 1, -1, -1):  # 倒序
+                    if link in threadLinks[z]:
+                        del threadLinks[z]
+                logging.warn("one post url download finished! " + str(i) + "/" + length + ":" + link + " ---" + self.name)
             else:
                 break;
-        logging.debug('All over --- self.ss length :' + str(len(self.ss)) + '------' + self.name)
-        mylock.acquire()
-        global num
-        num = num - 1
-        mylock.release()
+        logging.warn('Thread over --- self.saveFolders length :' + str(len(self.saveFolders)) + '------' + self.name)
+        threadMap.pop(self.name);
         return 
 
 testThread()
