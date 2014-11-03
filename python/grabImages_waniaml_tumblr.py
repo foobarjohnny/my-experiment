@@ -158,6 +158,18 @@ def gDownloadHtmlJpg(downloadUrl, savePath):
         jpg = gGetAbslLink(downloadUrl, jpg) + '.jpg'
         if jpg.find(sStr2) == -1:
             gDownload(jpg, savePath)
+
+def gDownloadHtmlJpg2(lines, downloadUrl, savePath):
+#    lines = gGetHtmlLines(downloadUrl)
+    regx = r"""src\s*="?(\S+)\.jpg"""
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    sStr2 = "imgurl"
+    for jpg in lists:
+        jpg = gGetAbslLink(downloadUrl, jpg) + '.jpg'
+        if jpg.find(sStr2) == -1:
+            gDownload(jpg, savePath)
+            
    # ##     print gGetFileName(jpg)
 """根据url取主站地址"""
 def gGetHttpAddr(url):
@@ -210,8 +222,8 @@ def gGetPostLink(url):
     lines = gGetFileLines(url)
     regx = r"""href="?(\S+/post/\S+)\""""
     for link in gGetRegList(lines, regx):
-        print link
-        logging.debug("cccclink:" + link)
+#        print link
+#        logging.debug("cccclink:" + link)
 #        link = "http://wanimal.lofter.com" + link
         if link not in rtnList:
             rtnList.append(link)
@@ -235,9 +247,39 @@ def gDownloadName(downloadUrl):
     if len(lists) <= 0: return "null"
     return lists[0]
 
+def gDownloadName2(lines, downloadUrl):
+#    lines = gGetHtmlLines(downloadUrl)
+    regx = r"""<p>([^<]*)</p>"""
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    if len(lists) <= 0: return "null"
+    return lists[0]
+
 def gDownloadTime(downloadUrl):
     lines = gGetHtmlLines(downloadUrl)
-    regx = r'<a href="' + downloadUrl + '" title="[^<]*">([^<]*)</a>'
+#    regx = r'<a href="' + downloadUrl + '" title="[^<]*">([^<]*)</a>'
+    regx = r'''<a href="''' + downloadUrl + '''">([^<]*)</a>'''
+    logging.debug('download pic from [' + downloadUrl + ']')
+#    logging.debug("lines:" )
+#    logging.debug( lines)
+#    for line in lines:
+#        logging.debug( line)
+
+
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    time = convertTime(lists[0]);
+    return time
+
+def gDownloadTime2(lines, downloadUrl):
+#    lines = gGetHtmlLines(downloadUrl)
+#    regx = r'<a href="' + downloadUrl + '" title="[^<]*">([^<]*)</a>'
+    regx = r'''<a href="''' + downloadUrl + '''">([^<]*)</a>'''
+    logging.debug('download pic from [' + downloadUrl + ']')
+#    logging.debug("lines:" )
+#    logging.debug( lines)
+#    for line in lines:
+#        logging.debug( line)
     lists = gGetRegList(lines, regx)
     if lists == None: return 
     time = convertTime(lists[0]);
@@ -256,21 +298,26 @@ def gDownloadAllJpg(url, savePath):
 
 """test"""
 def test():
-    posts = gGetPostLink("d.html")
+#    posts = gGetPostLink("d.html")
+    post_map= {'Thread_26': ['http://wanimal1983.tumblr.com/post/63144538057/shy', 'http://wanimal1983.tumblr.com/post/63144496407/banana', 'http://wanimal1983.tumblr.com/post/63144479156/banana', 'http://wanimal1983.tumblr.com/post/63144442606/black', 'http://wanimal1983.tumblr.com/post/63144411189/jumping', 'http://wanimal1983.tumblr.com/post/63144369150/lady']}
+    posts =[]
+    for (k,v) in  post_map.items(): 
+        posts.extend(v)
+    
     i = 0
-    x = 750
     length = str(len(posts))
     logging.debug("type:" + str(type(posts)))
     sss = set(posts)
-    logging.debug("sss length:" + str(len(sss)))
+    logging.debug("length:" + str(len(sss)))
     logging.debug(len(posts))
     ll = []
     for link in posts:
         i = i + 1
         logging.debug(str(i) + "/" + length + ":" + link)
 #        if i < x or i >= x + 50 : continue
-        time = gDownloadTime(link).strip()
-        name = gDownloadName(link).strip()
+        html_lines = gGetHtmlLines(link)
+        time = gDownloadTime2(html_lines, link).strip()
+        name = gDownloadName2(html_lines, link).strip()
         name = time + '_' + name
         name = name.replace('?', '')
         name = name.replace('&nbsp;', ' ')
@@ -278,6 +325,7 @@ def test():
         name = name.replace(':', '')
         name = name.strip()
         save = unicode('c:/WANIMAL_TUMBLR/' + name + '/')
+        save = save[0:125];
         ll.append(save)
         logging.debug(save)
         if os.path.exists(save) and os.path.isdir(save):
@@ -287,7 +335,7 @@ def test():
             os.makedirs(save)
         logging.debug('download pic from [' + link + ']')
         logging.debug('save to [' + save + '] ...')
-        gDownloadHtmlJpg(link, save)
+        gDownloadHtmlJpg2(html_lines, link, save)
         logging.debug("download finished! " + str(i) + "/" + length + ":" + link)
     logging.debug('All over')
     logging.debug(len(posts))
@@ -360,8 +408,9 @@ class getImgsThread(threading.Thread):
             if len(self.postUrls) > 0:
                 link = self.postUrls.pop()
                 i = i + 1
-                time = gDownloadTime(link).strip()
-                name = gDownloadName(link).strip()
+                html_lines = gGetHtmlLines(link)
+                time = gDownloadTime2(html_lines, link).strip()
+                name = gDownloadName2(html_lines, link).strip()
                 name = time + '_' + name
                 name = name.replace('?', '')
                 name = name.replace('&nbsp;', ' ')
@@ -383,7 +432,7 @@ class getImgsThread(threading.Thread):
                     os.makedirs(save)
                 logging.debug('download pic from [' + link + ']---' + self.name)
                 logging.debug('save to [' + save + '] ...---' + self.name)
-                gDownloadHtmlJpg(link, save)
+                gDownloadHtmlJpg2(html_lines, link, save)
                 global threadMap;
                 threadLinks = threadMap[self.name];
                 for z in range(len(threadLinks) - 1, -1, -1):  # 倒序
@@ -404,10 +453,14 @@ def convertTime(s):
     s = s.replace("th,", ",")
     s = s.replace("rd,", ",")
     s = s.replace("st,", ",")
+    s = s.replace("nd", "")
+    s = s.replace("th", "")
+    s = s.replace("rd", "")
+    s = s.replace("st", "")
 
 
 #    FROM_FORMAT = "%m/%d/%y %I:%M%p" 
-    FROM_FORMAT = "%b %d, %Y" 
+    FROM_FORMAT = "%d %b %Y" 
     TO_FORMAT = "%Y-%m-%d"
     d = datetime.datetime.strptime(s, FROM_FORMAT)
     time = d.strftime(TO_FORMAT)

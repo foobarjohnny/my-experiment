@@ -103,7 +103,7 @@ def gGetAbslLink(url, link):
     return addr 
 
 """根据输入的lines，匹配正则表达式，返回list"""
-def gGetRegList(linesList, regx):
+def  gGetRegList(linesList, regx):
     if linesList == None : return 
     rtnList = []
     for line in linesList:
@@ -158,6 +158,18 @@ def gDownloadHtmlJpg(downloadUrl, savePath):
         jpg = gGetAbslLink(downloadUrl, jpg) + '.jpg'
         if jpg.find(sStr2) == -1:
             gDownload(jpg, savePath)
+
+def gDownloadHtmlJpg2(lines, downloadUrl, savePath):
+#    lines = gGetHtmlLines(downloadUrl)
+    regx = r"""bigimgsrc\s*="?(\S+)\.jpg"""
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    sStr2 = "imgurl"
+    for jpg in lists:
+        jpg = gGetAbslLink(downloadUrl, jpg) + '.jpg'
+        if jpg.find(sStr2) == -1:
+            gDownload(jpg, savePath)
+            
    # ##     print gGetFileName(jpg)
 """根据url取主站地址"""
 def gGetHttpAddr(url):
@@ -228,7 +240,17 @@ def gGetFileLines(url):
     
 def gDownloadName(downloadUrl):
     lines = gGetHtmlLines(downloadUrl)
-    regx = r"""<p>([^<]*)</p>"""
+    regx = r'name="Description" content="([^"]*)"/>'
+
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    if len(lists) <= 0: return "null"
+    return lists[0]
+
+def gDownloadName2(lines, downloadUrl):
+#    lines = gGetHtmlLines(downloadUrl)
+    regx = r'name="Description" content="([^"]*)"/>'
+
     lists = gGetRegList(lines, regx)
     if lists == None: return 
     if len(lists) <= 0: return "null"
@@ -236,7 +258,15 @@ def gDownloadName(downloadUrl):
 
 def gDownloadTime(downloadUrl):
     lines = gGetHtmlLines(downloadUrl)
-    c = '<a href="' + downloadUrl + '">([^<]*)</a>'
+
+    regx = r'<a href="' + downloadUrl + '">([^<]*)</a>'
+    lists = gGetRegList(lines, regx)
+    if lists == None: return 
+    return lists[0]
+
+def gDownloadTime2(lines, downloadUrl):
+#    lines = gGetHtmlLines(downloadUrl)
+  
     regx = r'<a href="' + downloadUrl + '">([^<]*)</a>'
     lists = gGetRegList(lines, regx)
     if lists == None: return 
@@ -255,26 +285,26 @@ def gDownloadAllJpg(url, savePath):
 
 """test"""
 def test():
-    posts = gGetPostLink("c.html")
+#    posts = gGetPostLink("c.html")
+#    post_map= {'Thread_26': ['http://wanimal1983.tumblr.com/post/63144538057/shy', 'http://wanimal1983.tumblr.com/post/63144496407/banana', 'http://wanimal1983.tumblr.com/post/63144479156/banana', 'http://wanimal1983.tumblr.com/post/63144442606/black', 'http://wanimal1983.tumblr.com/post/63144411189/jumping', 'http://wanimal1983.tumblr.com/post/63144369150/lady']}
+#    posts =[]
+#    for (k,v) in  post_map.items(): 
+#        posts.extend(v)
+    
     i = 0
-    x = 750
     length = str(len(posts))
-    posts=['http://wanimal.lofter.com/post/17d0d7_c8b5f1'];
-#     posts = [ 'http://wanimal.lofter.com/post/17d0d7_506503', 'http://wanimal.lofter.com/post/17d0d7_5064ff',
-#         'http://wanimal.lofter.com/post/17d0d7_5064fd', 'http://wanimal.lofter.com/post/17d0d7_5064f9',
-#         'http://wanimal.lofter.com/post/17d0d7_4fa3e7', 'http://wanimal.lofter.com/post/17d0d7_4f9a64',
-#         'http://wanimal.lofter.com/post/17d0d7_4f9830' ];
     logging.debug("type:" + str(type(posts)))
     sss = set(posts)
-    logging.debug("sss length:" + str(len(sss)))
+    logging.debug("length:" + str(len(sss)))
     logging.debug(len(posts))
     ll = []
     for link in posts:
         i = i + 1
         logging.debug(str(i) + "/" + length + ":" + link)
 #        if i < x or i >= x + 50 : continue
-        time = gDownloadTime(link).strip()
-        name = gDownloadName(link).strip()
+        html_lines = gGetHtmlLines(link)
+        time = gDownloadTime2(html_lines, link).strip()
+        name = gDownloadName2(html_lines, link).strip()
         name = time + '_' + name
         name = name.replace('?', '')
         name = name.replace('&nbsp;', ' ')
@@ -282,6 +312,7 @@ def test():
         name = name.replace(':', '')
         name = name.strip()
         save = unicode('I:/WANIMAL_LOFTER/' + name + '/')
+        save = save[0:125];
         ll.append(save)
         logging.debug(save)
         if os.path.exists(save) and os.path.isdir(save):
@@ -291,7 +322,7 @@ def test():
             os.makedirs(save)
         logging.debug('download pic from [' + link + ']')
         logging.debug('save to [' + save + '] ...')
-        gDownloadHtmlJpg(link, save)
+        gDownloadHtmlJpg2(html_lines, link, save)
         logging.debug("download finished! " + str(i) + "/" + length + ":" + link)
     logging.debug('All over')
     logging.debug(len(posts))
@@ -365,8 +396,9 @@ class getImgsThread(threading.Thread):
             if len(self.postUrls) > 0:
                 link = self.postUrls.pop()
                 i = i + 1
-                time = gDownloadTime(link).strip()
-                name = gDownloadName(link).strip()
+                html_lines = gGetHtmlLines(link)
+                time = gDownloadTime2(html_lines, link).strip()
+                name = gDownloadName2(html_lines, link).strip()
                 name = time + '_' + name
                 name = name.replace('?', '')
                 name = name.replace('&nbsp;', ' ')
@@ -388,7 +420,7 @@ class getImgsThread(threading.Thread):
                     os.makedirs(save)
                 logging.debug('download pic from [' + link + ']---' + self.name)
                 logging.debug('save to [' + save + '] ...---' + self.name)
-                gDownloadHtmlJpg(link, save)
+                gDownloadHtmlJpg2(html_lines, link, save)
                 global threadMap;
                 threadLinks = threadMap[self.name];
                 for z in range(len(threadLinks) - 1, -1, -1):  # 倒序
@@ -401,4 +433,4 @@ class getImgsThread(threading.Thread):
         threadMap.pop(self.name);
         return 
 
-testThread()
+test()
